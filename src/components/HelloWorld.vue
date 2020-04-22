@@ -27,7 +27,7 @@ export default {
   }),
   methods:{
     getTestMessage(){
-      axios.post("https://limitless-sierra-90681.herokuapp.com/test",{
+      axios.post("https://condition.herokuapp.com/test",{
         testMessage:this.testMessage
       }).then(response=>{
         this.returnMessage=response.data

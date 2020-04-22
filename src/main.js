@@ -7,6 +7,7 @@ import vuetify from './plugins/vuetify';
 import firebase from 'firebase'
 Vue.config.productionTip = false
 
+// Your web app's Firebase configuration
 var firebaseConfig = {
   apiKey: "AIzaSyCkTAVQThEpr3S4e_cMkP4xbTSvfDD6rVo",
   authDomain: "condition-meter.firebaseapp.com",
@@ -14,8 +15,8 @@ var firebaseConfig = {
   projectId: "condition-meter",
   storageBucket: "condition-meter.appspot.com",
   messagingSenderId: "118802890827",
-  appId: "1:118802890827:web:f06a0a4a0a62886a0b0dce",
-  measurementId: "G-K0VL0M6KJN"
+  appId: "1:118802890827:web:c72a45c4a062379f0b0dce",
+  measurementId: "G-36VS9SHCWR"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);

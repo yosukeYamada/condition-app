@@ -6,8 +6,7 @@
       </div>
     </v-app-bar>
 
-    <br><br><br>
-    <router-view></router-view>
+    
 
     <v-content>
       <router-view />

@@ -25,7 +25,7 @@
               <input />
             </div>
             <div>
-              <router-link to>登録</router-link>
+              <router-link to="/AdminHome">登録</router-link>
             </div>
           </fieldset>
         </form>

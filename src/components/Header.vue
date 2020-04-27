@@ -1,5 +1,5 @@
 <template>
   <header>
-    <h1>Rakuppo</h1>
+    <h1 class="Header">Rakuppo</h1>
   </header>
 </template>

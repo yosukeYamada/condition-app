@@ -1,10 +1,10 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
+    
       <div class="d-flex align-center">
         <Header />
       </div>
-    </v-app-bar>
+    
 
     <v-content>
       <router-view />
@@ -27,3 +27,20 @@ export default {
   })
 };
 </script>
+
+<style>
+
+#adminside{
+  margin :40% auto;
+
+}
+.b-sidebar{
+  background-color: #66CC66; 
+  
+}
+
+
+
+
+
+</style>

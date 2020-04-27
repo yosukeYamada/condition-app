@@ -7,7 +7,12 @@
     </v-app-bar>
 
     <v-content>
+<<<<<<< HEAD
+      <HelloWorld/>
+      <router-view/>
+=======
       <router-view />
+>>>>>>> a3a9e1be9b7fa90d2ddb39c9afdaaa538f301328
     </v-content>
   </v-app>
 </template>

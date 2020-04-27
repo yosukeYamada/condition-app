@@ -2,9 +2,10 @@
    <v-container text-cener>
 
 
- <p>Googleアカウントでログインしてください</p>
+ <h1>ログイン画面</h1>
+ <p>Applicationをご利用の方は、Googleアカウントでログインしてください</p>
 
- <v-btn color="info">>Googleアカウントでログイン</v-btn>
+ <router-link to="/registerUser"><v-btn color="info">>Googleアカウントでログイン</v-btn></router-link>
    </v-container>
 </template>
 

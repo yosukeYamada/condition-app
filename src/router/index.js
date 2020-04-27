@@ -11,6 +11,7 @@ import Aggregate from "../views/Aggregate";
 import EmployeeList from "../views/EmployeeList";
 import EmployeeDetail from "../views/EmployeeDetail";
 
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -37,6 +38,7 @@ const routes = [
   {
     path: "/Posts",
     name: "Posts",
+
     component : Posts,
 
   },
@@ -60,6 +62,8 @@ const routes = [
     name: "EmployeeDetail",
     component : EmployeeDetail,
   }
+
+  
 ];
 
 const router = new VueRouter({

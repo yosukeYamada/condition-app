@@ -1,7 +1,17 @@
 <template>
-    <div>
-        <p>投稿画面</p>
-    </div>
 
+  <div id="posts">
+    <Posts />
+  </div>
 </template>
+
+<script>
+import Posts from "../components/Posts";
+
+export default {
+  components: {
+    Posts
+  }
+};
+</script>
 

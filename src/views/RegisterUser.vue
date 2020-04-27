@@ -12,4 +12,4 @@ export default {
     RegisterUser
   }
 };
-</script>:
+</script>

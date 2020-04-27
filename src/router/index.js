@@ -9,8 +9,7 @@ import Posts from "../views/Posts.vue";
 import MotivHistory from "../views/MotivHistory";
 import Aggregate from "../views/Aggregate";
 import EmployeeList from "../views/EmployeeList";
-import EmployeeDetail from "../views/EmployeeDetail";
-
+import AdminSetting from "../views/AdminSetting";
 
 Vue.use(VueRouter);
 
@@ -21,7 +20,7 @@ const routes = [
     component: Login,
   },
   {
-    path: "/registerUser",
+    path: "/RegisterUser",
     name: "RegisterUser",
     component: RegisterUser,
   },
@@ -39,31 +38,28 @@ const routes = [
     path: "/Posts",
     name: "Posts",
 
-    component : Posts,
-
+    component: Posts,
   },
   {
     path: "/MotivHistory",
     name: "MotivHistory",
-    component : MotivHistory, 
+    component: MotivHistory,
   },
   {
     path: "/Aggregate",
     name: "Aggregate",
-    component :Aggregate,
+    component: Aggregate,
   },
   {
     path: "/EmployeeList",
     name: "EmployeeList",
-    component : EmployeeList,
+    component: EmployeeList,
   },
   {
-    path: "/EmployeeDetail",
-    name: "EmployeeDetail",
-    component : EmployeeDetail,
-  }
-
-  
+    path: "/AdminSetting",
+    name: "AdminSetting",
+    component: AdminSetting,
+  },
 ];
 
 const router = new VueRouter({

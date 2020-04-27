@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <div>
     <AdminHome />
     <AdminSideNav></AdminSideNav>
   </div>

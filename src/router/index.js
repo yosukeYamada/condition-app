@@ -1,29 +1,75 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-Vue.use(VueRouter)
+import Login from "../views/Login.vue";
+import RegisterUser from "../views/RegisterUser.vue";
+import EmployeeHome from "../views/EmployeeHome.vue";
+import AdminHome from "../views/AdminHome.vue";
+import Posts from "../views/Posts.vue";
+import MotivHistory from "../views/MotivHistory";
+import Aggregate from "../views/Aggregate";
+import EmployeeList from "../views/EmployeeList";
+import EmployeeDetail from "../views/EmployeeDetail";
 
-  const routes = [
+
+Vue.use(VueRouter);
+
+const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: "/",
+    name: "Login",
+    component: Login,
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: "/registerUser",
+    name: "RegisterUser",
+    component: RegisterUser,
+  },
+  {
+    path: "/EmployeeHome",
+    name: "EmployeeHome",
+    component: EmployeeHome,
+  },
+  {
+    path: "/AdminHome",
+    name: "AdminHome",
+    component: AdminHome,
+  },
+  {
+    path: "/Posts",
+    name: "Posts",
+
+    component : Posts,
+
+  },
+  {
+    path: "/MotivHistory",
+    name: "MotivHistory",
+    component : MotivHistory, 
+  },
+  {
+    path: "/Aggregate",
+    name: "Aggregate",
+    component :Aggregate,
+  },
+  {
+    path: "/EmployeeList",
+    name: "EmployeeList",
+    component : EmployeeList,
+  },
+  {
+    path: "/EmployeeDetail",
+    name: "EmployeeDetail",
+    component : EmployeeDetail,
   }
-]
+
+  
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

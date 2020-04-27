@@ -5,7 +5,7 @@ import Login from "../views/Login.vue";
 import RegisterUser from "../views/RegisterUser.vue";
 import EmployeeHome from "../views/EmployeeHome.vue";
 import AdminHome from "../views/AdminHome.vue";
-
+import Posts from "../views/Posts.vue";
 
 Vue.use(VueRouter);
 
@@ -29,6 +29,11 @@ const routes = [
     path: "/AdminHome",
     name: "AdminHome",
     component: AdminHome,
+  },
+  {
+    path: "/Posts",
+    name: "Posts",
+    component: Posts,
   },
 ];
 

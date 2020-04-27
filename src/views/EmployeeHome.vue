@@ -12,4 +12,4 @@ export default {
     EmployeeHome
   }
 };
-</script>:
+</script>

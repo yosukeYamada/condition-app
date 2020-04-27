@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <div>
     <EmployeeHome />
     <EmployeeSideNav></EmployeeSideNav>
   </div>
@@ -12,7 +12,7 @@ import EmployeeSideNav from "../components/EmployeeSideNav";
 export default {
   components: {
     EmployeeHome,
-    EmployeeSideNav,
+    EmployeeSideNav
   }
 };
 </script>

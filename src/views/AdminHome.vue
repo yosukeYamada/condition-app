@@ -1,18 +1,10 @@
 <template>
+
   <div id="home">
     <div id="content">
       <AdminHome />
     </div>
-    
-      
-      
-      
-      <AdminSideMenu></AdminSideMenu>
-      
-      
-     
- 
-    
+    <AdminSideMenu></AdminSideMenu>
   </div>
 </template>
 
@@ -23,18 +15,13 @@ import AdminSideMenu from "../views/AdminSideMenu";
 export default {
   components: {
     AdminHome,
-    AdminSideMenu
-  }
+    AdminSideMenu,
+  },
 };
 </script>
 
 <style>
-#content{
+#content {
   text-align: center;
 }
-
-
-
-
-
 </style>

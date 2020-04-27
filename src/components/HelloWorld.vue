@@ -11,6 +11,7 @@
         <span>テスト送信</span>
       </v-btn>
       <p>{{returnMessage}}</p>
+      <p>{{returnMessage}}</p>
     </v-row>
   </v-container>
 </template>
@@ -25,9 +26,12 @@ export default {
     returnMessage:null
 
   }),
+  created(){
+    axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
+  },
   methods:{
     getTestMessage(){
-      axios.post("https://condition.herokuapp.com/test",{
+      axios.post("/test",{
         testMessage:this.testMessage
       }).then(response=>{
         this.returnMessage=response.data
@@ -36,3 +40,5 @@ export default {
   }
 };
 </script>
+
+// https://condition.herokuapp.com/test

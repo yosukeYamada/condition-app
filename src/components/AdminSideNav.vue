@@ -1,7 +1,5 @@
 <template>
-
- <div id="adminside">
-    
+  <div id="adminside">
     <router-link to="/Posts">
       <p>今日のコンディション投稿</p>
     </router-link>
@@ -17,7 +15,7 @@
     <router-link to="AdminSetting">
       <p>管理者設定</p>
     </router-link>
-  
- </div>
-
+  </div>
 </template>
+
+

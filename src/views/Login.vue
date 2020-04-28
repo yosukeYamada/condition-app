@@ -1,45 +1,23 @@
 <template>
-  <v-app>
-    
-      <div class="d-flex align-center">
-        <Header />
-      </div>
-    
+  <div>
+    <Login></Login>
 
-    <v-content>
-      <router-view />
-    </v-content>
-  </v-app>
+  </div>
 </template>
 
 <script>
-import Header from "./components/Header";
+import Login from "../components/Login.vue";
 
 export default {
-  name: "App",
-
   components: {
-    Header
-  },
-
-  data: () => ({
-    //
-  })
+    Login
+  }
 };
 </script>
 
 <style>
 
-#adminside{
-  margin :40% auto;
-
-}
-.b-sidebar{
-  background-color: #66CC66; 
-  
-}
-
-#header-fixed
+ #header-fixed
 {
     position: fixed;            /* ヘッダーの固定 */
     top: 0px;                   /* 位置(上0px) */
@@ -49,11 +27,23 @@ export default {
 }
 
 #header { 
-	background-color:#66CC66;     /* 背景色(黒) */
+	background-color:#CCFFCC;     /* 背景色(黒) */
 	padding:10px 0 20px;       /* 上10px、下20pxをあける */
 	height:110px;              /* 縦の高さ110px */
 	width:100%;                /* 横の幅を100% */
 }
+
+#login{
+    padding: 0px;               /* 余白指定 */
+    top:  0;                     /* 位置指定 */
+    bottom:  30%;                  /* 位置指定 */
+    left:  0;                    /* 位置指定 */
+    position: absolute;
+    margin:auto;
+    width:100%;
+    height :110px;
+}
+
 
 
 

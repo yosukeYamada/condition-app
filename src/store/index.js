@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from "firebase/app"
 import "firebase/auth"
-import axios from 'axios'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -16,13 +15,15 @@ export default new Vuex.Store({
     },
     deleteLoginUser (state) {
       state.login_user = null
+    },
+    setLoding(state, payload) {
+      state.loading = payload
     }
   },
   actions: {
     login() {
       const google_auth_provider = new firebase.auth.GoogleAuthProvider()
-      firebase.auth().signInWithRedirect(google_auth_provider).then(
-      axios.post('http://localhost:8080/findByMail', {mail: firebase.auth().currentUser.email}))
+      firebase.auth().signInWithRedirect(google_auth_provider)
   },
     setLoginUser({commit}, user) {
       commit('setLoginUser', user)

@@ -1,18 +1,18 @@
 <template>
   <div>
     <Aggregate />
-    <AdminSideNav />
+    <AdminSideMenu />
   </div>
 </template>
 
 <script>
 import Aggregate from "../components/Aggregate.vue";
-import AdminSideNav from "../components/AdminSideNav";
+import AdminSideMenu from "../views/AdminSideMenu";
 
 export default {
   components: {
     Aggregate,
-    AdminSideNav
+    AdminSideMenu
   }
 };
 </script>

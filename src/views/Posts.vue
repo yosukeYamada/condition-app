@@ -1,19 +1,27 @@
 <template>
   <div id="posts">
-    <Posts />
-    <AdminSideNav />
+    <div id="content">
+      <Posts />
+    </div>
+
+    <AdminSideMenu />
   </div>
 </template>
 
 <script>
 import Posts from "../components/Posts";
-import AdminSideNav from "../components/AdminSideNav";
+import AdminSideMenu from "../views/AdminSideMenu";
 
 export default {
   components: {
     Posts,
-    AdminSideNav
+    AdminSideMenu
   }
 };
 </script>
 
+<style>
+#content {
+  text-align: center;
+}
+</style>

@@ -4,9 +4,12 @@
       <AdminHome />
     </div>
 
+
     <Menubotton id="Menubotton"></Menubotton>
 
     <AdminSideMenu></AdminSideMenu>
+
+    
   </div>
 </template>
 
@@ -21,6 +24,7 @@ export default {
     AdminSideMenu,
     Menubotton,
   },
+
 };
 </script>
 

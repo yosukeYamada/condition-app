@@ -1,18 +1,18 @@
 <template>
   <div>
     <AdminSetting />
-    <AdminSideNav></AdminSideNav>
+    <AdminSideMenu />
   </div>
 </template>
 
 <script>
 import AdminSetting from "../components/AdminSetting";
-import AdminSideNav from "../components/AdminSideNav";
+import AdminSideMenu from "../views/AdminSideMenu";
 
 export default {
   components: {
     AdminSetting,
-    AdminSideNav
+    AdminSideMenu
   }
 };
 </script>

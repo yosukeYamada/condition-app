@@ -3,12 +3,19 @@
  <h1>ログイン画面</h1>
  <p>Applicationをご利用の方は、Googleアカウントでログインしてください</p>
 
- <router-link to="/registerUser"><v-btn color="info" @click="login">Googleアカウントでログイン</v-btn></router-link>
+ <span v-if="$store.state.login_user">
+ <v-btn color="info" @click="logout">ログアウト</v-btn>
+ </span>
+
+ <span v-else>
+ <v-btn color="info" @click="login">ログイン</v-btn>
+ </span>
+
    </v-container>
 </template>
 
 <script>
-import firebase from 'firebase'
+import firebase from 'firebase/app'
 import { mapActions } from 'vuex'
     export default{
         data(){

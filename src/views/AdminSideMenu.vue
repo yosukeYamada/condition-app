@@ -1,33 +1,44 @@
 <template>
-    <div class="b-sidebar">
-    <Header></Header>
-     <AdminSideNav></AdminSideNav>
+  
+    
+    <div class="sideMenu">
+      <b-sidebar id="sidebar-1" title="Menu" shadow>
+        
+        <!-- <Menubotton id="Menubutton1"></Menubotton> -->
+        <AdminSideNav class="sideNav"></AdminSideNav>
+      </b-sidebar>
     </div>
 
 </template>
 
 <script>
-import Header from "../components/Header.vue"
-import AdminSideNav from "../components/AdminSideNav.vue"
+
+import AdminSideNav from "../components/AdminSideNav.vue";
+// import Menubotton from "../components/Menubotton.vue";
 export default {
-
-    components:{
-        AdminSideNav,
-        Header,
-    }
-
-}
-
-
+  components: {
+    AdminSideNav,
+    // Menubotton,
+  },
+};
 </script>
 
 <style>
-.sideMenu{
-    width:30%;
-    background : #66CC66;
+#sidebar-1{
+    background:aquamarine;
 }
+.sideMenu{
+    background:aquamarine;
+    
 
 
+
+
+    
+}
+.sideNav{
+    background:aquamarine;
+}
 
 
 

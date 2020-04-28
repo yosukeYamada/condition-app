@@ -55,6 +55,28 @@ export default {
 	width:100%;                /* 横の幅を100% */
 }
 
+#Menubotton{
+  padding: 0;               /* 余白指定 */
+    top:  10%;                     /* 位置指定 */
+    bottom: 0;                  /* 位置指定 */
+    left:  4%;                    /* 位置指定 */
+    position: absolute;
+    margin :0 auto;
+    width:10%;
+    height :80%;
+}
+
+#Menubotton1{
+
+  padding: 20%;               /* 余白指定 */
+    top:  2%;                     /* 位置指定 */
+    bottom: 0;                  /* 位置指定 */
+    left:  10%;                    /* 位置指定 */
+    position: absolute;
+    margin :0 auto;
+    width:10%;
+    height :80%;
+}
 
 
 

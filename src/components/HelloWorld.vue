@@ -6,6 +6,7 @@
       </v-col>
       <v-col cols="12">
         <v-text-field v-model="testMessage"/>
+        <p>{{testMessage}}</p>
       </v-col>
       <v-btn @click="getTestMessage()">
         <span>テスト送信</span>

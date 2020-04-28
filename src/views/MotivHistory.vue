@@ -1,18 +1,18 @@
 <template>
   <div>
     <Motivations />
-    <AdminSideNav />
+    <AdminSideMenu />
   </div>
 </template>
 
 <script>
 import Motivations from "../components/Motivations.vue";
-import AdminSideNav from "../components/AdminSideNav";
+import AdminSideMenu from "../views/AdminSideMenu";
 
 export default {
   components: {
     Motivations,
-    AdminSideNav
+    AdminSideMenu
   }
 };
 </script>

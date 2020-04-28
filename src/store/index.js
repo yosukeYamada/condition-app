@@ -2,12 +2,14 @@ import Vue from "vue";
 import Vuex from "vuex";
 import firebase from "firebase/app";
 import "firebase/auth";
+import axios from "axios";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     login_user: null,
     mail: "",
+    users: [],
   },
   mutations: {
     setLoginUser(state, user) {
@@ -18,6 +20,9 @@ export default new Vuex.Store({
     },
     setLoding(state, payload) {
       state.loading = payload;
+    },
+    setUsers: function(state, users) {
+      state.users = users;
     },
   },
   actions: {
@@ -33,6 +38,13 @@ export default new Vuex.Store({
     },
     deleteLoginUser({ commit }) {
       commit("deleteLoginUser");
+    },
+    getUsers: function({ commit }) {
+      return axios
+        .get("http://localhost:8080/mail/findByMail")
+        .then((response) => {
+          commit("setUsers", response.data);
+        });
     },
   },
   modules: {},

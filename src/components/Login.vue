@@ -1,4 +1,6 @@
 <template>
+
+    <div id="login">
    <v-container text-cener>
  <h1>ログイン画面</h1>
  <p>Applicationをご利用の方は、Googleアカウントでログインしてください</p>
@@ -12,6 +14,7 @@
  </span>
 
    </v-container>
+    </div>
 </template>
 
 <script>

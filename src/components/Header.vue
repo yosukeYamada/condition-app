@@ -1,5 +1,7 @@
 <template>
-  <header>
-    <h1 class="Header">Rakuppo</h1>
-  </header>
+<div id ="header-fixed">
+  <div id ="header">
+    <h1>Rakuppo</h1>
+  </div>
+</div>
 </template>

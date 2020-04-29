@@ -42,7 +42,16 @@ import { mapActions } from 'vuex'
         this.setLoading()
           if (user) {
             this.setLoginUser(user)
-            axios.post('http://localhost:8080/mail/findByMail', {mail: firebase.auth().currentUser.email})
+            axios.post('http://localhost:8080/mail/findByMailAndAuthority', {mail: firebase.auth().currentUser.email})
+            .then(response => {
+              if(response.data == null) {
+                this.$router.push('/RegisterUser')
+              } else if(response.data.user.authority == 1){
+                this.$router.push('/EmployeeHome')
+              } else if(response.data.user.authority == 2){
+                this.$router.push('/AdminHome')
+              }
+            })
             this.setLoadings()
           } else {
             this.deleteLoginUser()

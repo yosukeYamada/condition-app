@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div v-if="!loading">Loading...</div>
-
-    <Login v-if="loading"></Login>
+    <Login></Login>
 
     <div id="app">
       <div v-for="user in users" :key="user.id">{{ user.name }}</div>
@@ -11,31 +9,16 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
 import Login from "../components/Login.vue";
 import { mapActions } from "vuex";
 
 export default {
-  data: function() {
-    return {
-      loading: false
-    };
-  },
   methods: {
     ...mapActions(["setLoginUser"])
   },
   components: {
     Login
   },
-  beforeCreate() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setLoginUser(user);
-        this.loading = true;
-      }
-    });
-  },
-  name: "app",
   computed: {
     users: function() {
       return this.$store.state.users;

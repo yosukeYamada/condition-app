@@ -1,15 +1,16 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
 import firebase from "firebase/app";
 import "firebase/auth";
-import axios from "axios";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     login_user: null,
-    mail: "",
-    users: [],
+    mail: '',
+    loading: true,
+    users:[]
   },
   mutations: {
     setLoginUser(state, user) {
@@ -18,20 +19,27 @@ export default new Vuex.Store({
     deleteLoginUser(state) {
       state.login_user = null;
     },
-    setLoding(state, payload) {
-      state.loading = payload;
+    setLoading(state) {
+      state.loading = false
+    },
+    setLoadings(state) {
+      state.loading = false
+    },
+    loading(state) {
+      state.loading = true
     },
     setUsers: function(state, users) {
       state.users = users;
     },
   },
   actions: {
-    login() {
-      const google_auth_provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithRedirect(google_auth_provider);
+    login({commit}) {
+      commit('loading')
+      const google_auth_provider = new firebase.auth.GoogleAuthProvider()
+      firebase.auth().signInWithRedirect(google_auth_provider)
     },
-    setLoginUser({ commit }, user) {
-      commit("setLoginUser", user);
+    setLoginUser({commit}, user) {
+      commit('setLoginUser', user)
     },
     logout() {
       firebase.auth().signOut();
@@ -46,6 +54,12 @@ export default new Vuex.Store({
           commit("setUsers", response.data);
         });
     },
+    setLoading({commit}) {
+      commit('setLoading')
+    },
+    setLoadings({commit}) {
+      commit('setLoadings')
+    }
   },
   modules: {},
   getters: {

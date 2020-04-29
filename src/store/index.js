@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     login_user: null,
-    mail: ''
+    mail: '',
+    loading: true
   },
   mutations: {
     setLoginUser (state, user) {
@@ -16,15 +17,22 @@ export default new Vuex.Store({
     deleteLoginUser (state) {
       state.login_user = null
     },
-    setLoding(state, payload) {
-      state.loading = payload
+    setLoading(state) {
+      state.loading = false
+    },
+    setLoadings(state) {
+      state.loading = false
+    },
+    loading(state) {
+      state.loading = true
     }
   },
   actions: {
-    login() {
+    login({commit}) {
+      commit('loading')
       const google_auth_provider = new firebase.auth.GoogleAuthProvider()
       firebase.auth().signInWithRedirect(google_auth_provider)
-  },
+    },
     setLoginUser({commit}, user) {
       commit('setLoginUser', user)
     },
@@ -33,6 +41,12 @@ export default new Vuex.Store({
     },
     deleteLoginUser({commit}) {
       commit('deleteLoginUser')
+    },
+    setLoading({commit}) {
+      commit('setLoading')
+    },
+    setLoadings({commit}) {
+      commit('setLoadings')
     }
   },
   modules: {

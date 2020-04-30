@@ -78,6 +78,16 @@ export default {
     height :80%;
 }
 
+#content {
+  padding: 0px; /* 余白指定 */
+  top: 0; /* 位置指定 */
+  bottom: 30%; /* 位置指定 */
+  left: 0; /* 位置指定 */
+  position: absolute;
+  margin: auto;
+  width: 100%;
+  height: 110px;
+}
 
 
 </style>

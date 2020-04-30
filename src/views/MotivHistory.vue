@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Menubotton id="Menubotton"></Menubotton>
     <Motivations />
     <AdminSideMenu />
   </div>
@@ -8,11 +9,13 @@
 <script>
 import Motivations from "../components/Motivations.vue";
 import AdminSideMenu from "../views/AdminSideMenu";
+import Menubotton from "../components/Menubotton";
 
 export default {
   components: {
     Motivations,
-    AdminSideMenu
+    AdminSideMenu,
+    Menubotton,
   }
 };
 </script>

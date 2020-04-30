@@ -3,19 +3,23 @@
     <div id="content">
       <Posts />
     </div>
+    <Menubotton id="Menubotton"></Menubotton>
+    <AdminSideNav></AdminSideNav>
 
-    <AdminSideMenu />
+    
   </div>
 </template>
 
 <script>
 import Posts from "../components/Posts";
-import AdminSideMenu from "../views/AdminSideMenu";
+import AdminSideNav from "../components/AdminSideNav"
+import Menubotton from "../components/Menubotton";
 
 export default {
   components: {
     Posts,
-    AdminSideMenu
+    AdminSideNav,
+    Menubotton
   }
 };
 </script>

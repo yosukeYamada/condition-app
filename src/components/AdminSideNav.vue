@@ -2,8 +2,8 @@
   <div id="adminside">
     <div class="sideMenu">
       <b-sidebar id="sidebar-1" title="Menu" shadow>
-        <!-- <Menubotton id="Menubutton1"></Menubotton> -->
-        <AdminSideNav class="sideNav">
+        
+        
           <router-link to="/Posts">
             <p>今日のコンディション投稿</p>
           </router-link>
@@ -19,7 +19,8 @@
           <router-link to="AdminSetting">
             <p>管理者設定</p>
           </router-link>
-        </AdminSideNav>
+
+        
         <Logout/>
       </b-sidebar>
     </div>
@@ -27,14 +28,18 @@
 </template>
 
 <script>
-import AdminSideNav from "../components/AdminSideNav.vue";
+
+    
+    
+
 import Logout from "@/components/Logout"
 // import Menubotton from "../components/Menubotton.vue";
 export default {
   components: {
-    AdminSideNav,
+  
     Logout
     // Menubotton,
+
   },
 };
 </script>

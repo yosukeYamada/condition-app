@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="content">
     <h1>HOME画面(管理者)</h1>
 
     <h2>お知らせ</h2>

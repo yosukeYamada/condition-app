@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="content">
     <h1>モチベ履歴</h1>
     <table>
       <tr>

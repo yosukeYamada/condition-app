@@ -1,22 +1,25 @@
 <template>
   <div>
-    <AdminSideMenu />
+    <Menubotton id="Menubotton"></Menubotton>
+    <AdminSideNav></AdminSideNav>
     <EmployeeListHeader />
     <EmployeeList />
   </div>
 </template>
 
 <script>
-import AdminSideMenu from "../views/AdminSideMenu";
 import EmployeeListHeader from "@/components/employee-list/EmployeeListHeader.vue";
 import EmployeeList from "../components/employee-list/EmployeeList.vue";
 import axios from "axios";
+import Menubotton from "../components/Menubotton";
+import AdminSideNav from "../components/AdminSideNav";
 
 export default {
   components: {
     EmployeeListHeader,
     EmployeeList,
-    AdminSideMenu,
+    Menubotton,
+    AdminSideNav
   },
   data() {
     return {

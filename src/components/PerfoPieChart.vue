@@ -4,11 +4,13 @@ import { Doughnut } from "vue-chartjs";
 export default {
   extends: Doughnut,
   props: ["PerfoChartData","isGetData"],
-//   watch: {
-//     isGetData: function() {
-//       this.renderChart(this.PerfoChartData, this.options);
-//     },
-//   },
+ watch: {
+    isGetData: function() {
+      this.renderChart(this.PerfoChartData, this.options);
+    },
+  },
+
+
   data() {
     return {
       options: {
@@ -100,8 +102,11 @@ export default {
         });
       },
     });
+    
+    
 
-    this.renderChart(this.PerfoChartData, this.options);
+        this.renderChart(this.PerfoChartData, this.options);
+    
   },
 };
 </script>

@@ -4,12 +4,12 @@ import { Doughnut } from "vue-chartjs";
 export default {
   extends: Doughnut,
   props: ["ConChartData", "isGetData"],
+  watch: {
+    isGetData: function() {
+      this.renderChart(this.ConChartData, this.options);
+    },
+  },
 
-  // watch: {
-  //   isGetData: function() {
-  //     this.renderChart(this.ConChartData, this.options);
-  //   },
-  // },
 
   data() {
     return {

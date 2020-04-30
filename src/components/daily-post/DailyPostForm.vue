@@ -1,10 +1,12 @@
 <template>
-  <div id="content">
+  <b-col>
     <b-card
       class="m-5 text-left"
       border-variant="success"
+      header="今日のコンディション登録"
+      header-bg-variant="success"
+      header-text-variant="white"
       style="border-width:2px;"
-      title="今日のコンディション登録"
     >
       <b-card-text>
         <b-form>
@@ -55,10 +57,9 @@
             >登録する</b-button
           >
         </b-form>
-        {{ param }}
       </b-card-text>
     </b-card>
-  </div>
+  </b-col>
 </template>
 <script>
 import axios from "axios";
@@ -67,11 +68,10 @@ export default {
   data() {
     return {
       param: {
-        motivationSelected: "",
-        performanceSelected: "",
-        conditionSelected: "",
+        motivationSelected: "3",
+        performanceSelected: "3",
+        conditionSelected: "3",
         comment: "",
-        // TODO あとログインユーザーのID情報がいる
       },
     };
   },
@@ -79,7 +79,7 @@ export default {
     register() {
       axios
         .post("http://localhost:8080/registerDailyPost", {
-          userId: "3", // TODO とりあえず開発用で固定
+          userId: "4", // TODO とりあえず開発用で固定(ログイン時にDBからストアにユーザー情報を格納してそこから持ってくる)
           motivationId: this.param.motivationSelected,
           conditionId: this.param.conditionSelected,
           performanceId: this.param.performanceSelected,

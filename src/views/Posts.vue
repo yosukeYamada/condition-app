@@ -1,24 +1,15 @@
 <template>
-  <div id="posts">
-      <Posts />
-    <Menubotton id="Menubotton"></Menubotton>
-    <AdminSideNav></AdminSideNav>
-
-    
+  <div>
+    <DailyPostForm />
   </div>
 </template>
 
 <script>
-import Posts from "@/components/daily-post/Posts.vue";
-import AdminSideNav from "../components/AdminSideNav"
-import Menubotton from "../components/Menubotton";
+import DailyPostForm from "@/components/daily-post/DailyPostForm.vue";
 
 export default {
   components: {
-    Posts,
-    AdminSideNav,
-    Menubotton
-  }
+    DailyPostForm,
+  },
 };
 </script>
-

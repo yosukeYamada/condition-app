@@ -1,25 +1,25 @@
 <template>
-  <div>
-    <AdminSideNav></AdminSideNav>
-    <Menubotton id="Menubotton"></Menubotton>
-    <EmployeeListHeader class="mb-5" />
-    <EmployeeList :employee-list="employeeList" />
-  </div>
+  <b-col>
+    <b-card class="m-5" border-variant="success" 
+      header="従業員一覧"
+      header-bg-variant="success"
+      header-text-variant="white"
+    style="border-width:2px;">
+      <EmployeeListHeader class="mb-5" />
+      <EmployeeList :employee-list="employeeList" />
+    </b-card>
+  </b-col>
 </template>
 
 <script>
 import EmployeeListHeader from "@/components/employee-list/EmployeeListHeader.vue";
 import EmployeeList from "../components/employee-list/EmployeeList.vue";
 import axios from "axios";
-import Menubotton from "../components/Menubotton";
-import AdminSideNav from "../components/AdminSideNav";
 
 export default {
   components: {
     EmployeeListHeader,
     EmployeeList,
-    Menubotton,
-    AdminSideNav,
   },
   data() {
     return {
@@ -43,8 +43,11 @@ export default {
     masterList: function() {
       var masterList = this.masterList;
       var employeeList = masterList.map(function(elm) {
-        let hireDate =  new Date(Date.parse(elm.hireDate))
-        hireDate = hireDate.getFullYear() + " - " + (("00"+(hireDate.getMonth() + 1)).slice(-2));
+        let hireDate = new Date(Date.parse(elm.hireDate));
+        hireDate =
+          hireDate.getFullYear() +
+          " - " +
+          ("00" + (hireDate.getMonth() + 1)).slice(-2);
         if (elm.dailyPost.length === 0) {
           return {
             name: elm.userName,

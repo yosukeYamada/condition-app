@@ -20,6 +20,7 @@
             <p>管理者設定</p>
           </router-link>
         </AdminSideNav>
+        <Logout/>
       </b-sidebar>
     </div>
   </div>
@@ -27,10 +28,12 @@
 
 <script>
 import AdminSideNav from "../components/AdminSideNav.vue";
+import Logout from "@/components/Logout"
 // import Menubotton from "../components/Menubotton.vue";
 export default {
   components: {
     AdminSideNav,
+    Logout
     // Menubotton,
   },
 };

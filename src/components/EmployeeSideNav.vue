@@ -9,5 +9,17 @@
     <router-link to="/Aggregate">
       <p>集計グラフ</p>
     </router-link>
+  <Logout />
   </div>
+
 </template>
+
+<script>
+import Logout from "@/components/Logout"
+
+export default {
+  components : {
+    Logout
+  }
+}
+</script>

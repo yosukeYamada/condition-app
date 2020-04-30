@@ -5,13 +5,6 @@
     </div>
 
     <div v-show="!this.$store.state.loading">
-      <span v-if="$store.state.login_user">
-        <v-btn color="info" @click="logout">ログアウト</v-btn>
-      </span>
-    </div>
-
-      
-    <div v-show="!this.$store.state.loading">
       <div id="login">
         <v-container text-cener>
           <h1>ログイン画面</h1>
@@ -38,7 +31,7 @@ import { mapActions } from 'vuex'
           }
       },
       methods: {
-        ...mapActions(['login', 'logout', 'setLoginUser', 'deleteLoginUser', 'setLoading', 'setLoadings'])
+        ...mapActions(['login', 'setLoginUser', 'deleteLoginUser', 'setLoading', 'setLoadings'])
       },
       created () {
         firebase.auth().onAuthStateChanged(user => {
@@ -47,7 +40,7 @@ import { mapActions } from 'vuex'
             this.setLoginUser(user)
             axios.post('http://localhost:8080/mail/findByMailAndAuthority', {mail: firebase.auth().currentUser.email})
             .then(response => {
-              if(response.data.user.authority == null) {
+              if(response.data.user.authority == 0) {
                 console.log('新規')
                 this.$router.push('/RegisterUser')
               } else if(response.data.user.authority == 1){
@@ -60,6 +53,7 @@ import { mapActions } from 'vuex'
             })
             this.setLoadings()
           } else {
+            this.$router.push('/')
             this.deleteLoginUser()
           }
         })

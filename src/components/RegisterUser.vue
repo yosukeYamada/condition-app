@@ -62,9 +62,20 @@
             <div>
               <router-link to="/AdminHome">登録</router-link>
             </div>
+            <v-btn color="info" @click="logout">戻る</v-btn>
           </fieldset>
         </form>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import { mapActions } from 'vuex'
+
+export default {
+   methods: {
+        ...mapActions(['logout','deleteLoginUser'])
+   },
+}
+</script>

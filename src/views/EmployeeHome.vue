@@ -12,7 +12,7 @@ import EmployeeSideNav from "../components/EmployeeSideNav";
 export default {
   components: {
     EmployeeHome,
-    EmployeeSideNav
-  }
+    EmployeeSideNav,
+  },
 };
 </script>

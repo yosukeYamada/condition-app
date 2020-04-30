@@ -19,7 +19,7 @@ export default {
   name: "App",
 
   components: {
-    Header
+    Header,
   },
 
   data: () => ({

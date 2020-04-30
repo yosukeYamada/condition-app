@@ -39,6 +39,12 @@ export default new Vuex.Store({
     deleteLoginUser({ commit }) {
       commit("deleteLoginUser");
     },
+    setLoading({commit}) {
+      commit('setLoading')
+    },
+    setLoadings({commit}) {
+      commit('setLoadings')
+    },
 
     getAggregate : function({ commit }){
       

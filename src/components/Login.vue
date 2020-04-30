@@ -37,7 +37,7 @@ export default {
       "setLoadings"
     ])
   },
-  created({ commit }) {
+  created() {
     firebase.auth().onAuthStateChanged(user => {
       this.setLoading();
       if (user) {
@@ -52,11 +52,9 @@ export default {
               this.$router.push("/RegisterUser");
             } else if (response.data.user.authority == 1) {
               console.log("管理者");
-              commit("setUser", response.data.user.userId);
               this.$router.push("/AdminHome");
             } else if (response.data.user.authority == 2) {
               console.log("従業員");
-              commit("setUser", response.data.user.userId);
               this.$router.push("/EmployeeHome");
             }
           });

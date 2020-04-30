@@ -52,9 +52,11 @@ export default {
               this.$router.push("/RegisterUser");
             } else if (response.data.user.authority == 1) {
               console.log("管理者");
+              console.log("情報 : " + response.data.user)
               this.$router.push("/AdminHome");
             } else if (response.data.user.authority == 2) {
               console.log("従業員");
+              console.log("情報 : " + response.data.user)
               this.$router.push("/EmployeeHome");
             }
           });

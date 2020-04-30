@@ -2,12 +2,14 @@ import Vue from "vue";
 import Vuex from "vuex";
 import firebase from "firebase/app";
 import "firebase/auth";
+import axios from "axios";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     login_user: null,
     mail: "",
+    aggregates:[]
   },
   mutations: {
     setLoginUser(state, user) {
@@ -19,6 +21,9 @@ export default new Vuex.Store({
     setLoding(state, payload) {
       state.loading = payload;
     },
+    setAggregate:function(state,aggregate){
+      state.aggregates = aggregate
+    }
   },
   actions: {
     login() {
@@ -34,6 +39,19 @@ export default new Vuex.Store({
     deleteLoginUser({ commit }) {
       commit("deleteLoginUser");
     },
+
+    getAggregate : function({ commit }){
+      
+        axios.get('http://localhost:8080/getAggregateByDay?date=2020/04/27')
+        .then(response =>{
+          console.log(response.data)
+          commit('setAggregate',response.data)
+  
+        })
+        .catch(e =>{
+            alert(e)
+        })
+    }
   },
   modules: {},
   getters: {

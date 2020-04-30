@@ -7,7 +7,7 @@
 
     <Menubotton id="Menubotton"></Menubotton>
 
-    <AdminSideMenu></AdminSideMenu>
+    <AdminSideNav></AdminSideNav>
 
     
   </div>
@@ -15,13 +15,13 @@
 
 <script>
 import AdminHome from "../components/AdminHome";
-import AdminSideMenu from "../views/AdminSideMenu";
+import AdminSideNav from "../components/AdminSideNav";
 import Menubotton from "../components/Menubotton";
 
 export default {
   components: {
     AdminHome,
-    AdminSideMenu,
+    AdminSideNav,
     Menubotton,
   },
 

@@ -35,3 +35,11 @@
     </table>
   </div>
 </template>
+
+<script>
+export default {
+  mounted() {
+    this.$store.dispatch("getUserMotivations");
+  }
+};
+</script>

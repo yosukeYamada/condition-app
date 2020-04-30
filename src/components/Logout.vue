@@ -1,7 +1,9 @@
 <template>
   <span v-if="$store.state.login_user">
-    <span>{{userName}}</span>
-    <img v-if="photoURL" :src="photoURL">
+    <v-list-item-content>
+    <v-list-item-avatar><img v-if="photoURL" :src="photoURL"></v-list-item-avatar>
+      <v-list-item-title>{{ userName }}</v-list-item-title>
+    </v-list-item-content>
     <v-btn color="info" @click="logout">ログアウト</v-btn>
   </span>
 </template>

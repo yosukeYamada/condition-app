@@ -5,6 +5,7 @@
     <div v-show="!this.$store.state.loading">
       <div id="content">
         <v-container text-cener>
+        <p class="err">{{err}}</p>
           <h1>ログイン画面</h1>
           <p>Applicationをご利用の方は、Googleアカウントでログインしてください</p>
 
@@ -25,7 +26,8 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      name: "Login"
+      name: "Login",
+      err: ''
     };
   },
   methods: {
@@ -61,11 +63,15 @@ export default {
               console.log("情報 : " + response.data.user.userId)
               this.$store.dispatch("setUser", response.data.user.userId);
               this.$router.push("/EmployeeHome");
+            } else if (response.data.user.authority == 3) {
+              this.deleteLoginUser();
+              firebase.auth().signOut();
+              this.err = 'メールアドレスは@rakus-partners.co.jpのものをお使いください'
             }
           });
         this.setLoadings();
       } else {
-        this.$router.push("/");
+        firebase.auth().signOut();
         this.deleteLoginUser();
       }
     });
@@ -84,5 +90,9 @@ export default {
   text-align: center;
   width: 100%;
   height: 110px;
+}
+
+.err {
+  color: red;
 }
 </style>

@@ -3,14 +3,12 @@ import { Doughnut } from "vue-chartjs";
 
 export default {
   extends: Doughnut,
-  props: ["ConChartData", "isGetData"],
-
-  // watch: {
-  //   isGetData: function() {
-  //     this.renderChart(this.ConChartData, this.options);
-  //   },
-  // },
-
+  props: ["PerfoChartData","isGetData"],
+//   watch: {
+//     isGetData: function() {
+//       this.renderChart(this.PerfoChartData, this.options);
+//     },
+//   },
   data() {
     return {
       options: {
@@ -48,7 +46,7 @@ export default {
 
           // position(第二, 第三引数は適宜調整)
           ctx.fillText(
-            "本日のコンディション",
+            "本日のパフォーマンス",
             chart.width / 2 - 30,
             chart.height / 2
           );
@@ -103,9 +101,7 @@ export default {
       },
     });
 
-    this.renderChart(this.ConChartData, this.options);
-    console.log("Con");
+    this.renderChart(this.PerfoChartData, this.options);
   },
 };
 </script>
-

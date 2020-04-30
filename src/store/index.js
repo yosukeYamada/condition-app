@@ -11,16 +11,8 @@ export default new Vuex.Store({
     mail: "",
     loading: true,
     aggregates: [],
-<<<<<<< Updated upstream
-    user: [],
-<<<<<<< HEAD
-    dailyPostList: [],
-=======
-=======
     userId: "",
     dailyPostList: [],
->>>>>>> Stashed changes
->>>>>>> sub
   },
   mutations: {
     setLoginUser(state, user) {

@@ -15,5 +15,17 @@
     <router-link to="AdminSetting">
       <p>管理者設定</p>
     </router-link>
+
+     <Logout/>
   </div>
 </template>
+
+<script>
+import Logout from "@/components/Logout"
+
+export default {
+  components : {
+    Logout
+  }
+}
+</script>

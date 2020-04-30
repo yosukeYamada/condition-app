@@ -3,6 +3,13 @@
     <div v-show="this.$store.state.loading" class="loading">
       Loading...
     </div>
+
+    <div v-show="!this.$store.state.loading">
+      <span v-if="$store.state.login_user">
+        <v-btn color="info" @click="logout">ログアウト</v-btn>
+      </span>
+    </div>
+
       
     <div v-show="!this.$store.state.loading">
       <div id="login">
@@ -10,12 +17,8 @@
           <h1>ログイン画面</h1>
           <p>Applicationをご利用の方は、Googleアカウントでログインしてください</p>
 
-          <span v-if="$store.state.login_user">
-            <v-btn color="info" @click="logout">ログアウト</v-btn>
-          </span>
-
           <span v-if="!$store.state.login_user">
-            <v-btn color="info" @click="login">ログイン</v-btn>
+            <v-btn color="info" @click="login">Googleアカウントでログイン</v-btn>
           </span>
         </v-container>
       </div>
@@ -44,12 +47,15 @@ import { mapActions } from 'vuex'
             this.setLoginUser(user)
             axios.post('http://localhost:8080/mail/findByMailAndAuthority', {mail: firebase.auth().currentUser.email})
             .then(response => {
-              if(response.data == null) {
+              if(response.data.user.authority == null) {
+                console.log('新規')
                 this.$router.push('/RegisterUser')
               } else if(response.data.user.authority == 1){
-                this.$router.push('/EmployeeHome')
-              } else if(response.data.user.authority == 2){
+                console.log('管理者')
                 this.$router.push('/AdminHome')
+              } else if(response.data.user.authority == 2){
+                console.log('従業員')
+                this.$router.push('/EmployeeHome')
               }
             })
             this.setLoadings()

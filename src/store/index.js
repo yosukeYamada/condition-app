@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     login_user: null,
     mail: "",
+    loading: true,
     aggregates:[]
   },
   mutations: {
@@ -18,12 +19,15 @@ export default new Vuex.Store({
     deleteLoginUser(state) {
       state.login_user = null;
     },
-    setLoding(state, payload) {
-      state.loading = payload;
+    setLoading(state) {
+      state.loading = false;
     },
     setAggregate:function(state,aggregate){
       state.aggregates = aggregate
-    }
+    },
+    setLoadings(state) {
+      state.loading = true
+    },
   },
   actions: {
     login() {

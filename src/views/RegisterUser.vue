@@ -9,7 +9,7 @@ import RegisterUser from "../components/RegisterUser";
 
 export default {
   components: {
-    RegisterUser
+    RegisterUser,
   }
 };
 </script>

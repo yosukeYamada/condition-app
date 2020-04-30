@@ -19,7 +19,9 @@
           <router-link to="AdminSetting">
             <p>管理者設定</p>
           </router-link>
+
         
+        <Logout/>
       </b-sidebar>
     </div>
   </div>
@@ -27,11 +29,17 @@
 
 <script>
 
+    
+    
+
+import Logout from "@/components/Logout"
 // import Menubotton from "../components/Menubotton.vue";
 export default {
   components: {
-    
-    
+  
+    Logout
+    // Menubotton,
+
   },
 };
 </script>

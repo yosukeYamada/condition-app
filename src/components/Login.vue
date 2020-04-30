@@ -52,11 +52,17 @@ export default {
               this.$router.push("/RegisterUser");
             } else if (response.data.user.authority == 1) {
               console.log("管理者");
+<<<<<<< Updated upstream
               console.log("情報 : " + response.data.user)
+=======
+              this.$store.dispatch("setUser", response.data.user.userId);
+>>>>>>> Stashed changes
               this.$router.push("/AdminHome");
+              console.log("情報 : " + response.data.user.userId)
             } else if (response.data.user.authority == 2) {
               console.log("従業員");
-              console.log("情報 : " + response.data.user)
+              console.log("情報 : " + response.data.user.userId)
+              this.$store.dispatch("setUser", response.data.user.userId);
               this.$router.push("/EmployeeHome");
             }
           });

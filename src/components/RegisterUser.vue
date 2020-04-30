@@ -7,16 +7,20 @@
             <legend>ユーザ登録</legend>
             <div>
               <label>名前:</label>
-              <input />
+              <input type="text" v-model="name" placeholder="名前" />
+            </div>
+            <div>
+              <label>ふりがな:</label>
+              <input type="text" v-model="kana" placeholder="ふりがな" />
             </div>
             <div>
               <label>メールアドレス:</label>
-              <input />
+              <input type="text" v-model="mail" placeholder="メールアドレス" />
             </div>
             <div>
               <div>
                 入社年月:
-                <select name="year">
+                <select v-model="year">
                   <option value>-</option>
                   <option value="2016">2016</option>
                   <option value="2017">2017</option>
@@ -24,7 +28,7 @@
                   <option value="2019">2019</option>
                   <option value="2020">2020</option>
                 </select>年
-                <select name="month">
+                <select v-model="month">
                   <option value>-</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -42,25 +46,17 @@
               </div>
             </div>
             <div>
-              <label>パスワード:</label>
-              <input />
-            </div>
-            <div>
-              <label>確認用パスワード:</label>
-              <input />
-            </div>
-            <div>
               <label>部門:</label>
-              <select>
-                <option>-</option>
-                <option>アプリエンジニア</option>
-                <option>クラウドエンジニア</option>
-                <option>機械学習エンジニア</option>
-                <option>内勤</option>
+              <select v-model="dep">
+                <option value>-</option>
+                <option value="1">アプリエンジニア</option>
+                <option value="2">クラウドエンジニア</option>
+                <option value="3">機械学習エンジニア</option>
+                <option value="4">内勤</option>
               </select>
             </div>
             <div>
-              <router-link to="/AdminHome">登録</router-link>
+              <v-btn @click="addUser">登録</v-btn>
             </div>
             <v-btn color="info" @click="logout">戻る</v-btn>
           </fieldset>
@@ -71,11 +67,38 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from "vuex";
+import axios from "axios";
 
 export default {
-   methods: {
-        ...mapActions(['logout','deleteLoginUser'])
-   },
-}
+  data() {
+    return {
+      name: "",
+      kana: "",
+      mail: "",
+      year: "",
+      month: "",
+      dep: ""
+    };
+  },
+  methods: {
+    ...mapActions(["logout", "deleteLoginUser"]),
+    addUser() {
+      const params = {
+        name: this.name,
+        kana: this.kana,
+        mail: this.mail,
+        year: this.year,
+        month: this.month,
+        dep: this.dep
+      };
+      axios
+        .post("http://localhost:8080/user/registerUser", params)
+        .then(response => {
+          console.log(response.data);
+          this.$router.push("/EmployeeUser");
+        });
+    }
+  }
+};
 </script>

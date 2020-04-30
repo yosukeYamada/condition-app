@@ -10,10 +10,12 @@
     <MotivPieChart
       class="Pie"
       :motiv-chart-data="MotivChartData"
+      :is-get-data="isGetData"
     ></MotivPieChart>
     <PerfoPieChart 
       class="Pie"
       :perfo-chart-data="PerfoChartData"
+      :is-get-data="isGetData"
       ></PerfoPieChart> 
     
     <AdminSideNav />
@@ -41,7 +43,7 @@ export default {
 
   data() {
     return {
-      // isGetData: false,
+      isGetData: false,
       ConChartData: {
         labels: ["快晴", "晴れ", "曇り", "雨", "大雨"],
 
@@ -63,6 +65,7 @@ export default {
       },
 
       MotivChartData: {
+        
         labels: ["快晴", "晴れ", "曇り", "雨", "大雨"],
 
         datasets: [
@@ -83,6 +86,7 @@ export default {
       },
 
       PerfoChartData: {
+        
         labels: ["快晴", "晴れ", "曇り", "雨", "大雨"],
 
         datasets: [
@@ -120,14 +124,19 @@ export default {
         this.ConChartData.datasets[0].data = this.convertChartData(
           response.data.condition
         ),
+        
+        
 
         this.MotivChartData.datasets[0].data = this.convertChartData(
           response.data.motivation
         ),
+          
         this.PerfoChartData.datasets[0].data = this.convertChartData(
             response.data.performance
+          
         );
         this.isGetData = true;
+        
       
       })
       .catch((e) => {

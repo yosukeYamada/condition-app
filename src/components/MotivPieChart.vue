@@ -4,11 +4,13 @@ import { Doughnut } from "vue-chartjs";
 export default {
   extends: Doughnut,
   props: ["MotivChartData", "isGetData"],
-  // watch: {
-  //   isGetData: function() {
-  //     this.renderChart(this.MotivChartData, this.options);
-  //   },
-  // },
+ watch: {
+    isGetData: function() {
+      this.renderChart(this.MotivChartData, this.options);
+    },
+  },
+
+
   data() {
     return {
       options: {

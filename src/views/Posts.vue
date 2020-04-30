@@ -1,8 +1,6 @@
 <template>
   <div id="posts">
-    <div id="content">
       <Posts />
-    </div>
     <Menubotton id="Menubotton"></Menubotton>
     <AdminSideNav></AdminSideNav>
 
@@ -11,7 +9,7 @@
 </template>
 
 <script>
-import Posts from "../components/Posts";
+import Posts from "@/components/daily-post/Posts.vue";
 import AdminSideNav from "../components/AdminSideNav"
 import Menubotton from "../components/Menubotton";
 
@@ -24,8 +22,3 @@ export default {
 };
 </script>
 
-<style>
-#content {
-  text-align: center;
-}
-</style>

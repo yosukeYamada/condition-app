@@ -1,18 +1,22 @@
 <template>
   <div>
+    <Menubotton id="Menubotton"></Menubotton>
+    <AdminSideNav></AdminSideNav>
     <EmployeeList />
-    <AdminSideMenu />
+    
   </div>
 </template>
 
 <script>
 import EmployeeList from "../components/EmployeeList.vue";
-import AdminSideMenu from "../views/AdminSideMenu";
+import Menubotton from "../components/Menubotton";
+import AdminSideNav from "../components/AdminSideNav";
 
 export default {
   components: {
     EmployeeList,
-    AdminSideMenu
+    Menubotton,
+    AdminSideNav
   }
 };
 </script>

@@ -1,18 +1,21 @@
 <template>
   <div>
+    <Menubotton id="Menubotton"></Menubotton>
     <AdminSetting />
-    <AdminSideMenu />
+    <AdminSideNav />
   </div>
 </template>
 
 <script>
 import AdminSetting from "../components/AdminSetting";
-import AdminSideMenu from "../views/AdminSideMenu";
+import AdminSideNav from "../components/AdminSideNav";
+import Menubotton from "../components/Menubotton";
 
 export default {
   components: {
     AdminSetting,
-    AdminSideMenu
+    AdminSideNav,
+    Menubotton
   }
 };
 </script>

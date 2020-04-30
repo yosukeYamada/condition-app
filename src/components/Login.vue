@@ -5,7 +5,7 @@
     </div>
       
     <div v-show="!this.$store.state.loading">
-      <div id="login">
+      <div id="content">
         <v-container text-cener>
           <h1>ログイン画面</h1>
           <p>Applicationをご利用の方は、Googleアカウントでログインしてください</p>

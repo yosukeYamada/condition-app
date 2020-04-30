@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="content">
     <h1>集計グラフ</h1>
 
     <div>日付選択式</div>

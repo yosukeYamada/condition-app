@@ -12,6 +12,7 @@ export default new Vuex.Store({
     loading: true,
     aggregates: [],
     user: [],
+    dailyPostList: [],
   },
   mutations: {
     setLoginUser(state, user) {
@@ -31,6 +32,9 @@ export default new Vuex.Store({
     },
     setUser(state, user) {
       state.user = user;
+    },
+    getUserMotivations(state, getUserMotivations) {
+      state.dailyPostList = getUserMotivations;
     },
   },
   actions: {
@@ -53,11 +57,14 @@ export default new Vuex.Store({
     setLoadings({ commit }) {
       commit("setLoadings");
     },
-    getUserMotivations: function({ commit }) {
-      return axios
-        .post("http://localhost:8080/motivations", { userId: this.user.userId })
+    setUser({ commit }, user) {
+      commit("setUser", user);
+    },
+    getUserMotivations: function ({ commit }) {
+      axios
+        .post("http://localhost:8080/motivations", { userId: this.user })
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
           commit("getUserMotivations", response.data);
         });
     },

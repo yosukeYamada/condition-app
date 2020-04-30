@@ -72,7 +72,6 @@ export default new Vuex.Store({
       axios
         .get("http://localhost:8080/getAggregateByDay?date=2020/04/27")
         .then((response) => {
-          console.log(response.data);
           commit("setAggregate", response.data);
         })
         .catch((e) => {

@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div v-show="this.$store.state.loading" class="loading">
-      Loading...
-    </div>
+    <div v-show="this.$store.state.loading" class="loading">Loading...</div>
 
     <div v-show="!this.$store.state.loading">
       <div id="content">
@@ -20,57 +18,68 @@
 </template>
 
 <script>
-import axios from 'axios'
-import firebase from 'firebase/app'
-import { mapActions } from 'vuex'
+import axios from "axios";
+import firebase from "firebase/app";
+import { mapActions } from "vuex";
 
-  export default{
-    data(){
-          return{
-              name: "Login",
-          }
-      },
-      methods: {
-        ...mapActions(['login', 'setLoginUser', 'deleteLoginUser', 'setLoading', 'setLoadings'])
-      },
-      created () {
-        firebase.auth().onAuthStateChanged(user => {
-        this.setLoading()
-          if (user) {
-            this.setLoginUser(user)
-            axios.post('http://localhost:8080/mail/findByMailAndAuthority', {mail: firebase.auth().currentUser.email})
-            .then(response => {
-              if(response.data.user.authority == 0) {
-                console.log('新規')
-                this.$router.push('/RegisterUser')
-              } else if(response.data.user.authority == 1){
-                console.log('管理者')
-                this.$router.push('/AdminHome')
-              } else if(response.data.user.authority == 2){
-                console.log('従業員')
-                this.$router.push('/EmployeeHome')
-              }
-            })
-            this.setLoadings()
-          } else {
-            this.$router.push('/')
-            this.deleteLoginUser()
-          }
-        })
-      },
+export default {
+  data() {
+    return {
+      name: "Login"
+    };
+  },
+  methods: {
+    ...mapActions([
+      "login",
+      "setLoginUser",
+      "deleteLoginUser",
+      "setLoading",
+      "setLoadings"
+    ])
+  },
+  created({ commit }) {
+    firebase.auth().onAuthStateChanged(user => {
+      this.setLoading();
+      if (user) {
+        this.setLoginUser(user);
+        axios
+          .post("http://localhost:8080/mail/findByMailAndAuthority", {
+            mail: firebase.auth().currentUser.email
+          })
+          .then(response => {
+            if (response.data.user.authority == 0) {
+              console.log("新規");
+              this.$router.push("/RegisterUser");
+            } else if (response.data.user.authority == 1) {
+              console.log("管理者");
+              commit("setUser", response.data.user.userId);
+              this.$router.push("/AdminHome");
+            } else if (response.data.user.authority == 2) {
+              console.log("従業員");
+              commit("setUser", response.data.user.userId);
+              this.$router.push("/EmployeeHome");
+            }
+          });
+        this.setLoadings();
+      } else {
+        this.$router.push("/");
+        this.deleteLoginUser();
+      }
+    });
   }
+};
 </script>
 
 <style>
-.loading{
-    padding: 0px;               /* 余白指定 */
-    top:  0;                     /* 位置指定 */
-    bottom:  0;                  /* 位置指定 */
-    left:  0;                    /* 位置指定 */
-    position: absolute;
-    margin:auto;
-    text-align: center;
-    width:100%;
-    height :110px;
+.loading {
+  padding: 0px; /* 余白指定 */
+  top: 0; /* 位置指定 */
+  bottom: 0; /* 位置指定 */
+  left: 0; /* 位置指定 */
+  position: absolute;
+  margin: auto;
+  text-align: center;
+  width: 100%;
+  height: 110px;
 }
 </style>

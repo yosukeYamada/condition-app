@@ -11,6 +11,7 @@ export default new Vuex.Store({
     mail: "",
     loading: true,
     aggregates: [],
+    user: [],
   },
   mutations: {
     setLoginUser(state, user) {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     setLoadings(state) {
       state.loading = true;
+    },
+    setUser(state, user) {
+      state.user = user;
     },
   },
   actions: {
@@ -49,7 +53,14 @@ export default new Vuex.Store({
     setLoadings({ commit }) {
       commit("setLoadings");
     },
-
+    getUserMotivations: function({ commit }) {
+      return axios
+        .post("http://localhost:8080/motivations", { userId: this.user.userId })
+        .then((response) => {
+          console.log(response);
+          commit("getUserMotivations", response.data);
+        });
+    },
     getAggregate: function({ commit }) {
       axios
         .get("http://localhost:8080/getAggregateByDay?date=2020/04/27")

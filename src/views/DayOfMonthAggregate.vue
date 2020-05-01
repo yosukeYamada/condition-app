@@ -5,7 +5,7 @@
 
 <script>
  import ConBarChart from "../components/ConBarChart.vue";
-
+ import axios from "axios";
  export default{
      components:{
          ConBarChart
@@ -14,11 +14,12 @@
 
      data(){
          return{
+             isGetData: false,
              ConChartData:{
-                 labels:[],
+                 labels: ['January', 'February', 'March', 'April', 'May'],
                  datasets:[
                      {
-                         label: 'Sample1',
+                         label: 'コンディション',
               data: [28, 20, 30, 40, 50],
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -45,6 +46,35 @@
 
          }
      }
+ },
+
+ mounted(){
+     axios.get('http://localhost:8080/getAggregateByMonth?date=2020/04/27')
+     .then((response)=>{
+         (this.ConChartData.datasets[0].data = this.convertChartData(
+             response.data.condition
+         ))
+         this.isGetData = true;
+         console.log(response);
+     })
+     .catch((e) =>{
+         alert(e);
+     });
+     
+ },
+ methods:{
+     convertChartData(responseData){
+         var resultArray = [];
+         resultArray.push(responseData.clearCount);
+         resultArray.push(responseData.sunnyCount);
+         resultArray.push(responseData.rainyCount);
+         resultArray.push(responseData.rainyCount);
+         resultArray.push(responseData.stormyCount);
+
+         return resultArray;
+    
+     }
+
  }
  }
 

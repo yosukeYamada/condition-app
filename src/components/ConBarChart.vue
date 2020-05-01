@@ -3,9 +3,14 @@ import { Bar } from 'vue-chartjs'
 
 export default{
     extends: Bar,
-    // props: ['ConBardata', 'options'],
+    props: ['ConChartData', 'options','isGetData'],
+    watch: {
+    isGetData: function() {
+      this.renderChart(this.ConChartData, this.options);
+    },
+  },
     mounted (){
-        this.renderChart(this.data,this.options)
+        this.renderChart(this.ConChartData,this.options)
     }
 
 

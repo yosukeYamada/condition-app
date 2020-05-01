@@ -45,14 +45,6 @@
               </div>
             </div>
             <div>
-              <label>パスワード:</label>
-              <input v-model="password"/>
-            </div>
-            <div>
-              <label>確認用パスワード:</label>
-              <input v-model="confirmationPassword"/>
-            </div>
-            <div>
               <label>部門:</label>
               <select v-model="depId">
                 <option>-</option>
@@ -67,7 +59,6 @@
             </div> -->
           </fieldset>
         </form>
-            <button v-on:click="apiTest()">APIテスト送信</button><br>
             <button v-on:click="registerUser()">登録</button>
       </div>
     </div>
@@ -80,26 +71,16 @@ export default {
   name:"RegisterUser",
   data(){
     return{
-      sampleData:"テストデータ",
       userName:null,
       userNameKana:null,
       mailAddress:null,
       hireYear:null,
       hireMonth:null,
-      password:null,
-      confirmationPassword:null,
       depId:null,
       authorityId:null
     }
   },
   methods:{
-    apiTest(){
-      console.log(this.sampleData)
-      axios.post("/api/test",{testMessage:this.sampleData})
-      .then(res=>{
-        console.log(res.data)
-      })
-    },
     registerUser(){
       this.authorityId =1;
       axios.post("/api/user/registerUser",{
@@ -109,8 +90,6 @@ export default {
         hireYear:this.hireYear,
         hireMonth:this.hireMonth,
         mailAddress:this.mailAddress,
-        password:this.password,
-        confirmationPassword:this.confirmationPassword,
         authorityId:this.authorityId
       })
       .then(response=>{

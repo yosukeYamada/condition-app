@@ -14,12 +14,12 @@
 
      data(){
          return{
-             isGetData: false,
+            //  isGetData: false,
              ConChartData:{
                  labels: ['January', 'February', 'March', 'April', 'May'],
                  datasets:[
                      {
-                         label: 'コンディション',
+              label: 'コンディション',
               data: [28, 20, 30, 40, 50],
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -51,27 +51,51 @@
  mounted(){
      axios.get('http://localhost:8080/getAggregateByMonth?date=2020/04/27')
      .then((response)=>{
+        //   console.log(response.data);
          (this.ConChartData.datasets[0].data = this.convertChartData(
-             response.data.condition
+             response.data
          ))
-         this.isGetData = true;
-         console.log(response);
+        //  this.isGetData = true;
      })
      .catch((e) =>{
          alert(e);
      });
      
+     
  },
  methods:{
      convertChartData(responseData){
-         var resultArray = [];
-         resultArray.push(responseData.clearCount);
-         resultArray.push(responseData.sunnyCount);
-         resultArray.push(responseData.rainyCount);
-         resultArray.push(responseData.rainyCount);
-         resultArray.push(responseData.stormyCount);
+         console.log(typeof responseData)
+         var dateArray =[]
+        //  var scoreArray=[]
+         for(let key in responseData){
+        
+             dateArray.push(key)
+         }
+         console.log(dateArray)
 
-         return resultArray;
+         responseData.map(elem=>{
+             elem.key
+         })
+         
+
+
+
+        //  var keys = responseData.keys();
+        //  console.log(keys)
+
+      
+           
+      
+
+    //      var resultArray = [];
+    //      resultArray.push(responseData.clearCount);
+    //      resultArray.push(responseData.sunnyCount);
+    //      resultArray.push(responseData.rainyCount);
+    //      resultArray.push(responseData.rainyCount);
+    //      resultArray.push(responseData.stormyCount);
+
+    //      return resultArray;
     
      }
 

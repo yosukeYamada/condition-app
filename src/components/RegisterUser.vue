@@ -29,15 +29,19 @@
                   <option value="2020">2020</option>
                 </select>年
                 <select name="month" v-model="hireMonth">
-                  <option value>-</option>
-                  <option value="1">アプリエンジニア</option>
-                  <option value="2">クラウドエンジニア</option>
-                  <option value="3">機械学習エンジニア</option>
-                  <option value="4">内勤</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
                 </select>
-              </div>
-              <div>
-                <v-btn @click="addUser">登録</v-btn>
               </div>
             </div>
             <div>
@@ -58,9 +62,9 @@
                 <option value="4">内勤</option>
               </select>
             </div>
-            <div>
+            <!-- <div>
               <router-link to="/AdminHome">登録</router-link>
-            </div>
+            </div> -->
           </fieldset>
         </form>
             <button v-on:click="apiTest()">APIテスト送信</button><br>
@@ -112,6 +116,7 @@ export default {
       .then(response=>{
         console.log(response)
         console.log(response.data)
+        this.$router.push("/AdminHome")
       })
     }
   }

@@ -11,13 +11,12 @@ export default new Vuex.Store({
     mail: "",
     loading: true,
     aggregates: [],
-    userId: "",
-    dailyPostList: [],
     firebase_user: null
   },
   mutations: {
     setLoginUser(state, user) {
       state.login_user = user;
+      // console.log(state.login_user)
     },
     setFirebaseUser(state, user) {
       state.firebase_user = user;
@@ -33,13 +32,6 @@ export default new Vuex.Store({
     },
     setLoadings(state) {
       state.loading = true;
-    },
-    setUser(state, user) {
-      state.userId = user;
-    },
-    getUserMotivations(state, getUserMotivations) {
-      state.dailyPostList = getUserMotivations;
-      console.log(state.dailyPostList)
     },
   },
   actions: {
@@ -64,17 +56,6 @@ export default new Vuex.Store({
     },
     setLoadings({ commit }) {
       commit("setLoadings");
-    },
-    setUser({ commit }, user) {
-      commit("setUser", user);
-    },
-    getUserMotivations: function ({ commit }) {
-      axios
-        .post("http://localhost:8080/motivations", { userId: this.state.userId })
-        .then((response) => {
-          console.log(response.data);
-          commit("getUserMotivations", response.data);
-        });
     },
     getAggregate: function({ commit }) {
       axios

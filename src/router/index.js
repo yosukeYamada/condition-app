@@ -8,6 +8,7 @@ import AdminHome from "../views/AdminHome.vue";
 import Posts from "../views/Posts.vue";
 import MotivHistory from "../views/MotivHistory";
 import Aggregate from "../views/Aggregate";
+import DayOfMonthAggregate from "../views/DayOfMonthAggregate";
 import EmployeeList from "../views/EmployeeList";
 import AdminSetting from "../views/AdminSetting";
 
@@ -51,6 +52,12 @@ const routes = [
     component: Aggregate,
   },
   {
+    path:"/DayOfMonthAggregate",
+    name: "DayOfMonthAggregate",
+    component : DayOfMonthAggregate
+
+  },
+  {
     path: "/EmployeeList",
     name: "EmployeeList",
     component: EmployeeList,
@@ -60,6 +67,8 @@ const routes = [
     name: "AdminSetting",
     component: AdminSetting,
   },
+
+  
 ];
 
 const router = new VueRouter({

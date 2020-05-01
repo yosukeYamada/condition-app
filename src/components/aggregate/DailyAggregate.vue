@@ -1,36 +1,32 @@
 <template>
   <div id="content">
     <h2 class="mb-4">集計グラフ</h2>
-    <div>表示する日付を選択してください</div>
     <b-row>
       <b-col>
-        <b-form-select
-          v-model="selectedYear"
-          :options="yearOptions"
-        ></b-form-select>
-      </b-col>
-      <b-col>
-        <b-form-select
-          v-model="selectedMonth"
-          :options="monthOptions"
-        ></b-form-select>
+        {{ selectedDate }}
+        <label for="example-datepicker">表示する日付を選択してください</label>
+        <b-form-datepicker
+          id="example-datepicker"
+          v-model="selectedDate"
+          class="mb-2"
+        ></b-form-datepicker>
       </b-col>
     </b-row>
     <b-row>
-      <b-col sm="4">
-        <b-card>
-          <ConPieChart
-            :con-chart-data="ConChartData"
-            :isGetData="isGetData"
-          ></ConPieChart>
-        </b-card>
-      </b-col>
       <b-col sm="4">
         <b-card>
           <MotivPieChart
             :motiv-chart-data="MotivChartData"
             :is-get-data="isGetData"
           ></MotivPieChart>
+        </b-card>
+      </b-col>
+      <b-col sm="4">
+        <b-card>
+          <ConPieChart
+            :con-chart-data="ConChartData"
+            :isGetData="isGetData"
+          ></ConPieChart>
         </b-card>
       </b-col>
       <b-col sm="4">
@@ -58,31 +54,7 @@ export default {
   },
   data() {
     return {
-      selectedYear: null,
-      yearOptions: [
-        { value: null, text: "年を選択", disabled: true },
-        { value: "2020", text: "2020" },
-        { value: "2021", text: "2021" },
-        { value: "2022", text: "2022" },
-        { value: "2023", text: "2023" },
-        { value: "2024", text: "2024" },
-      ],
-      selectedMonth: null,
-      monthOptions: [
-        { value: null, text: "月を選択", disabled: true },
-        { value: "01", text: "01" },
-        { value: "02", text: "02" },
-        { value: "03", text: "03" },
-        { value: "04", text: "04" },
-        { value: "05", text: "05" },
-        { value: "06", text: "06" },
-        { value: "07", text: "07" },
-        { value: "08", text: "08" },
-        { value: "09", text: "09" },
-        { value: "10", text: "10" },
-        { value: "11", text: "11" },
-        { value: "12", text: "12" },
-      ],
+      selectedDate: "",
       isGetData: false,
       ConChartData: {
         labels: ["快晴", "晴れ", "曇り", "雨", "大雨"],

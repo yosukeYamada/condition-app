@@ -67,16 +67,18 @@
      convertChartData(responseData){
          console.log(typeof responseData)
          var dateArray =[]
-        //  var scoreArray=[]
+         var scoreArray=[]
          for(let key in responseData){
         
              dateArray.push(key)
          }
          console.log(dateArray)
 
-         responseData.map(elem=>{
-             elem.key
-         })
+         scoreArray .push(dateArray[0])
+
+
+        
+         
          
 
 

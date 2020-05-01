@@ -1,6 +1,7 @@
 <template>
   <div id="registerUser">
     <RegisterUser />
+    
   </div>
 </template>
 

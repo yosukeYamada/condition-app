@@ -13,7 +13,9 @@ export default new Vuex.Store({
     aggregates: [],
     userId: "",
     dailyPostList: [],
-    firebase_user: null
+    firebase_user: null,
+
+    authority:""
   },
   mutations: {
     setLoginUser(state, user) {
@@ -41,6 +43,9 @@ export default new Vuex.Store({
       state.dailyPostList = getUserMotivations;
       console.log(state.dailyPostList)
     },
+    setAuthority(state,authority){
+      state.authority = authority;
+    }
   },
   actions: {
     login() {
@@ -67,6 +72,9 @@ export default new Vuex.Store({
     },
     setUser({ commit }, user) {
       commit("setUser", user);
+    },
+    setAuthority({commit},authority){
+      commit("setAuthority",authority);
     },
     getUserMotivations: function ({ commit }) {
       axios

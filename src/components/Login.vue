@@ -45,6 +45,7 @@ export default {
       this.setLoading();
       if (user) {
         this.setFirebaseUser(user)
+        
         axios
           .post("http://localhost:8080/mail/findByMailAndAuthority", {
             mail: firebase.auth().currentUser.email
@@ -55,11 +56,15 @@ export default {
             } else if (response.data.user.authority == 1) {
               this.setLoginUser(response.data.user);
               this.$store.dispatch("setUser", response.data.user.userId);
-              this.$router.push("/AdminHome");
+
+              //authorityの値をstateに格納
+              this.$store.dispatch("setAuthority",response.data.user.authority);
+
+              this.$router.push("/Home");
             } else if (response.data.user.authority == 2) {
               this.setLoginUser(response.data.user);
               this.$store.dispatch("setUser", response.data.user.userId);
-              this.$router.push("/EmployeeHome");
+              this.$router.push("/Home");
             } else if (response.data.user.authority == 3) {
               this.deleteLoginUser();
               firebase.auth().signOut();

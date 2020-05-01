@@ -6,19 +6,19 @@
         <router-view />
       </b-row>
     </b-container>
-    <AdminSideNav></AdminSideNav>
+    <SideMenu></SideMenu>
   </v-app>
 </template>
 
 <script>
 import Header from "@/components/common/Header";
-import AdminSideNav from "@/components/AdminSideNav";
+import SideMenu from "@/components/SideMenu";
 
 export default {
   name: "App",
   components: {
     Header,
-    AdminSideNav
+    SideMenu
   },
   data: () => ({}),
 };

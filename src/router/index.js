@@ -1,16 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-
 import Login from "../views/Login.vue";
 import RegisterUser from "../views/RegisterUser.vue";
-import EmployeeHome from "../views/EmployeeHome.vue";
-import AdminHome from "../views/AdminHome.vue";
 import Posts from "../views/Posts.vue";
 import MotivHistory from "../views/MotivHistory";
 import Aggregate from "../views/Aggregate";
 import DayOfMonthAggregate from "../views/DayOfMonthAggregate";
 import EmployeeList from "../views/EmployeeList";
 import AdminSetting from "../views/AdminSetting";
+import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
 
@@ -25,15 +23,12 @@ const routes = [
     name: "RegisterUser",
     component: RegisterUser,
   },
+
   {
-    path: "/EmployeeHome",
-    name: "EmployeeHome",
-    component: EmployeeHome,
-  },
-  {
-    path: "/AdminHome",
-    name: "AdminHome",
-    component: AdminHome,
+    path:"/Home",
+    name:"Home",
+    component:Home,
+
   },
   {
     path: "/Posts",
@@ -66,6 +61,7 @@ const routes = [
     name: "AdminSetting",
     component: AdminSetting,
   },
+  
 
   
 ];

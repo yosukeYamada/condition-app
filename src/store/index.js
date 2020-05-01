@@ -16,10 +16,12 @@ export default new Vuex.Store({
     firebase_user: null,
 
     authority:""
+
   },
   mutations: {
     setLoginUser(state, user) {
       state.login_user = user;
+      // console.log(state.login_user)
     },
     setFirebaseUser(state, user) {
       state.firebase_user = user;
@@ -36,6 +38,7 @@ export default new Vuex.Store({
     setLoadings(state) {
       state.loading = true;
     },
+
     setUser(state, user) {
       state.userId = user;
     },
@@ -46,6 +49,7 @@ export default new Vuex.Store({
     setAuthority(state,authority){
       state.authority = authority;
     }
+
   },
   actions: {
     login() {
@@ -70,6 +74,7 @@ export default new Vuex.Store({
     setLoadings({ commit }) {
       commit("setLoadings");
     },
+
     setUser({ commit }, user) {
       commit("setUser", user);
     },
@@ -84,6 +89,7 @@ export default new Vuex.Store({
           commit("getUserMotivations", response.data);
         });
     },
+
     getAggregate: function({ commit }) {
       axios
         .get("http://localhost:8080/getAggregateByDay?date=2020/04/27")

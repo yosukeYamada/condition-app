@@ -54,7 +54,8 @@ export default {
             if (response.data.user.authority == 0) {
               this.$router.push("/RegisterUser");
             } else if (response.data.user.authority == 1) {
-              this.setLoginUser(response.data.user);
+
+              this.setLoginUser(response.data);
               this.$store.dispatch("setUser", response.data.user.userId);
 
               //authorityの値をstateに格納
@@ -65,6 +66,7 @@ export default {
               this.setLoginUser(response.data.user);
               this.$store.dispatch("setUser", response.data.user.userId);
               this.$router.push("/Home");
+
             } else if (response.data.user.authority == 3) {
               this.deleteLoginUser();
               firebase.auth().signOut();

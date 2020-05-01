@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app style="background-color:#f5f5f5">
     <Header class="mb-5" />
     <b-container>
       <b-row align-v="center" align-h="center">

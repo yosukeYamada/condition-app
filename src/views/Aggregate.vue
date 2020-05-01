@@ -1,41 +1,35 @@
 <template>
   <div>
-    <Menubotton id="Menubotton"></Menubotton>
     <Aggregate />
     <ConPieChart
       class="Pie"
       :con-chart-data="ConChartData"
       :isGetData="isGetData"
-    ></ConPieChart><br>
+    ></ConPieChart
+    ><br />
     <MotivPieChart
       class="Pie"
       :motiv-chart-data="MotivChartData"
       :is-get-data="isGetData"
     ></MotivPieChart>
-    <PerfoPieChart 
+    <PerfoPieChart
       class="Pie"
       :perfo-chart-data="PerfoChartData"
       :is-get-data="isGetData"
-      ></PerfoPieChart> 
-    
-    <AdminSideNav />
+    ></PerfoPieChart>
   </div>
 </template>
 
 <script>
-import Aggregate from "../components/Aggregate.vue";
-import AdminSideNav from "../components/AdminSideNav.vue";
+import Aggregate from "@/components/Aggregate.vue";
 import axios from "axios";
-import Menubotton from "../components/Menubotton";
-import ConPieChart from "../components/ConPieChart";
-import MotivPieChart from "../components/MotivPieChart";
-import PerfoPieChart from "../components/PerfoPieChart";
+import ConPieChart from "@/components/ConPieChart";
+import MotivPieChart from "@/components/MotivPieChart";
+import PerfoPieChart from "@/components/PerfoPieChart";
 
 export default {
   components: {
     Aggregate,
-    AdminSideNav,
-    Menubotton,
     ConPieChart,
     MotivPieChart,
     PerfoPieChart,
@@ -65,7 +59,6 @@ export default {
       },
 
       MotivChartData: {
-        
         labels: ["快晴", "晴れ", "曇り", "雨", "大雨"],
 
         datasets: [
@@ -86,7 +79,6 @@ export default {
       },
 
       PerfoChartData: {
-        
         labels: ["快晴", "晴れ", "曇り", "雨", "大雨"],
 
         datasets: [
@@ -114,30 +106,22 @@ export default {
       //     },
       //   },
       // },
-      
-    }
+    };
   },
   mounted() {
     axios
       .get("http://localhost:8080/getAggregateByDay?date=2020/04/27")
       .then((response) => {
-        this.ConChartData.datasets[0].data = this.convertChartData(
+        (this.ConChartData.datasets[0].data = this.convertChartData(
           response.data.condition
-        ),
-        
-        
-
-        this.MotivChartData.datasets[0].data = this.convertChartData(
-          response.data.motivation
-        ),
-          
-        this.PerfoChartData.datasets[0].data = this.convertChartData(
+        )),
+          (this.MotivChartData.datasets[0].data = this.convertChartData(
+            response.data.motivation
+          )),
+          (this.PerfoChartData.datasets[0].data = this.convertChartData(
             response.data.performance
-          
-        );
+          ));
         this.isGetData = true;
-        
-      
       })
       .catch((e) => {
         alert(e);
@@ -151,8 +135,8 @@ export default {
       resultArray.push(responseData.cloudyCount);
       resultArray.push(responseData.rainyCount);
       resultArray.push(responseData.stormyCount);
-      console.log(responseData)
-   
+      console.log(responseData);
+
       return resultArray;
     },
   },

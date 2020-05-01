@@ -36,9 +36,6 @@
                   <option value="4">内勤</option>
                 </select>
               </div>
-              <div>
-                <v-btn @click="addUser">登録</v-btn>
-              </div>
             </div>
             <div>
               <label>パスワード:</label>

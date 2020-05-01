@@ -29,21 +29,20 @@
                   <option value="2020">2020</option>
                 </select>年
                 <select name="month" v-model="hireMonth">
-                  <option value>-</option>
-                  <option value="1">アプリエンジニア</option>
-                  <option value="2">クラウドエンジニア</option>
-                  <option value="3">機械学習エンジニア</option>
-                  <option value="4">内勤</option>
-                </select>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>月
               </div>
-            </div>
-            <div>
-              <label>パスワード:</label>
-              <input v-model="password"/>
-            </div>
-            <div>
-              <label>確認用パスワード:</label>
-              <input v-model="confirmationPassword"/>
             </div>
             <div>
               <label>部門:</label>
@@ -55,12 +54,11 @@
                 <option value="4">内勤</option>
               </select>
             </div>
-            <div>
+            <!-- <div>
               <router-link to="/AdminHome">登録</router-link>
-            </div>
+            </div> -->
           </fieldset>
         </form>
-            <button v-on:click="apiTest()">APIテスト送信</button><br>
             <button v-on:click="registerUser()">登録</button>
       </div>
     </div>
@@ -73,26 +71,16 @@ export default {
   name:"RegisterUser",
   data(){
     return{
-      sampleData:"テストデータ",
       userName:null,
       userNameKana:null,
       mailAddress:null,
       hireYear:null,
       hireMonth:null,
-      password:null,
-      confirmationPassword:null,
       depId:null,
       authorityId:null
     }
   },
   methods:{
-    apiTest(){
-      console.log(this.sampleData)
-      axios.post("/api/test",{testMessage:this.sampleData})
-      .then(res=>{
-        console.log(res.data)
-      })
-    },
     registerUser(){
       this.authorityId =1;
       axios.post("/api/user/registerUser",{
@@ -102,13 +90,12 @@ export default {
         hireYear:this.hireYear,
         hireMonth:this.hireMonth,
         mailAddress:this.mailAddress,
-        password:this.password,
-        confirmationPassword:this.confirmationPassword,
         authorityId:this.authorityId
       })
       .then(response=>{
         console.log(response)
         console.log(response.data)
+        this.$router.push("/AdminHome")
       })
     }
   }

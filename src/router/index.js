@@ -59,6 +59,8 @@ const routes = [
     name: "AdminSetting",
     component: AdminSetting,
   },
+
+  
 ];
 
 const router = new VueRouter({

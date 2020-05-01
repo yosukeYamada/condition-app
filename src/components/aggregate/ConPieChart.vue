@@ -3,14 +3,12 @@ import { Doughnut } from "vue-chartjs";
 
 export default {
   extends: Doughnut,
-  props: ["MotivChartData", "isGetData"],
- watch: {
+  props: ["ConChartData", "isGetData"],
+  watch: {
     isGetData: function() {
-      this.renderChart(this.MotivChartData, this.options);
+      this.renderChart(this.ConChartData, this.options);
     },
   },
-
-
   data() {
     return {
       options: {
@@ -24,7 +22,6 @@ export default {
       },
     };
   },
-
   mounted() {
     this.addPlugin({
       afterDraw(chart) {
@@ -34,7 +31,6 @@ export default {
           dataset.data.forEach((element) => {
             dataSum += element;
           });
-
           // 中央にテキスト表示
           let fontSize = 15;
           let fontStyle = "normal";
@@ -48,7 +44,7 @@ export default {
 
           // position(第二, 第三引数は適宜調整)
           ctx.fillText(
-            "本日のモチベーション",
+            "本日のコンディション",
             chart.width / 2 - 30,
             chart.height / 2
           );
@@ -102,11 +98,7 @@ export default {
         });
       },
     });
-
-    this.renderChart(this.MotivChartData, this.options);
-    console.log("Motiv");
+    this.renderChart(this.ConChartData, this.options);
   },
 };
 </script>
-
-

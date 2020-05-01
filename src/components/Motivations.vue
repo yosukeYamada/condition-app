@@ -1,45 +1,36 @@
 <template>
   <div id="content">
     <h1>モチベ履歴</h1>
-    <table>
+    <table border="1">
       <tr>
         <th>日付</th>
         <th>体調</th>
         <th>やる気</th>
+        <th>成果</th>
         <th>その他</th>
       </tr>
-      <tr>
-        <td>2020/4/24</td>
-        <td>☼</td>
-        <td>☼</td>
-        <td>頑張る</td>
-      </tr>
-      <tr>
-        <td>2020/4/23</td>
-        <td>☂</td>
-        <td>☼</td>
-        <td>不調</td>
-      </tr>
-      <tr>
-        <td>2020/4/22</td>
-        <td>🌥</td>
-        <td>🌥</td>
-        <td>特になし</td>
-      </tr>
-      <tr>
-        <td>2020/4/21</td>
-        <td>☼</td>
-        <td>☼</td>
-        <td>元気</td>
+      <tr v-for="dailypost in this.$store.state.dailyPostList" :key="dailypost.dailypostId">
+        <td>{{ dailypost.date | moment }}</td>
+        <td>{{ dailypost.postedCondition.condition.conditionName }}</td>
+        <td>{{ dailypost.postedMotivation.motivation.motivationName }}</td>
+        <td>{{ dailypost.postedPerformance.performance.performanceName }}</td>
+        <td>{{ dailypost.postedComment.comment }}</td>
       </tr>
     </table>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   mounted() {
     this.$store.dispatch("getUserMotivations");
+    console.log(this.$store.state.dailyPostList)
+  },
+  filters: {
+    moment: function(date) {
+      return moment(date).format("YYYY-MM-DD")
+    }
   }
 };
 </script>

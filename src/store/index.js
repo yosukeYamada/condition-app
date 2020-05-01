@@ -39,6 +39,7 @@ export default new Vuex.Store({
     },
     getUserMotivations(state, getUserMotivations) {
       state.dailyPostList = getUserMotivations;
+      console.log(state.dailyPostList)
     },
   },
   actions: {

@@ -31,9 +31,7 @@ export default new Vuex.Store({
       state.loading = true;
     },
     setUser(state, user) {
-      console.log("mut : " + user)
       state.userId = user;
-      console.log("stateの情報 : " + state.userId)
     },
     getUserMotivations(state, getUserMotivations) {
       state.dailyPostList = getUserMotivations;

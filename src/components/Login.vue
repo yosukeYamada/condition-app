@@ -50,17 +50,11 @@ export default {
           })
           .then(response => {
             if (response.data.user.authority == 0) {
-              console.log("新規");
               this.$router.push("/RegisterUser");
             } else if (response.data.user.authority == 1) {
-              console.log("管理者");
-              this.$store.dispatch("setUser", response.user);
               this.$store.dispatch("setUser", response.data.user.userId);
               this.$router.push("/AdminHome");
-              console.log("情報 : " + response.data.user.userId)
             } else if (response.data.user.authority == 2) {
-              console.log("従業員");
-              console.log("情報 : " + response.data.user.userId)
               this.$store.dispatch("setUser", response.data.user.userId);
               this.$router.push("/EmployeeHome");
             } else if (response.data.user.authority == 3) {

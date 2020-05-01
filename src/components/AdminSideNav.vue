@@ -28,18 +28,12 @@
 </template>
 
 <script>
-
-    
-    
-
 import Logout from "@/components/Logout"
 // import Menubotton from "../components/Menubotton.vue";
 export default {
   components: {
-  
     Logout
     // Menubotton,
-
   },
 };
 </script>

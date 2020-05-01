@@ -5,6 +5,14 @@
 </template>
 <script>
 export default {
+  props: {
+    employeeList: Array,
+  },
+  watch: {
+    employeeList: function() {
+      this.items = this.employeeList;
+    },
+  },
   data() {
     return {
       fields: [
@@ -44,36 +52,11 @@ export default {
           sortable: true,
         },
       ],
-      items: [
-        {
-          name: "東 俊介",
-          dep: "アプリエンジニア",
-          hireDate: "2019/10",
-          motivation: "☼",
-          condition: "☂",
-          performance: "☼",
-          comment: "ラーメン食べたい。",
-        },
-        {
-          name: "飯田周平",
-          dep: "アプリエンジニア",
-          hireDate: "2019/10",
-          motivation: "☂",
-          condition: "☂",
-          performance: "☂",
-          comment: "今日はつらいです・・・。",
-        },
-        {
-          name: "森塚太郎",
-          dep: "クラウドエンジニア",
-          hireDate: "2019/10",
-          motivation: "☼",
-          condition: "☼",
-          performance: "☼",
-          comment: "絶好調！！！！！",
-        },
-      ],
+      items: [],
     };
+  },
+  mounted() {
+    this.items = this.employeeList;
   },
 };
 </script>

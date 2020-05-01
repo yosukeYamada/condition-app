@@ -1,31 +1,15 @@
 <template>
-  <div id="posts">
-    <div id="content">
-      <Posts />
-    </div>
-    <Menubotton id="Menubotton"></Menubotton>
-    <AdminSideNav></AdminSideNav>
-
-    
+  <div>
+    <DailyPostForm />
   </div>
 </template>
 
 <script>
-import Posts from "../components/Posts";
-import AdminSideNav from "../components/AdminSideNav"
-import Menubotton from "../components/Menubotton";
+import DailyPostForm from "@/components/daily-post/DailyPostForm.vue";
 
 export default {
   components: {
-    Posts,
-    AdminSideNav,
-    Menubotton
-  }
+    DailyPostForm,
+  },
 };
 </script>
-
-<style>
-#content {
-  text-align: center;
-}
-</style>

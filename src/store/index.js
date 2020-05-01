@@ -11,7 +11,8 @@ export default new Vuex.Store({
     mail: "",
     loading: true,
     aggregates: [],
-    user: [],
+    userId: "",
+    dailyPostList: [],
   },
   mutations: {
     setLoginUser(state, user) {
@@ -30,7 +31,10 @@ export default new Vuex.Store({
       state.loading = true;
     },
     setUser(state, user) {
-      state.user = user;
+      state.userId = user;
+    },
+    getUserMotivations(state, getUserMotivations) {
+      state.dailyPostList = getUserMotivations;
     },
   },
   actions: {
@@ -53,11 +57,14 @@ export default new Vuex.Store({
     setLoadings({ commit }) {
       commit("setLoadings");
     },
-    getUserMotivations: function({ commit }) {
-      return axios
-        .post("http://localhost:8080/motivations", { userId: this.user.userId })
+    setUser({ commit }, user) {
+      commit("setUser", user);
+    },
+    getUserMotivations: function ({ commit }) {
+      axios
+        .post("http://localhost:8080/motivations", { userId: this.state.userId })
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
           commit("getUserMotivations", response.data);
         });
     },
@@ -65,7 +72,6 @@ export default new Vuex.Store({
       axios
         .get("http://localhost:8080/getAggregateByDay?date=2020/04/27")
         .then((response) => {
-          console.log(response.data);
           commit("setAggregate", response.data);
         })
         .catch((e) => {

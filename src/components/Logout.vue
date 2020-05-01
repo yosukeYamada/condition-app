@@ -9,12 +9,14 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
-
+import firebase from "firebase/app";
 export default {
    methods: {
-        ...mapActions(['logout'])
+      logout() {
+        firebase.auth().signOut();
+        this.$router.push("/");
+      }
    },
    computed: {
     ...mapGetters(['userName', 'photoURL'])

@@ -3,14 +3,12 @@ import { Doughnut } from "vue-chartjs";
 
 export default {
   extends: Doughnut,
-  props: ["ConChartData", "isGetData"],
+  props: ["MotivChartData", "isGetData"],
   watch: {
     isGetData: function() {
-      this.renderChart(this.ConChartData, this.options);
+      this.renderChart(this.MotivChartData, this.options);
     },
   },
-
-
   data() {
     return {
       options: {
@@ -24,7 +22,6 @@ export default {
       },
     };
   },
-
   mounted() {
     this.addPlugin({
       afterDraw(chart) {
@@ -48,7 +45,7 @@ export default {
 
           // position(第二, 第三引数は適宜調整)
           ctx.fillText(
-            "本日のコンディション",
+            "本日のモチベーション",
             chart.width / 2 - 30,
             chart.height / 2
           );
@@ -102,10 +99,7 @@ export default {
         });
       },
     });
-
-    this.renderChart(this.ConChartData, this.options);
-    console.log("Con");
+    this.renderChart(this.MotivChartData, this.options);
   },
 };
 </script>
-

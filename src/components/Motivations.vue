@@ -9,7 +9,7 @@
         <th>成果</th>
         <th>その他</th>
       </tr>
-      <tr v-for="dailypost in this.$store.state.dailyPostList" :key="dailypost.dailypostId">
+      <tr v-for="dailypost in dailyPostList" :key="dailypost.dailypostId">
         <td>{{ dailypost.date | moment }}</td>
         <td>{{ dailypost.postedCondition.condition.conditionName }}</td>
         <td>{{ dailypost.postedMotivation.motivation.motivationName }}</td>
@@ -21,11 +21,16 @@
 </template>
 
 <script>
+// import axios from "axios";
 import moment from 'moment'
 export default {
+  data() {
+    return {
+      dailyPostList:[]
+    }
+  },
   mounted() {
-    this.$store.dispatch("getUserMotivations");
-    console.log(this.$store.state.dailyPostList)
+    this.dailyPostList = this.$store.state.login_user.user.dailyPost
   },
   filters: {
     moment: function(date) {

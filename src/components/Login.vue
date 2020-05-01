@@ -53,12 +53,10 @@ export default {
             if (response.data.user.authority == 0) {
               this.$router.push("/RegisterUser");
             } else if (response.data.user.authority == 1) {
-              this.setLoginUser(response.data.user);
-              this.$store.dispatch("setUser", response.data.user.userId);
+              this.setLoginUser(response.data);
               this.$router.push("/AdminHome");
             } else if (response.data.user.authority == 2) {
-              this.setLoginUser(response.data.user);
-              this.$store.dispatch("setUser", response.data.user.userId);
+              this.setLoginUser(response.data);
               this.$router.push("/EmployeeHome");
             } else if (response.data.user.authority == 3) {
               this.deleteLoginUser();

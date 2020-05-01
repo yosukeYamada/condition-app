@@ -13,10 +13,14 @@ export default new Vuex.Store({
     aggregates: [],
     userId: "",
     dailyPostList: [],
+    firebase_user: null
   },
   mutations: {
     setLoginUser(state, user) {
       state.login_user = user;
+    },
+    setFirebaseUser(state, user) {
+      state.firebase_user = user;
     },
     deleteLoginUser(state) {
       state.login_user = null;
@@ -44,6 +48,9 @@ export default new Vuex.Store({
     },
     setLoginUser({ commit }, user) {
       commit("setLoginUser", user);
+    },
+    setFirebaseUser({ commit }, user) {
+      commit("setFirebaseUser", user);
     },
     logout() {
       firebase.auth().signOut();
@@ -81,7 +88,7 @@ export default new Vuex.Store({
   },
   modules: {},
   getters: {
-    userName: (state) => (state.login_user ? state.login_user.displayName : ""),
-    photoURL: (state) => (state.login_user ? state.login_user.photoURL : ""),
+    userName: (state) => (state.login_user ? state.login_user.userName : ""),
+    photoURL: (state) => (state.firebase_user ? state.firebase_user.photoURL : ""),
   },
 });

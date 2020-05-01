@@ -34,6 +34,7 @@ export default {
     ...mapActions([
       "login",
       "setLoginUser",
+      "setFirebaseUser",
       "deleteLoginUser",
       "setLoading",
       "setLoadings"
@@ -43,7 +44,7 @@ export default {
     firebase.auth().onAuthStateChanged(user => {
       this.setLoading();
       if (user) {
-        this.setLoginUser(user);
+        this.setFirebaseUser(user)
         axios
           .post("http://localhost:8080/mail/findByMailAndAuthority", {
             mail: firebase.auth().currentUser.email
@@ -52,9 +53,11 @@ export default {
             if (response.data.user.authority == 0) {
               this.$router.push("/RegisterUser");
             } else if (response.data.user.authority == 1) {
+              this.setLoginUser(response.data.user);
               this.$store.dispatch("setUser", response.data.user.userId);
               this.$router.push("/AdminHome");
             } else if (response.data.user.authority == 2) {
+              this.setLoginUser(response.data.user);
               this.$store.dispatch("setUser", response.data.user.userId);
               this.$router.push("/EmployeeHome");
             } else if (response.data.user.authority == 3) {

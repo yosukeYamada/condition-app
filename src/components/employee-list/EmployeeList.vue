@@ -1,8 +1,32 @@
 <template>
-  <div>
-    <b-table striped hover :items="items" :fields="fields"></b-table>
-  </div>
+  <v-data-table :headers="headers" :items="items" class="elevation-1">
+    <template v-slot:item.motivation="{ item }">
+      <!-- <v-chip :color="getColor(item.calories)" dark>{{ item.calories }}</v-chip> -->
+      <v-fa
+        :icon="transferIcon(item.motivation)"
+        size="lg"
+        :style="transferColor(item.motivation)"
+      />
+    </template>
+    <template v-slot:item.condition="{ item }">
+      <!-- <v-chip :color="getColor(item.calories)" dark>{{ item.calories }}</v-chip> -->
+      <v-fa
+        :icon="transferIcon(item.condition)"
+        size="lg"
+        :style="transferColor(item.condition)"
+      />
+    </template>
+    <template v-slot:item.performance="{ item }">
+      <!-- <v-chip :color="getColor(item.calories)" dark>{{ item.calories }}</v-chip> -->
+      <v-fa
+        :icon="transferIcon(item.performance)"
+        size="lg"
+        :style="transferColor(item.performance)"
+      />
+    </template>
+  </v-data-table>
 </template>
+
 <script>
 export default {
   props: {
@@ -15,45 +39,77 @@ export default {
   },
   data() {
     return {
-      fields: [
+      headers: [
         {
-          key: "name",
-          label: "名前",
+          value: "name",
+          text: "名前",
           sortable: true,
         },
         {
-          key: "dep",
-          label: "部署名",
+          value: "dep",
+          text: "部署名",
           sortable: true,
         },
         {
-          key: "hireDate",
-          label: "入社月",
+          value: "hireDate",
+          text: "入社月",
           sortable: true,
         },
         {
-          key: "motivation",
-          label: "やる気",
+          value: "motivation",
+          text: "やる気",
           sortable: true,
         },
         {
-          key: "condition",
-          label: "体調",
+          value: "condition",
+          text: "体調",
           sortable: true,
         },
         {
-          key: "performance",
-          label: "成果",
+          value: "performance",
+          text: "成果",
           sortable: true,
         },
         {
-          key: "comment",
-          label: "コメント",
+          value: "comment",
+          text: "コメント",
           sortable: true,
         },
       ],
       items: [],
     };
+  },
+  methods: {
+    transferIcon(param) {
+      if (param === "快晴") {
+        return ["fas", "sun"];
+      } else if (param === "晴") {
+        return ["fas", "cloud-sun"];
+      } else if (param === "曇") {
+        return ["fas", "cloud"];
+      } else if (param === "雨") {
+        return ["fas", "cloud-rain"];
+      } else if (param === "嵐") {
+        return ["fas", "cloud-showers-heavy"];
+      } else {
+        return ["fas", "question"];
+      }
+    },
+    transferColor(param) {
+      if (param === "快晴") {
+        return { color: "#ea5550" };
+      } else if (param === "晴") {
+        return { color: "#f3981d" };
+      } else if (param === "曇") {
+        return { color: "#b2cbe4" };
+      } else if (param === "雨") {
+        return { color: "#68a4d9" };
+      } else if (param === "嵐") {
+        return { color: "#0075c2" };
+      } else {
+        return { color: "black" };
+      }
+    },
   },
   mounted() {
     this.items = this.employeeList;

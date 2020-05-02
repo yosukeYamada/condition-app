@@ -3,7 +3,7 @@
 
     <AdminHome v-show='authority==1'></AdminHome>
     <EmployeeHome v-show='authority!=1'></EmployeeHome><br>
-     {{authority}}
+     <!-- {{authority}} -->
   </div>
 </template>
 

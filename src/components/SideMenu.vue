@@ -11,7 +11,7 @@
             <p>モチベーション履歴</p>
           </router-link>
 
-          {{authority}}
+          <!-- {{authority}} -->
 
           
 

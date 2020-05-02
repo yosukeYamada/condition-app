@@ -30,6 +30,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$store.state.login_user.user.dailyPost)
     this.dailyPostList = this.$store.state.login_user.user.dailyPost
   },
   filters: {

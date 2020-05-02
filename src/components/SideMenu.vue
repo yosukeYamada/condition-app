@@ -23,7 +23,7 @@
           <router-link to="AdminSetting" v-show='authority==1'>
             <p>管理者設定</p>
           </router-link>
-          {{authority}}
+          <!-- {{authority}} -->
       
         
         <Logout/>

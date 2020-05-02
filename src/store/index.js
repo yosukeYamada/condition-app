@@ -13,7 +13,7 @@ export default new Vuex.Store({
     aggregates: [],
     dailyPostList: [],
     firebase_user: null,
-    authority:""
+    authority: ""
   },
   mutations: {
     setLoginUser(state, user) {

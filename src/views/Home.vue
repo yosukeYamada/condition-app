@@ -1,26 +1,23 @@
 <template>
   <div>
-
-    <AdminHome v-show='authority==1'></AdminHome>
-    <EmployeeHome v-show='authority!=1'></EmployeeHome><br>
-     <!-- {{authority}} -->
+    <EmployeeHome v-if="authority === 1"></EmployeeHome>
+    <AdminHome v-if="authority === 2"></AdminHome>
   </div>
 </template>
 
 <script>
-import AdminHome from "../components/AdminHome";
-import EmployeeHome from "../components/EmployeeHome";
+import AdminHome from "@/components/AdminHome";
+import EmployeeHome from "@/components/EmployeeHome";
 
 export default {
   components: {
     AdminHome,
-    EmployeeHome
+    EmployeeHome,
   },
-
-  computed:{
-      authority:function(){
-          return this.$store.state.authority
-      }
-  }
+  computed: {
+    authority() {
+      return this.$store.state.login_user.user.authority;
+    },
+  },
 };
 </script>

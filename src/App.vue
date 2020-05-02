@@ -13,13 +13,42 @@
 <script>
 import Header from "@/components/common/Header";
 import SideMenu from "@/components/SideMenu";
+import firebase from "firebase";
+import axios from "axios";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
   components: {
     Header,
-    SideMenu
+    SideMenu,
   },
-  data: () => ({}),
+  methods: {
+    ...mapActions(["setLoginUser"]),
+    loginCheck() {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (!user) {
+          /** ログインしていない場合 */
+          console.log("ログインしていません");
+        } else {
+          /** ログインしている場合 */
+          console.log("ログインしています");
+          if (this.$store.state.login_user === null) {
+            console.error("ログインユーザー情報がnullです");
+            axios
+              .post("http://localhost:8080/mail/findByMailAndAuthority", {
+                mail: firebase.auth().currentUser.email,
+              })
+              .then((response) => {
+                this.setLoginUser(response.data);
+              });
+          }
+        }
+      });
+    },
+  },
+  created() {
+    this.loginCheck();
+  },
 };
 </script>

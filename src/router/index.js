@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
 import RegisterUser from "../views/RegisterUser.vue";
-import Posts from "../views/Posts.vue";
+import DailyPost from "../views/DailyPost.vue";
 import MotivHistory from "../views/MotivHistory";
 import Aggregate from "../views/Aggregate";
 import EmployeeList from "../views/EmployeeList";
@@ -24,15 +24,14 @@ const routes = [
   },
 
   {
-    path:"/Home",
-    name:"Home",
-    component:Home,
-
+    path: "/Home",
+    name: "Home",
+    component: Home,
   },
   {
-    path: "/Posts",
-    name: "Posts",
-    component: Posts,
+    path: "/dailyPost",
+    name: "DailyPost",
+    component: DailyPost,
   },
   {
     path: "/MotivHistory",
@@ -54,9 +53,6 @@ const routes = [
     name: "AdminSetting",
     component: AdminSetting,
   },
-  
-
-  
 ];
 
 const router = new VueRouter({

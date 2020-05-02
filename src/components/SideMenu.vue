@@ -1,24 +1,79 @@
 <template>
   <div id="adminside">
     <div class="sideMenu">
-      <b-sidebar id="sidebar-1" title="Menu" shadow>
-        <router-link to="/Posts">
-          <p>今日のコンディション投稿</p>
-        </router-link>
-        <router-link to="/MotivHistory">
-          <p>モチベーション履歴</p>
-        </router-link>
-        <!-- {{authority}} -->
-        <router-link to="/Aggregate" v-if="authority === 2">
-          <p>集計グラフ</p>
-        </router-link>
-        <router-link to="/EmployeeList" v-if="authority === 2">
-          <p>従業員一覧</p>
-        </router-link>
-        <router-link to="AdminSetting" v-if="authority === 2">
-          <p>管理者設定</p>
-        </router-link>
-        <Logout />
+      <b-sidebar
+        id="sidebar-backdrop"
+        bg-variant="dark"
+        text-variant="light"
+        backdrop
+        shadow
+      >
+        <div class="px-4 mt-5 mb-5 display-1 font-weight-medium">Menu</div>
+        <v-list class="py-0 bg-dark" dark tile>
+          <v-list-item-group>
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon> mdi mdi-weather-sunny</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title
+                  @click="toPage('/dailyPost')"
+                  class="text-white"
+                  >今日のコンディション投稿</v-list-item-title
+                >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon> mdi mdi-history</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title
+                  @click="toPage('/MotivHistory')"
+                  class="text-white"
+                  >モチベーション履歴</v-list-item-title
+                >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon> mdi mdi-format-list-bulleted</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title
+                  @click="toPage('/EmployeeList')"
+                  class="text-white"
+                  >従業員一覧</v-list-item-title
+                >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon> mdi mdi-chart-line</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title
+                  @click="toPage('/Aggregate')"
+                  class="text-white"
+                  >集計グラフ</v-list-item-title
+                >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon> mdi mdi-cog-outline</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title
+                  @click="toPage('AdminSetting')"
+                  class="text-white"
+                  >管理者設定</v-list-item-title
+                >
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+        <Logout class="px-4 my-5 fixed-bottom" />
       </b-sidebar>
     </div>
   </div>
@@ -26,28 +81,20 @@
 
 <script>
 import Logout from "@/components/Logout";
-// import Menubotton from "../components/Menubotton.vue";
 export default {
   components: {
     Logout,
-    // Menubotton,
   },
   computed: {
     authority: function() {
       return this.$store.state.login_user.user.authority;
+      // return 2; // TODO 本当は上のようにしたいがlogin_userがセットし終わる前に処理が行われ、nullでエラーになる
+    },
+  },
+  methods: {
+    toPage(path) {
+      this.$router.push(path);
     },
   },
 };
 </script>
-
-<style>
-#sidebar-1 {
-  background: aquamarine;
-}
-.sideMenu {
-  background: aquamarine;
-}
-.sideNav {
-  background: aquamarine;
-}
-</style>

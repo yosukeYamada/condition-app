@@ -74,7 +74,7 @@ export default {
         ],
       },
       MotivChartData: {
-        labels: ["快晴", "晴れ", "曇り", "雨", "大雨"],
+        labels: ["快晴", "晴れ", "曇り", "雨", "嵐"],
         datasets: [
           {
             data: [],
@@ -91,7 +91,7 @@ export default {
         ],
       },
       PerfoChartData: {
-        labels: ["快晴", "晴れ", "曇り", "雨", "大雨"],
+        labels: ["快晴", "晴れ", "曇り", "雨", "嵐"],
         datasets: [
           {
             data: [],

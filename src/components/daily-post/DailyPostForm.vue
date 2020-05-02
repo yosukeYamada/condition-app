@@ -68,6 +68,7 @@
           <b-button variant="outline-success" @click.prevent="register()"
             >登録する</b-button
           >
+          ログインユーザー→{{ $store.state.login_user }}
         </b-form>
       </b-card-text>
     </b-card>

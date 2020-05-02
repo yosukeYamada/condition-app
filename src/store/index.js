@@ -13,7 +13,7 @@ export default new Vuex.Store({
     aggregates: [],
     dailyPostList: [],
     firebase_user: null,
-    authority: ""
+    authority: "",
   },
   mutations: {
     setLoginUser(state, user) {
@@ -34,10 +34,9 @@ export default new Vuex.Store({
     setLoadings(state) {
       state.loading = true;
     },
-    setAuthority(state,authority){
+    setAuthority(state, authority) {
       state.authority = authority;
-    }
-
+    },
   },
   actions: {
     login() {
@@ -62,8 +61,8 @@ export default new Vuex.Store({
     setLoadings({ commit }) {
       commit("setLoadings");
     },
-    setAuthority({commit},authority){
-      commit("setAuthority",authority);
+    setAuthority({ commit }, authority) {
+      commit("setAuthority", authority);
     },
 
     getAggregate: function({ commit }) {
@@ -80,6 +79,7 @@ export default new Vuex.Store({
   modules: {},
   getters: {
     userName: (state) => (state.login_user ? state.login_user.userName : ""),
-    photoURL: (state) => (state.firebase_user ? state.firebase_user.photoURL : ""),
+    photoURL: (state) =>
+      state.firebase_user ? state.firebase_user.photoURL : "",
   },
 });

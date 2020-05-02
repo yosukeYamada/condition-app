@@ -6,20 +6,23 @@
       header-text-variant="white"
     style="border-width:2px;">
       <EmployeeListHeader class="mb-5" />
-      <EmployeeList :employee-list="employeeList" />
+      <!-- <EmployeeList :employee-list="employeeList" /> -->
+      <EmployeeListTest :employee-list="employeeList" />
     </b-card>
   </b-col>
 </template>
 
 <script>
 import EmployeeListHeader from "@/components/employee-list/EmployeeListHeader.vue";
-import EmployeeList from "../components/employee-list/EmployeeList.vue";
+// import EmployeeList from "../components/employee-list/EmployeeList.vue";
+import EmployeeListTest from "@/components/employee-list/EmployeeListTest.vue";
 import axios from "axios";
 
 export default {
   components: {
     EmployeeListHeader,
-    EmployeeList,
+    // EmployeeList,
+    EmployeeListTest,
   },
   data() {
     return {

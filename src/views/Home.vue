@@ -2,8 +2,8 @@
   <div>
 
     <AdminHome v-show='authority==1'></AdminHome>
-    <EmployeeHome v-show='authority==2'></EmployeeHome><br>
-     <!-- {{authority}} -->
+    <EmployeeHome v-show='authority!=1'></EmployeeHome><br>
+     {{authority}}
   </div>
 </template>
 

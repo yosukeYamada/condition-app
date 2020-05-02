@@ -57,7 +57,7 @@ export default {
       selectedDate: "",
       isGetData: false,
       ConChartData: {
-        labels: ["快晴", "晴れ", "曇り", "雨", "大雨"],
+        labels: ["快晴", "晴れ", "曇り", "雨", "嵐"],
         datasets: [
           {
             data: [],

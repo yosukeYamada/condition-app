@@ -11,6 +11,7 @@
             <p>モチベーション履歴</p>
           </router-link>
 
+          {{authority}}
 
           
 
@@ -23,7 +24,6 @@
           <router-link to="AdminSetting" v-show='authority==1'>
             <p>管理者設定</p>
           </router-link>
-          <!-- {{authority}} -->
       
         
         <Logout/>

@@ -1,43 +1,54 @@
 <template>
   <b-col>
     <b-card
-      class="m-5 text-left"
+      class="text-left"
       border-variant="success"
       header="今日のコンディション登録"
       header-bg-variant="success"
       header-text-variant="white"
       style="border-width:2px;"
     >
-      <b-card-text>
+      <b-card-text class="pt-2">
         <b-form>
-          <b-form-group label="今日のモチベーションはどれくらいですか？">
-            <b-form-radio-group class="mb-4" v-model="param.motivationSelected">
-              <b-form-radio value="1">快晴</b-form-radio>
-              <b-form-radio value="2">晴れ</b-form-radio>
-              <b-form-radio value="3">曇り</b-form-radio>
-              <b-form-radio value="4">雨</b-form-radio>
-              <b-form-radio value="5">嵐</b-form-radio>
+          <b-form-group
+            class="pt-4"
+            label="今日のモチベーションはどれくらいですか？"
+          >
+            <b-form-radio-group v-model="param.motivationSelected">
+              <b-form-radio
+                class="pr-5 pb-4"
+                v-for="(item, i) in radioItems"
+                :key="i"
+                :value="item.value"
+                ><v-fa :icon="item.icon" size="2x" :style="item.style"
+              /></b-form-radio>
             </b-form-radio-group>
           </b-form-group>
-          <b-form-group label="今日の体調はどうですか？">
-            <b-form-radio-group class="mb-4" v-model="param.conditionSelected">
-              <b-form-radio value="1">快晴</b-form-radio>
-              <b-form-radio value="2">晴れ</b-form-radio>
-              <b-form-radio value="3">曇り</b-form-radio>
-              <b-form-radio value="4">雨</b-form-radio>
-              <b-form-radio value="5">嵐</b-form-radio>
+          <b-form-group class="pt-4" label="今日の体調はどうですか？">
+            <b-form-radio-group v-model="param.conditionSelected">
+              <b-form-radio
+                class="pr-5 pb-4"
+                v-for="(item, i) in radioItems"
+                :key="i"
+                :value="item.value"
+                ><v-fa :icon="item.icon" size="2x" :style="item.style"
+              /></b-form-radio>
             </b-form-radio-group>
           </b-form-group>
-          <b-form-group label="今日やることの目標のイメージはできていますか？">
+          <b-form-group
+            class="pt-4"
+            label="今日やることの目標のイメージはできていますか？"
+          >
             <b-form-radio-group
-              class="mb-4"
               v-model="param.performanceSelected"
             >
-              <b-form-radio value="1">快晴</b-form-radio>
-              <b-form-radio value="2">晴れ</b-form-radio>
-              <b-form-radio value="3">曇り</b-form-radio>
-              <b-form-radio value="4">雨</b-form-radio>
-              <b-form-radio value="5">嵐</b-form-radio>
+              <b-form-radio
+                class="pr-5 pb-4"
+                v-for="(item, i) in radioItems"
+                :key="i"
+                :value="item.value"
+                ><v-fa :icon="item.icon" size="2x" :style="item.style"
+              /></b-form-radio>
             </b-form-radio-group>
           </b-form-group>
           <b-form-group
@@ -46,6 +57,7 @@
             label-for="input-comment"
           >
             <b-form-textarea
+              class="mt-3"
               id="input-comment"
               v-model="param.comment"
               placeholder="コメントがあれば入力してください"
@@ -73,6 +85,33 @@ export default {
         conditionSelected: "3",
         comment: "",
       },
+      radioItems: [
+        {
+          icon: ["fas", "sun"],
+          style: { color: "#ea5550" },
+          value: 1,
+        },
+        {
+          icon: ["fas", "cloud-sun"],
+          style: { color: "#f3981d" },
+          value: 2,
+        },
+        {
+          icon: ["fas", "cloud"],
+          style: { color: "#b2cbe4" },
+          value: 3,
+        },
+        {
+          icon: ["fas", "cloud-rain"],
+          style: { color: "#68a4d9" },
+          value: 4,
+        },
+        {
+          icon: ["fas", "cloud-showers-heavy"],
+          style: { color: "#0075c2" },
+          value: 5,
+        },
+      ],
     };
   },
   methods: {

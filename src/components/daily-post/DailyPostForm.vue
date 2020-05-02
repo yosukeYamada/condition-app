@@ -68,7 +68,6 @@
           <b-button variant="outline-success" @click.prevent="register()"
             >登録する</b-button
           >
-          ログインユーザー→{{ $store.state.login_user }}
         </b-form>
       </b-card-text>
     </b-card>
@@ -119,7 +118,7 @@ export default {
     register() {
       axios
         .post("http://localhost:8080/registerDailyPost", {
-          userId: "4", // TODO とりあえず開発用で固定(ログイン時にDBからストアにユーザー情報を格納してそこから持ってくる)
+          userId: this.$store.state.login_user.userId,
           motivationId: this.param.motivationSelected,
           conditionId: this.param.conditionSelected,
           performanceId: this.param.performanceSelected,

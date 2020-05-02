@@ -9,13 +9,13 @@
           <p>モチベーション履歴</p>
         </router-link>
         <!-- {{authority}} -->
-        <router-link to="/Aggregate" v-show="authority == 1">
+        <router-link to="/Aggregate" v-if="authority === 2">
           <p>集計グラフ</p>
         </router-link>
-        <router-link to="/EmployeeList" v-show="authority == 1">
+        <router-link to="/EmployeeList" v-if="authority === 2">
           <p>従業員一覧</p>
         </router-link>
-        <router-link to="AdminSetting" v-show="authority == 1">
+        <router-link to="AdminSetting" v-if="authority === 2">
           <p>管理者設定</p>
         </router-link>
         <Logout />
@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     authority: function() {
-      return this.$store.state.authority;
+      return this.$store.state.login_user.user.authority;
     },
   },
 };

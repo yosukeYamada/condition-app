@@ -24,10 +24,5 @@ export default {
     }
     console.log(this.dailyPost)
   },
-  // filters: {
-  //   moment: function(date) {
-  //     return moment(date).format("YYYY-MM-DD")
-  //   }
-  // }
 };
 </script>

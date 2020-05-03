@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import AdminSetting from "../components/AdminSetting";
+import AdminSetting from "@/components/setting/AdminSetting";
 
 export default {
   components: {

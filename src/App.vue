@@ -12,7 +12,7 @@
 
 <script>
 import Header from "@/components/common/Header";
-import SideMenu from "@/components/SideMenu";
+import SideMenu from "@/components/common/SideMenu";
 import firebase from "firebase";
 import axios from "axios";
 import { mapActions } from "vuex";

@@ -50,6 +50,7 @@ export default {
           ("00" + (hireDate.getMonth() + 1)).slice(-2);
         if (elm.dailyPost.length === 0) {
           return {
+            userId:elm.userId,
             name: elm.userName,
             dep: elm.dep.depName,
             hireDate: hireDate,
@@ -60,6 +61,7 @@ export default {
           };
         } else {
           return {
+            userId:elm.userId,
             name: elm.userName,
             dep: elm.dep.depName,
             hireDate: hireDate,

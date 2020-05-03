@@ -1,7 +1,9 @@
 <template>
   <v-data-table :headers="headers" :items="items" class="elevation-1">
+    <template v-slot:item.name="{ item }">
+      <span v-text="item.name" @click="toPage(item.userId)"></span>
+    </template>
     <template v-slot:item.motivation="{ item }">
-      <!-- <v-chip :color="getColor(item.calories)" dark>{{ item.calories }}</v-chip> -->
       <v-fa
         :icon="transferIcon(item.motivation)"
         size="lg"
@@ -9,7 +11,6 @@
       />
     </template>
     <template v-slot:item.condition="{ item }">
-      <!-- <v-chip :color="getColor(item.calories)" dark>{{ item.calories }}</v-chip> -->
       <v-fa
         :icon="transferIcon(item.condition)"
         size="lg"
@@ -17,7 +18,6 @@
       />
     </template>
     <template v-slot:item.performance="{ item }">
-      <!-- <v-chip :color="getColor(item.calories)" dark>{{ item.calories }}</v-chip> -->
       <v-fa
         :icon="transferIcon(item.performance)"
         size="lg"
@@ -80,6 +80,10 @@ export default {
     };
   },
   methods: {
+    toPage(userId) {
+      alert("ユーザーID:" + userId + "の個別の履歴を見に行きます！(個別ページは現在開発中です！)");
+      // this.$router.push("/MotivHistory/" + userId);
+    },
     transferIcon(param) {
       if (param === "快晴") {
         return ["fas", "sun"];

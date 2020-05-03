@@ -3,10 +3,10 @@
     <b-card
       class="text-left"
       border-variant="success"
+      style="border-width:2px;"
       header="今日のコンディション登録"
       header-bg-variant="success"
       header-text-variant="white"
-      style="border-width:2px;"
     >
       <b-card-text class="pt-2">
         <b-form>

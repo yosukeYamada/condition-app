@@ -3,24 +3,11 @@ import { Doughnut } from "vue-chartjs";
 
 export default {
   extends: Doughnut,
-  props: ["MotivChartData", "isGetData"],
+  props: ["MotivChartData", "options", "isGetData"],
   watch: {
     isGetData: function() {
       this.renderChart(this.MotivChartData, this.options);
     },
-  },
-  data() {
-    return {
-      options: {
-        responsive: true,
-        legend: {
-          position: "left",
-          labels: {
-            fontSize: 15,
-          },
-        },
-      },
-    };
   },
   mounted() {
     this.addPlugin({
@@ -40,13 +27,13 @@ export default {
           // eslint-disable-next-line no-undef
           ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
 
-          ctx.textAlign = "left";
+          ctx.textAlign = "center";
           ctx.textBaseline = "middle";
 
           // position(第二, 第三引数は適宜調整)
           ctx.fillText(
             "本日のモチベーション",
-            chart.width / 2 - 30,
+            chart.width / 2 ,
             chart.height / 2
           );
 
@@ -58,7 +45,7 @@ export default {
               let fontSize = 14;
               let fontStyle = "normal";
               let fontFamily = "Helvetica Neue";
-              ctx.fillStyle = "#000";
+              ctx.fillStyle = "#FFFFFF";
               // 設定を適用
               // eslint-disable-next-line no-undef
               ctx.font = Chart.helpers.fontString(
@@ -66,13 +53,11 @@ export default {
                 fontStyle,
                 fontFamily
               );
-
               // ラベルをパーセント表示に変更
               let labelString = chart.data.labels[index];
               let dataString =
                 Math.round((dataset.data[index] / dataSum) * 100).toString() +
                 "%";
-
               // positionの設定
               ctx.textAlign = "center";
               ctx.textBaseline = "middle";
@@ -90,10 +75,6 @@ export default {
                 position.x,
                 position.y + fontSize / 2 - padding
               ); // データの百分率
-
-              // 凡例の位置調整
-              let legend = chart.legend;
-              legend.top = chart.height - legend.height / 2 - legend.top / 2;
             });
           }
         });

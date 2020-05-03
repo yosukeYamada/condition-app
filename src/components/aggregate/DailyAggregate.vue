@@ -2,14 +2,33 @@
   <div id="content">
     <h2 class="mb-4">集計グラフ</h2>
     <b-row>
-      <b-col>
-        {{ selectedDate }}
-        <label for="example-datepicker">表示する日付を選択してください</label>
-        <b-form-datepicker
-          id="example-datepicker"
-          v-model="selectedDate"
-          class="mb-2"
-        ></b-form-datepicker>
+      <b-col sm="4" class="pb-0">
+        <v-menu
+          ref="menu"
+          v-model="menu"
+          :close-on-content-click="false"
+          :return-value.sync="selectedDate"
+          transition="scale-transition"
+          offset-y
+          min-width="290px"
+        >
+          <template v-slot:activator="{ on }">
+            <v-text-field
+              v-model="selectedDate"
+              label="表示する日付を選択してください"
+              prepend-icon="event"
+              readonly
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker v-model="selectedDate" locale="ja-ja" :day-format="date => new Date(date).getDate()" no-title scrollable>
+            <v-spacer></v-spacer>
+            <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+            <v-btn text color="primary" @click="$refs.menu.save(selectedDate)"
+              >OK</v-btn
+            >
+          </v-date-picker>
+        </v-menu>
       </b-col>
     </b-row>
     <b-row>
@@ -17,6 +36,7 @@
         <b-card>
           <MotivPieChart
             :motiv-chart-data="MotivChartData"
+            :options="options"
             :is-get-data="isGetData"
           ></MotivPieChart>
         </b-card>
@@ -25,6 +45,7 @@
         <b-card>
           <ConPieChart
             :con-chart-data="ConChartData"
+            :options="options"
             :isGetData="isGetData"
           ></ConPieChart>
         </b-card>
@@ -33,6 +54,7 @@
         <b-card>
           <PerfoPieChart
             :perfo-chart-data="PerfoChartData"
+            :options="options"
             :is-get-data="isGetData"
           ></PerfoPieChart>
         </b-card>
@@ -54,7 +76,8 @@ export default {
   },
   data() {
     return {
-      selectedDate: "",
+      selectedDate: new Date().toISOString().substr(0, 10),
+      menu: false,
       isGetData: false,
       ConChartData: {
         labels: ["快晴", "晴れ", "曇り", "雨", "嵐"],
@@ -62,13 +85,11 @@ export default {
           {
             data: [],
             backgroundColor: [
-              "#f87979",
-              "#aa4c8f",
-              "#38b48b",
-              "#006e54",
-              "#c1e4e9",
-              "#89c3eb",
-              "#c3d825",
+              "#ea5550",
+              "#f3981d",
+              "#b2cbe4",
+              "#68a4d9",
+              "#0075c2",
             ],
           },
         ],
@@ -79,13 +100,11 @@ export default {
           {
             data: [],
             backgroundColor: [
-              "#f87979",
-              "#aa4c8f",
-              "#38b48b",
-              "#006e54",
-              "#c1e4e9",
-              "#89c3eb",
-              "#c3d825",
+              "#ea5550",
+              "#f3981d",
+              "#b2cbe4",
+              "#68a4d9",
+              "#0075c2",
             ],
           },
         ],
@@ -96,16 +115,20 @@ export default {
           {
             data: [],
             backgroundColor: [
-              "#f87979",
-              "#aa4c8f",
-              "#38b48b",
-              "#006e54",
-              "#c1e4e9",
-              "#89c3eb",
-              "#c3d825",
+              "#ea5550",
+              "#f3981d",
+              "#b2cbe4",
+              "#68a4d9",
+              "#0075c2",
             ],
           },
         ],
+      },
+      options: {
+        responsive: true,
+        legend: {
+          display: false,
+        },
       },
     };
   },

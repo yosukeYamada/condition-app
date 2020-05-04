@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import AdminSetting from "@/components/setting/AdminSetting";
-import Setting2 from "@/components/setting/Setting2";
+import AdminSetting from "@/components/admin-setting/AdminSetting";
+import Setting2 from "@/components/admin-setting/Setting2";
 
 export default {
   components: {

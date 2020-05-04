@@ -1,0 +1,13 @@
+<template>
+  <b-card
+    border-variant="success"
+    style="border-width:2px;"
+    header="機能追加するときのサンプル"
+    header-bg-variant="success"
+    header-text-variant="white"
+  >
+    <b-card-text>
+        サンプル
+    </b-card-text>
+  </b-card>
+</template>

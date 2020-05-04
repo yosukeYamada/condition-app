@@ -1,5 +1,5 @@
 <template>
-  <v-data-table :headers="headers" :items="items" class="elevation-1">
+  <v-data-table :headers="headers" :items="items" class="elevation-1 card">
     <template v-slot:item.name="{ item }">
       <span v-text="item.name" @click="toPage(item.userId)"></span>
     </template>
@@ -81,7 +81,11 @@ export default {
   },
   methods: {
     toPage(userId) {
-      alert("ユーザーID:" + userId + "の個別の履歴を見に行きます！(個別ページは現在開発中です！)");
+      alert(
+        "ユーザーID:" +
+          userId +
+          "の個別の履歴を見に行きます！(個別ページは現在開発中です！)"
+      );
       // this.$router.push("/MotivHistory/" + userId);
     },
     transferIcon(param) {
@@ -120,3 +124,9 @@ export default {
   },
 };
 </script>
+<style>
+.theme--light.v-data-table thead tr th {
+  background-color: #28a745 !important;
+  color: white !important;
+}
+</style>

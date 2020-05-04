@@ -1,13 +1,8 @@
 <template>
   <b-col>
-    <b-card class="m-5" border-variant="success" 
-      header="従業員一覧"
-      header-bg-variant="success"
-      header-text-variant="white"
-    style="border-width:2px;">
+    <h2 class="mb-4">従業員一覧</h2>
       <EmployeeListHeader class="mb-5" />
       <EmployeeList :employee-list="employeeList" />
-    </b-card>
   </b-col>
 </template>
 

@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <b-col>
     <DailyAggregate />
     <GraphDescription />
     <MonthlyAggregate />
-  </div>
+  </b-col>
 </template>
 
 <script>

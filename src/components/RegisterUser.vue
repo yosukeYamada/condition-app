@@ -133,9 +133,7 @@ export default {
   },
   methods: {
     registerUser() {
-      axios
-        .post("http://localhost:8080/registerUser", {
-          // axios.post("/api/user/registerUser",{
+          axios.post("/api/user/registerUser",{
           userName: this.userName,
           userNameKana: this.userNameKana,
           depId: this.depId,

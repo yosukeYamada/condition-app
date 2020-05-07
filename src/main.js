@@ -6,6 +6,8 @@ import vuetify from "./plugins/vuetify";
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import axios from "axios";
 import VueAxios from "vue-axios";
+import "../validate/validate.js"
+
 Vue.use(VueAxios, axios);
 
 // bootstrap-vueのインポート

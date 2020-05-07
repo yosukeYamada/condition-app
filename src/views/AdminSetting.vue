@@ -2,14 +2,10 @@
   <b-col>
     <h2 class="mb-4">管理者設定</h2>
     <b-row>
-      <b-col sm="6">
-        <AdminSetting />
-      </b-col>
+      <AdminSetting />
     </b-row>
     <b-row>
-      <b-col sm="6">
-        <Setting2 />
-      </b-col>
+      <Setting2 />
     </b-row>
   </b-col>
 </template>
@@ -23,7 +19,7 @@ import firebase from "firebase/app";
 export default {
   components: {
     AdminSetting,
-    Setting2
+    Setting2,
   },
 
   //リロード時にログインユーザー情報を保持する

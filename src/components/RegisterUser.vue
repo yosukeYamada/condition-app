@@ -36,55 +36,59 @@
               <div>{{errors[0]}}</div>
             </b-form-group>
           </ValidationProvider>
-          <ValidationProvider rules="email|required" v-slot="{errors}">
-            <b-form-group
-              label="メールアドレス"
-              label-for="input-email"
-              description="ログイン時に入力したメールアドレスを入力してください"
-            >
-              <b-form-input
-                id="input-email"
-                type="email"
-                v-model="mailAddress"
-                placeholder="taro.rakus@rakus-partners.co.jp"
-                disabled="disabled"
-              />
-            </b-form-group>
-            <div>{{errors[0]}}</div>
-          </ValidationProvider>
-          <b-form-group label="入社年月">
-            <b-row>
-              <b-col>
-                  <ValidationProvider rules="digits:4" v-slot="{errors}">
-                <b-form-select name="year" v-model="hireYear">
-                    <option value="null" disabled>年</option>
-                    <option v-for="i in selectYears" :key="i" :value="i">
-                      {{
-                      i
-                      }}
-                    </option>
-                </b-form-select>
-                    <p>{{errors[0]}}</p>
-                  </ValidationProvider>
-              </b-col>
-              <b-col>
-                  <ValidationProvider rules="digits:2" v-slot="{errors}">
-                <b-form-select name="month" v-model="hireMonth">
-                    <option value="null" disabled>月</option>
-                    <option v-for="i in 12" :key="i" :value="i">{{ i }}</option>
-                </b-form-select>
-                    <p>{{errors[0]}}</p>
-                  </ValidationProvider>
-              </b-col>
-            </b-row>
+          <!-- <ValidationProvider rules="email|required" v-slot="{errors}"> -->
+          <b-form-group
+            label="メールアドレス"
+            label-for="input-email"
+            description="ログイン時に入力したメールアドレスを入力してください"
+          >
+            <b-form-input
+              id="input-email"
+              type="email"
+              v-model="mailAddress"
+              placeholder="taro.rakus@rakus-partners.co.jp"
+              disabled="disabled"
+            />
           </b-form-group>
-          <div>
-            <b-form-group label="部門">
-              <b-form-select v-model="depId">
-                <option value="null" disabled>部門名を選択してください</option>
-                <option v-for="(dep, i) in selectDeps" :key="i" :value="dep.value">{{ dep.name }}</option>
-              </b-form-select>
+          <!-- <div>{{errors[0]}}</div> -->
+          <!-- </ValidationProvider> -->
+          <ValidationObserver>
+            <b-form-group label="入社年月">
+              <b-row>
+                <b-col>
+                  <ValidationProvider rules="checkRequiredHireMonthYear|hireMonthYear:@month" v-slot="{errors}">
+                    <b-form-select name="year" v-model="hireYear">
+                      <option disabled selected>年</option>
+                      <option v-for="i in selectYears" :key="i" :value="i">
+                        {{
+                        i
+                        }}
+                      </option>
+                    </b-form-select>
+                    <p>{{errors[0]}}</p>
+                  </ValidationProvider>
+                </b-col>
+                <b-col>
+                  <ValidationProvider name="month" rules="required">
+                  <b-form-select name="month" v-model="hireMonth">
+                    <option disabled selected>月</option>
+                    <option v-for="i in 12" :key="i" :value="i">{{ i }}</option>
+                  </b-form-select>
+                  </ValidationProvider>
+                </b-col>
+              </b-row>
             </b-form-group>
+          </ValidationObserver>
+          <div>
+            <ValidationProvider rules="required" v-slot="{errors}">
+              <b-form-group label="部門">
+                <b-form-select v-model="depId">
+                  <option value="null" disabled>部門名を選択してください</option>
+                  <option v-for="(dep, i) in selectDeps" :key="i" :value="dep.value">{{ dep.name }}</option>
+                </b-form-select>
+              </b-form-group>
+              <p>{{errors[0]}}</p>
+            </ValidationProvider>
           </div>
           <b-button
             class="mr-3"
@@ -133,6 +137,8 @@ export default {
   },
   methods: {
     registerUser() {
+      console.log(this.hireYear)
+      console.log(this.hireMonth)
       axios
         .post("/api/user/registerUser", {
           userName: this.userName,
@@ -160,6 +166,8 @@ export default {
   },
   mounted() {
     this.mailAddress = this.$store.state.loginUserMail.mailName;
+          console.log(this.hireYear)
+      console.log(this.hireMonth)
   }
 };
 </script>

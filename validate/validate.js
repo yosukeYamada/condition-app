@@ -1,31 +1,52 @@
 import Vue from "vue";
 // Vee-validateのインポート
 import { extend,ValidationObserver, ValidationProvider } from "vee-validate";
-import {digits,regex,email} from 'vee-validate/dist/rules'
+import {digits,regex,email,required} from 'vee-validate/dist/rules'
 
 
 
-// extend('required', {
-//   validate (value) {
-//     return {
-//       required: true,
-//       valid: ['', null, undefined].indexOf(value) === -1
-//     };
-//   },
-//   computesRequired: true,
-//   message:"文字列を入力して下さい"
-// });
+extend('required', {
+  validate (value) {
+    return {
+      required: true,
+      valid: ['', null, undefined].indexOf(value) === -1
+    };
+  },
+  computesRequired: true,
+  message:"入力は必須です"
+});
+
+extend('checkDep',{
+  ...required,
+  message:"所属部門の入力は必須です"
+})
+
+
+extend('checkRequiredHireMonthYear',{
+  ...required,
+  message:"入社年月日の入力は必須です"
+})
+
+extend('hireMonthYear',{
+  params:['target'],
+  validate(value,{target}){
+      return value !==null && target !==null
+  },
+  message:"入社年月日の入力は必須です"
+
+});
+
 
 // ユーザ登録に使うvalidation
 extend('regex',regex)
 extend('userName',{
+  ...required,
   ...regex,
-  // ...required,
   message:"20文字以内の全角で入力してください。"
 });
 extend('userNameKana',{
+  ...required,
   ...regex,
-  // ...required,
   message:"20文字以内の全角平仮名で入力してください。"
 });
 

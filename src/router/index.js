@@ -8,6 +8,7 @@ import Aggregate from "../views/Aggregate";
 import EmployeeList from "../views/EmployeeList";
 import AdminSetting from "../views/AdminSetting";
 import Home from "../views/Home.vue";
+import Top from "../views/Top.vue";
 
 Vue.use(VueRouter);
 
@@ -22,7 +23,11 @@ const routes = [
     name: "RegisterUser",
     component: RegisterUser,
   },
-
+  {
+    path: "/top",
+    name: "Top",
+    component: Top,
+  },
   {
     path: "/Home",
     name: "Home",

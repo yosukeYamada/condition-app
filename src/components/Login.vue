@@ -89,6 +89,10 @@ export default {
             //従業員権限
             } else if (response.data.user.authority == 2) {
               this.setLoginUser(response.data);
+              //authorityの値をstateに格納
+              this.$store.dispatch(
+                "setAuthority",
+                response.data.user.authority);
               this.$router.push("/Home");
             } else if (response.data.user.authority == 3) {
               this.deleteLoginUser();

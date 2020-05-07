@@ -16,7 +16,7 @@ export default new Vuex.Store({
       updateDate: "",
       updateUserId: 0,
       user: {
-        authority: 1, // 初期値は1(一般ユーザー権限)で指定
+        authority: 2, // 初期値は1(一般ユーザー権限)で指定
         dailyPost: {},
         dep: {},
         depId: 0,

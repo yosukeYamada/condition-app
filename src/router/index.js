@@ -3,7 +3,8 @@ import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
 import RegisterUser from "../views/RegisterUser.vue";
 import DailyPost from "../views/DailyPost.vue";
-import MotivHistory from "../views/MotivHistory";
+import MyMotivation from "../views/MyMotivation";
+import EmployeeMotivation from "../views/EmployeeMotivation";
 import Aggregate from "../views/Aggregate";
 import EmployeeList from "../views/EmployeeList";
 import AdminSetting from "../views/AdminSetting";
@@ -34,9 +35,14 @@ const routes = [
     component: DailyPost,
   },
   {
-    path: "/MotivHistory",
-    name: "MotivHistory",
-    component: MotivHistory,
+    path: "/EmployeeMotivation/:userId?/employee",
+    name: "EmployeeMotivation",
+    component: EmployeeMotivation,
+  },
+  {
+    path: "/MyMotivation",
+    name: "MyMotivation",
+    component: MyMotivation,
   },
   {
     path: "/Aggregate",

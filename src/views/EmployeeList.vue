@@ -9,7 +9,7 @@
 <script>
 import EmployeeListHeader from "@/components/employee-list/EmployeeListHeader.vue";
 import EmployeeList from "../components/employee-list/EmployeeList.vue";
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   components: {
@@ -24,14 +24,7 @@ export default {
   },
   methods: {
     getMasterList() {
-      axios
-        .get("http://localhost:8080/showEmployeeList")
-        .then((response) => {
-          this.masterList = response.data;
-        })
-        .catch((e) => {
-          alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
-        });
+      this.masterList = this.$store.state.employeeList
     },
   },
   watch: {

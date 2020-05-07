@@ -36,7 +36,6 @@
               <div>{{errors[0]}}</div>
             </b-form-group>
           </ValidationProvider>
-          <!-- <ValidationProvider rules="email|required" v-slot="{errors}"> -->
           <b-form-group
             label="メールアドレス"
             label-for="input-email"
@@ -50,13 +49,14 @@
               disabled="disabled"
             />
           </b-form-group>
-          <!-- <div>{{errors[0]}}</div> -->
-          <!-- </ValidationProvider> -->
           <ValidationObserver>
             <b-form-group label="入社年月">
               <b-row>
                 <b-col>
-                  <ValidationProvider rules="checkRequiredHireMonthYear|hireMonthYear:@month" v-slot="{errors}">
+                  <ValidationProvider
+                    rules="checkRequiredHireMonthYear|hireMonthYear:@month"
+                    v-slot="{errors}"
+                  >
                     <b-form-select name="year" v-model="hireYear">
                       <option disabled selected>年</option>
                       <option v-for="i in selectYears" :key="i" :value="i">
@@ -70,10 +70,10 @@
                 </b-col>
                 <b-col>
                   <ValidationProvider name="month" rules="required">
-                  <b-form-select name="month" v-model="hireMonth">
-                    <option disabled selected>月</option>
-                    <option v-for="i in 12" :key="i" :value="i">{{ i }}</option>
-                  </b-form-select>
+                    <b-form-select name="month" v-model="hireMonth">
+                      <option disabled selected>月</option>
+                      <option v-for="i in 12" :key="i" :value="i">{{ i }}</option>
+                    </b-form-select>
                   </ValidationProvider>
                 </b-col>
               </b-row>
@@ -137,8 +137,6 @@ export default {
   },
   methods: {
     registerUser() {
-      console.log(this.hireYear)
-      console.log(this.hireMonth)
       axios
         .post("/api/user/registerUser", {
           userName: this.userName,
@@ -147,13 +145,9 @@ export default {
           hireYear: this.hireYear,
           hireMonth: this.hireMonth,
           mailAddress: this.mailAddress,
-          authorityId: 1
+          authorityId: 2
         })
-        .then(response => {
-          console.log(response);
-          console.log(response.data);
-          this.$router.push("/AdminHome");
-        });
+        .then(this.$router.push("/"));
     },
     resetButton() {
       this.userName = "";
@@ -165,9 +159,7 @@ export default {
     }
   },
   mounted() {
-    this.mailAddress = this.$store.state.loginUserMail.mailName;
-          console.log(this.hireYear)
-      console.log(this.hireMonth)
+    this.mailAddress = this.$store.state.login_user.mailName;
   }
 };
 </script>

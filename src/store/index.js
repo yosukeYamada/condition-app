@@ -34,13 +34,11 @@ export default new Vuex.Store({
       userId: 0,
       version: 0,
     },
-    mail: "",
     loading: true,
     aggregates: [],
     dailyPostList: [],
     firebase_user: null,
     authority: "",
-    loginUserMail: "",
     employeeList:[]
   },
   mutations: {
@@ -64,9 +62,6 @@ export default new Vuex.Store({
     },
     setAuthority(state, authority) {
       state.authority = authority;
-    },
-    loginUserMail(state, loginUserMail) {
-      state.loginUserMail = loginUserMail
     },
     employeeList(state, employeeList) {
       state.employeeList = employeeList
@@ -97,9 +92,6 @@ export default new Vuex.Store({
     },
     setAuthority({ commit }, authority) {
       commit("setAuthority", authority);
-    },
-    loginUserMail({commit}, loginUserMail) {
-      commit("loginUserMail", loginUserMail)
     },
     employeeList({commit}, employeeList) {
       commit("employeeList", employeeList)

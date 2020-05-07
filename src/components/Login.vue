@@ -51,7 +51,6 @@ export default {
       "setLoading",
       "setLoadings",
       "employeeList",
-      "loginUserMail",
     ]),
   },
   created() {
@@ -66,7 +65,7 @@ export default {
           .then((response) => {
             //新規登録画面へ遷移
             if (response.data.user.authority == 0) {
-              this.loginUserMail(response.data)
+              this.setLoginUser(response.data);
 
               this.$router.push("/RegisterUser");
             //管理者権限

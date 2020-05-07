@@ -6,7 +6,6 @@ import {digits,regex,email,required} from 'vee-validate/dist/rules'
 extend('regex',regex)
 extend('userName',{
   ...regex,
-  ...required,
   message:"20文字以内の全角で入力してください。"
 });
 extend('userNameKana',{

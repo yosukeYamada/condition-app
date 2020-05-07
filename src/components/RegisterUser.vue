@@ -6,15 +6,16 @@
           <form>
             <fieldset>
               <legend>ユーザ登録</legend>
-              <ValidationProvider :rules="{regex: /^[\p{Han}]+S/}" v-slot="{errors}">
                 <div>
+              <ValidationProvider :rules="{userName: /^[^-~｡-ﾟ]*$/}" v-slot="{errors}">
+              
                   <label>名前:</label>
                   <input v-model="userName" value="UTF8"/>
-                </div>
                 <div>{{errors[0]}}</div>
               </ValidationProvider>
+                </div>
               <div>
-                <ValidationProvider :rules="{userNameKana: /^[a-zA-Z0-9]+$/}" v-slot="{errors}">
+                <ValidationProvider :rules="{userNameKana: /^[ｦ-ﾟ]*$/}" v-slot="{errors}">
                   <label>名前(半角ｶﾀｶﾅ):</label>
                   <input v-model="userNameKana" />
                   <div>{{errors[0]}}</div>

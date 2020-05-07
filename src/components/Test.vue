@@ -20,16 +20,12 @@
 <script>
 import axios from "axios";
 export default {
-  name: "HelloWorld",
+  name: "Test",
 
   data: () => ({
     testMessage:"",
-    returnMessage:null
-
+    returnMessage:null,
   }),
-  created(){
-    axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
-  },
   methods:{
     getTestMessage(){
       axios.post("/test",{
@@ -37,7 +33,7 @@ export default {
       }).then(response=>{
         this.returnMessage=response.data
       })
-    }
+    },
   }
 };
 </script>

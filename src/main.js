@@ -8,6 +8,7 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import "../validate/validate.js"
 
+axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
 Vue.use(VueAxios, axios);
 
 // bootstrap-vueのインポート

@@ -14,19 +14,19 @@
           <p>Rakuppoを利用するにはユーザー登録を完了してください。</p>
         </b-card-text>
         <b-card-text>
-          <b-form-group label="名前" label-for="input-name" description="苗字と名前の間はスペースをあけないでください">
-            <ValidationProvider :rules="{userName: /^[^-~｡-ﾟ]*$/}" v-slot="{errors}">
+          <ValidationProvider :rules="{userName: /^[^ -~｡-ﾟ]*$/}" v-slot="{errors}">
+            <b-form-group label="名前" label-for="input-name" description="苗字と名前の間はスペースをあけないでください">
               <b-form-input id="input-name" type="text" v-model="userName" placeholder="ラクス太郎" />
               <p>{{errors[0]}}</p>
-            </ValidationProvider>
-          </b-form-group>
+            </b-form-group>
+          </ValidationProvider>
 
-          <b-form-group
-            label="ふりがな"
-            label-for="input-name-kana"
-            description="苗字と名前の間はスペースをあけないでください"
-          >
-            <ValidationProvider :rules="{userNameKana: /^[ぁ-ん]+$/}" v-slot="{errors}">
+          <ValidationProvider :rules="{userNameKana: /^[ぁ-ん]+$/}" v-slot="{errors}">
+            <b-form-group
+              label="ふりがな"
+              label-for="input-name-kana"
+              description="苗字と名前の間はスペースをあけないでください"
+            >
               <b-form-input
                 id="input-name-kana"
                 type="text"
@@ -34,8 +34,8 @@
                 placeholder="らくすたろう"
               />
               <div>{{errors[0]}}</div>
-            </ValidationProvider>
-          </b-form-group>
+            </b-form-group>
+          </ValidationProvider>
           <ValidationProvider rules="email|required" v-slot="{errors}">
             <b-form-group
               label="メールアドレス"
@@ -47,6 +47,7 @@
                 type="email"
                 v-model="mailAddress"
                 placeholder="taro.rakus@rakus-partners.co.jp"
+                disabled="disabled"
               />
             </b-form-group>
             <div>{{errors[0]}}</div>
@@ -54,20 +55,26 @@
           <b-form-group label="入社年月">
             <b-row>
               <b-col>
+                  <ValidationProvider rules="digits:4" v-slot="{errors}">
                 <b-form-select name="year" v-model="hireYear">
-                  <option value="null" disabled>年</option>
-                  <option v-for="i in selectYears" :key="i" :value="i">
-                    {{
-                    i
-                    }}
-                  </option>
+                    <option value="null" disabled>年</option>
+                    <option v-for="i in selectYears" :key="i" :value="i">
+                      {{
+                      i
+                      }}
+                    </option>
                 </b-form-select>
+                    <p>{{errors[0]}}</p>
+                  </ValidationProvider>
               </b-col>
               <b-col>
+                  <ValidationProvider rules="digits:2" v-slot="{errors}">
                 <b-form-select name="month" v-model="hireMonth">
-                  <option value="null" disabled>月</option>
-                  <option v-for="i in 12" :key="i" :value="i">{{ i }}</option>
+                    <option value="null" disabled>月</option>
+                    <option v-for="i in 12" :key="i" :value="i">{{ i }}</option>
                 </b-form-select>
+                    <p>{{errors[0]}}</p>
+                  </ValidationProvider>
               </b-col>
             </b-row>
           </b-form-group>
@@ -116,9 +123,9 @@ export default {
           value: 4
         }
       ],
-      userName: "",
-      userNameKana: "",
-      mailAddress: "",
+      userName: null,
+      userNameKana: null,
+      mailAddress: null,
       hireYear: null,
       hireMonth: null,
       depId: null
@@ -152,7 +159,7 @@ export default {
     }
   },
   mounted() {
-    this.mailAddress = this.$store.state.login_user.mailAddress;
-  },
+    this.mailAddress = this.$store.state.loginUserMail.mailName;
+  }
 };
 </script>

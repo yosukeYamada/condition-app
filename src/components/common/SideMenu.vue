@@ -48,7 +48,7 @@
               </v-list-item-content>
             </v-list-item>
 
-            <template v-if="autority=== 1">
+            <template v-if="authority=== 1">
             <v-list-item >
               <v-list-item-icon>
                 <v-icon> mdi mdi-format-list-bulleted</v-icon>

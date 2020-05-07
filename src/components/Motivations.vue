@@ -1,6 +1,28 @@
 <template>
   <div>
-    <b-table striped hover :items="dailyPost"></b-table>
+    <v-data-table :headers="headers" :items="dailyPost">
+      <template v-slot:item.motivation="{ item }">
+      <v-fa
+        :icon="transferIcon(item.motivation)"
+        size="lg"
+        :style="transferColor(item.motivation)"
+      />
+    </template>
+    <template v-slot:item.condition="{ item }">
+      <v-fa
+        :icon="transferIcon(item.condition)"
+        size="lg"
+        :style="transferColor(item.condition)"
+      />
+    </template>
+    <template v-slot:item.performance="{ item }">
+      <v-fa
+        :icon="transferIcon(item.performance)"
+        size="lg"
+        :style="transferColor(item.performance)"
+      />
+    </template>
+    </v-data-table>
   </div>
 </template>
 
@@ -9,20 +31,78 @@ import moment from 'moment'
 export default {
   data() {
     return {
-      dailyPost:[]
+      dailyPost:[],
+      headers: [
+        {
+          value: "date",
+          text: "投稿日",
+          sortable: true,
+        },
+        {
+          value: "motivation",
+          text: "やる気",
+          sortable: true,
+        },
+        {
+          value: "condition",
+          text: "体調",
+          sortable: true,
+        },
+        {
+          value: "performance",
+          text: "成果",
+          sortable: true,
+        },
+        {
+          value: "comment",
+          text: "コメント",
+          sortable: true,
+        },
+      ],
     }
   },
   mounted() {
     for(let num in this.$store.state.login_user.user.dailyPost) {
       this.dailyPost.push(
-        { '日付': moment(this.$store.state.login_user.user.dailyPost[num].date).format("YYYY-MM-DD"), 
-        '体調': this.$store.state.login_user.user.dailyPost[num].postedCondition.condition.conditionName,
-        'やる気': this.$store.state.login_user.user.dailyPost[num].postedMotivation.motivation.motivationName,
-        '成果': this.$store.state.login_user.user.dailyPost[num].postedPerformance.performance.performanceName,
-        'その他':this.$store.state.login_user.user.dailyPost[num].postedComment.comment}
+        { date: moment(this.$store.state.login_user.user.dailyPost[num].date).format("YYYY-MM-DD"), 
+        condition: this.$store.state.login_user.user.dailyPost[num].postedCondition.condition.conditionName,
+        motivation: this.$store.state.login_user.user.dailyPost[num].postedMotivation.motivation.motivationName,
+        performance: this.$store.state.login_user.user.dailyPost[num].postedPerformance.performance.performanceName,
+        comment:this.$store.state.login_user.user.dailyPost[num].postedComment.comment}
       )
     }
-    console.log(this.dailyPost)
   },
+  methods: {
+     transferIcon(param) {
+      if (param === "快晴") {
+        return ["fas", "sun"];
+      } else if (param === "晴") {
+        return ["fas", "cloud-sun"];
+      } else if (param === "曇") {
+        return ["fas", "cloud"];
+      } else if (param === "雨") {
+        return ["fas", "cloud-rain"];
+      } else if (param === "嵐") {
+        return ["fas", "cloud-showers-heavy"];
+      } else {
+        return ["fas", "question"];
+      }
+    },
+    transferColor(param) {
+      if (param === "快晴") {
+        return { color: "#ea5550" };
+      } else if (param === "晴") {
+        return { color: "#f3981d" };
+      } else if (param === "曇") {
+        return { color: "#b2cbe4" };
+      } else if (param === "雨") {
+        return { color: "#68a4d9" };
+      } else if (param === "嵐") {
+        return { color: "#0075c2" };
+      } else {
+        return { color: "black" };
+      }
+    },
+  }
 };
 </script>

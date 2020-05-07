@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <b-col sm="6">
     <Login></Login>
 
     <!-- <div id="app">
       <div v-for="user in users" :key="user.id">{{ user.name }}</div>
     </div> -->
-  </div>
+  </b-col>
 </template>
 
 <script>

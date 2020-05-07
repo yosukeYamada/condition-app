@@ -1,24 +1,32 @@
 <template>
   <div>
     <div v-show="this.$store.state.loading" class="loading">Loading...</div>
-
-    <div v-show="!this.$store.state.loading">
-      <div id="content">
-        <v-container text-cener>
-          <p class="err">{{ err }}</p>
-          <h1>ログイン画面</h1>
-          <p>
-            Applicationをご利用の方は、Googleアカウントでログインしてください
-          </p>
-
-          <span v-if="!$store.state.login_user">
-            <v-btn color="info" @click="login"
-              >Googleアカウントでログイン</v-btn
-            >
-          </span>
-        </v-container>
-      </div>
-    </div>
+    <b-card
+      class="text-center py-3 shadow-sm"
+      v-show="!this.$store.state.loading"
+    >
+      <b-card-text>
+        <p class="err">{{ err }}</p>
+        <p class="display-2 font-weight-bold text-success mb-5">Rakuppo</p>
+        <p>あなたの今日のコンディションを記録しましょう</p>
+        <span v-if="!$store.state.login_user">
+          <v-btn
+            class="my-5 px-5 align-middle"
+            outlined
+            color="grey lighten-1"
+            @click="login"
+            style="text-transform: none;height:42px"
+          >
+            <div class="px-3">
+              <img class="pb-1" src="@/assets/google_icon.png" />
+              <span class="ml-1" style="color:#6a6a6a">
+                Googleアカウントでログイン
+              </span>
+            </div>
+          </v-btn>
+        </span>
+      </b-card-text>
+    </b-card>
   </div>
 </template>
 

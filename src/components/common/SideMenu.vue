@@ -48,14 +48,14 @@
               </v-list-item-content>
             </v-list-item>
 
-            <template v-if="autority==='1'">
+            <template v-if="autority===1">
             
             <v-list-item >
               <v-list-item-icon>
                 <v-icon> mdi mdi-format-list-bulleted</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title v-if="authority === 1"
+                <v-list-item-title 
                   @click="toPage('/EmployeeList')"
                   class="text-white"
                   >従業員一覧</v-list-item-title
@@ -70,7 +70,7 @@
                 <v-icon> mdi mdi-chart-line</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title v-if="authority === 1"
+                <v-list-item-title 
                   @click="toPage('/Aggregate')"
                   class="text-white"
                   >集計グラフ</v-list-item-title
@@ -78,12 +78,12 @@
               </v-list-item-content>
             </v-list-item>
             </tempate>
-            <template v-if="authority==='1'">
+            <template v-if="authority=== 1 ">
             <v-list-item>
               <v-list-item-icon>
                 <v-icon> mdi mdi-cog-outline</v-icon>
               </v-list-item-icon>
-              <v-list-item-content v-if="authority==='1'">
+              <v-list-item-content>
                 <v-list-item-title
                   @click="toPage('AdminSetting')" 
                   class="text-white"

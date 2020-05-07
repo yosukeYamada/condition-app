@@ -1,7 +1,9 @@
 <template>
   <v-data-table :headers="headers" :items="items" class="elevation-1 card">
     <template v-slot:item.name="{ item }">
-      <span v-text="item.name" @click="toPage(item.userId)"></span>
+      <router-link :to="{ name: 'EmployeeMotivation', params: { userId: item.userId } }">
+        <v-text>{{ item.name }}</v-text>
+      </router-link>
     </template>
     <template v-slot:item.motivation="{ item }">
       <v-fa
@@ -86,7 +88,6 @@ export default {
           userId +
           "の個別の履歴を見に行きます！(個別ページは現在開発中です！)"
       );
-      // this.$router.push("/MotivHistory/" + userId);
     },
     transferIcon(param) {
       if (param === "快晴") {

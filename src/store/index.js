@@ -40,6 +40,8 @@ export default new Vuex.Store({
     dailyPostList: [],
     firebase_user: null,
     authority: "",
+    loginUserMail: "",
+    employeeList:[]
   },
   mutations: {
     setLoginUser(state, user) {
@@ -63,6 +65,12 @@ export default new Vuex.Store({
     setAuthority(state, authority) {
       state.authority = authority;
     },
+    loginUserMail(state, loginUserMail) {
+      state.loginUserMail = loginUserMail
+    },
+    employeeList(state, employeeList) {
+      state.employeeList = employeeList
+    }
   },
   actions: {
     login() {
@@ -90,7 +98,12 @@ export default new Vuex.Store({
     setAuthority({ commit }, authority) {
       commit("setAuthority", authority);
     },
-
+    loginUserMail({commit}, loginUserMail) {
+      commit("loginUserMail", loginUserMail)
+    },
+    employeeList({commit}, employeeList) {
+      commit("employeeList", employeeList)
+    },
     getAggregate: function({ commit }) {
       axios
         .get("http://localhost:8080/getAggregateByDay?date=2020/04/27")

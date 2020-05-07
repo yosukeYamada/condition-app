@@ -1,28 +1,18 @@
 <template>
   <div class="jumbotron jumbotron-fluid bg-dark py-0">
     <div class="jumbotron-background"></div>
-    <div class="container text-white">
-      <h1 class="display-2 mb-4">コンディションを管理しよう</h1>
+    <div class="container text-white text-center">
+      <p class="display-2 mb-4">コンディションを管理しよう</p>
       <p class="lead">
-        Rakuppoは自身の日々のコンディションを登録してマネジメントするアプリケーションです
+        日々のコンディションをマネジメントするアプリケーション
       </p>
       <hr class="my-4" />
       <p>
         すでに利用しているユーザーはこちらからログインしてコンディションを登録しましょう
       </p>
-      <b-button class="btn-primary btn-lg text-white" href="#" @click="toPage('/')" role="button"
-        >ログインする</b-button
-      >
+      <b-button variant="success" @click="toPage('/')">ログインする</b-button>
     </div>
   </div>
-  <!-- <b-jumbotron
-    fluid
-    header="Rakuppo"
-    lead="コンディションをマネジメントするシステム"
-  >
-    <p>ユーザーの方はログインしてコンディションを記録しましょう</p>
-    <b-button variant="primary" @click="toPage('/')">ログインする</b-button>
-  </b-jumbotron> -->
 </template>
 <script>
 export default {
@@ -43,7 +33,8 @@ export default {
   z-index: 2;
   background: rgba(0, 0, 0, 0.2);
   height: 100%;
-  padding: 5rem;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 .jumbotron-background {
   object-fit: fill;

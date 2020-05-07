@@ -42,6 +42,8 @@ export default {
       "deleteLoginUser",
       "setLoading",
       "setLoadings",
+      "employeeList",
+      "loginUserMail",
     ]),
   },
   created() {
@@ -54,8 +56,12 @@ export default {
             mail: firebase.auth().currentUser.email,
           })
           .then((response) => {
+            //新規登録画面へ遷移
             if (response.data.user.authority == 0) {
+              this.loginUserMail(response.data)
+
               this.$router.push("/RegisterUser");
+            //管理者権限
             } else if (response.data.user.authority == 1) {
               this.setLoginUser(response.data);
               //authorityの値をstateに格納
@@ -63,8 +69,16 @@ export default {
                 "setAuthority",
                 response.data.user.authority
               );
-
+              //全従業員情報を取得
+              axios.get("http://localhost:8080/showEmployeeList")
+              .then((response) => {
+                this.employeeList(response.data);
+              })
+              .catch((e) => {
+                alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
+              });
               this.$router.push("/Home");
+            //従業員権限
             } else if (response.data.user.authority == 2) {
               this.setLoginUser(response.data);
               this.$router.push("/Home");

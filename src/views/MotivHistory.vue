@@ -1,12 +1,7 @@
 <template>
  <b-col>
-    <b-card class="m-5" border-variant="success" 
-      header="モチベーション履歴"
-      header-bg-variant="success"
-      header-text-variant="white"
-    style="border-width:2px;">
+    <h2 class="mb-4">モチベーション履歴</h2>
       <Motivations />
-    </b-card>
  </b-col>
 </template>
 

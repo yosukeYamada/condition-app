@@ -158,7 +158,7 @@ export default {
     },
   },
   mounted() {
-    this.mailAddress = this.$store.state.login_user;
+    this.mailAddress = this.$store.state.login_user.mailAddress;
   },
 };
 </script>

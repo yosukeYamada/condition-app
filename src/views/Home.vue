@@ -1,7 +1,7 @@
 <template>
   <b-col>
-    <EmployeeHome v-if="authority === 1"></EmployeeHome>
-    <AdminHome v-if="authority === 2"></AdminHome>
+    <AdminHome v-if="authority === 1"></AdminHome>
+    <EmployeeHome v-if="authority === 2"></EmployeeHome>
   </b-col>
 </template>
 

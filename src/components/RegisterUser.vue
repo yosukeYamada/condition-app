@@ -104,6 +104,7 @@
 
 <script>
 import axios from "axios";
+import {mapActions} from "vuex"
 export default {
   name: "RegisterUser",
   data() {
@@ -163,7 +164,10 @@ export default {
       this.hireYear = null;
       this.hireMonth = null;
       this.depId = null;
-    }
+    },
+    ...mapActions([
+      "setLoginUser",
+    ]),
   },
   mounted() {
     this.mailAddress = this.$store.state.login_user.mailName;

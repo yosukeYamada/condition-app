@@ -36,7 +36,8 @@ export default new Vuex.Store({
     },
     aggregates: [],
     firebase_user: null,
-    employeeList:[]
+    employeeList:[],
+    login_status: false
   },
   mutations: {
     setLoginUser(state, user) {
@@ -56,6 +57,12 @@ export default new Vuex.Store({
     },
     employeeList(state, employeeList) {
       state.employeeList = employeeList
+    },
+    login_status(state) {
+      state.login_status = true;
+    },
+    change_login_status(state) {
+      state.login_status = false;
     }
   },
   actions: {
@@ -80,6 +87,12 @@ export default new Vuex.Store({
     },
     employeeList({commit}, employeeList) {
       commit("employeeList", employeeList)
+    },
+    login_status({commit}) {
+      commit("login_status")
+    },
+    change_login_status({commit}) {
+      commit("change_login_status")
     },
     getAggregate: function({ commit }) {
       axios

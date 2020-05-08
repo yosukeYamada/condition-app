@@ -74,7 +74,7 @@ export default {
       this.employeeList = employeeList;
     },
   },
- 
+    //リロード時にログインユーザー情報を保持する
     init() {
       firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
     },

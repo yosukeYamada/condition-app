@@ -24,8 +24,7 @@ export default {
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
   },
   created() {
-    // firebase.auth().setPersistance(firebase.auth.Auth.Persistance.SESSION);
-
+    
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setFirebaseUser(user);

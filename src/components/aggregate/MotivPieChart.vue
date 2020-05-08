@@ -58,6 +58,13 @@ export default {
               let dataString =
                 Math.round((dataset.data[index] / dataSum) * 100).toString() +
                 "%";
+
+               //0％のラベルは非表示にする
+              if(dataString=='0%'){
+                dataString = ""
+                labelString=""
+              
+              }
               // positionの設定
               ctx.textAlign = "center";
               ctx.textBaseline = "middle";

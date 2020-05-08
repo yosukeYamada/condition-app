@@ -34,7 +34,6 @@ export default new Vuex.Store({
       userId: 0,
       version: 0,
     },
-    loading: true,
     aggregates: [],
     firebase_user: null,
     authority: "",
@@ -50,14 +49,8 @@ export default new Vuex.Store({
     deleteLoginUser(state) {
       state.login_user = null;
     },
-    setLoading(state) {
-      state.loading = false;
-    },
     setAggregate: function(state, aggregate) {
       state.aggregates = aggregate;
-    },
-    setLoadings(state) {
-      state.loading = true;
     },
     setAuthority(state, authority) {
       state.authority = authority;
@@ -83,12 +76,6 @@ export default new Vuex.Store({
     },
     deleteLoginUser({ commit }) {
       commit("deleteLoginUser");
-    },
-    setLoading({ commit }) {
-      commit("setLoading");
-    },
-    setLoadings({ commit }) {
-      commit("setLoadings");
     },
     setAuthority({ commit }, authority) {
       commit("setAuthority", authority);

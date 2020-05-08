@@ -6,7 +6,7 @@
       v-show="!loading"
     >
       <b-card-text>
-        <p class="err">{{ err }}</p>
+        <p class="err" style="white-space:pre-wrap; word-wrap:break-word;">{{ err }}</p>
         <p class="display-2 font-weight-bold text-success mb-5">Rakuppo</p>
         <p>あなたの今日のコンディションを記録しましょう</p>
         <span v-if="!$store.state.login_user">
@@ -100,7 +100,8 @@ export default {
               this.deleteLoginUser();
               firebase.auth().signOut();
               this.err =
-                "メールアドレスは@rakus-partners.co.jpのものをお使いください";
+                `メールアドレスは@rakus-partners.co.jpのもの、
+または@rakus.co.jpのものをお使いください`;
             }
           });
         this.loading = true
@@ -116,8 +117,7 @@ export default {
 <style>
 .loading {
   padding: 0px; /* 余白指定 */
-  top: 0; /* 位置指定 */
-  bottom: 0; /* 位置指定 */
+  bottom: 300; /* 位置指定 */
   left: 0; /* 位置指定 */
   position: absolute;
   margin: auto;

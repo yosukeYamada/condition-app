@@ -1,10 +1,6 @@
 <template>
   <b-col sm="6">
     <Login></Login>
-
-    <!-- <div id="app">
-      <div v-for="user in users" :key="user.id">{{ user.name }}</div>
-    </div> -->
   </b-col>
 </template>
 
@@ -19,14 +15,6 @@ export default {
   components: {
     Login
   },
-  // computed: {
-  //   users: function() {
-  //     return this.$store.state.users;
-  //   }
-  // },
-  // mounted() {
-  //   this.$store.dispatch("getUsers");
-  // }
 };
 </script>
 

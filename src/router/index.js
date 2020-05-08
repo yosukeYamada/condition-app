@@ -10,6 +10,7 @@ import EmployeeList from "../views/EmployeeList";
 import AdminSetting from "../views/AdminSetting";
 import Home from "../views/Home.vue";
 import Top from "../views/Top.vue";
+// import store from '../store/index';
 
 Vue.use(VueRouter);
 
@@ -29,10 +30,18 @@ const routes = [
     name: "Top",
     component: Top,
   },
+  
   {
     path: "/Home",
     name: "Home",
     component: Home,
+    // beforeEnter: (to, from, next) => {
+    //   if(store.state.login_user.status === 1){
+        
+    //     next()
+    //   }
+    //     next('/login')
+    // }
   },
   {
     path: "/dailyPost",

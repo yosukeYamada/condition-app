@@ -36,7 +36,6 @@ export default new Vuex.Store({
     },
     loading: true,
     aggregates: [],
-    dailyPostList: [],
     firebase_user: null,
     authority: "",
     employeeList:[]

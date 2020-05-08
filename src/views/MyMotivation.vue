@@ -35,8 +35,6 @@ export default {
           .then((response) => {
             //authorityの値をstateに格納
             this.$store.dispatch("setAuthority", response.data.user.authority);
-            console.log(response.data);
-
             this.$store.dispatch("setLoginUser", response.data);
           });
       }

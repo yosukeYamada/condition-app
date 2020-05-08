@@ -14,14 +14,14 @@
           <p>Rakuppoを利用するにはユーザー登録を完了してください。</p>
         </b-card-text>
         <b-card-text>
-          <ValidationProvider :rules="{userName: /^[^ -~｡-ﾟ]*$/}" v-slot="{errors}">
+          <ValidationProvider :rules="{userName: /[^ -~｡-ﾟ]{1,20}/}" v-slot="{errors}">
             <b-form-group label="名前" label-for="input-name" description="苗字と名前の間はスペースをあけないでください">
               <b-form-input id="input-name" type="text" v-model="userName" placeholder="ラクス太郎" />
               <p>{{errors[0]}}</p>
             </b-form-group>
           </ValidationProvider>
 
-          <ValidationProvider :rules="{userNameKana: /^[ぁ-ん]+$/}" v-slot="{errors}">
+          <ValidationProvider :rules="{userNameKana: /[ぁ-ん]{1,20}/}" v-slot="{errors}">
             <b-form-group
               label="ふりがな"
               label-for="input-name-kana"
@@ -104,6 +104,7 @@
 
 <script>
 import axios from "axios";
+import {mapActions} from "vuex"
 export default {
   name: "RegisterUser",
   data() {
@@ -147,7 +148,15 @@ export default {
           mailAddress: this.mailAddress,
           authorityId: 2
         })
-        .then(this.$router.push("/Home"));
+        .then(response =>{
+          this.setLoginUser(response.data);
+              //authorityの値をstateに格納
+              this.$store.dispatch(
+                "setAuthority",
+                response.data.user.authority);
+              this.login_status();
+              this.$router.push("/Home");
+        });
     },
     resetButton() {
       this.userName = "";
@@ -156,7 +165,11 @@ export default {
       this.hireYear = null;
       this.hireMonth = null;
       this.depId = null;
-    }
+    },
+    ...mapActions([
+      "setLoginUser",
+      "login_status"
+    ]),
   },
   mounted() {
     this.mailAddress = this.$store.state.login_user.mailName;

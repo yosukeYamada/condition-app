@@ -52,6 +52,7 @@ export default {
       "setLoading",
       "setLoadings",
       "employeeList",
+      "login_status",
     ]),
   },
   created() {
@@ -60,7 +61,7 @@ export default {
       if (user) {
         this.setFirebaseUser(user);
         axios
-          .post("http://localhost:8080/mail/findByMailAndAuthority", {
+          .post("/mail/findByMailAndAuthority", {
             mail: firebase.auth().currentUser.email,
           })
           .then((response) => {
@@ -71,13 +72,14 @@ export default {
             //管理者権限
             } else if (response.data.user.authority == 1) {
               this.setLoginUser(response.data);
+              this.login_status();
               //authorityの値をstateに格納
               this.$store.dispatch(
                 "setAuthority",
                 response.data.user.authority
               );
               //全従業員情報を取得
-              axios.get("http://localhost:8080/showEmployeeList")
+              axios.get("/showEmployeeList")
               .then((response) => {
                 this.employeeList(response.data);
               })
@@ -88,6 +90,7 @@ export default {
             //従業員権限
             } else if (response.data.user.authority == 2) {
               this.setLoginUser(response.data);
+              this.login_status();
               //authorityの値をstateに格納
               this.$store.dispatch(
                 "setAuthority",

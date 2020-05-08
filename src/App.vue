@@ -34,9 +34,8 @@ export default {
           /** ログインしている場合 */
           console.log("ログインしています");
           if (this.$store.state.login_user === null) {
-            console.error("ログインユーザー情報がnullです");
             axios
-              .post("http://localhost:8080/mail/findByMailAndAuthority", {
+              .post("/mail/findByMailAndAuthority", {
                 mail: firebase.auth().currentUser.email,
               })
               .then((response) => {

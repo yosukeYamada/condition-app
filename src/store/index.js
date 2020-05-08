@@ -36,8 +36,8 @@ export default new Vuex.Store({
     },
     aggregates: [],
     firebase_user: null,
-    authority: "",
-    employeeList:[]
+    employeeList:[],
+    login_status: false
   },
   mutations: {
     setLoginUser(state, user) {
@@ -53,10 +53,16 @@ export default new Vuex.Store({
       state.aggregates = aggregate;
     },
     setAuthority(state, authority) {
-      state.authority = authority;
+      state.login_user.user.authority = authority;
     },
     employeeList(state, employeeList) {
       state.employeeList = employeeList
+    },
+    login_status(state) {
+      state.login_status = true;
+    },
+    change_login_status(state) {
+      state.login_status = false;
     }
   },
   actions: {
@@ -82,6 +88,12 @@ export default new Vuex.Store({
     employeeList({commit}, employeeList) {
       commit("employeeList", employeeList)
     },
+    login_status({commit}) {
+      commit("login_status")
+    },
+    change_login_status({commit}) {
+      commit("change_login_status")
+    },
     getAggregate: function({ commit }) {
       axios
         .get("http://localhost:8080/getAggregateByDay?date=2020/04/27")
@@ -97,5 +109,8 @@ export default new Vuex.Store({
   getters: {
     userName: (state) => (state.login_user ? state.login_user.user.userName : ""),
     photoURL: (state) => state.firebase_user ? state.firebase_user.photoURL : "",
+    employeeMotivation: state => userId => {
+      state.employeeList.filter(elm => elm.userId === userId)
+    }
   },
 });

@@ -52,6 +52,7 @@ export default {
       "setLoading",
       "setLoadings",
       "employeeList",
+      "login_status",
     ]),
   },
   created() {
@@ -71,6 +72,7 @@ export default {
             //管理者権限
             } else if (response.data.user.authority == 1) {
               this.setLoginUser(response.data);
+              this.login_status();
               //authorityの値をstateに格納
               this.$store.dispatch(
                 "setAuthority",
@@ -88,6 +90,7 @@ export default {
             //従業員権限
             } else if (response.data.user.authority == 2) {
               this.setLoginUser(response.data);
+              this.login_status();
               //authorityの値をstateに格納
               this.$store.dispatch(
                 "setAuthority",

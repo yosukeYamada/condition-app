@@ -34,11 +34,10 @@ export default new Vuex.Store({
       userId: 0,
       version: 0,
     },
-    loading: true,
     aggregates: [],
-    dailyPostList: [],
     firebase_user: null,
-    employeeList:[]
+    employeeList:[],
+    login_status: false
   },
   mutations: {
     setLoginUser(state, user) {
@@ -50,20 +49,20 @@ export default new Vuex.Store({
     deleteLoginUser(state) {
       state.login_user = null;
     },
-    setLoading(state) {
-      state.loading = false;
-    },
     setAggregate: function(state, aggregate) {
       state.aggregates = aggregate;
-    },
-    setLoadings(state) {
-      state.loading = true;
     },
     setAuthority(state, authority) {
       state.login_user.user.authority = authority;
     },
     employeeList(state, employeeList) {
       state.employeeList = employeeList
+    },
+    login_status(state) {
+      state.login_status = true;
+    },
+    change_login_status(state) {
+      state.login_status = false;
     }
   },
   actions: {
@@ -84,17 +83,17 @@ export default new Vuex.Store({
     deleteLoginUser({ commit }) {
       commit("deleteLoginUser");
     },
-    setLoading({ commit }) {
-      commit("setLoading");
-    },
-    setLoadings({ commit }) {
-      commit("setLoadings");
-    },
     setAuthority({ commit }, authority) {
       commit("setAuthority", authority);
     },
     employeeList({commit}, employeeList) {
       commit("employeeList", employeeList)
+    },
+    login_status({commit}) {
+      commit("login_status")
+    },
+    change_login_status({commit}) {
+      commit("change_login_status")
     },
     getAggregate: function({ commit }) {
       axios

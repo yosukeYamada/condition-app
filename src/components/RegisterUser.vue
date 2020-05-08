@@ -154,6 +154,7 @@ export default {
               this.$store.dispatch(
                 "setAuthority",
                 response.data.user.authority);
+              this.login_status();
               this.$router.push("/Home");
         });
     },
@@ -167,6 +168,7 @@ export default {
     },
     ...mapActions([
       "setLoginUser",
+      "login_status"
     ]),
   },
   mounted() {

@@ -17,16 +17,19 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import firebase from "firebase/app";
 export default {
   methods: {
     logout() {
       firebase.auth().signOut();
       this.$router.push("/");
+      this.change_login_status();
     },
   },
   computed: {
     ...mapGetters(["userName", "photoURL"]),
+    ...mapActions(["change_login_status"])
   },
 };
 </script>

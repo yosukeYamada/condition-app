@@ -52,9 +52,17 @@ export default {
 
               // ラベルをパーセント表示に変更
               let labelString = chart.data.labels[index];
+              
               let dataString =
                 Math.round((dataset.data[index] / dataSum) * 100).toString() +
                 "%";
+              
+              //0％のラベルは非表示にする
+              if(dataString=='0%'){
+                dataString = ""
+                labelString=""
+              
+              }
 
               // positionの設定
               ctx.textAlign = "center";

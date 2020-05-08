@@ -102,20 +102,23 @@
 
 <script>
 import Logout from "@/components/Logout";
+
 export default {
   components: {
     Logout,
   },
   computed: {
     authority: function() {
-      return this.$store.state.authority;
-      // return 2; // TODO 本当は上のようにしたいがlogin_userがセットし終わる前に処理が行われ、nullでエラーになる
+      return this.$store.state.authority
     },
+     
+  
   },
   methods: {
     toPage(path) {
       this.$router.push(path);
     },
+    
   },
 };
 </script>

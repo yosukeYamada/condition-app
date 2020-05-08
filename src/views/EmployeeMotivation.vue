@@ -72,21 +72,20 @@ export default {
   },
   mounted() {
     var list = this.$store.state.employeeList.filter(elm => elm.userId === this.$route.params.userId)
-    console.log(list)
     for(let num in list[0].dailyPost) {
       this.employeeList.push({
-        date: moment(this.$store.state.employeeList[0].dailyPost[num].date).format("YYYY-MM-DD"), 
-        motivation: this.$store.state.employeeList[0].dailyPost[num].postedMotivation.motivation.motivationName,
-        condition: this.$store.state.employeeList[0].dailyPost[num].postedCondition.condition.conditionName,
-        performance: this.$store.state.employeeList[0].dailyPost[num].postedPerformance.performance.performanceName,
-        comment: this.$store.state.employeeList[0].dailyPost[num].postedComment.comment
+        date: moment(list[0].dailyPost[num].date).format("YYYY-MM-DD"), 
+        motivation: list[0].dailyPost[num].postedMotivation.motivation.motivationName,
+        condition: list[0].dailyPost[num].postedCondition.condition.conditionName,
+        performance: list[0].dailyPost[num].postedPerformance.performance.performanceName,
+        comment: list[0].dailyPost[num].postedComment.comment
       })
     }
   },
   filters: {
-        moment: function (date) {
-            return moment(date).format('YYYY年MM月');
-        }
+    moment: function (date) {
+        return moment(date).format('YYYY年MM月');
+    }
   },
   methods: {
     transferIcon(param) {
@@ -129,9 +128,6 @@ export default {
       firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
     },
   created() {
-    this.getMasterList();
-    // firebase.auth().setPersistance(firebase.auth.Auth.Persistance.SESSION);
-
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setFirebaseUser(user);

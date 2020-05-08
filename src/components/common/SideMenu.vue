@@ -109,7 +109,7 @@ export default {
   },
   computed: {
     authority: function() {
-      return this.$store.state.authority
+      return this.$store.state.login_user.user.authority
     },
      
   

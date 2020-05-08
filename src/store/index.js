@@ -36,7 +36,6 @@ export default new Vuex.Store({
     },
     aggregates: [],
     firebase_user: null,
-    authority: "",
     employeeList:[]
   },
   mutations: {
@@ -53,7 +52,7 @@ export default new Vuex.Store({
       state.aggregates = aggregate;
     },
     setAuthority(state, authority) {
-      state.authority = authority;
+      state.login_user.user.authority = authority;
     },
     employeeList(state, employeeList) {
       state.employeeList = employeeList

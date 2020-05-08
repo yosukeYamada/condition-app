@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="$store.state.login_user">
     <div class="py-4 border-top">
       <b-avatar
         v-if="photoURL"

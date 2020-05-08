@@ -68,6 +68,7 @@ export default {
   },
   mounted() {
     var list = this.$store.state.employeeList.filter(elm => elm.userId === this.$route.params.userId)
+    console.log(list)
     for(let num in list[0].dailyPost) {
       this.employeeList.push({
         date: moment(this.$store.state.employeeList[0].dailyPost[num].date).format("YYYY-MM-DD"), 

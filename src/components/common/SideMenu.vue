@@ -1,5 +1,5 @@
 <template>
-  <div id="adminside">
+  <div id="adminside" v-if="$store.state.login_user">
     <div class="sideMenu">
       <b-sidebar
         id="sidebar-backdrop"

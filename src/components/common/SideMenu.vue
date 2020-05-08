@@ -102,6 +102,7 @@
 
 <script>
 import Logout from "@/components/Logout";
+
 export default {
   components: {
     Logout,
@@ -110,13 +111,14 @@ export default {
     authority: function() {
       return this.$store.state.authority
     },
-    // eslint-disable-next-line no-undef
-    ...mapGetters(["photoURL"])
+     
+  
   },
   methods: {
     toPage(path) {
       this.$router.push(path);
     },
+    
   },
 };
 </script>

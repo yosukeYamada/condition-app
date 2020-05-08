@@ -33,6 +33,10 @@
 
 <script>
 import moment from 'moment'
+import { mapActions } from "vuex";
+import axios from "axios";
+import firebase from "firebase/app";
+
 export default {
    data() {
     return {
@@ -115,6 +119,35 @@ export default {
         return { color: "black" };
       }
     },
+    //これがないとfirabaseのユーザー情報をstateに格納できない
+     ...mapActions([
+      "setFirebaseUser"
+    ])
+  },
+   //リロード時にログインユーザー情報を保持する
+    init() {
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+    },
+  created() {
+    this.getMasterList();
+    // firebase.auth().setPersistance(firebase.auth.Auth.Persistance.SESSION);
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setFirebaseUser(user);
+        axios
+          .post("http://localhost:8080/mail/findByMailAndAuthority", {
+            mail: firebase.auth().currentUser.email,
+          })
+          .then((response) => {
+            //authorityの値をstateに格納
+            this.$store.dispatch("setAuthority", response.data.user.authority);
+            console.log(response.data);
+
+            this.$store.dispatch("setLoginUser", response.data);
+          });
+      }
+    });
   },
 };
 </script>

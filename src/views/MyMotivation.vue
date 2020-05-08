@@ -9,6 +9,8 @@
 import Motivations from "../components/Motivations.vue";
 import axios from "axios";
 import firebase from "firebase/app";
+import { mapActions } from "vuex";
+
 
 
 export default {
@@ -26,6 +28,7 @@ export default {
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        this.setFirebaseUser(user);
         axios
           .post("http://localhost:8080/mail/findByMailAndAuthority", {
             mail: firebase.auth().currentUser.email,
@@ -40,5 +43,11 @@ export default {
       }
     });
   },
+   //これがないとfirabaseのユーザー情報をstateに格納できない
+  methods:{
+    ...mapActions([
+      "setFirebaseUser"
+    ])
+  }
 };
 </script>

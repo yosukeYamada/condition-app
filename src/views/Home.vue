@@ -10,6 +10,7 @@ import AdminHome from "@/components/home/AdminHome";
 import EmployeeHome from "@/components/home/EmployeeHome";
 import axios from "axios";
 import firebase from "firebase/app";
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -26,6 +27,7 @@ export default {
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        this.setFirebaseUser(user);
         axios
           .post("http://localhost:8080/mail/findByMailAndAuthority", {
             mail: firebase.auth().currentUser.email,
@@ -46,5 +48,12 @@ export default {
       return this.$store.state.login_user.user.authority;
     },
   },
+
+  //これがないとfirabaseのユーザー情報をstateに格納できない
+  methods:{
+    ...mapActions([
+      "setFirebaseUser"
+    ])
+  }
 };
 </script>

@@ -11,6 +11,7 @@ import EmployeeListHeader from "@/components/employee-list/EmployeeListHeader.vu
 import EmployeeList from "../components/employee-list/EmployeeList.vue";
 import axios from "axios";
 import firebase from "firebase/app";
+import { mapActions } from "vuex";
 
 
 export default {
@@ -28,6 +29,11 @@ export default {
     getMasterList() {
       this.masterList = this.$store.state.employeeList
     },
+
+    //これがないとfirabaseのユーザー情報をstateに格納できない
+     ...mapActions([
+      "setFirebaseUser"
+    ])
   },
   watch: {
     masterList: function() {
@@ -77,6 +83,7 @@ export default {
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        this.setFirebaseUser(user);
         axios
           .post("http://localhost:8080/mail/findByMailAndAuthority", {
             mail: firebase.auth().currentUser.email,
@@ -91,5 +98,6 @@ export default {
       }
     });
   },
+  
 };
 </script>

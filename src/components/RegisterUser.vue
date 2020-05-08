@@ -147,7 +147,7 @@ export default {
           mailAddress: this.mailAddress,
           authorityId: 2
         })
-        .then(this.$router.push("/"));
+        .then(this.$router.push("/Home"));
     },
     resetButton() {
       this.userName = "";

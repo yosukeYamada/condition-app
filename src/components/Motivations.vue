@@ -62,6 +62,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$store.state.login_user.user.dailyPost)
     for(let num in this.$store.state.login_user.user.dailyPost) {
       this.dailyPost.push(
         { date: moment(this.$store.state.login_user.user.dailyPost[num].date).format("YYYY-MM-DD"), 

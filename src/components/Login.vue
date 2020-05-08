@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div v-show="this.$store.state.loading" class="loading">Loading...</div>
+    <div v-show="loading" class="loading">Loading...</div>
     <b-card
       class="text-center py-3 shadow-sm"
-      v-show="!this.$store.state.loading"
+      v-show="!loading"
     >
       <b-card-text>
         <p class="err">{{ err }}</p>
@@ -40,6 +40,7 @@ export default {
     return {
       name: "Login",
       err: "",
+      loading: true
     };
   },
   methods: {
@@ -51,12 +52,11 @@ export default {
       "setLoading",
       "setLoadings",
       "employeeList",
-      "loginUserMail",
     ]),
   },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
-      this.setLoading();
+      this.loading = false;
       if (user) {
         this.setFirebaseUser(user);
         axios
@@ -66,8 +66,7 @@ export default {
           .then((response) => {
             //新規登録画面へ遷移
             if (response.data.user.authority == 0) {
-              this.loginUserMail(response.data)
-
+              this.setLoginUser(response.data);
               this.$router.push("/RegisterUser");
             //管理者権限
             } else if (response.data.user.authority == 1) {
@@ -101,7 +100,7 @@ export default {
                 "メールアドレスは@rakus-partners.co.jpのものをお使いください";
             }
           });
-        this.setLoadings();
+        this.loading = true
       } else {
         firebase.auth().signOut();
         this.deleteLoginUser();

@@ -34,13 +34,9 @@ export default new Vuex.Store({
       userId: 0,
       version: 0,
     },
-    mail: "",
-    loading: true,
     aggregates: [],
-    dailyPostList: [],
     firebase_user: null,
     authority: "",
-    loginUserMail: "",
     employeeList:[]
   },
   mutations: {
@@ -53,23 +49,15 @@ export default new Vuex.Store({
     deleteLoginUser(state) {
       state.login_user = null;
     },
-    setLoading(state) {
-      state.loading = false;
-    },
     setAggregate: function(state, aggregate) {
       state.aggregates = aggregate;
-    },
-    setLoadings(state) {
-      state.loading = true;
     },
     setAuthority(state, authority) {
       state.authority = authority;
     },
-    loginUserMail(state, loginUserMail) {
-      state.loginUserMail = loginUserMail
-    },
     employeeList(state, employeeList) {
       state.employeeList = employeeList
+      console.log(state.employeeList)
     }
   },
   actions: {
@@ -89,17 +77,8 @@ export default new Vuex.Store({
     deleteLoginUser({ commit }) {
       commit("deleteLoginUser");
     },
-    setLoading({ commit }) {
-      commit("setLoading");
-    },
-    setLoadings({ commit }) {
-      commit("setLoadings");
-    },
     setAuthority({ commit }, authority) {
       commit("setAuthority", authority);
-    },
-    loginUserMail({commit}, loginUserMail) {
-      commit("loginUserMail", loginUserMail)
     },
     employeeList({commit}, employeeList) {
       commit("employeeList", employeeList)
@@ -118,7 +97,6 @@ export default new Vuex.Store({
   modules: {},
   getters: {
     userName: (state) => (state.login_user ? state.login_user.user.userName : ""),
-    photoURL: (state) =>
-      state.firebase_user ? state.firebase_user.photoURL : "",
+    photoURL: (state) => state.firebase_user ? state.firebase_user.photoURL : "",
   },
 });

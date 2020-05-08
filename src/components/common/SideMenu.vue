@@ -1,5 +1,5 @@
 <template>
-  <div id="adminside">
+  <div id="adminside" v-if="$store.state.login_user">
     <div class="sideMenu">
       <b-sidebar
         id="sidebar-backdrop"
@@ -41,7 +41,7 @@
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title
-                  @click="toPage('/MotivHistory')"
+                  @click="toPage('/MyMotivation')"
                   class="text-white"
                   >モチベーション履歴</v-list-item-title
                 >

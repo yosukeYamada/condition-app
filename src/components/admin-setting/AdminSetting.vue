@@ -1,24 +1,26 @@
 <template>
-  <b-card
-    border-variant="success"
-    style="border-width:2px;"
-    header="従業員のユーザー設定"
-    header-bg-variant="success"
-    header-text-variant="white"
-  >
-    <b-card-text>
-      <div class="mb-2" v-for="(item, i) in items" :key="i">
-        <span
-          :to="item.path"
-          @click="toPage()"
-          @mouseover="onMouseover(item)"
-          @mouseleave="onMouseleave(item)"
-          :style="item.style"
-          >{{ item.name }}</span
-        >
-      </div>
-    </b-card-text>
-  </b-card>
+  <b-col sm="6">
+    <b-card
+      border-variant="success"
+      style="border-width:2px;"
+      header="従業員のユーザー設定"
+      header-bg-variant="success"
+      header-text-variant="white"
+    >
+      <b-card-text>
+        <div class="mb-2" v-for="(item, i) in items" :key="i">
+          <span
+            :to="item.path"
+            @click="toPage()"
+            @mouseover="onMouseover(item)"
+            @mouseleave="onMouseleave(item)"
+            :style="item.style"
+            >{{ item.name }}</span
+          >
+        </div>
+      </b-card-text>
+    </b-card>
+  </b-col>
 </template>
 <script>
 export default {

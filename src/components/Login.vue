@@ -60,7 +60,7 @@ export default {
       if (user) {
         this.setFirebaseUser(user);
         axios
-          .post("http://localhost:8080/mail/findByMailAndAuthority", {
+          .post("/mail/findByMailAndAuthority", {
             mail: firebase.auth().currentUser.email,
           })
           .then((response) => {
@@ -77,7 +77,7 @@ export default {
                 response.data.user.authority
               );
               //全従業員情報を取得
-              axios.get("http://localhost:8080/showEmployeeList")
+              axios.get("/showEmployeeList")
               .then((response) => {
                 this.employeeList(response.data);
               })

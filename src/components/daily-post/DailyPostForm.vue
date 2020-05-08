@@ -117,7 +117,7 @@ export default {
   methods: {
     register() {
       axios
-        .post("http://localhost:8080/registerDailyPost", {
+        .post("/registerDailyPost", {
           userId: this.$store.state.login_user.userId,
           motivationId: this.param.motivationSelected,
           conditionId: this.param.conditionSelected,

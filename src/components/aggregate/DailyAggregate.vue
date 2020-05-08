@@ -134,7 +134,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:8080/getAggregateByDay?date=2020/04/27")
+      .get("/getAggregateByDay?date=2020/04/27")
       .then((response) => {
         (this.ConChartData.datasets[0].data = this.convertChartData(
           response.data.condition

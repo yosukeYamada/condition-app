@@ -112,8 +112,5 @@ export default new Vuex.Store({
   getters: {
     userName: (state) => (state.login_user ? state.login_user.user.userName : ""),
     photoURL: (state) => state.firebase_user ? state.firebase_user.photoURL : "",
-    employeeMotivation: state => userId => {
-      state.employeeList.filter(elm => elm.userId === userId)
-    }
   },
 });

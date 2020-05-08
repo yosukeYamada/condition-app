@@ -117,7 +117,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:8080/getAggregateByMonth?date=2020/04/27")
+      .get("/getAggregateByMonth?date=2020/04/27")
       .then((response) => {
         this.convertChartData(response.data);
         this.isGetData = true;

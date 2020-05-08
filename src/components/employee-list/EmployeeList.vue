@@ -2,7 +2,7 @@
   <v-data-table :headers="headers" :items="items" class="elevation-1 card">
     <template v-slot:item.name="{ item }">
       <router-link :to="{ name: 'EmployeeMotivation', params: { userId: item.userId } }">
-        <v-text>{{ item.name }}</v-text>
+        <span>{{ item.name }}</span>
       </router-link>
     </template>
     <template v-slot:item.motivation="{ item }">
@@ -82,13 +82,6 @@ export default {
     };
   },
   methods: {
-    toPage(userId) {
-      alert(
-        "ユーザーID:" +
-          userId +
-          "の個別の履歴を見に行きます！(個別ページは現在開発中です！)"
-      );
-    },
     transferIcon(param) {
       if (param === "快晴") {
         return ["fas", "sun"];

@@ -63,7 +63,7 @@
             </v-list-item>
             </template>
             
-            <tempate v-if="authority=== 1">
+            <template v-if="authority=== 1">
             <v-list-item>
               <v-list-item-icon>
                 <v-icon> mdi mdi-chart-line</v-icon>
@@ -76,7 +76,7 @@
                 >
               </v-list-item-content>
             </v-list-item>
-            </tempate>
+            </template>
             <template v-if="authority=== 1 ">
             <v-list-item>
               <v-list-item-icon>

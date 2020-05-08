@@ -114,10 +114,16 @@ export default {
     },
     registerLimit() {
       axios
-        .post("http://localhost:8080/registerLimit", {
-          userId: this.$store.state.login_user.userId,
+        .post("/registerLimit", {
+          userId: this.$store.state.login_user.userId
         })
-        .then(console.log(Response));
+        .then((response) => {
+          if(response.data) {
+            alert('投稿は1日1回です')
+          } else {
+            this.$router.push('/dailyPost')
+          }
+        });
     },
   },
 };

@@ -39,9 +39,7 @@
             class="pt-4"
             label="今日やることの目標のイメージはできていますか？"
           >
-            <b-form-radio-group
-              v-model="param.performanceSelected"
-            >
+            <b-form-radio-group v-model="param.performanceSelected">
               <b-form-radio
                 class="pr-5 pb-4"
                 v-for="(item, i) in radioItems"
@@ -117,7 +115,7 @@ export default {
   methods: {
     register() {
       axios
-        .post("http://localhost:8080/registerDailyPost", {
+        .post("/registerDailyPost", {
           userId: this.$store.state.login_user.userId,
           motivationId: this.param.motivationSelected,
           conditionId: this.param.conditionSelected,

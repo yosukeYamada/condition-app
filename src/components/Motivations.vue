@@ -2,36 +2,36 @@
   <div>
     <v-data-table :headers="headers" :items="dailyPost">
       <template v-slot:item.motivation="{ item }">
-      <v-fa
-        :icon="transferIcon(item.motivation)"
-        size="lg"
-        :style="transferColor(item.motivation)"
-      />
-    </template>
-    <template v-slot:item.condition="{ item }">
-      <v-fa
-        :icon="transferIcon(item.condition)"
-        size="lg"
-        :style="transferColor(item.condition)"
-      />
-    </template>
-    <template v-slot:item.performance="{ item }">
-      <v-fa
-        :icon="transferIcon(item.performance)"
-        size="lg"
-        :style="transferColor(item.performance)"
-      />
-    </template>
+        <v-fa
+          :icon="transferIcon(item.motivation)"
+          size="lg"
+          :style="transferColor(item.motivation)"
+        />
+      </template>
+      <template v-slot:item.condition="{ item }">
+        <v-fa
+          :icon="transferIcon(item.condition)"
+          size="lg"
+          :style="transferColor(item.condition)"
+        />
+      </template>
+      <template v-slot:item.performance="{ item }">
+        <v-fa
+          :icon="transferIcon(item.performance)"
+          size="lg"
+          :style="transferColor(item.performance)"
+        />
+      </template>
     </v-data-table>
   </div>
 </template>
 
 <script>
-import moment from 'moment'
+import moment from "moment";
 export default {
   data() {
     return {
-      dailyPost:[],
+      dailyPost: [],
       headers: [
         {
           value: "date",
@@ -59,22 +59,28 @@ export default {
           sortable: true,
         },
       ],
-    }
+    };
   },
   mounted() {
-    console.log(this.$store.state.login_user.user.dailyPost)
-    for(let num in this.$store.state.login_user.user.dailyPost) {
-      this.dailyPost.push(
-        { date: moment(this.$store.state.login_user.user.dailyPost[num].date).format("YYYY-MM-DD"), 
-        condition: this.$store.state.login_user.user.dailyPost[num].postedCondition.condition.conditionName,
-        motivation: this.$store.state.login_user.user.dailyPost[num].postedMotivation.motivation.motivationName,
-        performance: this.$store.state.login_user.user.dailyPost[num].postedPerformance.performance.performanceName,
-        comment:this.$store.state.login_user.user.dailyPost[num].postedComment.comment}
-      )
+    console.log(this.$store.state.login_user.user.dailyPost);
+    for (let num in this.$store.state.login_user.user.dailyPost) {
+      this.dailyPost.push({
+        date: moment(
+          this.$store.state.login_user.user.dailyPost[num].date
+        ).format("YYYY-MM-DD"),
+        condition: this.$store.state.login_user.user.dailyPost[num]
+          .postedCondition.condition.conditionName,
+        motivation: this.$store.state.login_user.user.dailyPost[num]
+          .postedMotivation.motivation.motivationName,
+        performance: this.$store.state.login_user.user.dailyPost[num]
+          .postedPerformance.performance.performanceName,
+        comment: this.$store.state.login_user.user.dailyPost[num].postedComment
+          .comment,
+      });
     }
   },
   methods: {
-     transferIcon(param) {
+    transferIcon(param) {
       if (param === "快晴") {
         return ["fas", "sun"];
       } else if (param === "晴") {
@@ -104,6 +110,6 @@ export default {
         return { color: "black" };
       }
     },
-  }
+  },
 };
 </script>

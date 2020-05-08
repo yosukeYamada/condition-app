@@ -16,9 +16,7 @@
                 <v-icon> mdi mdi-home</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title
-                  @click="toPage('/Home')"
-                  class="text-white"
+                <v-list-item-title @click="toPage('/Home')" class="text-white"
                   >ホーム</v-list-item-title
                 >
               </v-list-item-content>
@@ -28,9 +26,7 @@
                 <v-icon> mdi mdi-weather-sunny</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title
-                  @click="toPage('/dailyPost')"
-                  class="text-white"
+                <v-list-item-title @click="registerLimit" class="text-white"
                   >今日のコンディション投稿</v-list-item-title
                 >
               </v-list-item-content>
@@ -48,49 +44,48 @@
               </v-list-item-content>
             </v-list-item>
 
-            <template v-if="authority=== 1">
-            <v-list-item >
-              <v-list-item-icon>
-                <v-icon> mdi mdi-format-list-bulleted</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title 
-                  @click="toPage('/EmployeeList')"
-                  class="text-white"
-                  >従業員一覧</v-list-item-title
-                >
-              </v-list-item-content>
-            </v-list-item>
+            <template v-if="authority === 1">
+              <v-list-item>
+                <v-list-item-icon>
+                  <v-icon> mdi mdi-format-list-bulleted</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title
+                    @click="toPage('/EmployeeList')"
+                    class="text-white"
+                    >従業員一覧</v-list-item-title
+                  >
+                </v-list-item-content>
+              </v-list-item>
             </template>
-            
-            <tempate v-if="authority=== 1">
-            <v-list-item>
-              <v-list-item-icon>
-                <v-icon> mdi mdi-chart-line</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title 
-                  @click="toPage('/Aggregate')"
-                  class="text-white"
-                  >集計グラフ</v-list-item-title
-                >
-              </v-list-item-content>
-            </v-list-item>
+
+            <tempate v-if="authority === 1">
+              <v-list-item>
+                <v-list-item-icon>
+                  <v-icon> mdi mdi-chart-line</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title
+                    @click="toPage('/Aggregate')"
+                    class="text-white"
+                    >集計グラフ</v-list-item-title
+                  >
+                </v-list-item-content>
+              </v-list-item>
             </tempate>
-            <template v-if="authority=== 1 ">
-            <v-list-item>
-              <v-list-item-icon>
-                <v-icon> mdi mdi-cog-outline</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title
-                  @click="toPage('AdminSetting')" 
-                  class="text-white"
-                  >管理者設定</v-list-item-title
-                >
-              </v-list-item-content>
-            
-            </v-list-item>
+            <template v-if="authority === 1">
+              <v-list-item>
+                <v-list-item-icon>
+                  <v-icon> mdi mdi-cog-outline</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title
+                    @click="toPage('AdminSetting')"
+                    class="text-white"
+                    >管理者設定</v-list-item-title
+                  >
+                </v-list-item-content>
+              </v-list-item>
             </template>
           </v-list-item-group>
         </v-list>
@@ -102,6 +97,7 @@
 
 <script>
 import Logout from "@/components/Logout";
+import axios from "axios";
 
 export default {
   components: {
@@ -109,16 +105,20 @@ export default {
   },
   computed: {
     authority: function() {
-      return this.$store.state.authority
+      return this.$store.state.authority;
     },
-     
-  
   },
   methods: {
     toPage(path) {
       this.$router.push(path);
     },
-    
+    registerLimit() {
+      axios
+        .post("http://localhost:8080/registerLimit", {
+          userId: this.$store.state.login_user.userId,
+        })
+        .then(console.log(Response));
+    },
   },
 };
 </script>

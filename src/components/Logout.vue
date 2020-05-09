@@ -26,10 +26,10 @@ export default {
       this.$router.push("/");
       this.change_login_status();
     },
+    ...mapActions(["change_login_status"])
   },
   computed: {
-    ...mapGetters(["userName", "photoURL"]),
-    ...mapActions(["change_login_status"])
+    ...mapGetters(["userName", "photoURL"])
   },
 };
 </script>

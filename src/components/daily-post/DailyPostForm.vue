@@ -39,9 +39,7 @@
             class="pt-4"
             label="今日やることの目標のイメージはできていますか？"
           >
-            <b-form-radio-group
-              v-model="param.performanceSelected"
-            >
+            <b-form-radio-group v-model="param.performanceSelected">
               <b-form-radio
                 class="pr-5 pb-4"
                 v-for="(item, i) in radioItems"

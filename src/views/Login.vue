@@ -8,7 +8,9 @@
 import Login from "../components/Login.vue";
 import { mapActions } from "vuex";
 
+
 export default {
+  
   methods: {
     ...mapActions(["setLoginUser"])
   },

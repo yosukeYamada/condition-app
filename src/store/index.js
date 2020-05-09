@@ -63,7 +63,8 @@ export default new Vuex.Store({
     },
     change_login_status(state) {
       state.login_status = false;
-    }
+    },
+  
   },
   actions: {
     login() {
@@ -89,7 +90,7 @@ export default new Vuex.Store({
     employeeList({commit}, employeeList) {
       commit("employeeList", employeeList)
     },
-    login_status({commit}) {
+    login_status({commit},) {
       commit("login_status")
     },
     change_login_status({commit}) {
@@ -112,6 +113,11 @@ export default new Vuex.Store({
     photoURL: (state) => state.firebase_user ? state.firebase_user.photoURL : "",
     employeeMotivation: state => userId => {
       state.employeeList.filter(elm => elm.userId === userId)
+    },
+    getStatus: function(state){
+      return state.login_user.user.status
+
     }
+
   },
 });

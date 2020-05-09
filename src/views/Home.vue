@@ -11,8 +11,16 @@ import EmployeeHome from "@/components/home/EmployeeHome";
 import axios from "axios";
 import firebase from "firebase/app";
 import { mapActions } from "vuex";
-
+// import store from "../store/index.js";
 export default {
+  // beforeRouterUpdate(to, from, next) {
+  //   if (store.state.login_status) {
+  //     next();
+  //   } else {
+  //     next({path: '/' });
+  //   }
+  //   },
+
   components: {
     AdminHome,
     EmployeeHome,
@@ -47,10 +55,8 @@ export default {
   },
 
   //これがないとfirabaseのユーザー情報をstateに格納できない
-  methods:{
-    ...mapActions([
-      "setFirebaseUser"
-    ])
-  }
+  methods: {
+    ...mapActions(["setFirebaseUser"]),
+  },
 };
 </script>

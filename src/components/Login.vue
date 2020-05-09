@@ -100,7 +100,7 @@ export default {
               this.deleteLoginUser();
               firebase.auth().signOut();
               this.err =
-                `メールアドレスは@rakus-partners.co.jpのもの、
+                `メールアドレスは@rakus-partners.co.jp、
 または@rakus.co.jpのものをお使いください`;
             }
           });

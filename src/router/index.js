@@ -30,7 +30,6 @@ const routes = [
     name: "Top",
     component: Top,
   },
-
   {
     path: "/Home",
     name: "Home",

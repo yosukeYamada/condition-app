@@ -1,5 +1,5 @@
 <template>
-  <div id="adminside" v-if="$store.state.login_user">
+  <div id="adminside" v-if="$store.state.loginUser">
     <div class="sideMenu">
       <b-sidebar
         id="sidebar-backdrop"
@@ -105,7 +105,7 @@ export default {
   },
   computed: {
     authority: function() {
-      return this.$store.state.login_user.user.authority;
+      return this.$store.state.loginUser.authority;
     },
   },
   methods: {
@@ -115,7 +115,7 @@ export default {
     registerLimit() {
       axios
         .post("/registerLimit", {
-          userId: this.$store.state.login_user.userId
+          userId: this.$store.state.loginUser.userId
         })
         .then((response) => {
           if(response.data) {

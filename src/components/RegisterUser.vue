@@ -153,8 +153,8 @@ export default {
               //authorityの値をstateに格納
               this.$store.dispatch(
                 "setAuthority",
-                response.data.user.authority);
-              this.login_status();
+                response.data.authority);
+              this.loginStatus();
               this.$router.push("/Home");
         });
     },
@@ -172,7 +172,7 @@ export default {
     ]),
   },
   mounted() {
-    this.mailAddress = this.$store.state.login_user.mailName;
+    this.mailAddress = this.$store.state.loginUser.mailList[0].mailName;
   }
 };
 </script>

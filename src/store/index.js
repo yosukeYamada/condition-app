@@ -7,15 +7,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    login_user: {
-      mailId: 0,
-      mailName: "",
-      registerDate: "",
-      registerUserId: 0,
-      status: 0,
-      updateDate: "",
-      updateUserId: 0,
-      user: {
+    loginUser: {
         authority: 2, // 初期値は1(一般ユーザー権限)で指定
         dailyPost: {},
         dep: {},
@@ -30,46 +22,54 @@ export default new Vuex.Store({
         userName: "",
         userNameKana: "",
         version: 0,
+        mailList: [{
+          mailId: 0,
+          mailName: "",
+          registerDate: "",
+          registerUserId: 0,
+          status: 0,
+          updateDate: "",
+          updateUserId: 0,
+          version: 0
+        }],
       },
-      userId: 0,
-      version: 0,
-    },
-    aggregates: [],
-    firebase_user: null,
-    employeeList:[],
-    login_status: false
+      depList: [],
+      aggregates: [],
+      firebaseUser: null,
+      employeeList:[],
+      loginStatus: false
   },
   mutations: {
     setLoginUser(state, user) {
-      state.login_user = user;
+      state.loginUser = user;
     },
     setFirebaseUser(state, user) {
-      state.firebase_user = user;
+      state.firebaseUser = user;
     },
     deleteLoginUser(state) {
-      state.login_user = null;
+      state.loginUser = null;
     },
     setAggregate: function(state, aggregate) {
       state.aggregates = aggregate;
     },
     setAuthority(state, authority) {
-      state.login_user.user.authority = authority;
+      state.loginUser.user.authority = authority;
     },
     employeeList(state, employeeList) {
       state.employeeList = employeeList
     },
-    login_status(state) {
-      state.login_status = true;
+    loginStatus(state) {
+      state.loginStatus = true;
     },
-    change_login_status(state) {
-      state.login_status = false;
+    changeLoginStatus(state) {
+      state.loginStatus = false;
     },
   
   },
   actions: {
     login() {
-      const google_auth_provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithRedirect(google_auth_provider);
+      const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithRedirect(googleAuthProvider);
       
     },
     setLoginUser({ commit }, user) {
@@ -90,11 +90,11 @@ export default new Vuex.Store({
     employeeList({commit}, employeeList) {
       commit("employeeList", employeeList)
     },
-    login_status({commit},) {
-      commit("login_status")
+    loginStatus({commit},) {
+      commit("loginStatus")
     },
-    change_login_status({commit}) {
-      commit("change_login_status")
+    changeLoginStatus({commit}) {
+      commit("changeLoginStatus")
     },
     getAggregate: function({ commit }) {
       axios
@@ -109,13 +109,13 @@ export default new Vuex.Store({
   },
   modules: {},
   getters: {
-    userName: (state) => (state.login_user ? state.login_user.user.userName : ""),
-    photoURL: (state) => state.firebase_user ? state.firebase_user.photoURL : "",
+    userName: (state) => (state.loginUser ? state.loginUser.user.userName : ""),
+    photoURL: (state) => state.firebaseUser ? state.firebaseUser.photoURL : "",
     employeeMotivation: state => userId => {
       state.employeeList.filter(elm => elm.userId === userId)
     },
     getStatus: function(state){
-      return state.login_user.user.status
+      return state.loginUser.user.status
 
     }
 

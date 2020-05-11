@@ -62,18 +62,18 @@ export default {
     };
   },
   mounted() {
-    for (let num in this.$store.state.login_user.user.dailyPost) {
+    for (let num in this.$store.state.loginUser.dailyPost) {
       this.dailyPost.push({
         date: moment(
-          this.$store.state.login_user.user.dailyPost[num].date
+          this.$store.state.loginUser.dailyPost[num].date
         ).format("YYYY-MM-DD"),
-        condition: this.$store.state.login_user.user.dailyPost[num]
+        condition: this.$store.state.loginUser.dailyPost[num]
           .postedCondition.condition.conditionName,
-        motivation: this.$store.state.login_user.user.dailyPost[num]
+        motivation: this.$store.state.loginUser.dailyPost[num]
           .postedMotivation.motivation.motivationName,
-        performance: this.$store.state.login_user.user.dailyPost[num]
+        performance: this.$store.state.loginUser.dailyPost[num]
           .postedPerformance.performance.performanceName,
-        comment: this.$store.state.login_user.user.dailyPost[num].postedComment
+        comment: this.$store.state.loginUser.dailyPost[num].postedComment
           .comment,
       });
     }

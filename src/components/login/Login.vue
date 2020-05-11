@@ -1,6 +1,5 @@
-<template>
+<template> 
   <div>
-    <div v-show="loading" class="loading">Loading...</div>
     <b-card class="text-center py-3 shadow-sm" v-show="!loading">
       <b-card-text>
         <p class="err" style="white-space:pre-wrap; word-wrap:break-word;">
@@ -26,6 +25,7 @@
         </span>
       </b-card-text>
     </b-card>
+    <Loading v-show="loading"></Loading>
   </div>
 </template>
 
@@ -33,6 +33,7 @@
 import axios from "axios";
 import firebase from "firebase/app";
 import { mapActions } from "vuex";
+import Loading from "@/components/login/Loading.vue"
 
 export default {
   data() {
@@ -41,6 +42,9 @@ export default {
       err: "",
       loading: true,
     };
+  },
+  components: {
+    Loading
   },
   methods: {
     ...mapActions([
@@ -119,7 +123,10 @@ export default {
 
 <style>
 .loading {
-  
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 }
 
 .err {

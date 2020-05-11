@@ -21,7 +21,7 @@
       <v-list-item
         v-for="(admin, i) in adminList"
         :key="i"
-        @click="alert('波打つエフェクト')"
+        @click="vlistItemClick"
       >
         <v-list-item-content>
           <v-list-item-title v-text="admin.name"></v-list-item-title>
@@ -67,39 +67,51 @@ export default {
       });
     },
     addAdminAuthority() {
-      axios
-        .post("/changeAuthority", {
-          email: this.inputEmail,
-          authority: 1,
-          updateUserId: this.$store.state.loginUser.userId,
-        })
-        .then((response) => {
-          alert(response.name + "さんに管理者権限を付与しました");
-          this.items.push({ name: response.name, email: response.mail });
-          this.inputEmail = "";
-        })
-        .catch(alert("管理者権限の付与に失敗しました"));
+      let isAdd = window.confirm(
+        this.inputEmail + "を管理者ユーザーに追加しますか？"
+      );
+      if (isAdd) {
+        axios
+          .post("/changeAuthority", {
+            email: this.inputEmail,
+            authority: 1,
+            updateUserId: this.$store.state.loginUser.userId,
+          })
+          .then((response) => {
+            console.log(response.data);
+            alert(response.data.name + "さんに管理者権限を付与しました");
+            this.adminList.push({
+              name: response.data.name,
+              email: response.data.email,
+            });
+            this.inputEmail = "";
+          })
+          .catch(() => alert("管理者権限の付与に失敗しました"));
+      }
     },
-    deleteAdminAuthority(item) {
+    deleteAdminAuthority(admin) {
       let isDelete = window.confirm(
-        item.name + "さんを管理者ユーザーから削除しますか？"
+        admin.name + "さんを管理者ユーザーから削除しますか？"
       );
       if (isDelete) {
         axios
           .post("/changeAuthority", {
-            email: item.email,
+            email: admin.email,
             authority: 2,
             updateUserId: this.$store.state.loginUser.userId,
           })
           .then((response) => {
-            let index = this.items.findIndex(
-              (item) => item.email === response.email
+            let index = this.adminList.findIndex(
+              (item) => item.email === response.data.email
             );
-            this.items.splice(index, 1);
-            alert(response.name + "さんを管理者ユーザーから削除しました");
+            this.adminList.splice(index, 1);
+            alert(response.data.name + "さんを管理者ユーザーから削除しました");
           })
-          .catch(alert("管理者権限の変更に失敗しました"));
+          .catch(() => alert("管理者権限の変更に失敗しました"));
       }
+    },
+    vlistItemClick() {
+      /** コンソールエラー回避とUI機能の維持のため置いておく */
     },
   },
   created() {

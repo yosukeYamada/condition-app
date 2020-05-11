@@ -1,41 +1,10 @@
 <template>
   <div id="content">
-    <h2 class="mb-4">集計グラフ</h2>
-    <b-row>
-      <b-col sm="4" class="pb-0">
-        <v-menu
-          ref="menu"
-          v-model="menu"
-          :close-on-content-click="false"
-          :return-value.sync="selectedDate"
-          transition="scale-transition"
-          offset-y
-          min-width="290px"
-        >
-          <template v-slot:activator="{ on }">
-            <v-text-field
-              v-model="selectedDate"
-              label="表示する日付を選択してください"
-              prepend-icon="event"
-              readonly
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-date-picker v-model="selectedDate" locale="ja-ja" :day-format="date => new Date(date).getDate()" no-title scrollable>
-            <v-spacer></v-spacer>
-            <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-            <v-btn text color="primary" @click="$refs.menu.save(selectedDate)"
-              >OK</v-btn
-            >
-          </v-date-picker>
-        </v-menu>
-      </b-col>
-    </b-row>
     <b-row>
       <b-col sm="4">
         <b-card>
           <MotivPieChart
-            :motiv-chart-data="MotivChartData"
+            :motiv-chart-data="motivChartData"
             :options="options"
             :is-get-data="isGetData"
           ></MotivPieChart>
@@ -44,7 +13,7 @@
       <b-col sm="4">
         <b-card>
           <ConPieChart
-            :con-chart-data="ConChartData"
+            :con-chart-data="conChartData"
             :options="options"
             :isGetData="isGetData"
           ></ConPieChart>
@@ -53,7 +22,7 @@
       <b-col sm="4">
         <b-card>
           <PerfoPieChart
-            :perfo-chart-data="PerfoChartData"
+            :perfo-chart-data="perfoChartData"
             :options="options"
             :is-get-data="isGetData"
           ></PerfoPieChart>
@@ -74,12 +43,11 @@ export default {
     MotivPieChart,
     PerfoPieChart,
   },
+  props: ["selectedDate"],
   data() {
     return {
-      selectedDate: new Date().toISOString().substr(0, 10),
-      menu: false,
       isGetData: false,
-      ConChartData: {
+      conChartData: {
         labels: ["快晴", "晴れ", "曇り", "雨", "嵐"],
         datasets: [
           {
@@ -94,7 +62,7 @@ export default {
           },
         ],
       },
-      MotivChartData: {
+      motivChartData: {
         labels: ["快晴", "晴れ", "曇り", "雨", "嵐"],
         datasets: [
           {
@@ -109,7 +77,7 @@ export default {
           },
         ],
       },
-      PerfoChartData: {
+      perfoChartData: {
         labels: ["快晴", "晴れ", "曇り", "雨", "嵐"],
         datasets: [
           {
@@ -132,25 +100,6 @@ export default {
       },
     };
   },
-  mounted() {
-    axios
-      .get("/getAggregateByDay?date=2020/04/27")
-      .then((response) => {
-        (this.ConChartData.datasets[0].data = this.convertChartData(
-          response.data.condition
-        )),
-          (this.MotivChartData.datasets[0].data = this.convertChartData(
-            response.data.motivation
-          )),
-          (this.PerfoChartData.datasets[0].data = this.convertChartData(
-            response.data.performance
-          ));
-        this.isGetData = true;
-      })
-      .catch((e) => {
-        alert(e);
-      });
-  },
   methods: {
     convertChartData(responseData) {
       var resultArray = [];
@@ -161,6 +110,35 @@ export default {
       resultArray.push(responseData.stormyCount);
       return resultArray;
     },
+    getAggregateByDay() {
+      axios
+        .post("/getAggregateByDay", {
+          date: this.selectedDate,
+        })
+        .then((response) => {
+          (this.conChartData.datasets[0].data = this.convertChartData(
+            response.data.condition
+          )),
+            (this.motivChartData.datasets[0].data = this.convertChartData(
+              response.data.motivation
+            )),
+            (this.perfoChartData.datasets[0].data = this.convertChartData(
+              response.data.performance
+            ));
+          this.isGetData = true;
+        })
+        .catch((e) => {
+          alert(e);
+        });
+    },
+  },
+  watch: {
+    selectedDate: () => {
+      this.getAggregateByDay();
+    },
+  },
+  mounted() {
+    this.getAggregateByDay();
   },
 };
 </script>

@@ -15,6 +15,14 @@ import firebase from "firebase/app";
 import { mapActions } from "vuex";
 
 export default {
+  // beforeRouteLeave(to, from, next) {
+  //   if (this.$store.getters.getStatus){
+  //     next();
+  //   } else {
+  //     next("/");
+  //   }
+  // },
+
   components: {
     EmployeeListHeader,
     EmployeeList,
@@ -31,7 +39,11 @@ export default {
     },
 
     //これがないとfirabaseのユーザー情報をstateに格納できない
-    ...mapActions(["setFirebaseUser"]),
+    ...mapActions([
+      "setFirebaseUser",
+      "login_status",
+      "setLoginUser",
+    ]),
   },
   watch: {
     masterList: function() {
@@ -86,6 +98,9 @@ export default {
             //authorityの値をstateに格納
             this.$store.dispatch("setAuthority", response.data.user.authority);
             this.$store.dispatch("setLoginUser", response.data);
+            this.setLoginUser(response.data);
+            this.login_status();
+           
           });
       }
     });

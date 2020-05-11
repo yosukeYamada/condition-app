@@ -112,7 +112,7 @@ const routes = [
     component: EmployeeList,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus === 1) {
+      if ((store.getters.getStatus)) {
         next();
       }else{
 

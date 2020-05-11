@@ -35,7 +35,7 @@ export default {
           console.log("ログインしています");
           if (this.$store.state.loginUser === null) {
             axios
-              .post("/mail/findByMailAndAuthority", {
+              .post("/api/user/findByMailAndAuthority", {
                 mail: firebase.auth().currentUser.email,
               })
               .then((response) => {

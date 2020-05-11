@@ -168,7 +168,7 @@ export default {
     },
     ...mapActions([
       "setLoginUser",
-      "login_status"
+      "loginStatus"
     ]),
   },
   mounted() {

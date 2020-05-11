@@ -16,7 +16,7 @@
                 <v-icon> mdi mdi-home</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title @click="toPage('/Home')" class="text-white"
+                <v-list-item-title @click="toPage('/home')" class="text-white"
                   >ホーム</v-list-item-title
                 >
               </v-list-item-content>
@@ -37,9 +37,9 @@
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title
-                  @click="toPage('/MyMotivation')"
+                  @click="toPage('/myCondition')"
                   class="text-white"
-                  >モチベーション履歴</v-list-item-title
+                  >コンディション履歴</v-list-item-title
                 >
               </v-list-item-content>
             </v-list-item>
@@ -51,7 +51,7 @@
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title
-                    @click="toPage('/EmployeeList')"
+                    @click="toPage('/employeeList')"
                     class="text-white"
                     >従業員一覧</v-list-item-title
                   >
@@ -66,7 +66,7 @@
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title
-                    @click="toPage('/Aggregate')"
+                    @click="toPage('/aggregate')"
                     class="text-white"
                     >集計グラフ</v-list-item-title
                   >
@@ -80,7 +80,7 @@
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title
-                    @click="toPage('AdminSetting')"
+                    @click="toPage('adminSetting')"
                     class="text-white"
                     >管理者設定</v-list-item-title
                   >

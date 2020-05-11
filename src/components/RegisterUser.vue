@@ -45,7 +45,6 @@
               id="input-email"
               type="email"
               v-model="mailAddress"
-              placeholder="taro.rakus@rakus-partners.co.jp"
               disabled="disabled"
             />
           </b-form-group>
@@ -104,7 +103,7 @@
 
 <script>
 import axios from "axios";
-import {mapActions} from "vuex"
+import { mapActions } from "vuex";
 export default {
   name: "RegisterUser",
   data() {
@@ -136,6 +135,9 @@ export default {
       depId: null
     };
   },
+  created(){
+    this.makeYearList()
+  },
   methods: {
     registerUser() {
       axios
@@ -148,14 +150,12 @@ export default {
           mailAddress: this.mailAddress,
           authorityId: 2
         })
-        .then(response =>{
+        .then(response => {
           this.setLoginUser(response.data);
-              //authorityの値をstateに格納
-              this.$store.dispatch(
-                "setAuthority",
-                response.data.user.authority);
-              this.login_status();
-              this.$router.push("/Home");
+          //authorityの値をstateに格納
+          this.$store.dispatch("setAuthority", response.data.user.authority);
+          this.login_status();
+          this.$router.push("/Home");
         });
     },
     resetButton() {
@@ -166,10 +166,17 @@ export default {
       this.hireMonth = null;
       this.depId = null;
     },
-    ...mapActions([
-      "setLoginUser",
-      "login_status"
-    ]),
+    ...mapActions(["setLoginUser", "login_status"]),
+    makeYearList() {
+      var now = new Date();
+      var nowYear = now.getFullYear();
+      var startYear = 2000;
+      var yearList = [];
+      for (var i = startYear; i <= nowYear; i++) {
+        yearList.push(i);
+      }
+      this.selectYears = yearList
+    }
   },
   mounted() {
     this.mailAddress = this.$store.state.login_user.mailName;

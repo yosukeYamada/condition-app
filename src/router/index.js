@@ -3,8 +3,8 @@ import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
 import RegisterUser from "../views/RegisterUser.vue";
 import DailyPost from "../views/DailyPost.vue";
-import MyMotivation from "../views/MyMotivation";
-import EmployeeMotivation from "../views/EmployeeMotivation";
+import MyCondition from "../views/MyCondition";
+import EmployeeCondition from "../views/EmployeeCondition";
 import Aggregate from "../views/Aggregate";
 import EmployeeList from "../views/EmployeeList";
 import AdminSetting from "../views/AdminSetting";
@@ -21,7 +21,7 @@ const routes = [
     component: Login,
   },
   {
-    path: "/RegisterUser",
+    path: "/registerUser",
     name: "RegisterUser",
     component: RegisterUser,
   },
@@ -30,20 +30,17 @@ const routes = [
     name: "Top",
     component: Top,
   },
-
   {
-    path: "/Home",
+    path: "/home",
     name: "Home",
     //ログインしていたら上記のパスに飛ぶことを許可する
     component: Home,
     beforeEnter(to, from, next) {
       if (store.getters.getStatus === 1) {
         next();
-      }else{
-
+      } else {
         next("/");
       }
-
     },
   },
   {
@@ -54,86 +51,74 @@ const routes = [
     beforeEnter(to, from, next) {
       if (store.getters.getStatus === 1) {
         next();
-      }else{
-
+      } else {
         next("/");
       }
-
     },
   },
   {
-    path: "/EmployeeMotivation/:userId?/employee",
-    name: "EmployeeMotivation",
-    component: EmployeeMotivation,
+    path: "/employeeCondition/:userId",
+    name: "EmployeeCondition",
+    component: EmployeeCondition,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
       if (store.getters.getStatus === 1) {
         next();
-      }else{
-
+      } else {
         next("/");
       }
-
     },
   },
   {
-    path: "/MyMotivation",
-    name: "MyMotivation",
-    component: MyMotivation,
+    path: "/myCondition",
+    name: "MyCondition",
+    component: MyCondition,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
       if (store.getters.getStatus === 1) {
         next();
-      }else{
-
+      } else {
         next("/");
       }
-
     },
   },
   {
-    path: "/Aggregate",
+    path: "/aggregate",
     name: "Aggregate",
     component: Aggregate,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
       if (store.getters.getStatus === 1) {
         next();
-      }else{
-
+      } else {
         next("/");
       }
-
     },
   },
   {
-    path: "/EmployeeList",
+    path: "/employeeList",
     name: "EmployeeList",
     component: EmployeeList,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
       if ((store.getters.getStatus)) {
         next();
-      }else{
-
+      } else {
         next("/");
       }
-
     },
   },
   {
-    path: "/AdminSetting",
+    path: "/adminSetting",
     name: "AdminSetting",
     component: AdminSetting,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
       if (store.getters.getStatus === 1) {
         next();
-      }else{
-
+      } else {
         next("/");
       }
-
     },
   },
 ];

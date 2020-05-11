@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$store.state.login_user">
+  <div v-if="$store.state.loginUser">
     <div class="py-4 border-top">
       <b-avatar
         v-if="photoURL"
@@ -24,9 +24,9 @@ export default {
     logout() {
       firebase.auth().signOut();
       this.$router.push("/");
-      this.change_login_status();
+      this.changeLoginStatus();
     },
-    ...mapActions(["change_login_status"])
+    ...mapActions(["changeLoginStatus"])
   },
   computed: {
     ...mapGetters(["userName", "photoURL"])

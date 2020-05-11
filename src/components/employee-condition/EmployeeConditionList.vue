@@ -1,10 +1,5 @@
 <template>
   <div>
-    <h4>
-      {{this.$store.state.employeeList.filter(elm => elm.userId === this.$route.params.userId)[0].hireDate | moment}}入社
-      {{this.$store.state.employeeList.filter(elm => elm.userId === this.$route.params.userId)[0].dep.depName}}
-      {{this.$store.state.employeeList.filter(elm => elm.userId === this.$route.params.userId)[0].userName}}のモチベーション履歴
-    </h4>
     <v-data-table :headers="headers" :items="employeeList">
       <template v-slot:item.motivation="{ item }">
         <v-fa
@@ -32,15 +27,12 @@
 </template>
 
 <script>
-import moment from 'moment'
-import { mapActions } from "vuex";
-import axios from "axios";
-import firebase from "firebase/app";
+import moment from "moment";
 
 export default {
-   data() {
+  data() {
     return {
-      employeeList:[],
+      employeeList: [],
       headers: [
         {
           value: "date",
@@ -68,24 +60,29 @@ export default {
           sortable: true,
         },
       ],
-    }
+    };
   },
   mounted() {
-    var list = this.$store.state.employeeList.filter(elm => elm.userId === this.$route.params.userId)
-    for(let num in list[0].dailyPost) {
+    var list = this.$store.state.employeeList.filter(
+      (elm) => elm.userId === this.$route.params.userId
+    );
+    for (let num in list[0].dailyPost) {
       this.employeeList.push({
-        date: moment(list[0].dailyPost[num].date).format("YYYY-MM-DD"), 
-        motivation: list[0].dailyPost[num].postedMotivation.motivation.motivationName,
-        condition: list[0].dailyPost[num].postedCondition.condition.conditionName,
-        performance: list[0].dailyPost[num].postedPerformance.performance.performanceName,
-        comment: list[0].dailyPost[num].postedComment.comment
-      })
+        date: moment(list[0].dailyPost[num].date).format("YYYY-MM-DD"),
+        motivation:
+          list[0].dailyPost[num].postedMotivation.motivation.motivationName,
+        condition:
+          list[0].dailyPost[num].postedCondition.condition.conditionName,
+        performance:
+          list[0].dailyPost[num].postedPerformance.performance.performanceName,
+        comment: list[0].dailyPost[num].postedComment.comment,
+      });
     }
   },
   filters: {
-    moment: function (date) {
-        return moment(date).format('YYYY年MM月');
-    }
+    moment: function(date) {
+      return moment(date).format("YYYY年MM月");
+    },
   },
   methods: {
     transferIcon(param) {
@@ -118,30 +115,30 @@ export default {
         return { color: "black" };
       }
     },
-    //これがないとfirabaseのユーザー情報をstateに格納できない
-     ...mapActions([
-      "setFirebaseUser"
-    ])
-  },
-   //リロード時にログインユーザー情報を保持する
-    init() {
-      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-    },
-  created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setFirebaseUser(user);
-        axios
-          .post("/mail/findByMailAndAuthority", {
-            mail: firebase.auth().currentUser.email,
-          })
-          .then((response) => {
-            //authorityの値をstateに格納
-            this.$store.dispatch("setAuthority", response.data.user.authority);
-            this.$store.dispatch("setLoginUser", response.data);
-          });
-      }
-    });
+  //   //これがないとfirabaseのユーザー情報をstateに格納できない
+  //    ...mapActions([
+  //     "setFirebaseUser"
+  //   ])
+  // },
+  //  //リロード時にログインユーザー情報を保持する
+  //   init() {
+  //     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+  //   },
+  // created() {
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       this.setFirebaseUser(user);
+  //       axios
+  //         .post("/mail/findByMailAndAuthority", {
+  //           mail: firebase.auth().currentUser.email,
+  //         })
+  //         .then((response) => {
+  //           //authorityの値をstateに格納
+  //           this.$store.dispatch("setAuthority", response.data.authority);
+  //           this.$store.dispatch("setLoginUser", response.data);
+  //         });
+  //     }
+  //   });
   },
 };
 </script>

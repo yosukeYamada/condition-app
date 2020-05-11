@@ -1,15 +1,14 @@
 <template>
   <div>
     <div v-show="loading" class="loading">Loading...</div>
-    <b-card
-      class="text-center py-3 shadow-sm"
-      v-show="!loading"
-    >
+    <b-card class="text-center py-3 shadow-sm" v-show="!loading">
       <b-card-text>
-        <p class="err" style="white-space:pre-wrap; word-wrap:break-word;">{{ err }}</p>
+        <p class="err" style="white-space:pre-wrap; word-wrap:break-word;">
+          {{ err }}
+        </p>
         <p class="display-2 font-weight-bold text-success mb-5">Rakuppo</p>
         <p>あなたの今日のコンディションを記録しましょう</p>
-        <span v-if="!$store.state.login_user">
+        <span>
           <v-btn
             class="my-5 px-5 align-middle"
             outlined
@@ -40,7 +39,7 @@ export default {
     return {
       name: "Login",
       err: "",
-      loading: true
+      loading: true,
     };
   },
   methods: {
@@ -52,7 +51,7 @@ export default {
       "setLoading",
       "setLoadings",
       "employeeList",
-      "login_status",
+      "loginStatus",
     ]),
   },
   created() {
@@ -61,22 +60,24 @@ export default {
       if (user) {
         this.setFirebaseUser(user);
         axios
-          .post("/mail/findByMailAndAuthority", {
+          .post("/api/user/findByMailAndAuthority", {
             mail: firebase.auth().currentUser.email,
           })
           .then((response) => {
             //新規登録画面へ遷移
-            if (response.data.user.authority == 0) {
+            if (response.data.authority == 0) {
+              console.log(response.data)
               this.setLoginUser(response.data);
               this.$router.push("/RegisterUser");
             //管理者権限
-            } else if (response.data.user.authority == 1) {
+            } else if (response.data.authority == 1) {
+              console.log(response.data)
               this.setLoginUser(response.data);
-              this.login_status();
+              this.loginStatus();
               //authorityの値をstateに格納
               this.$store.dispatch(
                 "setAuthority",
-                response.data.user.authority
+                response.data.authority
               );
               //全従業員情報を取得
               axios.get("/showEmployeeList")
@@ -88,23 +89,24 @@ export default {
               });
               this.$router.push("/Home");
             //従業員権限
-            } else if (response.data.user.authority == 2) {
+            } else if (response.data.authority == 2) {
+              console.log(response.data)
               this.setLoginUser(response.data);
-              this.login_status();
+              this.loginStatus();
               //authorityの値をstateに格納
               this.$store.dispatch(
                 "setAuthority",
-                response.data.user.authority);
+                response.data.authority);
               this.$router.push("/Home");
-            } else if (response.data.user.authority == 3) {
+            //メールアドレスが不正の場合
+            } else if (response.data.authority == 3) {
               this.deleteLoginUser();
               firebase.auth().signOut();
-              this.err =
-                `メールアドレスは@rakus-partners.co.jp、
+              this.err = `メールアドレスは@rakus-partners.co.jp、
 または@rakus.co.jpのものをお使いください`;
             }
           });
-        this.loading = true
+        this.loading = true;
       } else {
         firebase.auth().signOut();
         this.deleteLoginUser();

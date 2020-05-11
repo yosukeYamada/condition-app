@@ -33,12 +33,12 @@ export default {
       if (user) {
         this.setFirebaseUser(user);
         axios
-          .post("/mail/findByMailAndAuthority", {
+          .post("/api/user/findByMailAndAuthority", {
             mail: firebase.auth().currentUser.email,
           })
           .then((response) => {
             //authorityの値をstateに格納
-            this.$store.dispatch("setAuthority", response.data.user.authority);
+            this.$store.dispatch("setAuthority", response.data.authority);
             this.$store.dispatch("setLoginUser", response.data);
           });
       }

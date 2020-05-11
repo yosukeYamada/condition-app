@@ -67,7 +67,6 @@ export default {
           .then((response) => {
             //新規登録画面へ遷移
             if (response.data.authority == 0) {
-              console.log(response.data)
               this.setLoginUser(response.data);
               this.depList(response.data.depList);
               this.$router.push("/RegisterUser");
@@ -92,7 +91,6 @@ export default {
               this.$router.push("/Home");
             //従業員権限
             } else if (response.data.authority == 2) {
-              console.log(response.data.depList)
               this.setLoginUser(response.data);
               this.depList(response.data.depList);
               this.loginStatus();

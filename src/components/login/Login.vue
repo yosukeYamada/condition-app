@@ -52,6 +52,7 @@ export default {
       "setLoadings",
       "employeeList",
       "loginStatus",
+      "depList",
     ]),
   },
   created() {
@@ -68,11 +69,13 @@ export default {
             if (response.data.authority == 0) {
               console.log(response.data)
               this.setLoginUser(response.data);
+              this.depList(response.data.depList);
               this.$router.push("/RegisterUser");
             //管理者権限
             } else if (response.data.authority == 1) {
               console.log(response.data)
               this.setLoginUser(response.data);
+              this.depList(response.data.depList);
               this.loginStatus();
               //authorityの値をstateに格納
               this.$store.dispatch(
@@ -92,6 +95,7 @@ export default {
             } else if (response.data.authority == 2) {
               console.log(response.data)
               this.setLoginUser(response.data);
+              this.depList(response.data.depList);
               this.loginStatus();
               //authorityの値をstateに格納
               this.$store.dispatch(
@@ -118,14 +122,7 @@ export default {
 
 <style>
 .loading {
-  padding: 0px; /* 余白指定 */
-  bottom: 300; /* 位置指定 */
-  left: 0; /* 位置指定 */
-  position: absolute;
-  margin: auto;
-  text-align: center;
-  width: 100%;
-  height: 110px;
+  
 }
 
 .err {

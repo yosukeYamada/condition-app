@@ -8,14 +8,21 @@
       header-text-variant="white"
     >
       <b-card-text>
-        <div class="mb-2" v-for="(item, i) in items" :key="i">
+        <div class="mb-2">
           <span
-            :to="item.path"
-            @click="toPage()"
-            @mouseover="onMouseover(item)"
-            @mouseleave="onMouseleave(item)"
-            :style="item.style"
-            >{{ item.name }}</span
+            v-b-modal.authority-modal
+            class="blue--text text--darken-3"
+            :style="{ textDecoration: 'none' }"
+            >管理者権限の付与・削除</span
+          >
+          <AuthorityModal />
+        </div>
+        <div class="mb-2">
+          <span
+            @click="toPage"
+            class="blue--text text--darken-3"
+            :style="{ textDecoration: 'none' }"
+            >ユーザーの登録削除を行う</span
           >
         </div>
       </b-card-text>
@@ -23,35 +30,16 @@
   </b-col>
 </template>
 <script>
+import AuthorityModal from "@/components/admin-setting/AuthorityModal.vue";
+
 export default {
-  data() {
-    return {
-      items: [
-        {
-          name: "管理者権限の付与・削除",
-          path: "",
-          style: { color: "#6495ed", textDecoration: "none" },
-        },
-        {
-          name: "ユーザーの登録削除を行う",
-          path: "",
-          style: { color: "#6495ed", textDecoration: "none" },
-        },
-      ],
-    };
+  components: {
+    AuthorityModal,
   },
   methods: {
     /** モック用 */
     toPage() {
       alert("このページはまだ開発されてません！");
-    },
-    /** モック用 */
-    onMouseover(item) {
-      item.style = { color: "#6495ed", textDecoration: "underline" };
-    },
-    /** モック用 */
-    onMouseleave(item) {
-      item.style = { color: "#6495ed", textDecoration: "none" };
     },
   },
 };

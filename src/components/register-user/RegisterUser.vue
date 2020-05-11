@@ -168,7 +168,7 @@ export default {
       this.hireMonth = null;
       this.depId = null;
     },
-    ...mapActions(["setLoginUser", "login_status"]),
+    ...mapActions(["setLoginUser", "loginStatus"]),
     makeYearList() {
       var now = new Date();
       var nowYear = now.getFullYear();

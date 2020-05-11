@@ -8,7 +8,7 @@
         </p>
         <p class="display-2 font-weight-bold text-success mb-5">Rakuppo</p>
         <p>あなたの今日のコンディションを記録しましょう</p>
-        <span v-if="!$store.state.login_user">
+        <span v-if="!$store.state.loginUser">
           <v-btn
             class="my-5 px-5 align-middle"
             outlined
@@ -51,7 +51,7 @@ export default {
       "setLoading",
       "setLoadings",
       "employeeList",
-      "login_status",
+      "loginStatus",
     ]),
   },
   created() {
@@ -60,44 +60,43 @@ export default {
       if (user) {
         this.setFirebaseUser(user);
         axios
-          .post("/mail/findByMailAndAuthority", {
+          .post("/api/user/findByMailAndAuthority", {
             mail: firebase.auth().currentUser.email,
           })
           .then((response) => {
             //新規登録画面へ遷移
-            if (response.data.user.authority == 0) {
+            if (response.data.authority == 0) {
               this.setLoginUser(response.data);
-              this.$router.push("/registerUser");
-              //管理者権限
-            } else if (response.data.user.authority == 1) {
+              this.$router.push("/RegisterUser");
+            //管理者権限
+            } else if (response.data.authority == 1) {
               this.setLoginUser(response.data);
-              this.login_status();
+              this.loginStatus();
               //authorityの値をstateに格納
               this.$store.dispatch(
                 "setAuthority",
-                response.data.user.authority
+                response.data.authority
               );
               //全従業員情報を取得
-              axios
-                .get("/showEmployeeList")
-                .then((response) => {
-                  this.employeeList(response.data);
-                })
-                .catch((e) => {
-                  alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
-                });
-              this.$router.push("/home");
-              //従業員権限
-            } else if (response.data.user.authority == 2) {
+              axios.get("/showEmployeeList")
+              .then((response) => {
+                this.employeeList(response.data);
+              })
+              .catch((e) => {
+                alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
+              });
+              this.$router.push("/Home");
+            //従業員権限
+            } else if (response.data.authority == 2) {
               this.setLoginUser(response.data);
-              this.login_status();
+              this.loginStatus();
               //authorityの値をstateに格納
               this.$store.dispatch(
                 "setAuthority",
-                response.data.user.authority
-              );
-              this.$router.push("/home");
-            } else if (response.data.user.authority == 3) {
+                response.data.authority);
+              this.$router.push("/Home");
+            //メールアドレスが不正の場合
+            } else if (response.data.authority == 3) {
               this.deleteLoginUser();
               firebase.auth().signOut();
               this.err = `メールアドレスは@rakus-partners.co.jp、

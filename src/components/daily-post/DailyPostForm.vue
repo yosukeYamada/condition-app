@@ -116,7 +116,7 @@ export default {
     register() {
       axios
         .post("/registerDailyPost", {
-          userId: this.$store.state.login_user.userId,
+          userId: this.$store.state.loginUser.userId,
           motivationId: this.param.motivationSelected,
           conditionId: this.param.conditionSelected,
           performanceId: this.param.performanceSelected,

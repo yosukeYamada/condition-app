@@ -33,7 +33,7 @@ export default {
         } else {
           /** ログインしている場合 */
           console.log("ログインしています");
-          if (this.$store.state.login_user === null) {
+          if (this.$store.state.loginUser === null) {
             axios
               .post("/mail/findByMailAndAuthority", {
                 mail: firebase.auth().currentUser.email,

@@ -42,7 +42,7 @@ export default {
           })
           .then((response) => {
             //authorityの値をstateに格納
-            this.$store.dispatch("setAuthority", response.data.user.authority);
+            this.$store.dispatch("setAuthority", response.data.authority);
             this.$store.dispatch("setLoginUser", response.data);
           });
       }
@@ -50,7 +50,7 @@ export default {
   },
   computed: {
     authority: function() {
-      return this.$store.state.login_user.user.authority;
+      return this.$store.state.login_user.authority;
     },
   },
 

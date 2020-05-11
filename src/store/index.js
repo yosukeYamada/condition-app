@@ -67,7 +67,7 @@ export default new Vuex.Store({
       state.loginStatus = false;
     },
     setDairyPost(state, dailyPost) {
-      state.login_status = dailyPost;
+      state.loginUser.dailyPost = dailyPost;
     },
   },
   actions: {

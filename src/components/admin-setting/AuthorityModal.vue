@@ -8,6 +8,7 @@
             type="email"
             size="sm"
             placeholder="メールアドレスで管理者を追加"
+            required
           ></b-form-input>
         </b-col>
         <b-col sm="2" class="pb-1">
@@ -18,17 +19,17 @@
     <v-list two-line subheader>
       <v-subheader>管理者ユーザーの一覧</v-subheader>
       <v-list-item
-        v-for="item in items"
-        :key="item.title"
+        v-for="(admin, i) in adminList"
+        :key="i"
         @click="alert('波打つエフェクト')"
       >
         <v-list-item-content>
-          <v-list-item-title v-text="item.name"></v-list-item-title>
-          <v-list-item-subtitle v-text="item.email"></v-list-item-subtitle>
+          <v-list-item-title v-text="admin.name"></v-list-item-title>
+          <v-list-item-subtitle v-text="admin.email"></v-list-item-subtitle>
         </v-list-item-content>
 
         <v-list-item-action>
-          <v-btn @click="deleteConfirm(item)" icon>
+          <v-btn @click="deleteConfirm(admin)" icon>
             <v-icon color="red darken-3">mdi-close-circle-outline</v-icon>
           </v-btn>
         </v-list-item-action>
@@ -42,26 +43,32 @@ export default {
   data() {
     return {
       inputEmail: "",
-      items: [
-        {
-          name: "ラクス太郎",
-          email: "taro.rakus@rakus-partners.co.jp",
-        },
-        {
-          name: "ラクスカル",
-          email: "rakuscal@rakus-partners.co.jp",
-        },
-        {
-          name: "飯田先輩",
-          email: "senpai.iida@rakus-partners.co.jp",
-        },
-      ],
+      adminList: [],
     };
   },
   methods: {
+    setAdminList() {
+      let adminList = this.$store.state.employeeList.filter(
+        (employee) => employee.authority === 1
+      );
+      this.adminList = adminList.map((employee) => {
+        try {
+          return {
+            name: employee.userName,
+            email: employee.mailList[0].mailName,
+          };
+        } catch (error) {
+          console.error(error);
+          return {
+            name: employee.userName,
+            email: "",
+          };
+        }
+      });
+    },
     addAdminAuthority() {
       axios
-        .post("/path", { email: this.inputEmail })
+        .post("/changeAdminAuthority", { email: this.inputEmail })
         .then((response) => {
           alert(response.name + "さんに管理者権限を付与しました");
           this.items.push({ name: response.name, email: response.email });
@@ -74,15 +81,20 @@ export default {
       );
       if (isDelete) {
         axios
-          .post("/path", { email: this.inputEmail })
-          .then(() => {
-            alert(item.name + "さんを管理者ユーザーから削除しました");
-            this.items.splice(0, 1);
+          .post("/changeAdminAuthority", { email: item.email })
+          .then((response) => {
+            let index = this.items.findIndex(
+              (item) => item.email === response.email
+            );
+            this.items.splice(index, 1);
+            alert(response.name + "さんを管理者ユーザーから削除しました");
           })
           .catch(alert("管理者権限の変更に失敗しました"));
       }
     },
   },
-  created() {},
+  created() {
+    this.setAdminList();
+  },
 };
 </script>

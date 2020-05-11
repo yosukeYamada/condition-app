@@ -116,7 +116,7 @@ export default {
     register() {
       axios
         .post("/registerDailyPost", {
-          userId: this.$store.state.login_user.userId,
+          userId: this.$store.state.loginUser.userId,
           motivationId: this.param.motivationSelected,
           conditionId: this.param.conditionSelected,
           performanceId: this.param.performanceSelected,
@@ -124,11 +124,13 @@ export default {
         })
         .then((response) => {
           console.log("コンディション情報の登録に成功しました：" + response);
+          this.$store.dispatch("setDairyPost", response.data);
         })
         .catch((e) => {
           alert("コンディション登録の送信に失敗しました：" + e);
         });
       alert("登録しました！");
+      this.$router.push("/MyMotivation");
     },
   },
 };

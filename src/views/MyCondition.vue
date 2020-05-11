@@ -31,6 +31,7 @@ export default {
             //authorityの値をstateに格納
             this.$store.dispatch("setAuthority", response.data.authority);
             this.$store.dispatch("setLoginUser", response.data);
+            
           });
       }
     });

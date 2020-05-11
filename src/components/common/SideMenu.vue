@@ -98,6 +98,7 @@
 <script>
 import Logout from "@/components/common/Logout";
 import axios from "axios";
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -109,9 +110,13 @@ export default {
     },
   },
   methods: {
+    ...mapActions([
+      "employeeList"
+    ]),
     toPage(path) {
       this.$router.push(path);
     },
+  
     registerLimit() {
       axios
         .post("/registerLimit", {

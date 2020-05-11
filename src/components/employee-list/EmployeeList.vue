@@ -30,7 +30,9 @@
 </template>
 
 <script>
+
 export default {
+
   props: {
     employeeList: Array,
   },
@@ -120,6 +122,7 @@ export default {
   },
   mounted() {
     this.items = this.employeeList;
+     
   },
 };
 </script>

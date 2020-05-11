@@ -73,6 +73,7 @@
 </template>
 <script>
 import axios from "axios";
+import firebase from "firebase/app";
 
 export default {
   data() {
@@ -124,13 +125,34 @@ export default {
         })
         .then((response) => {
           console.log("コンディション情報の登録に成功しました：" + response);
+
           this.$store.dispatch("setDairyPost", response.data);
+
         })
         .catch((e) => {
           alert("コンディション登録の送信に失敗しました：" + e);
         });
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          this.setFirebaseUser(user);
+          axios
+            .post("/mail/findByMailAndAuthority", {
+              mail: firebase.auth().currentUser.email,
+            })
+            .then((response) => {
+              //authorityの値をstateに格納
+              this.$store.dispatch(
+                "setAuthority",
+                response.data.user.authority
+              );
+              this.$store.dispatch("setLoginUser", response.data);
+
+            });
+        }
+      });
       alert("登録しました！");
-      this.$router.push("/MyMotivation");
+
+      this.$router.push("/");
     },
   },
 };

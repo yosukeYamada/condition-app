@@ -99,6 +99,9 @@ export default new Vuex.Store({
     loginStatus({ commit }) {
       commit("loginStatus");
     },
+    depList({ commit }, depList ) {
+      commit("depList", depList);
+    },
     changeLoginStatus({ commit }) {
       commit("changeLoginStatus");
     },
@@ -112,11 +115,8 @@ export default new Vuex.Store({
           alert(e);
         });
     },
-    setDairyPosts({ commit, dailyPost }) {
+    setDairyPosts({ commit }, dailyPost ) {
       commit("setDairyPosts", dailyPost);
-    },
-    depList({ commit, depList }) {
-      commit("depList", depList);
     },
   },
   modules: {},

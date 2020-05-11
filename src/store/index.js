@@ -36,8 +36,8 @@ export default new Vuex.Store({
     },
     aggregates: [],
     firebase_user: null,
-    employeeList:[],
-    login_status: false
+    employeeList: [],
+    login_status: false,
   },
   mutations: {
     setLoginUser(state, user) {
@@ -56,7 +56,7 @@ export default new Vuex.Store({
       state.login_user.user.authority = authority;
     },
     employeeList(state, employeeList) {
-      state.employeeList = employeeList
+      state.employeeList = employeeList;
     },
     login_status(state) {
       state.login_status = true;
@@ -64,13 +64,14 @@ export default new Vuex.Store({
     change_login_status(state) {
       state.login_status = false;
     },
-  
+    setDairyPost(state, dailyPost) {
+      state.login_status = dailyPost;
+    },
   },
   actions: {
     login() {
       const google_auth_provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(google_auth_provider);
-      
     },
     setLoginUser({ commit }, user) {
       commit("setLoginUser", user);
@@ -87,14 +88,14 @@ export default new Vuex.Store({
     setAuthority({ commit }, authority) {
       commit("setAuthority", authority);
     },
-    employeeList({commit}, employeeList) {
-      commit("employeeList", employeeList)
+    employeeList({ commit }, employeeList) {
+      commit("employeeList", employeeList);
     },
-    login_status({commit},) {
-      commit("login_status")
+    login_status({ commit }) {
+      commit("login_status");
     },
-    change_login_status({commit}) {
-      commit("change_login_status")
+    change_login_status({ commit }) {
+      commit("change_login_status");
     },
     getAggregate: function({ commit }) {
       axios
@@ -106,18 +107,21 @@ export default new Vuex.Store({
           alert(e);
         });
     },
+    setDairyPosts({ commit, dailyPost }) {
+      commit("setDairyPosts", dailyPost);
+    },
   },
   modules: {},
   getters: {
-    userName: (state) => (state.login_user ? state.login_user.user.userName : ""),
-    photoURL: (state) => state.firebase_user ? state.firebase_user.photoURL : "",
-    employeeMotivation: state => userId => {
-      state.employeeList.filter(elm => elm.userId === userId)
+    userName: (state) =>
+      state.login_user ? state.login_user.user.userName : "",
+    photoURL: (state) =>
+      state.firebase_user ? state.firebase_user.photoURL : "",
+    employeeMotivation: (state) => (userId) => {
+      state.employeeList.filter((elm) => elm.userId === userId);
     },
-    getStatus: function(state){
-      return state.login_user.user.status
-
-    }
-
+    getStatus: function(state) {
+      return state.login_user.user.status;
+    },
   },
 });

@@ -115,13 +115,13 @@ export default {
     registerLimit() {
       axios
         .post("/registerLimit", {
-          userId: this.$store.state.login_user.userId
+          userId: this.$store.state.login_user.userId,
         })
         .then((response) => {
-          if(response.data) {
-            alert('投稿は1日1回です')
+          if (response.data) {
+            alert("投稿は1日1回です");
           } else {
-            this.$router.push('/dailyPost')
+            this.$router.push("/dailyPost");
           }
         });
     },

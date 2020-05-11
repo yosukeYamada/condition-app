@@ -69,6 +69,9 @@ export default new Vuex.Store({
     setDairyPost(state, dailyPost) {
       state.loginUser.dailyPost = dailyPost;
     },
+    depList(state, depList) {
+      state.depList = depList;
+    },
   },
   actions: {
     login() {
@@ -111,6 +114,9 @@ export default new Vuex.Store({
     },
     setDairyPosts({ commit, dailyPost }) {
       commit("setDairyPosts", dailyPost);
+    },
+    depList({ commit, depList }) {
+      commit("depList", depList);
     },
   },
   modules: {},

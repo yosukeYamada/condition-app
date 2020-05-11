@@ -8,21 +8,22 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     loginUser: {
-        authority: 2, // 初期値は1(一般ユーザー権限)で指定
-        dailyPost: {},
-        dep: {},
-        depId: 0,
-        hireDate: "",
-        registerDate: "",
-        registerUserId: 0,
-        status: 0,
-        updateDate: "",
-        updateUserId: 0,
-        userId: 0,
-        userName: "",
-        userNameKana: "",
-        version: 0,
-        mailList: [{
+      authority: 2, // 初期値は1(一般ユーザー権限)で指定
+      dailyPost: {},
+      dep: {},
+      depId: 0,
+      hireDate: "",
+      registerDate: "",
+      registerUserId: 0,
+      status: 0,
+      updateDate: "",
+      updateUserId: 0,
+      userId: 0,
+      userName: "",
+      userNameKana: "",
+      version: 0,
+      mailList: [
+        {
           mailId: 0,
           mailName: "",
           registerDate: "",
@@ -30,14 +31,15 @@ export default new Vuex.Store({
           status: 0,
           updateDate: "",
           updateUserId: 0,
-          version: 0
-        }],
-      },
-      depList: [],
-      aggregates: [],
-      firebaseUser: null,
-      employeeList:[],
-      loginStatus: false
+          version: 0,
+        },
+      ],
+    },
+    depList: [],
+    aggregates: [],
+    firebaseUser: null,
+    employeeList: [],
+    loginStatus: false,
   },
   mutations: {
     setLoginUser(state, user) {
@@ -56,7 +58,7 @@ export default new Vuex.Store({
       state.loginUser.user.authority = authority;
     },
     employeeList(state, employeeList) {
-      state.employeeList = employeeList
+      state.employeeList = employeeList;
     },
     loginStatus(state) {
       state.loginStatus = true;
@@ -64,13 +66,14 @@ export default new Vuex.Store({
     changeLoginStatus(state) {
       state.loginStatus = false;
     },
-  
+    setDairyPost(state, dailyPost) {
+      state.login_status = dailyPost;
+    },
   },
   actions: {
     login() {
       const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(googleAuthProvider);
-      
     },
     setLoginUser({ commit }, user) {
       commit("setLoginUser", user);
@@ -87,14 +90,14 @@ export default new Vuex.Store({
     setAuthority({ commit }, authority) {
       commit("setAuthority", authority);
     },
-    employeeList({commit}, employeeList) {
-      commit("employeeList", employeeList)
+    employeeList({ commit }, employeeList) {
+      commit("employeeList", employeeList);
     },
-    loginStatus({commit},) {
-      commit("loginStatus")
+    loginStatus({ commit }) {
+      commit("loginStatus");
     },
-    changeLoginStatus({commit}) {
-      commit("changeLoginStatus")
+    changeLoginStatus({ commit }) {
+      commit("changeLoginStatus");
     },
     getAggregate: function({ commit }) {
       axios
@@ -106,18 +109,20 @@ export default new Vuex.Store({
           alert(e);
         });
     },
+    setDairyPosts({ commit, dailyPost }) {
+      commit("setDairyPosts", dailyPost);
+    },
   },
   modules: {},
   getters: {
     userName: (state) => (state.loginUser ? state.loginUser.user.userName : ""),
-    photoURL: (state) => state.firebaseUser ? state.firebaseUser.photoURL : "",
-    employeeMotivation: state => userId => {
-      state.employeeList.filter(elm => elm.userId === userId)
+    photoURL: (state) =>
+      state.firebaseUser ? state.firebaseUser.photoURL : "",
+    employeeMotivation: (state) => (userId) => {
+      state.employeeList.filter((elm) => elm.userId === userId);
     },
-    getStatus: function(state){
-      return state.loginUser.user.status
-
-    }
-
+    getStatus: function(state) {
+      return state.loginUser.user.status;
+    },
   },
 });

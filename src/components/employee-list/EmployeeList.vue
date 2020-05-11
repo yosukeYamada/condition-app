@@ -58,6 +58,11 @@ export default {
           sortable: true,
         },
         {
+          value: "lastPostDate",
+          text: "最終投稿日",
+          sortable: true,
+        },
+        {
           value: "motivation",
           text: "やる気",
           sortable: true,

@@ -152,7 +152,7 @@ export default {
       });
       alert("登録しました！");
 
-      this.$router.push("/MyMotivation");
+      this.$router.push("/");
     },
   },
 };

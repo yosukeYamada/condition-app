@@ -11,15 +11,7 @@ import EmployeeHome from "@/components/home/EmployeeHome";
 import axios from "axios";
 import firebase from "firebase/app";
 import { mapActions } from "vuex";
-// import store from "../store/index.js";
 export default {
-  // beforeRouterUpdate(to, from, next) {
-  //   if (store.state.login_status) {
-  //     next();
-  //   } else {
-  //     next({path: '/' });
-  //   }
-  //   },
 
   components: {
     AdminHome,
@@ -31,7 +23,6 @@ export default {
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
   },
   created() {
-    // firebase.auth().setPersistance(firebase.auth.Auth.Persistance.SESSION);
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {

@@ -12,7 +12,7 @@
           ></b-form-input>
         </b-col>
         <b-col sm="2" class="pb-1">
-          <b-button size="sm">追加</b-button>
+          <b-button size="sm" @click="addAdminAuthority">追加</b-button>
         </b-col>
       </b-row>
     </v-subheader>
@@ -29,7 +29,7 @@
         </v-list-item-content>
 
         <v-list-item-action>
-          <v-btn @click="deleteConfirm(admin)" icon>
+          <v-btn @click="deleteAdminAuthority(admin)" icon>
             <v-icon color="red darken-3">mdi-close-circle-outline</v-icon>
           </v-btn>
         </v-list-item-action>
@@ -68,20 +68,29 @@ export default {
     },
     addAdminAuthority() {
       axios
-        .post("/changeAdminAuthority", { email: this.inputEmail })
+        .post("/changeAuthority", {
+          email: this.inputEmail,
+          authority: 1,
+          updateUserId: this.$store.state.loginUser.userId,
+        })
         .then((response) => {
           alert(response.name + "さんに管理者権限を付与しました");
-          this.items.push({ name: response.name, email: response.email });
+          this.items.push({ name: response.name, email: response.mail });
+          this.inputEmail = "";
         })
         .catch(alert("管理者権限の付与に失敗しました"));
     },
-    deleteConfirm(item) {
+    deleteAdminAuthority(item) {
       let isDelete = window.confirm(
         item.name + "さんを管理者ユーザーから削除しますか？"
       );
       if (isDelete) {
         axios
-          .post("/changeAdminAuthority", { email: item.email })
+          .post("/changeAuthority", {
+            email: item.email,
+            authority: 2,
+            updateUserId: this.$store.state.loginUser.userId,
+          })
           .then((response) => {
             let index = this.items.findIndex(
               (item) => item.email === response.email

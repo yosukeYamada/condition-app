@@ -164,7 +164,6 @@ export default {
     resetButton() {
       this.userName = "";
       this.userNameKana = "";
-      this.mailAddress = "";
       this.hireYear = null;
       this.hireMonth = null;
       this.depId = null;

@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import Logout from "@/components/Logout";
+import Logout from "@/components/common/Logout";
 import axios from "axios";
 
 export default {

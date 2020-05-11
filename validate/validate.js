@@ -18,13 +18,13 @@ extend('required', {
 
 extend('checkDep',{
   ...required,
-  message:"所属部門の入力は必須です"
+  message:"所属部門入力は必須です"
 })
 
 
 extend('checkRequiredHireMonthYear',{
   ...required,
-  message:"入社年月の入力は必須です"
+  message:"入社年月入力は必須です"
 })
 
 extend('hireMonthYear',{

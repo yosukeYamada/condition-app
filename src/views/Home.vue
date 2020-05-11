@@ -37,7 +37,7 @@ export default {
       if (user) {
         this.setFirebaseUser(user);
         axios
-          .post("/mail/findByMailAndAuthority", {
+          .post("/api/user/findByMailAndAuthority", {
             mail: firebase.auth().currentUser.email,
           })
           .then((response) => {
@@ -50,7 +50,7 @@ export default {
   },
   computed: {
     authority: function() {
-      return this.$store.state.login_user.authority;
+      return this.$store.state.loginUser.authority;
     },
   },
 

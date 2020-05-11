@@ -8,7 +8,7 @@
         </p>
         <p class="display-2 font-weight-bold text-success mb-5">Rakuppo</p>
         <p>あなたの今日のコンディションを記録しましょう</p>
-        <span v-if="!$store.state.loginUser">
+        <span>
           <v-btn
             class="my-5 px-5 align-middle"
             outlined
@@ -66,10 +66,12 @@ export default {
           .then((response) => {
             //新規登録画面へ遷移
             if (response.data.authority == 0) {
+              console.log(response.data)
               this.setLoginUser(response.data);
               this.$router.push("/RegisterUser");
             //管理者権限
             } else if (response.data.authority == 1) {
+              console.log(response.data)
               this.setLoginUser(response.data);
               this.loginStatus();
               //authorityの値をstateに格納
@@ -88,6 +90,7 @@ export default {
               this.$router.push("/Home");
             //従業員権限
             } else if (response.data.authority == 2) {
+              console.log(response.data)
               this.setLoginUser(response.data);
               this.loginStatus();
               //authorityの値をstateに格納

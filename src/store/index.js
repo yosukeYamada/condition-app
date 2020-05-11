@@ -55,7 +55,7 @@ export default new Vuex.Store({
       state.aggregates = aggregate;
     },
     setAuthority(state, authority) {
-      state.loginUser.user.authority = authority;
+      state.loginUser.authority = authority;
     },
     employeeList(state, employeeList) {
       state.employeeList = employeeList;
@@ -115,14 +115,13 @@ export default new Vuex.Store({
   },
   modules: {},
   getters: {
-    userName: (state) => (state.loginUser ? state.loginUser.user.userName : ""),
-    photoURL: (state) =>
-      state.firebaseUser ? state.firebaseUser.photoURL : "",
-    employeeMotivation: (state) => (userId) => {
-      state.employeeList.filter((elm) => elm.userId === userId);
+    userName: (state) => (state.loginUser ? state.loginUser.userName : ""),
+    photoURL: (state) => state.firebaseUser ? state.firebaseUser.photoURL : "",
+    employeeMotivation: state => userId => {
+      state.employeeList.filter(elm => elm.userId === userId)
     },
-    getStatus: function(state) {
-      return state.loginUser.user.status;
-    },
+    getStatus: function(state){
+      return state.loginUser.status
+    }
   },
 });

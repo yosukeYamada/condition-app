@@ -81,7 +81,7 @@ export default {
       if (user) {
         this.setFirebaseUser(user);
         axios
-          .post("/mail/findByMailAndAuthority", {
+          .post("/api/user/findByMailAndAuthority", {
             mail: firebase.auth().currentUser.email,
           })
           .then((response) => {

@@ -1,30 +1,25 @@
 <template>
- <b-col>
+  <b-col>
     <h2 class="mb-4">モチベーション履歴</h2>
-      <Motivations />
- </b-col>
+    <MyConditionList />
+  </b-col>
 </template>
 
 <script>
-import Motivations from "../components/Motivations.vue";
+import MyConditionList from "@/components/my-condition/MyConditionList.vue";
 import axios from "axios";
 import firebase from "firebase/app";
 import { mapActions } from "vuex";
 
-
-
 export default {
   components: {
-    Motivations,
-    
+    MyConditionList,
   },
-  
   //リロード時にログインユーザー情報を保持する
   init() {
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
   },
   created() {
-    
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setFirebaseUser(user);
@@ -40,11 +35,9 @@ export default {
       }
     });
   },
-   //これがないとfirabaseのユーザー情報をstateに格納できない
-  methods:{
-    ...mapActions([
-      "setFirebaseUser"
-    ])
-  }
+  //これがないとfirabaseのユーザー情報をstateに格納できない
+  methods: {
+    ...mapActions(["setFirebaseUser"]),
+  },
 };
 </script>

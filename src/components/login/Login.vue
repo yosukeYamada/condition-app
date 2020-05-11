@@ -73,7 +73,6 @@ export default {
               this.$router.push("/RegisterUser");
             //管理者権限
             } else if (response.data.authority == 1) {
-              console.log(response.data)
               this.setLoginUser(response.data);
               this.depList(response.data.depList);
               this.loginStatus();
@@ -93,7 +92,7 @@ export default {
               this.$router.push("/Home");
             //従業員権限
             } else if (response.data.authority == 2) {
-              console.log(response.data)
+              console.log(response.data.depList)
               this.setLoginUser(response.data);
               this.depList(response.data.depList);
               this.loginStatus();

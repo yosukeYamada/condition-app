@@ -83,7 +83,7 @@
               <b-form-group label="部門">
                 <b-form-select v-model="depId">
                   <option value="null" disabled>部門名を選択してください</option>
-                  <option v-for="(dep, i) in selectDeps" :key="i" :value="dep.value">{{ dep.name }}</option>
+                  <option v-for="(dep, i) in selectDeps" :key="i" :value="dep.depId">{{ dep.depName }}</option>
                 </b-form-select>
               </b-form-group>
               <p>{{errors[0]}}</p>
@@ -137,6 +137,7 @@ export default {
   },
   created(){
     this.makeYearList()
+    this.makeDepList()
   },
   methods: {
     registerUser() {
@@ -163,7 +164,6 @@ export default {
     resetButton() {
       this.userName = "";
       this.userNameKana = "";
-      this.mailAddress = "";
       this.hireYear = null;
       this.hireMonth = null;
       this.depId = null;
@@ -178,6 +178,11 @@ export default {
         yearList.push(i);
       }
       this.selectYears = yearList
+    },
+    makeDepList(){
+      var depList =[]
+      depList = this.$store.state.depList
+      this.selectDeps = depList
     }
   },
   mounted() {

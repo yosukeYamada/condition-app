@@ -4,7 +4,7 @@ import Login from "../views/Login.vue";
 import RegisterUser from "../views/RegisterUser.vue";
 import DailyPost from "../views/DailyPost.vue";
 import MyCondition from "../views/MyCondition";
-import EmployeeMotivation from "../views/EmployeeMotivation";
+import EmployeeCondition from "../views/EmployeeCondition";
 import Aggregate from "../views/Aggregate";
 import EmployeeList from "../views/EmployeeList";
 import AdminSetting from "../views/AdminSetting";
@@ -58,9 +58,9 @@ const routes = [
     },
   },
   {
-    path: "/EmployeeMotivation/:userId?/employee",
-    name: "EmployeeMotivation",
-    component: EmployeeMotivation,
+    path: "/employeeCondition/:userId",
+    name: "EmployeeCondition",
+    component: EmployeeCondition,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
       if (store.getters.getStatus === 1) {

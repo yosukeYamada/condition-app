@@ -1,7 +1,7 @@
 <template>
   <v-data-table :headers="headers" :items="items" class="elevation-1 card">
     <template v-slot:item.name="{ item }">
-      <router-link :to="{ name: 'EmployeeMotivation', params: { userId: item.userId } }">
+      <router-link :to="{ name: 'EmployeeCondition', params: { userId: item.userId } }">
         <span>{{ item.name }}</span>
       </router-link>
     </template>

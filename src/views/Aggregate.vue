@@ -42,7 +42,7 @@
     >
     <DailyAggregate :selected-date="selectedDate" />
     <GraphDescription />
-    <MonthlyAggregate />
+    <MonthlyAggregate :selected-date="selectedDate" />
   </b-col>
 </template>
 

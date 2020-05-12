@@ -13,7 +13,7 @@
             v-b-modal.news-post
             class="blue--text text--darken-3"
             :style="{ textDecoration: 'none' }"
-            >お知らせの登録を行う</span>
+            >お知らせの投稿を行う</span>
             <NewsPost />
         </div>
       </b-card-text>

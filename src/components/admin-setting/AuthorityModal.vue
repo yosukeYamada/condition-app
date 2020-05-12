@@ -3,7 +3,7 @@
     <v-subheader>
       <b-row>
         <b-col sm="10" class="pr-0 pb-1">
-          <vue-simple-suggest v-model="inputEmail" :list="employees" size="sm" type="email"
+          <vue-simple-suggest v-model="inputEmail" :list="employeesEmail" size="sm" type="email"
             placeholder="メールアドレスで管理者を追加" :filter-by-query="true"
             required>
           </vue-simple-suggest>
@@ -47,8 +47,15 @@ export default {
       employeeList:[],
       employeesName:[],
       employeesEmail:[],
-      employees:[],
+      // employees:[],
     };
+  },
+  watch : {
+    inputEmail : function(employees){
+      if(employees == this.employeesName + this.employeesEmail) {
+        this.inputEmail == 'こんにちは'
+      }
+    }
   },
   components: {
     VueSimpleSuggest
@@ -92,7 +99,7 @@ export default {
       for(let num in this.employeeList) {
         this.employeesName.push(this.employeeList[num].name)
         this.employeesEmail.push(this.employeeList[num].email)
-        this.employees.push(this.employeeList[num].name + ' : ' + this.employeeList[num].email)
+        // this.employees.push(this.employeeList[num].name + ' : ' + this.employeeList[num].email)
       }
     },
     addAdminAuthority() {

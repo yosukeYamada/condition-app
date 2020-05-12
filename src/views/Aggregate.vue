@@ -30,17 +30,16 @@
           >
             <v-spacer></v-spacer>
             <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-            <v-btn
-              text
-              color="primary"
-              @click="$refs.menu.save(selectedDate)"
+            <v-btn text color="primary" @click="$refs.menu.save(selectedDate)"
               >OK</v-btn
             >
           </v-date-picker>
         </v-menu>
       </b-col>
     </b-row>
-    {{ selectedDate }}
+    <small
+      >※ 指定した日付に該当するデータが存在しない場合はグラフは描画されません</small
+    >
     <DailyAggregate :selected-date="selectedDate" />
     <GraphDescription />
     <MonthlyAggregate />

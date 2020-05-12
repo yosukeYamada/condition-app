@@ -3,10 +3,10 @@ import { Doughnut } from "vue-chartjs";
 
 export default {
   extends: Doughnut,
-  props: ["PerfoChartData", "options", "isGetData"],
+  props: ["chartData", "options", "isGetData"],
   watch: {
     isGetData: function() {
-      this.renderChart(this.PerfoChartData, this.options);
+      this.renderChart(this.chartData, this.options);
     },
   },
   mounted() {
@@ -57,11 +57,10 @@ export default {
                 Math.round((dataset.data[index] / dataSum) * 100).toString() +
                 "%";
 
-               //0％のラベルは非表示にする
-              if(dataString=='0%'){
-                dataString = ""
-                labelString=""
-              
+              //0％のラベルは非表示にする
+              if (dataString == "0%") {
+                dataString = "";
+                labelString = "";
               }
 
               // positionの設定
@@ -86,7 +85,7 @@ export default {
         });
       },
     });
-    this.renderChart(this.PerfoChartData, this.options);
+    this.renderChart(this.chartData, this.options);
   },
 };
 </script>

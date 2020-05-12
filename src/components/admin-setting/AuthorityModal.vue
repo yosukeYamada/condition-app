@@ -3,13 +3,10 @@
     <v-subheader>
       <b-row>
         <b-col sm="10" class="pr-0 pb-1">
-          <b-form-input
-            v-model="inputEmail"
-            type="email"
-            size="sm"
-            placeholder="メールアドレスで管理者を追加"
-            required
-          ></b-form-input>
+          <vue-simple-suggest v-model="inputEmail" :list="employees" size="sm" type="email"
+            placeholder="メールアドレスで管理者を追加" :filter-by-query="true"
+            required>
+          </vue-simple-suggest>
         </b-col>
         <b-col sm="2" class="pb-1">
           <b-button size="sm" @click="addAdminAuthority">追加</b-button>
@@ -21,8 +18,8 @@
       <v-list-item
         v-for="(admin, i) in adminList"
         :key="i"
-        @click="alert('波打つエフェクト')"
       >
+        <!-- @click="alert('波打つエフェクト')" -->
         <v-list-item-content>
           <v-list-item-title v-text="admin.name"></v-list-item-title>
           <v-list-item-subtitle v-text="admin.email"></v-list-item-subtitle>
@@ -39,12 +36,21 @@
 </template>
 <script>
 import axios from "axios";
+import VueSimpleSuggest from 'vue-simple-suggest'
+import 'vue-simple-suggest/dist/styles.css'
 export default {
   data() {
     return {
       inputEmail: "",
       adminList: [],
+      employeeList:[],
+      employeesName:[],
+      employeesEmail:[],
+      employees:[],
     };
+  },
+  components: {
+    VueSimpleSuggest
   },
   methods: {
     setAdminList() {
@@ -58,13 +64,35 @@ export default {
             email: employee.mailList[0].mailName,
           };
         } catch (error) {
-          console.error(error);
           return {
             name: employee.userName,
             email: "",
           };
         }
       });
+    },
+    setEmployeeList() {
+      let employees = this.$store.state.employeeList.filter(
+        (employee) => employee.authority === 2
+      );
+      this.employeeList = employees.map((employee) => {
+        try {
+          return {
+            name: employee.userName,
+            email: employee.mailList[0].mailName,
+          };
+        } catch (error) {
+          return {
+            name: employee.userName,
+            email: "",
+          };
+        }
+      });
+      for(let num in this.employeeList) {
+        this.employeesName.push(this.employeeList[num].name)
+        this.employeesEmail.push(this.employeeList[num].email)
+        this.employees.push(this.employeeList[num].name + ' : ' + this.employeeList[num].email)
+      }
     },
     addAdminAuthority() {
       axios
@@ -74,11 +102,15 @@ export default {
           updateUserId: this.$store.state.loginUser.userId,
         })
         .then((response) => {
-          alert(response.name + "さんに管理者権限を付与しました");
-          this.items.push({ name: response.name, email: response.mail });
-          this.inputEmail = "";
+          if(response.data.email == 'null') {
+            alert("そのメールアドレスは登録されていません")
+          } else {
+            alert(response.data.name + "さんに管理者権限を付与しました");
+            this.adminList.push({ name: response.data.name, email: response.data.email });
+            this.inputEmail = "";
+          }
         })
-        .catch(alert("管理者権限の付与に失敗しました"));
+        // .catch(alert("管理者権限の付与に失敗しました"));
     },
     deleteAdminAuthority(item) {
       let isDelete = window.confirm(
@@ -92,18 +124,18 @@ export default {
             updateUserId: this.$store.state.loginUser.userId,
           })
           .then((response) => {
-            let index = this.items.findIndex(
-              (item) => item.email === response.email
+            let index = this.adminList.findIndex(
+              (item) => item.email === response.data.email
             );
-            this.items.splice(index, 1);
-            alert(response.name + "さんを管理者ユーザーから削除しました");
+            this.adminList.splice(index, 1);
+            alert(response.data.name + "さんを管理者ユーザーから削除しました");
           })
-          .catch(alert("管理者権限の変更に失敗しました"));
       }
     },
   },
   created() {
     this.setAdminList();
+    this.setEmployeeList();
   },
 };
 </script>

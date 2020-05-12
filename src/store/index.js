@@ -59,7 +59,6 @@ export default new Vuex.Store({
     },
     employeeList(state, employeeList) {
       state.employeeList = employeeList;
-      console.log(state.employeeList)
     },
     loginStatus(state) {
       state.loginStatus = true;

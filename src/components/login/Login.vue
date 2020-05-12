@@ -1,4 +1,4 @@
-<template> 
+<template>
   <div>
     <b-card class="text-center py-3 shadow-sm" v-show="!loading">
       <b-card-text>
@@ -7,22 +7,25 @@
         </p>
         <p class="display-2 font-weight-bold text-success mb-5">Rakuppo</p>
         <p>あなたの今日のコンディションを記録しましょう</p>
-        <span>
-          <v-btn
-            class="my-5 px-5 align-middle"
-            outlined
-            color="grey lighten-1"
-            @click="login"
-            style="text-transform: none;height:42px"
-          >
-            <div class="px-3">
-              <img class="pb-1" src="@/assets/google_icon.png" />
-              <span class="ml-1" style="color:#6a6a6a">
-                Googleアカウントでログイン
-              </span>
-            </div>
+        <v-btn
+          class="my-5 px-5 align-middle"
+          outlined
+          color="grey lighten-1"
+          @click="login"
+          style="text-transform: none;height:42px"
+        >
+          <div class="px-3">
+            <img class="pb-1" src="@/assets/google_icon.png" />
+            <span class="ml-1" style="color:#6a6a6a">
+              Googleアカウントでログイン
+            </span>
+          </div>
+        </v-btn>
+        <div>
+          <v-btn text color="green" @click="toPage('/top')">
+            トップに戻る
           </v-btn>
-        </span>
+        </div>
       </b-card-text>
     </b-card>
     <Loading v-show="loading"></Loading>
@@ -33,7 +36,7 @@
 import axios from "axios";
 import firebase from "firebase/app";
 import { mapActions } from "vuex";
-import Loading from "@/components/login/Loading.vue"
+import Loading from "@/components/login/Loading.vue";
 
 export default {
   data() {
@@ -44,7 +47,7 @@ export default {
     };
   },
   components: {
-    Loading
+    Loading,
   },
   methods: {
     ...mapActions([
@@ -58,6 +61,9 @@ export default {
       "loginStatus",
       "depList",
     ]),
+    toPage(path) {
+      this.$router.push(path);
+    },
   },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -74,36 +80,32 @@ export default {
               this.setLoginUser(response.data);
               this.depList(response.data.depList);
               this.$router.push("/RegisterUser");
-            //管理者権限
+              //管理者権限
             } else if (response.data.authority == 1) {
               this.setLoginUser(response.data);
               this.depList(response.data.depList);
               this.loginStatus();
               //authorityの値をstateに格納
-              this.$store.dispatch(
-                "setAuthority",
-                response.data.authority
-              );
+              this.$store.dispatch("setAuthority", response.data.authority);
               //全従業員情報を取得
-              axios.get("/showEmployeeList")
-              .then((response) => {
-                this.employeeList(response.data);
-              })
-              .catch((e) => {
-                alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
-              });
+              axios
+                .get("/showEmployeeList")
+                .then((response) => {
+                  this.employeeList(response.data);
+                })
+                .catch((e) => {
+                  alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
+                });
               this.$router.push("/Home");
-            //従業員権限
+              //従業員権限
             } else if (response.data.authority == 2) {
               this.setLoginUser(response.data);
               this.depList(response.data.depList);
               this.loginStatus();
               //authorityの値をstateに格納
-              this.$store.dispatch(
-                "setAuthority",
-                response.data.authority);
+              this.$store.dispatch("setAuthority", response.data.authority);
               this.$router.push("/Home");
-            //メールアドレスが不正の場合
+              //メールアドレスが不正の場合
             } else if (response.data.authority == 3) {
               this.deleteLoginUser();
               firebase.auth().signOut();

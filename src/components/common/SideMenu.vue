@@ -8,7 +8,7 @@
         backdrop
         shadow
       >
-        <div class="px-4 mt-5 mb-5 display-1 font-weight-medium">Menu</div>
+        <div class="px-4 mb-5 display-1 font-weight-medium">Menu</div>
         <v-list class="py-0 bg-dark" dark tile>
           <v-list-item-group>
             <v-list-item>
@@ -89,7 +89,7 @@
             </template>
           </v-list-item-group>
         </v-list>
-        <Logout class="px-4 my-5 fixed-bottom" />
+        <Logout :class="logoutClass" />
       </b-sidebar>
     </div>
   </div>
@@ -104,19 +104,21 @@ export default {
   components: {
     Logout,
   },
+  data() {
+    return {
+      logoutClass: ["px-4", "my-5", "fixed-bottom"],
+    };
+  },
   computed: {
     authority: function() {
       return this.$store.state.loginUser.authority;
     },
   },
   methods: {
-    ...mapActions([
-      "employeeList"
-    ]),
+    ...mapActions(["employeeList"]),
     toPage(path) {
       this.$router.push(path);
     },
-  
     registerLimit() {
       axios
         .post("/registerLimit", {
@@ -130,6 +132,16 @@ export default {
           }
         });
     },
+    abjustLogout() {
+      if (window.innerHeight < 600) {
+        this.logoutClass = ["px-4", "my-5"];
+      } else {
+        this.logoutClass = ["px-4", "my-5", "fixed-bottom"];
+      }
+    },
+  },
+  mounted() {
+    window.addEventListener("resize", this.abjustLogout);
   },
 };
 </script>

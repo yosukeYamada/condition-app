@@ -16,7 +16,13 @@
         <b-card-text>
           <ValidationProvider :rules="{userName: /([^ -~｡-ﾟ])/}" v-slot="{errors}">
             <b-form-group label="名前" label-for="input-name" description="苗字と名前の間はスペースをあけないでください">
-              <b-form-input id="input-name" type="text" v-model="userName" placeholder="ラクス太郎" maxlength='20'/>
+              <b-form-input
+                id="input-name"
+                type="text"
+                v-model="userName"
+                placeholder="ラクス太郎"
+                maxlength="20"
+              />
               <p>{{errors[0]}}</p>
             </b-form-group>
           </ValidationProvider>
@@ -32,7 +38,7 @@
                 type="text"
                 v-model="userNameKana"
                 placeholder="らくすたろう"
-                maxlength='20'
+                maxlength="20"
               />
               <div>{{errors[0]}}</div>
             </b-form-group>
@@ -42,12 +48,7 @@
             label-for="input-email"
             description="ログイン時に入力したメールアドレスを入力してください"
           >
-            <b-form-input
-              id="input-email"
-              type="email"
-              v-model="mailAddress"
-              disabled="disabled"
-            />
+            <b-form-input id="input-email" type="email" v-model="mailAddress" disabled="disabled" />
           </b-form-group>
           <ValidationObserver>
             <b-form-group label="入社年月">
@@ -72,7 +73,7 @@
                   <ValidationProvider name="month" rules="required">
                     <b-form-select name="month" v-model="hireMonth">
                       <option disabled selected>月</option>
-                      <option v-for="i in 12" :key="i" :value="i">{{ i }}</option>
+                      <option v-for="i in hireMonthList" :key="i" :value="i">{{ i }}</option>
                     </b-form-select>
                   </ValidationProvider>
                 </b-col>
@@ -84,7 +85,11 @@
               <b-form-group label="部門">
                 <b-form-select v-model="depId">
                   <option value="null" disabled>部門名を選択してください</option>
-                  <option v-for="(dep, i) in selectDeps" :key="i" :value="dep.depId">{{ dep.depName }}</option>
+                  <option
+                    v-for="(dep, i) in selectDeps"
+                    :key="i"
+                    :value="dep.depId"
+                  >{{ dep.depName }}</option>
                 </b-form-select>
               </b-form-group>
               <p>{{errors[0]}}</p>
@@ -136,14 +141,27 @@ export default {
       depId: null
     };
   },
-  created(){
-    this.makeYearList()
-    this.makeDepList()
+  computed: {
+    hireMonthList() {
+      var now = new Date();
+      var nowYear = now.getFullYear();
+      if (this.hireYear === nowYear) {
+        var nowMonth = now.getMonth()+1;
+        console.log(nowMonth)
+        console.log(nowYear)
+        return nowMonth;
+      }
+      return 12;
+    }
+  },
+  created() {
+    this.makeYearList();
+    this.makeDepList();
   },
   methods: {
     registerUser() {
-      this.userName = this.userName.replace("　","")
-      this.userNameKana = this.userNameKana.replace("　",'')
+      this.userName = this.userName.replace("　", "");
+      this.userNameKana = this.userNameKana.replace("　", "");
       axios
         .post("/api/user/registerUser", {
           userName: this.userName,
@@ -156,12 +174,10 @@ export default {
         })
         .then(response => {
           this.setLoginUser(response.data);
-              //authorityの値をstateに格納
-              this.$store.dispatch(
-                "setAuthority",
-                response.data.authority);
-              this.loginStatus();
-              this.$router.push("/Home");
+          //authorityの値をstateに格納
+          this.$store.dispatch("setAuthority", response.data.authority);
+          this.loginStatus();
+          this.$router.push("/Home");
         });
     },
     resetButton() {
@@ -180,12 +196,12 @@ export default {
       for (var i = startYear; i <= nowYear; i++) {
         yearList.push(i);
       }
-      this.selectYears = yearList
+      this.selectYears = yearList;
     },
-    makeDepList(){
-      var depList =[]
-      depList = this.$store.state.depList
-      this.selectDeps = depList
+    makeDepList() {
+      var depList = [];
+      depList = this.$store.state.depList;
+      this.selectDeps = depList;
     }
   },
   mounted() {

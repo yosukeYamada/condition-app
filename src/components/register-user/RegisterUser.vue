@@ -147,8 +147,6 @@ export default {
       var nowYear = now.getFullYear();
       if (this.hireYear === nowYear) {
         var nowMonth = now.getMonth()+1;
-        console.log(nowMonth)
-        console.log(nowYear)
         return nowMonth;
       }
       return 12;

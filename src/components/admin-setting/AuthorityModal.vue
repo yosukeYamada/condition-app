@@ -3,10 +3,42 @@
     <v-subheader>
       <b-row>
         <b-col sm="10" class="pr-0 pb-1">
-          <vue-simple-suggest v-model="inputEmail" :list="employeesEmail" size="sm" type="email"
-            placeholder="メールアドレスで管理者を追加" :filter-by-query="true"
-            required>
-          </vue-simple-suggest>
+
+            <v-autocomplete
+              v-model="inputEmail"
+              :items="employees"
+              label="メールアドレスで管理者を追加"
+              item-text="email"
+              item-value="email"
+            >
+              <template v-slot:selection="data">
+                <v-chip
+                  v-bind="data.attrs"
+                  :input-value="data.selected"
+                  @click="data.select"
+                >
+                  <!-- <v-avatar left>
+                    <v-img :src="data.item.avatar"></v-img>
+                  </v-avatar> -->
+                  {{ data.item.name }}
+                </v-chip>
+              </template>
+              <template v-slot:item="data">
+                <template v-if="typeof data.item !== 'object'">
+                  <v-list-item-content v-text="data.item"></v-list-item-content>
+                </template>
+                <template v-else>
+                  <!-- <v-list-item-avatar>
+                    <img :src="data.item.avatar">
+                  </v-list-item-avatar> -->
+                  <v-list-item-content>
+                    <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                    <v-list-item-subtitle v-html="data.item.email"></v-list-item-subtitle>
+                  </v-list-item-content>
+                </template>
+              </template>
+            </v-autocomplete>
+  
         </b-col>
         <b-col sm="2" class="pb-1">
           <b-button size="sm" @click="addAdminAuthority">追加</b-button>
@@ -20,7 +52,6 @@
         :key="i"
         @click="vlistItemClick"
       >
-        <!-- @click="alert('波打つエフェクト')" -->
         <v-list-item-content>
           <v-list-item-title v-text="admin.name"></v-list-item-title>
           <v-list-item-subtitle v-text="admin.email"></v-list-item-subtitle>
@@ -37,7 +68,6 @@
 </template>
 <script>
 import axios from "axios";
-import VueSimpleSuggest from 'vue-simple-suggest'
 import 'vue-simple-suggest/dist/styles.css'
 export default {
   data() {
@@ -45,20 +75,8 @@ export default {
       inputEmail: "",
       adminList: [],
       employeeList:[],
-      employeesName:[],
-      employeesEmail:[],
-      // employees:[],
+      employees:[],
     };
-  },
-  watch : {
-    inputEmail : function(employees){
-      if(employees == this.employeesName + this.employeesEmail) {
-        this.inputEmail == 'こんにちは'
-      }
-    }
-  },
-  components: {
-    VueSimpleSuggest
   },
   methods: {
     setAdminList() {
@@ -97,12 +115,11 @@ export default {
         }
       });
       for(let num in this.employeeList) {
-        this.employeesName.push(this.employeeList[num].name)
-        this.employeesEmail.push(this.employeeList[num].email)
-        // this.employees.push(this.employeeList[num].name + ' : ' + this.employeeList[num].email)
+        this.employees.push({name:this.employeeList[num].name, email:this.employeeList[num].email})
       }
     },
     addAdminAuthority() {
+      console.log(this.inputEmail)
       let isAdd = window.confirm(
         this.inputEmail + "を管理者ユーザーに追加しますか？"
       );

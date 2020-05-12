@@ -1,7 +1,7 @@
 <template>
-  <div class="jumbotron jumbotron-fluid bg-dark py-0">
+  <div class="jumbotron jumbotron-fluid bg-dark p-0">
     <div class="jumbotron-background"></div>
-    <div class="container text-white text-center">
+    <div class="container-fluid text-white text-center">
       <p class="display-2 mb-4">コンディションを管理しよう</p>
       <p class="lead">
         日々のコンディションをマネジメントするアプリケーション
@@ -28,7 +28,7 @@ export default {
   position: relative;
   overflow: hidden;
 }
-.jumbotron .container {
+.jumbotron .container-fluid {
   position: relative;
   z-index: 2;
   background: rgba(0, 0, 0, 0.2);

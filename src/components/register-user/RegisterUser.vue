@@ -14,7 +14,7 @@
           <p>Rakuppoを利用するにはユーザー登録を完了してください。</p>
         </b-card-text>
         <b-card-text>
-          <ValidationProvider :rules="{userName: /[^ -~｡-ﾟ]/}" v-slot="{errors}">
+          <ValidationProvider :rules="{userName: /([^ -~｡-ﾟ])/}" v-slot="{errors}">
             <b-form-group label="名前" label-for="input-name" description="苗字と名前の間はスペースをあけないでください">
               <b-form-input id="input-name" type="text" v-model="userName" placeholder="ラクス太郎" maxlength='20'/>
               <p>{{errors[0]}}</p>
@@ -142,6 +142,8 @@ export default {
   },
   methods: {
     registerUser() {
+      this.userName = this.userName.replace("　","")
+      this.userNameKana = this.userNameKana.replace("　",'')
       axios
         .post("/api/user/registerUser", {
           userName: this.userName,

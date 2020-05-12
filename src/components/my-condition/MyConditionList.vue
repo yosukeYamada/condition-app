@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="dailyPost">
+    <v-data-table :headers="headers" :items="dailyPostList">
       <template v-slot:item.motivation="{ item }">
         <v-fa
           :icon="transferIcon(item.motivation)"
@@ -61,22 +61,26 @@ export default {
       ],
     };
   },
-  mounted() {
-    for (let num in this.$store.state.loginUser.dailyPost) {
-      this.dailyPost.push({
-        date: moment(
-          this.$store.state.loginUser.dailyPost[num].date
-        ).format("YYYY-MM-DD"),
-        condition: this.$store.state.loginUser.dailyPost[num]
-          .postedCondition.condition.conditionName,
-        motivation: this.$store.state.loginUser.dailyPost[num]
-          .postedMotivation.motivation.motivationName,
-        performance: this.$store.state.loginUser.dailyPost[num]
-          .postedPerformance.performance.performanceName,
-        comment: this.$store.state.loginUser.dailyPost[num].postedComment
-          .comment,
-      });
-    }
+  computed: {
+    dailyPostList() {
+      var dailyPostList = [];
+      for (let num in this.$store.state.loginUser.dailyPost) {
+        dailyPostList.push({
+          date: moment(this.$store.state.loginUser.dailyPost[num].date).format(
+            "YYYY-MM-DD"
+          ),
+          condition: this.$store.state.loginUser.dailyPost[num].postedCondition
+            .condition.conditionName,
+          motivation: this.$store.state.loginUser.dailyPost[num]
+            .postedMotivation.motivation.motivationName,
+          performance: this.$store.state.loginUser.dailyPost[num]
+            .postedPerformance.performance.performanceName,
+          comment: this.$store.state.loginUser.dailyPost[num].postedComment
+            .comment,
+        });
+      }
+      return dailyPostList;
+    },
   },
   methods: {
     transferIcon(param) {

@@ -119,8 +119,8 @@ export default new Vuex.Store({
           alert(e);
         });
     },
-    setDairyPosts({ commit }, dailyPost) {
-      commit("setDairyPosts", dailyPost);
+    setDairyPost({ commit }, dailyPost) {
+      commit("setDairyPost", dailyPost);
     },
   },
   modules: {},

@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <DailyPostForm />
-  </div>
+  <b-container>
+    <b-row align-v="center" align-h="center">
+      <DailyPostForm />
+    </b-row>
+  </b-container>
 </template>
 
 <script>

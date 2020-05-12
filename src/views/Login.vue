@@ -1,7 +1,11 @@
 <template>
-  <b-col sm="6">
-    <Login></Login>
-  </b-col>
+  <b-container>
+    <b-row align-v="center" align-h="center">
+      <b-col sm="6">
+        <Login></Login>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -9,9 +13,8 @@ import Login from "@/components/login/Login.vue";
 import { mapActions } from "vuex";
 
 export default {
-  
   methods: {
-    ...mapActions(["setLoginUser"])
+    ...mapActions(["setLoginUser"]),
   },
   components: {
     Login,

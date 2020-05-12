@@ -1,8 +1,12 @@
 <template>
-  <b-col>
-    <h2 class="mb-4">モチベーション履歴</h2>
-    <MyConditionList />
-  </b-col>
+  <b-container>
+    <b-row align-v="center" align-h="center">
+      <b-col>
+        <h2 class="mb-4">モチベーション履歴</h2>
+        <MyConditionList />
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>

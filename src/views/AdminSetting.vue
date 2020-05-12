@@ -1,22 +1,26 @@
 <template>
-  <b-col>
-    <h2 class="mb-4">管理者設定</h2>
-    <b-row>
-      <AdminSetting />
+  <b-container>
+    <b-row align-v="center" align-h="center">
+      <b-col>
+        <h2 class="mb-4">管理者設定</h2>
+        <b-row>
+          <AdminSetting />
+        </b-row>
+        <b-row>
+          <NewsPostSetting />
+        </b-row>
+        <b-row>
+          <Setting2 />
+        </b-row>
+        <img
+          class="float-right"
+          width="50"
+          @click="rakuscal(rakuscalCount)"
+          :src="rakuscalImage"
+        />
+      </b-col>
     </b-row>
-    <b-row>
-      <NewsPostSetting />
-    </b-row>
-    <b-row>
-      <Setting2 />
-    </b-row>
-    <img
-      class="float-right"
-      width="50"
-      @click="rakuscal(rakuscalCount)"
-      :src="rakuscalImage"
-    />
-  </b-col>
+  </b-container>
 </template>
 
 <script>

@@ -1,9 +1,13 @@
 <template>
-  <b-col>
-    <h2 class="mb-4">従業員一覧</h2>
-    <EmployeeListHeader class="mb-5" />
-    <EmployeeList :employee-list="employeeList" />
-  </b-col>
+  <b-container>
+    <b-row align-v="center" align-h="center">
+      <b-col>
+        <h2 class="mb-4">従業員一覧</h2>
+        <EmployeeListHeader class="mb-5" />
+        <EmployeeList :employee-list="employeeList" />
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -68,13 +72,14 @@ export default {
   created() {
     this.getMasterList();
     //全従業員情報を取得
-              axios.get("/showEmployeeList")
-              .then((response) => {
-                this.$store.dispatch("employeeList",response.data);
-              })
-              .catch((e) => {
-                alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
-              });
+    axios
+      .get("/showEmployeeList")
+      .then((response) => {
+        this.$store.dispatch("employeeList", response.data);
+      })
+      .catch((e) => {
+        alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
+      });
   },
 };
 </script>

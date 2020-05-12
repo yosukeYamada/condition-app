@@ -1,6 +1,10 @@
 <template>
   <div id="registerUser">
-    <RegisterUser />
+    <b-container>
+      <b-row align-v="center" align-h="center">
+        <RegisterUser />
+      </b-row>
+    </b-container>
   </div>
 </template>
 

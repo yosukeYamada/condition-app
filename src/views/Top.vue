@@ -1,11 +1,11 @@
 <template>
-  <b-col>
+  <div>
     <Jumbotron />
     <UpdateInfo />
     <About />
-    <hr>
+    <hr />
     <Develop />
-  </b-col>
+  </div>
 </template>
 <script>
 import Jumbotron from "@/components/top/Jumbotron.vue";

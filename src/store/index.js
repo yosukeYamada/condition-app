@@ -3,44 +3,48 @@ import Vuex from "vuex";
 import firebase from "firebase/app";
 import "firebase/auth";
 import axios from "axios";
+import createPersistedState from "vuex-persistedstate";
+
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {
-    loginUser: {
-      authority: 2, // 初期値は1(一般ユーザー権限)で指定
-      dailyPost: {},
-      dep: {},
-      depId: 0,
-      hireDate: "",
-      registerDate: "",
-      registerUserId: 0,
-      status: 0,
-      updateDate: "",
-      updateUserId: 0,
-      userId: 0,
-      userName: "",
-      userNameKana: "",
-      version: 0,
-      mailList: [
-        {
-          mailId: 0,
-          mailName: "",
-          registerDate: "",
-          registerUserId: 0,
-          status: 0,
-          updateDate: "",
-          updateUserId: 0,
-          version: 0,
-        },
-      ],
-    },
-    depList: [],
-    aggregates: [],
-    firebaseUser: null,
-    employeeList: [],
-    loginStatus: false,
+const initialState = {
+  loginUser: {
+    authority: 2, // 初期値は1(一般ユーザー権限)で指定
+    dailyPost: {},
+    dep: {},
+    depId: 0,
+    hireDate: "",
+    registerDate: "",
+    registerUserId: 0,
+    status: 0,
+    updateDate: "",
+    updateUserId: 0,
+    userId: 0,
+    userName: "",
+    userNameKana: "",
+    version: 0,
+    mailList: [
+      {
+        mailId: 0,
+        mailName: "",
+        registerDate: "",
+        registerUserId: 0,
+        status: 0,
+        updateDate: "",
+        updateUserId: 0,
+        version: 0,
+      },
+    ],
   },
+  depList: [],
+  aggregates: [],
+  firebaseUser: null,
+  employeeList: [],
+  loginStatus: false,
+};
+
+export default new Vuex.Store({
+  state: initialState,
   mutations: {
     setLoginUser(state, user) {
       state.loginUser = user;
@@ -99,7 +103,7 @@ export default new Vuex.Store({
     loginStatus({ commit }) {
       commit("loginStatus");
     },
-    depList({ commit }, depList ) {
+    depList({ commit }, depList) {
       commit("depList", depList);
     },
     changeLoginStatus({ commit }) {
@@ -115,19 +119,21 @@ export default new Vuex.Store({
           alert(e);
         });
     },
-    setDairyPosts({ commit }, dailyPost ) {
+    setDairyPosts({ commit }, dailyPost) {
       commit("setDairyPosts", dailyPost);
     },
   },
   modules: {},
   getters: {
     userName: (state) => (state.loginUser ? state.loginUser.userName : ""),
-    photoURL: (state) => state.firebaseUser ? state.firebaseUser.photoURL : "",
-    employeeMotivation: state => userId => {
-      state.employeeList.filter(elm => elm.userId === userId)
+    photoURL: (state) =>
+      state.firebaseUser ? state.firebaseUser.photoURL : "",
+    employeeMotivation: (state) => (userId) => {
+      state.employeeList.filter((elm) => elm.userId === userId);
     },
-    getStatus: function(state){
-      return state.loginUser.status
-    }
+    getStatus: function(state) {
+      return state.loginStatus;
+    },
   },
+  plugins: [createPersistedState({ storage: window.sessionStorage })], // オプションを追加
 });

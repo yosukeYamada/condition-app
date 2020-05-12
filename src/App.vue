@@ -23,6 +23,10 @@ export default {
     Header,
     SideMenu,
   },
+
+  mounted() {
+    this.loginCheck();
+  },
   methods: {
     ...mapActions(["setLoginUser"]),
     loginCheck() {
@@ -45,9 +49,6 @@ export default {
         }
       });
     },
-  },
-  created() {
-    this.loginCheck();
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <b-row align-v="center" align-h="center">
-      <b-col sm="6">
+      <b-col lg="6">
         <Login></Login>
       </b-col>
     </b-row>

@@ -4,7 +4,7 @@
       <b-col sm="4">
         <b-card>
           <MotivPieChart
-            :motiv-chart-data="motivChartData"
+            :chart-data="motivChartData"
             :options="options"
             :is-get-data="isGetData"
           ></MotivPieChart>
@@ -13,7 +13,7 @@
       <b-col sm="4">
         <b-card>
           <ConPieChart
-            :con-chart-data="conChartData"
+            :chart-data="conChartData"
             :options="options"
             :isGetData="isGetData"
           ></ConPieChart>
@@ -22,7 +22,7 @@
       <b-col sm="4">
         <b-card>
           <PerfoPieChart
-            :perfo-chart-data="perfoChartData"
+            :chart-data="perfoChartData"
             :options="options"
             :is-get-data="isGetData"
           ></PerfoPieChart>
@@ -36,6 +36,8 @@ import axios from "axios";
 import ConPieChart from "@/components/aggregate/ConPieChart";
 import MotivPieChart from "@/components/aggregate/MotivPieChart";
 import PerfoPieChart from "@/components/aggregate/PerfoPieChart";
+const labels = ["快晴", "晴れ", "曇り", "雨", "嵐"];
+const backgroundColor = ["#ea5550", "#f3981d", "#b2cbe4", "#68a4d9", "#0075c2"];
 
 export default {
   components: {
@@ -48,47 +50,29 @@ export default {
     return {
       isGetData: false,
       conChartData: {
-        labels: ["快晴", "晴れ", "曇り", "雨", "嵐"],
+        labels: labels,
         datasets: [
           {
             data: [],
-            backgroundColor: [
-              "#ea5550",
-              "#f3981d",
-              "#b2cbe4",
-              "#68a4d9",
-              "#0075c2",
-            ],
+            backgroundColor: backgroundColor,
           },
         ],
       },
       motivChartData: {
-        labels: ["快晴", "晴れ", "曇り", "雨", "嵐"],
+        labels: labels,
         datasets: [
           {
             data: [],
-            backgroundColor: [
-              "#ea5550",
-              "#f3981d",
-              "#b2cbe4",
-              "#68a4d9",
-              "#0075c2",
-            ],
+            backgroundColor: backgroundColor,
           },
         ],
       },
       perfoChartData: {
-        labels: ["快晴", "晴れ", "曇り", "雨", "嵐"],
+        labels: labels,
         datasets: [
           {
             data: [],
-            backgroundColor: [
-              "#ea5550",
-              "#f3981d",
-              "#b2cbe4",
-              "#68a4d9",
-              "#0075c2",
-            ],
+            backgroundColor: backgroundColor,
           },
         ],
       },
@@ -116,16 +100,16 @@ export default {
           date: this.selectedDate,
         })
         .then((response) => {
-          (this.conChartData.datasets[0].data = this.convertChartData(
+          this.conChartData.datasets[0].data = this.convertChartData(
             response.data.condition
-          )),
-            (this.motivChartData.datasets[0].data = this.convertChartData(
-              response.data.motivation
-            )),
-            (this.perfoChartData.datasets[0].data = this.convertChartData(
-              response.data.performance
-            ));
-          this.isGetData = true;
+          );
+          this.motivChartData.datasets[0].data = this.convertChartData(
+            response.data.motivation
+          );
+          this.perfoChartData.datasets[0].data = this.convertChartData(
+            response.data.performance
+          );
+          this.isGetData = this.isGetData ? false : true;
         })
         .catch((e) => {
           alert(e);
@@ -133,11 +117,13 @@ export default {
     },
   },
   watch: {
-    selectedDate: () => {
-      this.getAggregateByDay();
+    selectedDate: {
+      handler: function() {
+        this.getAggregateByDay();
+      },
     },
   },
-  mounted() {
+  created() {
     this.getAggregateByDay();
   },
 };

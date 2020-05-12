@@ -37,10 +37,12 @@
         </v-menu>
       </b-col>
     </b-row>
-    {{ selectedDate }}
+    <small
+      >※ 指定した日付に該当するデータが存在しない場合はグラフは描画されません</small
+    >
     <DailyAggregate :selected-date="selectedDate" />
     <GraphDescription />
-    <MonthlyAggregate />
+    <MonthlyAggregate :selected-date="selectedDate" />
   </b-col>
 </template>
 

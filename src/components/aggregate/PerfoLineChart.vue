@@ -1,8 +1,8 @@
 <script>
-import { Line, mixins } from "vue-chartjs";
+import { Bar, mixins } from "vue-chartjs";
 
 export default {
-  extends: Line,
+  extends: Bar,
   mixins: [mixins.reactiveData],
   props: ["perfoChartData", "options", "isGetData"],
   watch: {

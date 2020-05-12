@@ -99,7 +99,7 @@ export default new Vuex.Store({
     loginStatus({ commit }) {
       commit("loginStatus");
     },
-    depList({ commit }, depList ) {
+    depList({ commit }, depList) {
       commit("depList", depList);
     },
     changeLoginStatus({ commit }) {
@@ -115,19 +115,20 @@ export default new Vuex.Store({
           alert(e);
         });
     },
-    setDairyPosts({ commit }, dailyPost ) {
-      commit("setDairyPosts", dailyPost);
+    setDairyPost({ commit }, dailyPost) {
+      commit("setDairyPost", dailyPost);
     },
   },
   modules: {},
   getters: {
     userName: (state) => (state.loginUser ? state.loginUser.userName : ""),
-    photoURL: (state) => state.firebaseUser ? state.firebaseUser.photoURL : "",
-    employeeMotivation: state => userId => {
-      state.employeeList.filter(elm => elm.userId === userId)
+    photoURL: (state) =>
+      state.firebaseUser ? state.firebaseUser.photoURL : "",
+    employeeMotivation: (state) => (userId) => {
+      state.employeeList.filter((elm) => elm.userId === userId);
     },
-    getStatus: function(state){
-      return state.loginUser.status
-    }
+    getStatus: function(state) {
+      return state.loginUser.status;
+    },
   },
 });

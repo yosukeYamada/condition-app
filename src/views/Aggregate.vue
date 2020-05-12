@@ -50,9 +50,6 @@
 import MonthlyAggregate from "@/components/aggregate/MonthlyAggregate";
 import DailyAggregate from "@/components/aggregate/DailyAggregate.vue";
 import GraphDescription from "@/components/aggregate/GraphDescription.vue";
-import axios from "axios";
-import firebase from "firebase/app";
-import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -65,32 +62,6 @@ export default {
       selectedDate: String,
       menu: false,
     };
-  },
-  // リロード時にログインユーザー情報を保持する
-  init() {
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-  },
-  created() {
-    this.selectedDate = new Date().toISOString().substr(0, 10);
-    // firebase.auth().setPersistance(firebase.auth.Auth.Persistance.SESSION);
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setFirebaseUser(user);
-        axios
-          .post("/api/user/findByMailAndAuthority", {
-            mail: firebase.auth().currentUser.email,
-          })
-          .then((response) => {
-            //authorityの値をstateに格納
-            this.$store.dispatch("setAuthority", response.data.authority);
-            this.$store.dispatch("setLoginUser", response.data);
-          });
-      }
-    });
-  },
-  //これがないとfirabaseのユーザー情報をstateに格納できない
-  methods: {
-    ...mapActions(["setFirebaseUser"]),
   },
 };
 </script>

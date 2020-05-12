@@ -38,7 +38,8 @@
       </b-col>
     </b-row>
     <small
-      >※ 指定した日付に該当するデータが存在しない場合はグラフは描画されません</small
+      >※
+      指定した日付に該当するデータが存在しない場合はグラフは描画されません</small
     >
     <DailyAggregate :selected-date="selectedDate" />
     <GraphDescription />
@@ -62,6 +63,9 @@ export default {
       selectedDate: String,
       menu: false,
     };
+  },
+  created() {
+    this.selectedDate = new Date().toISOString().substr(0, 10);
   },
 };
 </script>

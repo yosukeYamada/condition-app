@@ -42,12 +42,12 @@ extend('regex',regex)
 extend('userName',{
   ...required,
   ...regex,
-  message:"20文字以内の全角で入力してください。"
+  message:"全角で入力してください。"
 });
 extend('userNameKana',{
   ...required,
   ...regex,
-  message:"20文字以内の全角平仮名で入力してください。"
+  message:"全角平仮名で入力してください。"
 });
 
 extend('email',{

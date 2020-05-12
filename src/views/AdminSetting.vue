@@ -5,6 +5,9 @@
       <AdminSetting />
     </b-row>
     <b-row>
+      <NewsPostSetting />
+    </b-row>
+    <b-row>
       <Setting2 />
     </b-row>
     <img
@@ -18,6 +21,7 @@
 
 <script>
 import AdminSetting from "@/components/admin-setting/AdminSetting";
+import NewsPostSetting from "@/components/admin-setting/NewsPostSetting";
 import Setting2 from "@/components/admin-setting/Setting2";
 import axios from "axios";
 import firebase from "firebase/app";
@@ -26,6 +30,7 @@ import { mapActions } from "vuex";
 export default {
   components: {
     AdminSetting,
+    NewsPostSetting,
     Setting2,
   },
   data() {

@@ -10,6 +10,7 @@
 import moment from "moment";
 import EmployeeListHeader from "@/components/employee-list/EmployeeListHeader.vue";
 import EmployeeList from "../components/employee-list/EmployeeList.vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -66,6 +67,14 @@ export default {
 
   created() {
     this.getMasterList();
+    //全従業員情報を取得
+              axios.get("/showEmployeeList")
+              .then((response) => {
+                this.$store.dispatch("employeeList",response.data);
+              })
+              .catch((e) => {
+                alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
+              });
   },
 };
 </script>

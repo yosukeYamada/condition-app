@@ -17,9 +17,6 @@
                   :input-value="data.selected"
                   @click="data.select"
                 >
-                  <!-- <v-avatar left>
-                    <v-img :src="data.item.avatar"></v-img>
-                  </v-avatar> -->
                   {{ data.item.name }}
                 </v-chip>
               </template>
@@ -28,9 +25,6 @@
                   <v-list-item-content v-text="data.item"></v-list-item-content>
                 </template>
                 <template v-else>
-                  <!-- <v-list-item-avatar>
-                    <img :src="data.item.avatar">
-                  </v-list-item-avatar> -->
                   <v-list-item-content>
                     <v-list-item-title v-html="data.item.name"></v-list-item-title>
                     <v-list-item-subtitle v-html="data.item.email"></v-list-item-subtitle>
@@ -41,7 +35,7 @@
   
         </b-col>
         <b-col sm="2" class="pb-1">
-          <b-button size="sm" @click="addAdminAuthority">追加</b-button>
+          <b-button size="sm" @click="addAdminAuthority()">追加</b-button>
         </b-col>
       </b-row>
     </v-subheader>
@@ -69,6 +63,7 @@
 <script>
 import axios from "axios";
 import 'vue-simple-suggest/dist/styles.css'
+// import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -119,7 +114,6 @@ export default {
       }
     },
     addAdminAuthority() {
-      console.log(this.inputEmail)
       let isAdd = window.confirm(
         this.inputEmail + "を管理者ユーザーに追加しますか？"
       );
@@ -137,6 +131,10 @@ export default {
             alert(response.data.name + "さんに管理者権限を付与しました");
             this.adminList.push({ name: response.data.name, email: response.data.email });
             this.inputEmail = "";
+            let index = this.employeeList.findIndex(
+              (item) => item.email === response.data.email
+            );
+            this.employees.splice(index, 1);
           }
         })
        } // .catch(alert("管理者権限の付与に失敗しました"));
@@ -157,6 +155,7 @@ export default {
               (item) => item.email === response.data.email
             );
             this.adminList.splice(index, 1);
+            this.employees.push({ name: response.data.name, email: response.data.email });
             alert(response.data.name + "さんを管理者ユーザーから削除しました");
           })
           .catch(() => alert("管理者権限の変更に失敗しました"));

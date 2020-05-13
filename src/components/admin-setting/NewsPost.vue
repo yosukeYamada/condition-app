@@ -44,8 +44,13 @@ export default {
           newsComment: this.param.inputNews,
         })
         .then((response) => {
-          console.log("お知らせ登録：" + response);
+          this.$store.dispatch("setNewsPost", response.data);
         })
+        .catch((e) => {
+          alert("お知らせ投稿に失敗しました：" + e);
+        });
+
+      alert("お知らせを投稿しました！");
       }
     }
   }

@@ -2,7 +2,6 @@ import Vue from "vue";
 import Vuex from "vuex";
 import firebase from "firebase/app";
 import "firebase/auth";
-import axios from "axios";
 import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
@@ -37,7 +36,6 @@ const initialState = {
     ],
   },
   depList: [],
-  aggregates: [],
   firebaseUser: null,
   employeeList: [],
   loginStatus: false,
@@ -54,9 +52,6 @@ export default new Vuex.Store({
     },
     deleteLoginUser(state) {
       state.loginUser = null;
-    },
-    setAggregate: function(state, aggregate) {
-      state.aggregates = aggregate;
     },
     setAuthority(state, authority) {
       state.loginUser.authority = authority;
@@ -109,16 +104,6 @@ export default new Vuex.Store({
     changeLoginStatus({ commit }) {
       commit("changeLoginStatus");
     },
-    getAggregate: function({ commit }) {
-      axios
-        .get("http://localhost:8080/getAggregateByDay?date=2020/04/27")
-        .then((response) => {
-          commit("setAggregate", response.data);
-        })
-        .catch((e) => {
-          alert(e);
-        });
-    },
     setDairyPost({ commit }, dailyPost) {
       commit("setDairyPost", dailyPost);
     },
@@ -126,7 +111,8 @@ export default new Vuex.Store({
   modules: {},
   getters: {
     userName: (state) => (state.loginUser ? state.loginUser.userName : ""),
-    photoURL: (state) => state.firebaseUser ? state.firebaseUser.photoURL : "",
+    photoURL: (state) =>
+      state.firebaseUser ? state.firebaseUser.photoURL : "",
     employeeMotivation: (state) => (userId) => {
       state.employeeList.filter((elm) => elm.userId === userId);
     },

@@ -10,7 +10,7 @@
           <NewsPostSetting />
         </b-row>
         <b-row>
-          <Setting2 />
+          <Others />
         </b-row>
         <img
           class="float-right"
@@ -26,13 +26,13 @@
 <script>
 import AdminSetting from "@/components/admin-setting/AdminSetting";
 import NewsPostSetting from "@/components/admin-setting/NewsPostSetting";
-import Setting2 from "@/components/admin-setting/Setting2";
+import Others from "@/components/admin-setting/Others";
 
 export default {
   components: {
     AdminSetting,
     NewsPostSetting,
-    Setting2,
+    Others,
   },
   data() {
     return {

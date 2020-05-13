@@ -4,8 +4,8 @@
       <b-row>
         <b-col sm="10" class="pr-0 pb-1">
           <b-form-input
-          v-model="inputNews"
-            type="textarea"
+          v-model="param.inputNews"
+            type="text"
             size="sm"
             placeholder="お知らせを追加"
             required
@@ -20,15 +20,33 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data(){
     return{
-      inputNews:""
+      param:{
+        newsId:"6",
+        inputNews:""
+      }
     };
   },
   methods:{
     addNews(){
-      
+      console.log(this.param.inputNews);
+      let isAdd = window.confirm(
+        this.param.inputNews + "をお知らせしますか？"
+      );
+      if (isAdd) {
+      axios
+        .post("/news", {
+          userId: this.$store.state.loginUser.userId,
+          newsId: this.param.newsId,
+          newsComment: this.param.inputNews,
+        })
+        .then((response) => {
+          console.log("お知らせ登録：" + response);
+        })
+      }
     }
   }
 }

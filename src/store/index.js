@@ -39,6 +39,7 @@ const initialState = {
   firebaseUser: null,
   employeeList: [],
   loginStatus: false,
+  newsPost:{},
 };
 
 export default new Vuex.Store({
@@ -70,6 +71,9 @@ export default new Vuex.Store({
     },
     depList(state, depList) {
       state.depList = depList;
+    },
+    setNewsPost(state,newsPost){
+      state.newsPost = newsPost;
     },
   },
   actions: {
@@ -106,6 +110,9 @@ export default new Vuex.Store({
     },
     setDairyPost({ commit }, dailyPost) {
       commit("setDairyPost", dailyPost);
+    },
+    setNewsPost({ commit }, newsPost) {
+      commit("setNewsPost", newsPost);
     },
   },
   modules: {},

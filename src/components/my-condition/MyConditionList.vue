@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="dailyPostList">
+    <v-data-table :headers="headers" :items="dailyPostList" class="card elevation-1">
       <template v-slot:item.motivation="{ item }">
         <v-fa
           :icon="transferIcon(item.motivation)"

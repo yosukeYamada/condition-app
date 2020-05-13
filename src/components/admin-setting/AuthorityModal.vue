@@ -35,7 +35,7 @@
   
         </b-col>
         <b-col sm="2" class="pb-1">
-          <b-button size="sm" @click="addAdminAuthority">追加</b-button>
+          <b-button size="sm" @click="addAdminAuthority()">追加</b-button>
         </b-col>
       </b-row>
     </v-subheader>
@@ -156,7 +156,7 @@ export default {
             );
             this.adminList.splice(index, 1);
             this.employees.push({ name: response.data.name, email: response.data.email });
-            // alert(response.data.name + "さんを管理者ユーザーから削除しました");
+            alert(response.data.name + "さんを管理者ユーザーから削除しました");
           })
           .catch(() => alert("管理者権限の変更に失敗しました"));
       }

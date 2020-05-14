@@ -57,7 +57,7 @@
             <b-button
               variant="outline-success"
               size="sm"
-              @click="changeDepName(dep.id, dep.version)"
+              @click="changeDepName(dep.depId, dep.version)"
               >変更</b-button
             >
           </v-list-item-action-text>
@@ -75,7 +75,7 @@
             <b-button
               variant="outline-danger"
               size="sm"
-              @click="deleteDep(dep.depName, dep.id, dep.version)"
+              @click="deleteDep(dep.depName, dep.depId, dep.version)"
               >削除</b-button
             >
           </v-list-item-action-text>
@@ -112,6 +112,7 @@ export default {
     },
     addNewDep() {
       alert("まだ実装できてません！");
+      alert(this.depList);
       console.log(this.inputAddDepName);
       //   axios
       //     .post("/addNewDep", {
@@ -149,16 +150,20 @@ export default {
       //     });
     },
     deleteDep(depName, depId, version) {
-      let isOK = window.confirm("本当に" + depName + "を削除してもよろしいでしょうか？\n\n※ 削除する部署には従業員が1名も所属していないことを確認してください");
-      if(isOK){
-          console.log({ depId: depId, version: version });
+      let isOK = window.confirm(
+        "本当に" +
+          depName +
+          "を削除してもよろしいでしょうか？\n\n※ 削除する部署には従業員が1名も所属していないことを確認してください"
+      );
+      if (isOK) {
+        console.log({ depId: depId, version: version });
       }
     },
     vlistItemClick() {
       /** コンソールエラー回避とUI機能の維持のため置いておく */
     },
   },
-  mounted() {
+  created() {
     this.depList = this.$store.state.depList;
   },
 };

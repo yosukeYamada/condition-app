@@ -17,6 +17,14 @@
           >
           <EditDepsModal />
         </div>
+        <div class="mb-2">
+          <span
+            class="blue--text text--darken-3"
+            :style="{ textDecoration: 'none' }"
+            @click="toPage('/editDeps')"
+            >部署名の変更、追加及び削除(別ページ)</span
+          >
+        </div>
       </b-card-text>
     </b-card>
   </b-col>
@@ -26,6 +34,11 @@ import EditDepsModal from "@/components/admin-setting/EditDepsModal.vue";
 export default {
   components: {
     EditDepsModal,
+  },
+  methods: {
+    toPage(path) {
+      this.$router.push(path);
+    },
   },
 };
 </script>

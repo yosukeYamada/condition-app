@@ -39,16 +39,9 @@ const initialState = {
   firebaseUser: null,
   employeeList: [],
   loginStatus: false,
-
-
   filterDepName:"",
-
-  newsPost:{},
-
-
-
+  newsPost:[],
   editPost:[]
-
 };
 
 export default new Vuex.Store({

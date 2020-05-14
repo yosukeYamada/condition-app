@@ -11,6 +11,7 @@ import AdminSetting from "../views/AdminSetting";
 import Home from "../views/Home.vue";
 import Top from "../views/Top.vue";
 import store from "../store/index.js";
+import EditDeps from "@/components/admin-setting/EditDeps.vue";
 
 Vue.use(VueRouter);
 
@@ -112,6 +113,19 @@ const routes = [
     path: "/adminSetting",
     name: "AdminSetting",
     component: AdminSetting,
+    //ログインしていたら上記のパスに飛ぶことを許可する
+    beforeEnter(to, from, next) {
+      if (store.getters.getStatus) {
+        next();
+      } else {
+        next("/");
+      }
+    },
+  },
+  {
+    path: "/editDeps",
+    name: EditDeps,
+    component: EditDeps,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
       if (store.getters.getStatus) {

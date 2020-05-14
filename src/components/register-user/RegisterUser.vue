@@ -175,6 +175,7 @@ export default {
           //authorityの値をstateに格納
           this.$store.dispatch("setAuthority", response.data.authority);
           this.loginStatus();
+          alert("登録が完了しました！")
           this.$router.push("/Home");
         });
     },

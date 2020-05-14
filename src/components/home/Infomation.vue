@@ -6,23 +6,35 @@
     header-bg-variant="success"
     header-text-variant="white"
   >
+
     <b-card-text>
-      <div class="mb-5">
+      <div class="mb-5" v-for="(post,i ) in posts" :key="i">
         <p class="mb-2 font-weight-bold">
-          2020-05-04
+          {{ post.newsDate | moment }}
         </p>
         <p>
-          コンディションは毎日きちんと入力しましょう！
-        </p>
-      </div>
-      <div class="mb-4">
-        <p class="mb-2 font-weight-bold">
-          2020-05-01
-        </p>
-        <p>
-          健康を維持するには早寝早起きと食生活、適度な運動が大切です。
+          {{ post.newsComment }}
         </p>
       </div>
     </b-card-text>
+
+
   </b-card>
 </template>
+
+<script>
+import moment from "moment";
+export default {
+  data(){
+    return{
+      posts:
+        this.$store.state.newsPost
+    }
+  },
+  filters: {
+        moment: function (date) {
+            return moment(date).format('YYYY/MM/DD HH:mm');
+        }
+    }
+}
+</script>

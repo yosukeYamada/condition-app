@@ -132,6 +132,9 @@ export default new Vuex.Store({
     setFilterDepName({commit},filterDepName){
       commit("setFilterDepName",filterDepName)
     },
+    setNewsPost({commit},newsPost){
+      commit("setNewsPost",newsPost)
+    },
     setData({commit},data){
       commit("setData",data)
     }

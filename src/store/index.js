@@ -45,6 +45,10 @@ const initialState = {
 
   newsPost:{},
 
+
+
+  editPost:[]
+
 };
 
 export default new Vuex.Store({
@@ -88,6 +92,12 @@ export default new Vuex.Store({
     setNewsPost(state,newsPost){
       state.newsPost = newsPost;
     },
+
+
+
+    setEditPost(state, editPost) {
+      state.editPost = editPost
+    }
 
   },
   actions: {
@@ -139,6 +149,12 @@ export default new Vuex.Store({
     setNewsPost({ commit }, newsPost) {
       commit("setNewsPost", newsPost);
     },
+
+
+
+    setEditPost({commit}, editPost) {
+      commit("setEditPost", editPost)
+    }
 
   },
   getters: {

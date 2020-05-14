@@ -40,6 +40,7 @@ const initialState = {
   employeeList: [],
   loginStatus: false,
   newsPost:{},
+  editPost:[]
 };
 
 export default new Vuex.Store({
@@ -75,6 +76,9 @@ export default new Vuex.Store({
     setNewsPost(state,newsPost){
       state.newsPost = newsPost;
     },
+    setEditPost(state, editPost) {
+      state.editPost = editPost
+    }
   },
   actions: {
     login() {
@@ -114,6 +118,9 @@ export default new Vuex.Store({
     setNewsPost({ commit }, newsPost) {
       commit("setNewsPost", newsPost);
     },
+    setEditPost({commit}, editPost) {
+      commit("setEditPost", editPost)
+    }
   },
   modules: {},
   getters: {

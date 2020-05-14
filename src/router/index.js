@@ -9,6 +9,7 @@ import Aggregate from "../views/Aggregate";
 import EmployeeList from "../views/EmployeeList";
 import AdminSetting from "../views/AdminSetting";
 import Home from "../views/Home.vue";
+import EditDailyPost from "../views/EditDailyPost.vue";
 import Top from "../views/Top.vue";
 import store from "../store/index.js";
 import EditDeps from "@/views/EditDeps.vue";
@@ -48,6 +49,19 @@ const routes = [
     path: "/dailyPost",
     name: "DailyPost",
     component: DailyPost,
+    //ログインしていたら上記のパスに飛ぶことを許可する
+    beforeEnter(to, from, next) {
+      if (store.getters.getStatus) {
+        next();
+      } else {
+        next("/");
+      }
+    },
+  },
+  {
+    path: "/editDailyPost/:dailyPostId",
+    name: "EditDailyPost",
+    component: EditDailyPost,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
       if (store.getters.getStatus) {

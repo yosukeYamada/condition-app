@@ -3,10 +3,10 @@ import { Doughnut } from "vue-chartjs";
 
 export default {
   extends: Doughnut,
-  props: ["ConChartData", "options","isGetData"],
+  props: ["chartData", "options", "isGetData"],
   watch: {
     isGetData: function() {
-      this.renderChart(this.ConChartData, this.options);
+      this.renderChart(this.chartData, this.options);
     },
   },
   mounted() {
@@ -52,16 +52,15 @@ export default {
 
               // ラベルをパーセント表示に変更
               let labelString = chart.data.labels[index];
-              
+
               let dataString =
                 Math.round((dataset.data[index] / dataSum) * 100).toString() +
                 "%";
-              
+
               //0％のラベルは非表示にする
-              if(dataString=='0%'){
-                dataString = ""
-                labelString=""
-              
+              if (dataString == "0%") {
+                dataString = "";
+                labelString = "";
               }
 
               // positionの設定
@@ -90,7 +89,7 @@ export default {
         });
       },
     });
-    this.renderChart(this.ConChartData, this.options);
+    this.renderChart(this.chartData, this.options);
   },
 };
 </script>

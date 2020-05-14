@@ -11,6 +11,7 @@ import AdminSetting from "../views/AdminSetting";
 import Home from "../views/Home.vue";
 import Top from "../views/Top.vue";
 import store from "../store/index.js";
+import EditDeps from "@/components/admin-setting/EditDeps.vue";
 
 Vue.use(VueRouter);
 
@@ -36,7 +37,7 @@ const routes = [
     //ログインしていたら上記のパスに飛ぶことを許可する
     component: Home,
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus === 1) {
+      if (store.getters.getStatus) {
         next();
       } else {
         next("/");
@@ -49,7 +50,7 @@ const routes = [
     component: DailyPost,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus === 1) {
+      if (store.getters.getStatus) {
         next();
       } else {
         next("/");
@@ -62,7 +63,7 @@ const routes = [
     component: EmployeeCondition,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus === 1) {
+      if (store.getters.getStatus) {
         next();
       } else {
         next("/");
@@ -75,7 +76,7 @@ const routes = [
     component: MyCondition,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus === 1) {
+      if (store.getters.getStatus) {
         next();
       } else {
         next("/");
@@ -88,7 +89,7 @@ const routes = [
     component: Aggregate,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus === 1) {
+      if (store.getters.getStatus) {
         next();
       } else {
         next("/");
@@ -101,7 +102,7 @@ const routes = [
     component: EmployeeList,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if ((store.getters.getStatus)) {
+      if (store.getters.getStatus) {
         next();
       } else {
         next("/");
@@ -114,7 +115,20 @@ const routes = [
     component: AdminSetting,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus === 1) {
+      if (store.getters.getStatus) {
+        next();
+      } else {
+        next("/");
+      }
+    },
+  },
+  {
+    path: "/editDeps",
+    name: EditDeps,
+    component: EditDeps,
+    //ログインしていたら上記のパスに飛ぶことを許可する
+    beforeEnter(to, from, next) {
+      if (store.getters.getStatus) {
         next();
       } else {
         next("/");

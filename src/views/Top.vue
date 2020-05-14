@@ -1,11 +1,17 @@
 <template>
-  <b-col>
+  <div>
     <Jumbotron />
-    <UpdateInfo />
+    <b-container>
+      <b-row align-v="center" align-h="center">
+        <b-col sm="8">
+          <UpdateInfo />
+        </b-col>
+      </b-row>
+    </b-container>
     <About />
-    <hr>
+    <hr />
     <Develop />
-  </b-col>
+  </div>
 </template>
 <script>
 import Jumbotron from "@/components/top/Jumbotron.vue";

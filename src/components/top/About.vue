@@ -9,10 +9,10 @@
             コンディションを可視化する
           </div>
           <div
-            class="mx-auto d-flex align-items-center mb-4"
-            style="background-color:gray;width:240px;height:160px;"
+            class="mx-auto d-flex align-items-center mb-5 card elevation-3 "
+            style="width:360px;"
           >
-            投稿画面のイメージ
+            <img src="/img/graph.gif" style="width:360px;" />
           </div>
           <p class="mx-auto">
             Rakuppoはリクルートとサイバーエージェントにより共同開発されたアプリケーション「Geppo」に強く感銘を受け、
@@ -28,10 +28,10 @@
             自分のコンディションを振り返る
           </div>
           <div
-            class="mx-auto d-flex align-items-center mb-4"
-            style="background-color:gray;width:240px;height:160px;"
+            class="mx-auto d-flex align-items-center mb-4 card elevation-3"
+            style="width:360px;"
           >
-            モチベーション履歴画面のイメージ
+            <img src="/img/my_condition.png" style="width:360px;" />
           </div>
           <p class="mx-auto mb-0">
             今日の自分のコンディションを天気で表した5段階で自己採点します。
@@ -59,10 +59,10 @@
             社内のコンディションを俯瞰する
           </div>
           <div
-            class="mx-auto d-flex align-items-center mb-4"
-            style="background-color:gray;width:240px;height:160px;"
+            class="mx-auto d-flex align-items-center mb-4 card elevation-3"
+            style="width:360px;"
           >
-            集計画面のイメージ
+            <img src="/img/employee_list.png" style="width:360px;" />
           </div>
           <p class="mx-auto">
             管理者ユーザーは、従業員が登録したコンディションを閲覧することができます。

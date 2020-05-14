@@ -38,30 +38,32 @@ import ConLineChart from "@/components/aggregate/ConLineChart.vue";
 import MotivLineChart from "@/components/aggregate/MotivLineChart.vue";
 import PerfoLineChart from "@/components/aggregate/PerfoLineChart.vue";
 import axios from "axios";
+
 export default {
   components: {
     ConLineChart,
     MotivLineChart,
     PerfoLineChart,
   },
+  props: ["selectedDate"],
   data() {
     return {
       conditionScoreArray: [],
       isGetData: false,
-          motivChartData: {
-            labels: ["January", "February", "March", "April", "May"],
-            datasets: [
-              {
-                label: "モチベーション",
-                data: [28, 20, 30, 40, 50],
-                borderColor: "rgb(240,100,100)",
-                backgroundColor: "rgba(240,100,100,0.2)",
-                radius: 0,
-                hitRadius: 4, // マウスポインタ検出のための円の半径
-                borderWidth: 2, // 線の太さ
-              },
-            ],
+      motivChartData: {
+        labels: ["January", "February", "March", "April", "May"],
+        datasets: [
+          {
+            label: "モチベーション",
+            data: [28, 20, 30, 40, 50],
+            borderColor: "rgb(240,100,100)",
+            backgroundColor: "rgba(240,100,100,0.2)",
+            radius: 0,
+            hitRadius: 4, // マウスポインタ検出のための円の半径
+            borderWidth: 2, // 線の太さ
           },
+        ],
+      },
       conChartData: {
         labels: ["January", "February", "March", "April", "May"],
         datasets: [
@@ -114,17 +116,29 @@ export default {
         (elm) => elm.performance.score
       );
     },
+    getAggregateByMonth() {
+      axios
+        .post("/getAggregateByMonth", {
+          date: this.selectedDate,
+        })
+        .then((response) => {
+          this.convertChartData(response.data);
+          this.isGetData = this.isGetData ? false : true;
+        })
+        .catch((e) => {
+          alert(e);
+        });
+    },
+  },
+  watch: {
+    selectedDate: {
+      handler: function() {
+        this.getAggregateByMonth();
+      },
+    },
   },
   mounted() {
-    axios
-      .get("/getAggregateByMonth?date=2020/04/27")
-      .then((response) => {
-        this.convertChartData(response.data);
-        this.isGetData = true;
-      })
-      .catch((e) => {
-        alert(e);
-      });
+    this.getAggregateByMonth();
   },
 };
 </script>

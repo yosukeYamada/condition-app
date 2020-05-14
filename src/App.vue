@@ -1,11 +1,7 @@
 <template>
   <v-app style="background-color:#f5f5f5">
     <Header class="mb-5" />
-    <b-container>
-      <b-row align-v="center" align-h="center">
         <router-view />
-      </b-row>
-    </b-container>
     <SideMenu></SideMenu>
   </v-app>
 </template>
@@ -22,6 +18,10 @@ export default {
   components: {
     Header,
     SideMenu,
+  },
+
+  mounted() {
+    this.loginCheck();
   },
   methods: {
     ...mapActions(["setLoginUser"]),
@@ -45,9 +45,6 @@ export default {
         }
       });
     },
-  },
-  created() {
-    this.loginCheck();
   },
 };
 </script>

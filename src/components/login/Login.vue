@@ -2,9 +2,7 @@
   <div>
     <b-card class="text-center py-3 shadow-sm" v-show="!loading">
       <b-card-text>
-        <p class="err" style="white-space:pre-wrap; word-wrap:break-word;">
-          {{ err }}
-        </p>
+        <p class="err" style="white-space:pre-wrap; word-wrap:break-word;">{{ err }}</p>
         <p class="display-2 font-weight-bold text-success mb-5">Rakuppo</p>
         <p>あなたの今日のコンディションを記録しましょう</p>
         <v-btn
@@ -16,15 +14,11 @@
         >
           <div class="px-3">
             <img class="pb-1" src="@/assets/google_icon.png" />
-            <span class="ml-1" style="color:#6a6a6a">
-              Googleアカウントでログイン
-            </span>
+            <span class="ml-1" style="color:#6a6a6a">Googleアカウントでログイン</span>
           </div>
         </v-btn>
         <div>
-          <v-btn text color="green" @click="toPage('/top')">
-            トップに戻る
-          </v-btn>
+          <v-btn text color="green" @click="toPage('/top')">トップに戻る</v-btn>
         </div>
       </b-card-text>
     </b-card>
@@ -43,11 +37,11 @@ export default {
     return {
       name: "Login",
       err: "",
-      loading: true,
+      loading: true
     };
   },
   components: {
-    Loading,
+    Loading
   },
   methods: {
     ...mapActions([
@@ -63,18 +57,18 @@ export default {
     ]),
     toPage(path) {
       this.$router.push(path);
-    },
+    }
   },
   created() {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       this.loading = false;
       if (user) {
         this.setFirebaseUser(user);
         axios
           .post("/api/user/findByMailAndAuthority", {
-            mail: firebase.auth().currentUser.email,
+            mail: firebase.auth().currentUser.email
           })
-          .then((response) => {
+          .then(response => {
             //新規登録画面へ遷移
             if (response.data.authority == 0) {
               this.setLoginUser(response.data);
@@ -90,10 +84,10 @@ export default {
               //全従業員情報を取得
               axios
                 .get("/showEmployeeList")
-                .then((response) => {
+                .then(response => {
                   this.employeeList(response.data);
                 })
-                .catch((e) => {
+                .catch(e => {
                   alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
                 });
               this.$router.push("/Home");
@@ -119,7 +113,7 @@ export default {
         this.deleteLoginUser();
       }
     });
-  },
+  }
 };
 </script>
 

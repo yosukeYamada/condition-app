@@ -39,7 +39,7 @@ const initialState = {
   firebaseUser: null,
   employeeList: [],
   loginStatus: false,
-  newsPost:{},
+  newsPost:[],
 };
 
 export default new Vuex.Store({

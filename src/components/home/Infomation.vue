@@ -6,35 +6,30 @@
     header-bg-variant="success"
     header-text-variant="white"
   >
-
     <b-card-text>
-      <div class="mb-5" v-for="(post,i ) in posts" :key="i">
-        <p class="mb-2 font-weight-bold">
-          {{ post.newsDate | moment }}
-        </p>
-        <p>
-          {{ post.newsComment }}
-        </p>
+      <div class="mb-5" v-for="(newsPost,i ) in newsPostList" :key="i">
+        <p class="mb-2 font-weight-bold">{{ newsPost.newsDate | moment }}</p>
+        <p>{{ newsPost.newsComment }}</p>
       </div>
     </b-card-text>
-
-
   </b-card>
 </template>
 
 <script>
 import moment from "moment";
 export default {
-  data(){
-    return{
-      posts:
-        this.$store.state.newsPost
-    }
+  data() {
+    return {
+      newsPostList: [],
+    };
   },
   filters: {
-        moment: function (date) {
-            return moment(date).format('YYYY/MM/DD HH:mm');
-        }
+    moment: function(date) {
+      return moment(date).format("YYYY/MM/DD HH:mm");
     }
-}
+  },
+  created(){
+    this.newsPostList = this.$store.state.newsPost;
+  }
+};
 </script>

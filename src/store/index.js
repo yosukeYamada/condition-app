@@ -41,7 +41,7 @@ const initialState = {
   loginStatus: false,
 
 
-  filterQuery:{},
+  filterDepName:"",
 
   newsPost:{},
 
@@ -78,8 +78,8 @@ export default new Vuex.Store({
       state.depList = depList;
     },
 
-    setFilterQuery(state,filterQuery){
-      state.filterQuery = filterQuery
+    setFilterDepName(state,filterDepName){
+      state.filterDepName = filterDepName
     },
     setData(state,data){
       state.employeeList = data
@@ -126,8 +126,8 @@ export default new Vuex.Store({
       commit("setDairyPost", dailyPost);
     },
 
-    setFilterQuery({commit},filterQuery){
-      commit("setFilterQuery",filterQuery)
+    setFilterDepName({commit},filterDepName){
+      commit("setFilterDepName",filterDepName)
     },
     setData({commit},data){
       commit("setData",data)
@@ -153,13 +153,13 @@ export default new Vuex.Store({
     },
 
     //従業員リストを部署名と入社年月で絞り込む
-    filterEmployeeList:function(state){
+    filterDepName:function(state){
       let data  = state.employeeList;
      
       //部署名で検索
-      if(state.filterQuery !== ""){
+      if(state.filterDepName !== ""){
         data = data.filter(
-          (employeeList) => employeeList.dep.depName === state.filterQuery
+          (employeeList) => employeeList.dep.depName
         );
       }
       return data

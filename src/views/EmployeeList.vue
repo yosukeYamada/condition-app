@@ -1,12 +1,11 @@
 <template>
   <b-col>
-    <h2 class="mb-4">従業員一覧</h2>
+    <h2 class="mb-4">従業員一覧 </h2>
 
-    <SearchByDepName ></SearchByDepName>
-   
-    
+    <SearchByDepName></SearchByDepName>
+
     <EmployeeListHeader class="mb-5" />
-    <EmployeeList :employee-list="employeeList" />
+    <EmployeeList :employee-list="childEmployeeList" />
   </b-col>
 </template>
 
@@ -28,24 +27,22 @@ export default {
     return {
       masterList: [],
       employeeList: [],
-      //絞り検索用
-      
-      
+      childEmployeeList: [],
+
+      //絞り込み検索用
+      filterDepName: "",
     };
   },
-  // computed: {
-  //   ...mapGetters('employeeList', ['filteredEmployeeList']),
-    
-  // },
+
   methods: {
     getMasterList() {
       this.masterList = this.$store.state.employeeList;
     },
-
-    //従業員絞り込み用のメソッド
-    // handleChangeQuery() {
-    //   this.setFilterQuery(this.filterQuery.depName);
-    // },
+  },
+  computed: {
+    getFilterDepName: function() {
+      return this.$store.state.filterDepName;
+    },
   },
   watch: {
     masterList: function() {
@@ -81,6 +78,26 @@ export default {
         }
       });
       this.employeeList = employeeList;
+      this.childEmployeeList = employeeList;
+    },
+    getFilterDepName: function() {
+      console.log("watcher");
+
+      //部署名で検索
+      if (this.$store.state.filterDepName !== "") {
+        if (this.$store.state.filterDepName === "全ての社員") {
+          console.log("全ての社員"+this.childEmployeeList)
+           this.childEmployeeList = this.employeeList
+        } else {
+          this.childEmployeeList = this.employeeList.filter((employee) => {
+            if (employee.dep === this.$store.state.filterDepName) {
+              console.log("部署ごと"+employee)
+              return employee;
+            }
+          });
+        }
+       
+      }
     },
   },
 
@@ -99,13 +116,13 @@ export default {
         //   )
         //  this.$store.dispatch("setData",filterEmployee)
         // }
-         console.log('1番目')
       })
       .catch((e) => {
         alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
       });
-    //filterQueryの初期値をstateに格納
-    // this.$store.dispatch("setFilterQuery", this.filterQuery);
+    //filterDepNameの初期値をstateに格納
+    // this.$store.dispatch("setFilterDepName", this.filterDepName);
+    console.log("1:stateのfilterQueryの中身" + this.$store.state.filterDepName);
   },
 };
 </script>

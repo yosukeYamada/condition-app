@@ -11,7 +11,7 @@ import AdminSetting from "../views/AdminSetting";
 import Home from "../views/Home.vue";
 import Top from "../views/Top.vue";
 import store from "../store/index.js";
-import EditDeps from "@/components/admin-setting/EditDeps.vue";
+import EditDeps from "@/views/EditDeps.vue";
 
 Vue.use(VueRouter);
 

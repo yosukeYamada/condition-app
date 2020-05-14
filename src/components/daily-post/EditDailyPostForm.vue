@@ -58,7 +58,7 @@
               <b-form-textarea
                 class="mt-3"
                 id="input-comment"
-                v-model="comment"
+                v-model="param.comment"
                 placeholder="コメントがあれば入力してください"
                 rows="3"
                 max-rows="6"
@@ -83,11 +83,15 @@ export default {
       userId: "",
       loading: false,
       comment:null,
+      motivationId: "",
+      conditonId: "",
+      performanceId: "",
+
       param: {
-        motivationSelected: "3",
-        performanceSelected: "3",
-        conditionSelected: "3",
-        comment: "",
+        motivationSelected: this.$route.params.motivationId,
+        conditionSelected: this.$route.params.conditionId,
+        performanceSelected: this.$route.params.performanceId,
+        comment: this.$route.params.comment
       },
       radioItems: [
         {
@@ -122,13 +126,13 @@ export default {
     register() {
       axios
         .post("/editDailyPost/edit", {
-          version: this.$store.state.editPost[0].version,
+          version: this.$route.params.version,
           updateUserId: this.$store.state.loginUser.userId,
           motivationId: this.param.motivationSelected,
           conditionId: this.param.conditionSelected,
           performanceId: this.param.performanceSelected,
-          comment: this.comment,
-          dailyPostId: this.$store.state.editPost[0].dailyPostId
+          comment: this.param.comment,
+          dailyPostId: this.$route.params.dailyPostId
         })
         .then((response) => {
           if(response.data[0].version == 0) {
@@ -146,9 +150,5 @@ export default {
       this.$router.push("/MyCondition");
     },
   },
-  created() {
-    this.comment = this.$store.state.editPost[0].comment
-    console.log(this.$store.state.editPost)
-  }
 };
 </script>

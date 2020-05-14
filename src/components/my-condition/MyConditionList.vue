@@ -144,17 +144,14 @@ export default {
     edit(item) {
       this.$router.push(
         { name: 'EditDailyPost', 
-        params: { dailyPostId: item.dailyPostId,},
-      })
-      this.editPost.push(
-        { updateUserId: this.$store.state.loginUser.userId,
-          dailyPostId: item.dailyPostId,
+        params: 
+        { dailyPostId: item.dailyPostId,
           motivationId: item.motivationId,
-          conditonId: item.conditionId,
+          conditionId: item.conditionId,
           performanceId: item.performanceId,
           comment: item.comment,
-          version: item.version })
-      this.setEditPost(this.editPost)
+          version: item.version,},
+      })
     }
   },
 };

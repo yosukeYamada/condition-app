@@ -19,7 +19,7 @@ export default {
             dataSum += element;
           });
           // 中央にテキスト表示
-          let fontSize = 15;
+          let fontSize = 14;
           let fontStyle = "normal";
           let fontFamily = "Helvetica Neue";
           ctx.fillStyle = "#000";

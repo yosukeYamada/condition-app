@@ -41,6 +41,8 @@ const initialState = {
   firebaseUser: null,
   employeeList: [],
   loginStatus: false,
+
+  filterQuery:{}
 };
 
 export default new Vuex.Store({
@@ -76,6 +78,12 @@ export default new Vuex.Store({
     depList(state, depList) {
       state.depList = depList;
     },
+    setFilterQuery(state,filterQuery){
+      state.filterQuery = filterQuery
+    },
+    setData(state,data){
+      state.employeeList = data
+    }
   },
   actions: {
     login() {
@@ -122,8 +130,16 @@ export default new Vuex.Store({
     setDairyPost({ commit }, dailyPost) {
       commit("setDairyPost", dailyPost);
     },
+    setFilterQuery({commit},filterQuery){
+      commit("setFilterQuery",filterQuery)
+    },
+    setData({commit},data){
+      commit("setData",data)
+    }
   },
-  modules: {},
+  modules: {
+    
+  },
   getters: {
     userName: (state) => (state.loginUser ? state.loginUser.userName : ""),
     photoURL: (state) =>
@@ -134,6 +150,19 @@ export default new Vuex.Store({
     getStatus: function(state) {
       return state.loginStatus;
     },
+
+    //従業員リストを部署名と入社年月で絞り込む
+    filterEmployeeList:function(state){
+      let data  = state.employeeList;
+     
+      //部署名で検索
+      if(state.filterQuery !== ""){
+        data = data.filter(
+          (employeeList) => employeeList.dep.depName === state.filterQuery
+        );
+      }
+      return data
+    }
   },
   plugins: [createPersistedState({ storage: window.sessionStorage })], // オプションを追加
 });

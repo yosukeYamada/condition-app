@@ -39,6 +39,7 @@ export default {
         0,
         0
       );
+     
       for(let i = 0; i < param.length; i++){
         var latestPost = {
         date: "",
@@ -67,15 +68,16 @@ export default {
           var result2 = result[0].split('-');
           var rdate = new Date(
             result2[0],
-            result2[1],
+            result2[1] -1,
             result2[2],
             0,
             0
           )
           latestPosts[i].date = rdate;
       }
+      
       for(let i = 0; i < latestPosts.length; i++){
-        if(latestPosts[i].date !== today){
+        if(latestPosts[i].date.getTime() !== today.getTime()){
           var resultPost = {
             date: "",
             name: "",

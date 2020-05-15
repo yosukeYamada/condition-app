@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <v-breadcrumbs :items="items">
+    <v-breadcrumbs class="py-0 pl-1" :items="items">
       <template v-slot:item="{ item }">
         <v-breadcrumbs-item :disabled="item.disabled">
           <router-link :class="item.class" :to="item.path">
@@ -39,7 +39,7 @@ export default {
         {
           text: "部署名の変更、追加及び削除",
           disabled: true,
-          path: "/editDeps",
+          path: "",
           class: ["grey--text"],
         },
       ],

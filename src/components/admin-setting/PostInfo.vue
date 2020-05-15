@@ -27,6 +27,7 @@
           v-model="content"
           :rules="contactFormValidation.contentsRules"
           label="内容"
+          rows="8"
           required
         ></v-textarea>
         <b-button

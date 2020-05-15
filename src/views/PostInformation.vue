@@ -13,7 +13,7 @@
       </template>
     </v-breadcrumbs>
     <b-row align-v="center" align-h="center">
-      <b-col lg="6" md="8">
+      <b-col lg="9" md="10" sm="12">
         <PostInfo />
       </b-col>
     </b-row>

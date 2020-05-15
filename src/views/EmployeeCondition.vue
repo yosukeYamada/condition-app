@@ -1,24 +1,13 @@
 <template>
   <b-container>
-    <v-breadcrumbs class="py-0 pl-1" :items="items">
-      <template v-slot:item="{ item }">
-        <v-breadcrumbs-item :disabled="item.disabled">
-          <router-link :class="item.class" :to="item.path">
-            {{ item.text }}
-          </router-link>
-        </v-breadcrumbs-item>
-      </template>
-      <template v-slot:divider>
-        <v-icon>mdi-chevron-right</v-icon>
-      </template>
-    </v-breadcrumbs>
+    <BreadCrumbs :items="items" />
     <b-row align-v="center" align-h="center">
       <b-col>
         <b-row>
           <b-col sm="8" lg="5" md="6">
             <b-card class="py-0 px-2">
               <b-row>
-                <b-col cols="8" sm="8" md="8" lg="8">
+                <b-col class="py-0" cols="8" sm="8" md="8" lg="8">
                   <b-card-title>
                     {{ employee.userName }}
                   </b-card-title>
@@ -29,7 +18,7 @@
                     >{{ employee.hireDate | moment }}入社</b-card-sub-title
                   >
                 </b-col>
-                <b-col cols="4" sm="3" md="4" lg="4">
+                <b-col class="py-0" cols="4" sm="3" md="4" lg="4">
                   <v-fa
                     class="text-secondary"
                     :icon="['fas', 'user-circle']"
@@ -50,9 +39,11 @@
 <script>
 import moment from "moment";
 import EmployeeConditionList from "@/components/employee-condition/EmployeeConditionList.vue";
+import BreadCrumbs from "@/components/common/BreadCrumbs.vue";
 export default {
   components: {
     EmployeeConditionList,
+    BreadCrumbs,
   },
   data() {
     return {

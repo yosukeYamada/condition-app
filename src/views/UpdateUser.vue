@@ -1,5 +1,6 @@
 <template>
   <b-container>
+    <BreadCrumbs :items="items" />
     <b-row align-v="center" align-h="center">
       <b-col>
         <h2 class="mb-4">ユーザー情報の更新・削除</h2>
@@ -13,15 +14,31 @@
 import moment from "moment";
 import UpdateUser from "../components/admin-setting/UpdateUser";
 import axios from "axios";
+import BreadCrumbs from "@/components/common/BreadCrumbs.vue";
 
 export default {
   components: {
     UpdateUser,
+    BreadCrumbs,
   },
   data() {
     return {
       masterList: [],
       employeeList: [],
+      items:[
+            {
+        text: "管理者設定",
+        disabled: false,
+        path: "/adminSetting",
+        class: [],
+      },
+      {
+        text: "ユーザー情報の更新・削除",
+        disabled: true,
+        path: "",
+        class: ["grey--text"],
+      },
+      ]
     };
   },
   methods: {

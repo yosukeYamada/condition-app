@@ -1,9 +1,14 @@
 <template>
   <v-data-table :headers="headers" :items="items" class="elevation-1 card">
     <template v-slot:item.name="{ item }">
-      <router-link :to="{ name: 'EmployeeCondition', params: { userId: item.userId } }">
+      <router-link
+        :to="{ name: 'EmployeeCondition', params: { userId: item.userId } }"
+      >
         <span>{{ item.name }}</span>
       </router-link>
+    </template>
+    <template v-slot:item.dep="{ item }">
+      <span>{{ transferDepName(item.dep) }}</span>
     </template>
     <template v-slot:item.motivation="{ item }">
       <v-fa
@@ -30,9 +35,7 @@
 </template>
 
 <script>
-
 export default {
-
   props: {
     employeeList: Array,
   },
@@ -89,6 +92,7 @@ export default {
     };
   },
   methods: {
+    /** 天候によって表示するアイコンを返すメソッド */
     transferIcon(param) {
       if (param === "快晴") {
         return ["fas", "sun"];
@@ -104,6 +108,7 @@ export default {
         return ["fas", "question"];
       }
     },
+    /** 天候によって色を返すメソッド */
     transferColor(param) {
       if (param === "快晴") {
         return { color: "#ea5550" };
@@ -119,10 +124,14 @@ export default {
         return { color: "black" };
       }
     },
+    /** 部署IDを部署名に変換するメソッド */
+    transferDepName(depId) {
+      let dep = this.$store.state.depList.find((dep) => dep.depId === depId);
+      return dep.depName;
+    },
   },
   mounted() {
     this.items = this.employeeList;
-     
   },
 };
 </script>

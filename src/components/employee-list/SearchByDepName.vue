@@ -3,7 +3,7 @@
     <v-row align="left">
       <v-col class="d-flex" cols="14" sm="6">
         <v-select
-          :items="depName"
+          :items="depNameArray"
           label="部署名"
           v-model="filterDepName"
           @change="handleChangeQuery()"
@@ -17,17 +17,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      depName: [
-        "アプリエンジニア",
-
-        "クラウドエンジニア",
-
-        "機械学習エンジニア",
-
-        "内勤",
-
-        "全ての社員"
-      ],
+      depNameArray: [],
       filterDepName: "",
 
       filteredEmployeeList: {},
@@ -35,6 +25,18 @@ export default {
   },
   computed: {
     ...mapGetters(["filterEmployeeList"]),
+    /** storeのdepListの取得 */
+    setDepNameArray: function() {
+      return this.$store.state.depList;
+    },
+  },
+  watch: {
+    /** storeのdepListの変更の監視 */
+    setDepNameArray: function(newDepList) {
+      let depNameArray = newDepList.map((dep) => dep.depName);
+      depNameArray.push("全ての従業員");
+      this.depNameArray = depNameArray;
+    },
   },
   beforeDestroy() {
     this.$store.dispatch("setFilterDepName", "");
@@ -42,9 +44,7 @@ export default {
   methods: {
     //従業員絞り込み用のメソッド
     handleChangeQuery() {
-      
       this.$store.dispatch("setFilterDepName", this.filterDepName);
-      console.log("2:filterQueryの中身" + this.$store.state.filterDepName);
       //従業員リストを部署名と入社年月で絞り込む
 
       // let data = this.$store.state.employeeList;
@@ -60,14 +60,15 @@ export default {
       // console.log(this.filterEmployeeList)
     },
   },
-  // mounted() {
-  //   //filterQueryの初期値をstateに格納
-  //   this.$store.dispatch("setFilterQuery", this.filterQuery);
-  //   console.log('2番目')
-  // },
+  mounted() {
+    /** セレクトボックスの部署一覧を初期化 */
+    let depNameArray = this.$store.state.depList.map((dep) => dep.depName);
+    depNameArray.push("全ての従業員");
+    this.depNameArray = depNameArray;
+    //   //filterQueryの初期値をstateに格納
+    //   this.$store.dispatch("setFilterQuery", this.filterQuery);
+    //   console.log('2番目')
+  },
 };
 </script>
-<style>
-
-
-</style>
+<style></style>

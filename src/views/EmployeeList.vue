@@ -53,7 +53,7 @@ export default {
           return {
             userId: elm.userId,
             name: elm.userName,
-            dep: elm.dep.depName,
+            dep: elm.depId,
             hireDate: hireDate,
             lastPostDate: "未登録",
             motivation: "未登録",
@@ -65,7 +65,7 @@ export default {
           return {
             userId: elm.userId,
             name: elm.userName,
-            dep: elm.dep.depName,
+            dep: elm.depId,
             hireDate: hireDate,
             lastPostDate: moment(elm.dailyPost[0].date).format("YYYY-MM-DD"),
             motivation:

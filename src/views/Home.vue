@@ -5,7 +5,7 @@
         <h2 class="mb-4">ホーム</h2>
         <b-row>
           <b-col sm="8">
-            <Infomation />
+            <HomeNews />
           </b-col>
         </b-row>
         <b-row>
@@ -19,11 +19,11 @@
 </template>
 
 <script>
-import Infomation from "@/components/home/Infomation";
+import HomeNews from "@/components/home/HomeNews";
 import RecentPosts from "@/components/home/RecentPosts";
 export default {
   components: {
-    Infomation,
+    HomeNews,
     RecentPosts,
   },
   computed: {

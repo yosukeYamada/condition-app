@@ -74,15 +74,7 @@ export default {
     }
   },
   created() {
-    axios
-      .get("/showNewsPostList")
-      .then(response => {
-        this.$store.dispatch("setNewsPost", response.data);
-        this.newsPostList = this.$store.state.newsPost;
-      })
-      .catch(e => {
-        alert("お知らせ一覧を取得するAPIとの通信に失敗しました:" + e);
-      });
+    this.newsPostList = this.$store.state.newsPost;
   }
 };
 </script>

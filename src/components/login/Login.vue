@@ -106,6 +106,8 @@ export default {
               this.err = `メールアドレスは@rakus-partners.co.jp、
 または@rakus.co.jpのものをお使いください`;
             }
+            // お知らせ一覧を取得、表示用にstateに格納
+            this.$store.dispatch("setNewsPost", response.data.postedNewsList);
           });
         this.loading = true;
       } else {

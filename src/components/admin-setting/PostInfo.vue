@@ -1,7 +1,7 @@
 <template>
   <b-card
     border-variant="success"
-    header="部署名の変更、追加及び削除"
+    header="トップページのNews投稿"
     header-bg-variant="success"
     header-text-variant="white"
     style="border-width:2px;"
@@ -15,28 +15,29 @@
         required
       ></v-text-field>
         <v-select
-          v-model="select"
+          v-model="categoryId"
           :items="categories"
           :rules="[v => !!v || 'カテゴリーを選択してください']"
           label="カテゴリー"
+          item-text="categoryName"
+          item-value="categoryId"
           required
         ></v-select>
         <v-textarea
-          v-model="contents"
+          v-model="content"
           :rules="contactFormValidation.contentsRules"
           label="内容"
           required
         ></v-textarea>
-        <v-btn
-          :loading="loading"
+        <b-button
           :disabled="!contactFormValidation.valid"
           @click="post()"
           block
           large
-          color="info"
+          variant="outline-success"
           class="mt-4 font-weight-bold"
         >投稿
-        </v-btn>
+        </b-button>
 
         <v-snackbar
           v-model="snackBar.show"
@@ -53,13 +54,14 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import axios from "axios";
 export default {
     data: () => ({
         title: '',
-        categoty: '',
-        contents: '',
-        loading: false,
+        content: '',
+        categoryId:"",
+        categories:[],
         contactFormValidation: {
         valid: false,
         nameRules: [v => !!v || 'タイトルは必須項目です'],
@@ -70,15 +72,19 @@ export default {
         color: '',
         message: ''
       },
-      select: null,
-      categories:[]
     }),
     methods: {
+      ...mapActions(["setInformation"],),
       post: function () {
         if (this.$refs.form.validate()) {
-          this.contactForm.loading = true
-          axios.post("")
-            .then(() => {
+          axios.post("/information/insert", {
+            title: this.title,
+            content: this.content,
+            categoryId : this.categoryId,
+            registerUserId: this.$store.state.loginUser.userId
+          })
+            .then((response) => {
+              this.setInformation(response.data)
               this.formReset()
               this.showSnackBar(
                 'success',
@@ -91,9 +97,6 @@ export default {
                 '投稿に失敗しました。時間をおいて再度お試しください。'
               )
               console.log(err)
-            })
-            .finally(() => {
-              this.contactForm.loading = false
             })
         }
       },
@@ -108,9 +111,11 @@ export default {
     },
     created() {
       for( var num in this.$store.state.category) {
-        console.log(this.$store.state.category[num].categoryName)
-        this.categories.push(this.$store.state.category[num].categoryName)
+        this.categories.push({
+          categoryId: this.$store.state.category[num].categoryId,
+          categoryName : this.$store.state.category[num].categoryName}
+        )
       }
-    }
+    },
   }
 </script>

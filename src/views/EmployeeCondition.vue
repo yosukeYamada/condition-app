@@ -1,24 +1,48 @@
 <template>
   <b-container>
+    <v-breadcrumbs class="py-0 pl-1" :items="items">
+      <template v-slot:item="{ item }">
+        <v-breadcrumbs-item :disabled="item.disabled">
+          <router-link :class="item.class" :to="item.path">
+            {{ item.text }}
+          </router-link>
+        </v-breadcrumbs-item>
+      </template>
+      <template v-slot:divider>
+        <v-icon>mdi-chevron-right</v-icon>
+      </template>
+    </v-breadcrumbs>
     <b-row align-v="center" align-h="center">
-      <h4>
-        {{
-          this.$store.state.employeeList.filter(
-            (elm) => elm.userId === this.$route.params.userId
-          )[0].hireDate | moment
-        }}入社
-        {{
-          this.$store.state.employeeList.filter(
-            (elm) => elm.userId === this.$route.params.userId
-          )[0].dep.depName
-        }}
-        {{
-          this.$store.state.employeeList.filter(
-            (elm) => elm.userId === this.$route.params.userId
-          )[0].userName
-        }}のコンディション履歴
-      </h4>
-      <EmployeeConditionList />
+      <b-col>
+        <b-row>
+          <b-col sm="8" lg="5" md="6">
+            <b-card class="py-0 px-2">
+              <b-row>
+                <b-col cols="8" sm="8" md="8" lg="8">
+                  <b-card-title>
+                    {{ employee.userName }}
+                  </b-card-title>
+                  <b-card-sub-title class="mb-3">{{
+                    transferDepName(employee.depId)
+                  }}</b-card-sub-title>
+                  <b-card-sub-title
+                    >{{ employee.hireDate | moment }}入社</b-card-sub-title
+                  >
+                </b-col>
+                <b-col cols="4" sm="3" md="4" lg="4">
+                  <v-fa
+                    class="text-secondary"
+                    :icon="['fas', 'user-circle']"
+                    size="5x"
+                    >mdi-account-circle</v-fa
+                  >
+                </b-col>
+              </b-row>
+            </b-card>
+          </b-col>
+        </b-row>
+        <EmployeeConditionList />
+      </b-col>
     </b-row>
   </b-container>
 </template>
@@ -30,10 +54,42 @@ export default {
   components: {
     EmployeeConditionList,
   },
+  data() {
+    return {
+      employee: {},
+      items: [
+        {
+          text: "従業員一覧",
+          disabled: false,
+          path: "/employeeList",
+          class: [],
+        },
+        {
+          text: "コンディション履歴",
+          disabled: true,
+          path: "",
+          class: ["grey--text"],
+        },
+      ],
+    };
+  },
   filters: {
     moment: function(date) {
       return moment(date).format("YYYY年MM月");
     },
+  },
+  methods: {
+    /** 部署IDを部署名に変換するメソッド */
+    transferDepName(depId) {
+      let dep = this.$store.state.depList.find((dep) => dep.depId === depId);
+      return dep.depName;
+    },
+  },
+  mounted() {
+    this.employee = this.$store.state.employeeList.find(
+      (elm) => elm.userId === this.$route.params.userId
+    );
+    this.items[1].text = this.employee.userName + "のコンディション履歴";
   },
 };
 </script>

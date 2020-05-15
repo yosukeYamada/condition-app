@@ -19,10 +19,10 @@
         </div>
         <div class="mb-2">
           <span
-            @click="toPage"
+            @click="toPage('updateUser')"
             class="blue--text text--darken-3"
             :style="{ textDecoration: 'none' }"
-            >ユーザーの登録削除を行う</span
+            >ユーザー情報の更新・削除</span
           >
         </div>
       </b-card-text>
@@ -37,10 +37,15 @@ export default {
     AuthorityModal,
   },
   methods: {
-    /** モック用 */
-    toPage() {
-      alert("このページはまだ開発されてません！");
+    toPage(path) {
+      this.$router.push(path);
     },
   },
 };
 </script>
+
+<style>
+.blue--text:hover {
+  cursor: pointer;
+}
+</style>

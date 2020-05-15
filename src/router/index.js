@@ -8,6 +8,8 @@ import EmployeeCondition from "../views/EmployeeCondition";
 import Aggregate from "../views/Aggregate";
 import EmployeeList from "../views/EmployeeList";
 import AdminSetting from "../views/AdminSetting";
+import UpdateUser from "../views/UpdateUser.vue";
+import UpdateUserForm from "../views/UpdateUserForm.vue";
 import Home from "../views/Home.vue";
 import Top from "../views/Top.vue";
 import store from "../store/index.js";
@@ -112,6 +114,32 @@ const routes = [
     path: "/adminSetting",
     name: "AdminSetting",
     component: AdminSetting,
+    //ログインしていたら上記のパスに飛ぶことを許可する
+    beforeEnter(to, from, next) {
+      if (store.getters.getStatus) {
+        next();
+      } else {
+        next("/");
+      }
+    },
+  },
+  {
+    path: "/updateUser",
+    name: "UpdateUser",
+    component: UpdateUser,
+    //ログインしていたら上記のパスに飛ぶことを許可する
+    beforeEnter(to, from, next) {
+      if (store.getters.getStatus) {
+        next();
+      } else {
+        next("/");
+      }
+    },
+  },
+  {
+    path: "/updateUserForm",
+    name: "UpdateUserForm",
+    component: UpdateUserForm,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
       if (store.getters.getStatus) {

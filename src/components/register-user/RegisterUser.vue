@@ -177,6 +177,9 @@ export default {
           this.loginStatus();
           alert("登録が完了しました！")
           this.$router.push("/Home");
+
+          // お知らせ一覧を取得、表示用にstateに格納
+          this.$store.dispatch("setNewsPost", response.data.postedNewsList);
         });
     },
     resetButton() {

@@ -20,7 +20,7 @@
         </v-list-item-content>
 
         <v-list-item-action>
-          <v-btn @click="deleteNewsPost(newsPost)" icon>
+          <v-btn @click="deleteNewsPost(newsPost.newsId)" icon>
             <v-icon color="red darken-3">mdi-close-circle-outline</v-icon>
           </v-btn>
         </v-list-item-action>
@@ -32,10 +32,10 @@
 <script>
 import moment from "moment";
 import axios from "axios";
-import { mapActions } from "vuex";
 export default {
   data() {
     return {
+      item:"",
       newsPostList: [],
       inputNews: ""
     };
@@ -46,9 +46,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setNewsPost"]),
     addNews() {
-      let isAdd = window.confirm(this.inputNews + "をお知らせしますか？");
+      let isAdd = window.confirm(
+        "「" + this.inputNews + "」をお知らせしますか？"
+      );
       if (isAdd) {
         axios
           .post("/news", {
@@ -57,17 +58,30 @@ export default {
           })
           .then(response => {
             this.$store.dispatch("setNewsPost", response.data);
+
+
+           this.newsPostList = this.$store.state.newsPost
+           this.newsPostList.push({
+              });
+
           })
           .catch(e => {
             alert("お知らせ投稿に失敗しました：" + e);
           });
-
         alert("お知らせを投稿しました！");
       }
     },
-    deleteNewsPost(newsPost) {
-      alert("未開発");
-      console.log(newsPost);
+    deleteNewsPost(newsId) {
+      let isAdd = window.confirm(newsId+"削除しますか？");
+      if (isAdd) {
+        axios.post("/deleteNews", {
+          userId: this.$store.state.loginUser.userId,
+          newsId: newsId
+        });
+        // リアルタイム表示
+        let index = this.newsId;
+        this.newsPostList.splice(index, 1);
+      }
     },
     vlistItemClick() {
       /** コンソールエラー回避とUI機能の維持のため置いておく */

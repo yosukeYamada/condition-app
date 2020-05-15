@@ -168,7 +168,6 @@ export default {
           hireYear: this.hireYear,
           hireMonth: this.hireMonth,
           mailAddress: this.mailAddress,
-          authorityId: 2
         })
         .then(response => {
           this.setLoginUser(response.data);

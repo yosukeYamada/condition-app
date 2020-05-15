@@ -13,7 +13,7 @@
           style="text-transform: none;height:42px"
         >
           <div class="px-3">
-            <img class="pb-1" src="@/assets/google_icon.png" />
+            <img class="pb-1" src="@/assets/img/google_icon.png" />
             <span class="ml-1" style="color:#6a6a6a">Googleアカウントでログイン</span>
           </div>
         </v-btn>
@@ -73,7 +73,7 @@ export default {
             if (response.data.authority == 0) {
               this.setLoginUser(response.data);
               this.depList(response.data.depList);
-              this.$router.push("/RegisterUser");
+              this.$router.push("/registerUser");
               //管理者権限
             } else if (response.data.authority == 1) {
               this.setLoginUser(response.data);
@@ -90,7 +90,7 @@ export default {
                 .catch(e => {
                   alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
                 });
-              this.$router.push("/Home");
+              this.$router.push("/home");
               //従業員権限
             } else if (response.data.authority == 2) {
               this.setLoginUser(response.data);
@@ -98,7 +98,7 @@ export default {
               this.loginStatus();
               //authorityの値をstateに格納
               this.$store.dispatch("setAuthority", response.data.authority);
-              this.$router.push("/Home");
+              this.$router.push("/home");
               //メールアドレスが不正の場合
             } else if (response.data.authority == 3) {
               this.deleteLoginUser();

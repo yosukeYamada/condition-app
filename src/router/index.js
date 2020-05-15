@@ -13,6 +13,7 @@ import EditDailyPost from "../views/EditDailyPost.vue";
 import Top from "../views/Top.vue";
 import store from "../store/index.js";
 import EditDeps from "@/views/EditDeps.vue";
+import PostInformation from "@/views/PostInformation.vue";
 
 Vue.use(VueRouter);
 
@@ -140,6 +141,19 @@ const routes = [
     path: "/editDeps",
     name: EditDeps,
     component: EditDeps,
+    //ログインしていたら上記のパスに飛ぶことを許可する
+    beforeEnter(to, from, next) {
+      if (store.getters.getStatus) {
+        next();
+      } else {
+        next("/");
+      }
+    },
+  },
+  {
+    path: "/postInformation",
+    name: PostInformation,
+    component: PostInformation,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
       if (store.getters.getStatus) {

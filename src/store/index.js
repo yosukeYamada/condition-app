@@ -42,6 +42,8 @@ const initialState = {
   loginStatus: false,
   filterDepName: "",
   newsPost: [],
+  information:[],
+  category:[]
 };
 
 export default new Vuex.Store({
@@ -84,6 +86,12 @@ export default new Vuex.Store({
 
     setNewsPost(state, newsPost) {
       state.newsPost = newsPost;
+    },
+    setInformation(state, information) {
+      state.information = information;
+    },
+    setCategory(state, category) {
+      state.category = category;
     },
     addNewDep(state, newDep) {
       state.depList.push(newDep);
@@ -137,12 +145,17 @@ export default new Vuex.Store({
     setDairyPost({ commit }, dailyPost) {
       commit("setDairyPost", dailyPost);
     },
-
     setFilterDepName({ commit }, filterDepName) {
       commit("setFilterDepName", filterDepName);
     },
     setNewsPost({ commit }, newsPost) {
       commit("setNewsPost", newsPost);
+    },
+    setInformation({ commit }, information) {
+      commit("setInformation", information);
+    },
+    setCategory({ commit }, category) {
+      commit("setCategory", category);
     },
     setData({ commit }, data) {
       commit("setData", data);

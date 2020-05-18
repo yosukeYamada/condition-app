@@ -2,12 +2,12 @@
   <b-col>
     <h2 class="mb-4">従業員一覧</h2>
 
-    <SearchByDepName></SearchByDepName>
-    <SearchByHireYear></SearchByHireYear>
-    <SearchByHireMonth></SearchByHireMonth>
-    <!-- <Test></Test> -->
+    
 
     <EmployeeListHeader class="mb-5" />
+    <SearchByDepName></SearchByDepName>
+    <SearchByHireYear></SearchByHireYear>
+    <SearchByHireMonth></SearchByHireMonth><br>
     <EmployeeList :employee-list="childEmployeeList" />
   </b-col>
 </template>
@@ -19,7 +19,6 @@ import EmployeeList from "../components/employee-list/EmployeeList.vue";
 import SearchByDepName from "../components/employee-list/SearchByDepName";
 import SearchByHireYear from "../components/employee-list/SearchByHireYear";
 import SearchByHireMonth from "../components/employee-list/SearchByHireMonth";
-// import Test from "../components/employee-list/Test";
 
 export default {
   components: {
@@ -28,7 +27,7 @@ export default {
     SearchByDepName,
     SearchByHireYear,
     SearchByHireMonth,
-    // Test
+    
   },
   data() {
     return {

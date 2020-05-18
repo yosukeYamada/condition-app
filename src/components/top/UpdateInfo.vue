@@ -1,9 +1,11 @@
 <template>
   <b-col>
-    <v-card class="px-1" tile outlined style="border-width:4px;">
+    <v-card class="px-1" tile outlined style="border-width:4px; height:350px">
       <v-card-text class="mt-2">
         
         <div class="headline font-weight-black mb-4">{{ title }}</div>
+
+        <div class="information">
 
         <div v-for="(info, i) in information" :key="i" class="mb-2">
 
@@ -27,6 +29,7 @@
           </b-row>
           </div>
         </div>
+        </div>
       </v-card-text>
     </v-card>
   </b-col>
@@ -34,6 +37,8 @@
 
 <script>
 import moment from "moment";
+import axios from "axios";
+import { mapActions } from "vuex";
 
 export default {
   data() {
@@ -49,6 +54,11 @@ export default {
     }
   },
   created() {
+    axios.get("/information")
+      .then((response) => {
+        this.setInformation(response.data.informationList)
+        this.setCategory(response.data.category)
+      })
     var informationList = []
     for(  var num in this.$store.state.information  ) {
       var information = 
@@ -61,8 +71,10 @@ export default {
         (category) => category.categoryId === this.$store.state.information[num].categoryId)
       informationList.push(information)
     }
-    this.information = informationList.splice(0,5)
-    console.log(this.information)
+    this.information = informationList
+  },
+  methods: {
+    ...mapActions(["setInformation", "setCategory"],),
   },
 }
 </script>
@@ -73,5 +85,10 @@ export default {
   }
   .link {
     text-decoration: none;
+  }
+  .information {
+    height: 260px;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 </style>

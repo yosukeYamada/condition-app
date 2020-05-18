@@ -18,7 +18,7 @@
           </div>
         </v-btn>
         <div>
-          <v-btn text color="green" @click="toPage('/top')">トップに戻る</v-btn>
+          <v-btn text color="green" @click="toPage('/')">トップに戻る</v-btn>
         </div>
       </b-card-text>
     </b-card>
@@ -69,6 +69,7 @@ export default {
             mail: firebase.auth().currentUser.email
           })
           .then(response => {
+            // axios.get("/test/insert")
             //新規登録画面へ遷移
             if (response.data.authority == 0) {
               this.setLoginUser(response.data);

@@ -10,7 +10,7 @@
             すでに利用しているユーザーは<br>
             こちらからログインしてコンディションを登録しましょう
           </p>
-          <b-button variant="success" @click="toPage('/')"
+          <b-button variant="success" @click="toPage('/login')"
             >ログインする</b-button
           >
         </b-col>

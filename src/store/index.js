@@ -287,13 +287,17 @@ export default new Vuex.Store({
           alert("登録されている部署の削除に失敗しました。");
         });
     },
-    deleteUser({ commit }, employee) {
-      commit("deleteUser", employee.userId);
+    deleteUser({commit},employee){
+      commit("deleteUser",employee.userId);
     },
-  },
-  modules: {
-    setNewsPost({ commit }, newsPost) {
-      commit("setNewsPost", newsPost);
+    /**
+     * お知らせ投稿一覧を取得するメソッド
+     * @components/login/Login.vue
+     */
+    getNewsList({ commit }) {
+      axios.get("/showNewsList").then((response) => {
+          commit("setNewsPost", response.data);
+        })
     },
   },
   getters: {

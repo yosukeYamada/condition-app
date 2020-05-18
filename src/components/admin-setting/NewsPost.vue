@@ -100,7 +100,6 @@ export default {
   },
   created() {
     this.newsPostList = this.$store.state.newsPost;
-    window.addEventListener("scroll", this.onScroll);
   }
 };
 </script>

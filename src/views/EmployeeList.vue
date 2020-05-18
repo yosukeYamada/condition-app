@@ -46,15 +46,6 @@ export default {
 
   //watcherのメソッドを算出
   computed: {
-    // getFilterDepName: function() {
-    //   return this.$store.state.filterDepName;
-    // },
-    // getFilterHireYear: function() {
-    //   return this.$store.state.filterHireYear;
-    // },
-    // getFilterHireMonth: function() {
-    //   return this.$store.state.filterHireMonth;
-    // },
     getFilter: function() {
       return this.$store.state.filter;
     },
@@ -98,6 +89,7 @@ export default {
 
     getFilter: {
       handler: function() {
+        console.log(this.$store.state.depList)
         this.childEmployeeList = this.employeeList;
 
         if (this.$store.state.filter.depName !== "") {

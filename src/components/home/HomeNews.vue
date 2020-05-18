@@ -6,8 +6,8 @@
     header-bg-variant="success"
     header-text-variant="white"
   >
-    <b-card-text v-if="newsPostList.length !== 0">
-      <div class="mb-5" v-for="(newsPost, i) in newsPostList" :key="i">
+    <b-card-text id="HomeNewsList">
+      <div class="mb-5" v-for="(newsPost,i ) in newsPostList" :key="i">
         <p class="mb-2 font-weight-bold">{{ newsPost.newsDate | moment }}</p>
         <p>{{ newsPost.newsComment }}</p>
       </div>
@@ -36,3 +36,11 @@ export default {
   },
 };
 </script>
+
+<style>
+#HomeNewsList {
+  height: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+</style>

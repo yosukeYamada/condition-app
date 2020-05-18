@@ -89,29 +89,21 @@ export default {
 
     getFilter: {
       handler: function() {
-        console.log(this.$store.state.depList)
         this.childEmployeeList = this.employeeList;
 
         if (this.$store.state.filter.depName !== "") {
-          console.log("部署" + this.$store.state.filter.depName);
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
             if (employee.dep === this.$store.state.filter.depName) {
-              console.log("部署ごと" + employee);
               return employee;
             }
           });
         }
         if (this.$store.state.filter.hireYear !== "") {
-          console.log("入社年" + this.$store.state.filter.hireYear);
-          console.log("childEmployeeList" + this.childEmployeeList);
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
-            console.log("employeeHiredata" + employee.hireDate);
             if (
               employee.hireDate.substr(0, 4) ===
               this.$store.state.filter.hireYear
             ) {
-              console.log("入社年はこれ" + employee.hireDate.substr(0, 4));
-
               return employee;
             }
           });
@@ -123,10 +115,6 @@ export default {
               parseInt(moment(employee.hireDate).format("M")) ===
               this.$store.state.filter.hireMonth
             ) {
-              console.log(
-                "入社月は" + parseInt(moment(employee.hireDate).format("M"))
-              );
-              console.log("入社月はこちら" + employee.hireDate);
               return employee;
             }
           });

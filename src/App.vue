@@ -40,7 +40,7 @@ export default {
           console.log("ログインしています");
           if (this.$store.state.loginUser === null) {
             axios
-              .post("/api/user/findByMailAndAuthority", {
+              .post("/loginCheck", {
                 mail: firebase.auth().currentUser.email,
               })
               .then((response) => {

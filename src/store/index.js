@@ -76,14 +76,12 @@ export default new Vuex.Store({
     depList(state, depList) {
       state.depList = depList;
     },
-
     setFilterDepName(state, filterDepName) {
       state.filterDepName = filterDepName;
     },
     setData(state, data) {
       state.employeeList = data;
     },
-
     setNewsPost(state, newsPost) {
       state.newsPost = newsPost;
     },

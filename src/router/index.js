@@ -16,6 +16,7 @@ import Top from "../views/Top.vue";
 import store from "../store/index.js";
 import EditDeps from "@/views/EditDeps.vue";
 import PostInformation from "@/views/PostInformation.vue";
+import Information from "@/views/Information.vue";
 
 Vue.use(VueRouter);
 
@@ -141,8 +142,13 @@ const routes = [
   },
   {
     path: "/editDeps",
-    name: EditDeps,
+    name: "EditDeps",
     component: EditDeps,
+  },
+  {
+    path: "/information/informationId=:informationId",
+    name: "Information",
+    component: Information
   },
   {
     path: "/updateUser",

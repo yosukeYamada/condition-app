@@ -22,7 +22,7 @@
           </div>
         </v-btn>
         <div>
-          <v-btn text color="green" @click="toPage('/top')">トップに戻る</v-btn>
+          <v-btn text color="green" @click="toPage('/')">トップに戻る</v-btn>
         </div>
       </b-card-text>
     </b-card>

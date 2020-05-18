@@ -42,7 +42,7 @@ const routes = [
     //ログインしていたら上記のパスに飛ぶことを許可する
     component: Home,
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
         next("/");
@@ -55,7 +55,7 @@ const routes = [
     component: DailyPost,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
         next("/");
@@ -68,7 +68,7 @@ const routes = [
     component: EditDailyPost,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
         next("/");
@@ -81,7 +81,7 @@ const routes = [
     component: EmployeeCondition,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
         next("/");
@@ -94,7 +94,7 @@ const routes = [
     component: MyCondition,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
         next("/");
@@ -107,7 +107,7 @@ const routes = [
     component: Aggregate,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
         next("/");
@@ -120,7 +120,7 @@ const routes = [
     component: EmployeeList,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
         next("/");
@@ -133,7 +133,7 @@ const routes = [
     component: AdminSetting,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
         next("/");
@@ -148,7 +148,7 @@ const routes = [
   {
     path: "/information/informationId=:informationId",
     name: "Information",
-    component: Information
+    component: Information,
   },
   {
     path: "/updateUser",
@@ -156,7 +156,7 @@ const routes = [
     component: UpdateUser,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
         next("/");
@@ -169,7 +169,7 @@ const routes = [
     component: UpdateUserForm,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
         next("/");
@@ -182,7 +182,7 @@ const routes = [
     component: PostInformation,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
         next("/");

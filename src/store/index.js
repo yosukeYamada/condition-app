@@ -10,8 +10,8 @@ Vue.use(Vuex);
 const initialState = {
   loginUser: {
     authority: 2, // 初期値は1(一般ユーザー権限)で指定
-    dailyPost: {},
-    dep: {},
+    dailyPost: [],
+    dep: {},  // 削除する
     depId: 0,
     hireDate: "",
     registerDate: "",
@@ -42,8 +42,8 @@ const initialState = {
   loginStatus: false,
   filterDepName: "",
   newsPost: [],
-  information:[],
-  category:[]
+  information: [],
+  category: [],
 };
 
 export default new Vuex.Store({
@@ -58,23 +58,32 @@ export default new Vuex.Store({
     deleteLoginUser(state) {
       state.loginUser = null;
     },
+    /**
+     * ログイン状態を切り替えるメソッド
+     * @param {*} isLogin ログイン状態
+     */
+    switchLoginStatus(state, isLogin) {
+      state.loginStatus = isLogin;
+    },
     setAuthority(state, authority) {
       state.loginUser.authority = authority;
     },
-    employeeList(state, employeeList) {
+    /**
+     * employeeListに取得した従業員一覧をセットするメソッド
+     * @param {*} employeeList 従業員一覧
+     */
+    setEmployeeList(state, employeeList) {
       state.employeeList = employeeList;
     },
-    loginStatus(state) {
-      state.loginStatus = true;
-    },
-    changeLoginStatus(state) {
-      state.loginStatus = false;
+    /**
+     * depListに取得した部署一覧をセットするメソッド
+     * @param {*} depList 部署一覧
+     */
+    setDepList(state, depList) {
+      state.depList = depList;
     },
     setDairyPost(state, dailyPost) {
       state.loginUser.dailyPost = dailyPost;
-    },
-    depList(state, depList) {
-      state.depList = depList;
     },
     setFilterDepName(state, filterDepName) {
       state.filterDepName = filterDepName;
@@ -91,9 +100,19 @@ export default new Vuex.Store({
     setCategory(state, category) {
       state.category = category;
     },
+    /**
+     * depListに新しいdepを追加するメソッド
+     * @param {*} state
+     * @param {*} newDep 新しい部署情報
+     */
     addNewDep(state, newDep) {
       state.depList.push(newDep);
     },
+    /**
+     * depListのdepの情報を新しい部署名に更新するメソッド
+     * @param {*} state
+     * @param {*} newDepName 名前を変更する部署情報
+     */
     changeDepName(state, newDepName) {
       state.depList.map((dep) => {
         if (dep.depId === newDepName.depId) {
@@ -104,6 +123,11 @@ export default new Vuex.Store({
         }
       });
     },
+    /**
+     * depListからdepを削除するメソッド
+     * @param {*} state
+     * @param {*} depId 部署ID
+     */
     deleteDep(state, depId) {
       state.depList = state.depList.filter((dep) => dep.depId !== depId);
     },
@@ -113,14 +137,20 @@ export default new Vuex.Store({
       const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(googleAuthProvider);
     },
+    /**
+     * ログイン状態を切り替えるメソッド
+     * @components/login/Login.vue
+     * @components/common/Logout.vue
+     * @param {*} isLogin ログイン状態(true ログインしている / false ログインしていない)
+     */
+    switchLoginStatus({ commit }, isLogin) {
+      commit("switchLoginStatus", isLogin);
+    },
     setLoginUser({ commit }, user) {
       commit("setLoginUser", user);
     },
     setFirebaseUser({ commit }, user) {
       commit("setFirebaseUser", user);
-    },
-    logout() {
-      firebase.auth().signOut();
     },
     deleteLoginUser({ commit }) {
       commit("deleteLoginUser");
@@ -128,17 +158,28 @@ export default new Vuex.Store({
     setAuthority({ commit }, authority) {
       commit("setAuthority", authority);
     },
-    employeeList({ commit }, employeeList) {
-      commit("employeeList", employeeList);
+    /**
+     * 従業員一覧を取得するメソッド
+     * @components/login/Login.vue
+     */
+    getEmployeeList({ commit }) {
+      axios
+        .get("/showEmployeeList")
+        .then((response) => {
+          commit("setEmployeeList", response.data);
+        })
+        .catch((e) => {
+          alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
+        });
     },
-    loginStatus({ commit }) {
-      commit("loginStatus");
-    },
-    depList({ commit }, depList) {
-      commit("depList", depList);
-    },
-    changeLoginStatus({ commit }) {
-      commit("changeLoginStatus");
+    /**
+     * 部署一覧を取得するメソッド
+     * @components/login/Login.vue
+     */
+    getDepList({ commit }) {
+      axios.get("/getDepList").then((response) => {
+        commit("setDepList", response.data);
+      });
     },
     setDairyPost({ commit }, dailyPost) {
       commit("setDairyPost", dailyPost);
@@ -158,6 +199,11 @@ export default new Vuex.Store({
     setData({ commit }, data) {
       commit("setData", data);
     },
+    /**
+     * 部署の新規追加を行うメソッド
+     * @components/admin-setting/EditDeps.vueで利用
+     * @param {*} newDepData
+     */
     addNewDep({ commit }, newDepData) {
       axios
         .post("/editDeps/addNewDep", newDepData)
@@ -170,6 +216,11 @@ export default new Vuex.Store({
           console.error(error);
         });
     },
+    /**
+     * 既存の部署名の変更を行うメソッド
+     * @components/admin-setting/EditDeps.vueで利用
+     * @param {*} newDepName 名前を変更する部署情報
+     */
     changeDepName({ commit }, newDepName) {
       axios
         .post("/editDeps/changeDepName", newDepName)
@@ -182,6 +233,11 @@ export default new Vuex.Store({
           console.error(error);
         });
     },
+    /**
+     * 既存の部署を削除するメソッド
+     * @components/admin-setting/EditDeps.vueで利用
+     * @param {*} deletedDep 削除する部署情報
+     */
     deleteDep({ commit }, deletedDep) {
       axios
         .post("/editDeps/deleteDep", {
@@ -210,10 +266,6 @@ export default new Vuex.Store({
     employeeMotivation: (state) => (userId) => {
       state.employeeList.filter((elm) => elm.userId === userId);
     },
-    getStatus: function(state) {
-      return state.loginStatus;
-    },
-
     //従業員リストを部署名と入社年月で絞り込む
     filterDepName: function(state) {
       let data = state.employeeList;

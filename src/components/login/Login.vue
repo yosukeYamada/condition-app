@@ -56,9 +56,9 @@ export default {
       "deleteLoginUser",
       "setLoading",
       "setLoadings",
-      "employeeList",
-      "loginStatus",
-      "depList",
+      "switchLoginStatus",
+      "getEmployeeList",
+      "getDepList",
     ]),
     toPage(path) {
       this.$router.push(path);
@@ -74,38 +74,27 @@ export default {
             mail: firebase.auth().currentUser.email,
           })
           .then((response) => {
-            //新規登録画面へ遷移
             if (response.data.authority == AUTHORITY.UNREGISTERED) {
+              /** 未登録ユーザーだった場合 */
               this.setLoginUser(response.data);
-              this.depList(response.data.depList);
+              this.getDepList();
               this.$router.push("/registerUser");
-              //管理者権限
             } else if (response.data.authority == AUTHORITY.ADMIN) {
+              /** 管理者権限の場合 */
               this.setLoginUser(response.data);
-              this.depList(response.data.depList);
-              this.loginStatus();
-              //authorityの値をstateに格納
-              this.$store.dispatch("setAuthority", response.data.authority);
+              this.getDepList();
+              this.switchLoginStatus(true);
               //全従業員情報を取得
-              axios
-                .get("/showEmployeeList")
-                .then((response) => {
-                  this.employeeList(response.data);
-                })
-                .catch((e) => {
-                  alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
-                });
+              this.getEmployeeList();
               this.$router.push("/home");
-              //従業員権限
             } else if (response.data.authority == AUTHORITY.USER) {
+              /** ユーザー権限の場合 */
               this.setLoginUser(response.data);
-              this.depList(response.data.depList);
-              this.loginStatus();
-              //authorityの値をstateに格納
-              this.$store.dispatch("setAuthority", response.data.authority);
+              this.setDepList(response.data.depList);
+              this.switchLoginStatus(true);
               this.$router.push("/home");
-              //メールアドレスが不正の場合
             } else if (response.data.authority == AUTHORITY.OUTSIDER) {
+              /** メールアドレスのドメインが組織外のユーザーの場合 */
               this.deleteLoginUser();
               firebase.auth().signOut();
               this.err = `メールアドレスは@rakus-partners.co.jp、

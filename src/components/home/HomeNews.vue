@@ -11,9 +11,9 @@
         <p class="mb-2 font-weight-bold">{{ newsPost.newsDate | moment }}</p>
         <p>{{ newsPost.newsComment }}</p>
       </div>
-    </b-card-text>
-    <b-card-text v-if="newsPostList.length === 0">
-      <p>現在お知らせはありません</p>
+      <b-card-text v-if="newsPostList.length === 0">
+        <p>現在お知らせはありません</p>
+      </b-card-text>
     </b-card-text>
   </b-card>
 </template>
@@ -23,17 +23,17 @@ import moment from "moment";
 export default {
   data() {
     return {
-      newsPostList: [],
+      newsPostList: []
     };
   },
   filters: {
     moment: function(date) {
       return moment(date).format("YYYY/MM/DD HH:mm");
-    },
+    }
   },
   created() {
     this.newsPostList = this.$store.state.newsPost;
-  },
+  }
 };
 </script>
 

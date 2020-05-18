@@ -59,6 +59,7 @@ export default {
       "switchLoginStatus",
       "getEmployeeList",
       "getDepList",
+      "getNewsList",
     ]),
     toPage(path) {
       this.$router.push(path);
@@ -83,6 +84,7 @@ export default {
               /** 管理者権限の場合 */
               this.setLoginUser(response.data);
               this.getDepList();
+              this.getNewsList();
               this.switchLoginStatus(true);
               //全従業員情報を取得
               this.getEmployeeList();
@@ -91,6 +93,7 @@ export default {
               /** ユーザー権限の場合 */
               this.setLoginUser(response.data);
               this.setDepList(response.data.depList);
+              this.getNewsList();
               this.switchLoginStatus(true);
               this.$router.push("/home");
             } else if (response.data.authority == AUTHORITY.OUTSIDER) {
@@ -100,8 +103,6 @@ export default {
               this.err = `メールアドレスは@rakus-partners.co.jp、
 または@rakus.co.jpのものをお使いください`;
             }
-            // お知らせ一覧を取得、表示用にstateに格納
-            this.$store.dispatch("setNewsPost", response.data.postedNewsList);
           });
         this.loading = true;
       } else {

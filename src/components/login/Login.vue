@@ -15,16 +15,14 @@
           style="text-transform: none;height:42px"
         >
           <div class="px-3">
-            <img class="pb-1" src="@/assets/google_icon.png" />
-            <span class="ml-1" style="color:#6a6a6a">
-              Googleアカウントでログイン
-            </span>
+            <img class="pb-1" src="@/assets/img/google_icon.png" />
+            <span class="ml-1" style="color:#6a6a6a"
+              >Googleアカウントでログイン</span
+            >
           </div>
         </v-btn>
         <div>
-          <v-btn text color="green" @click="toPage('/top')">
-            トップに戻る
-          </v-btn>
+          <v-btn text color="green" @click="toPage('/top')">トップに戻る</v-btn>
         </div>
       </b-card-text>
     </b-card>
@@ -36,7 +34,8 @@
 import axios from "axios";
 import firebase from "firebase/app";
 import { mapActions } from "vuex";
-import Loading from "@/components/login/Loading.vue";
+import Loading from "@/components/common/Loading.vue";
+import AUTHORITY from "@/assets/js/Authority.js";
 
 export default {
   data() {
@@ -57,9 +56,9 @@ export default {
       "deleteLoginUser",
       "setLoading",
       "setLoadings",
-      "employeeList",
-      "loginStatus",
-      "depList",
+      "switchLoginStatus",
+      "getEmployeeList",
+      "getDepList",
     ]),
     toPage(path) {
       this.$router.push(path);
@@ -71,49 +70,38 @@ export default {
       if (user) {
         this.setFirebaseUser(user);
         axios
-          .post("/api/user/findByMailAndAuthority", {
+          .post("/loginCheck", {
             mail: firebase.auth().currentUser.email,
           })
           .then((response) => {
-            //新規登録画面へ遷移
-            if (response.data.authority == 0) {
+            if (response.data.authority == AUTHORITY.UNREGISTERED) {
+              /** 未登録ユーザーだった場合 */
               this.setLoginUser(response.data);
-              this.depList(response.data.depList);
-              this.$router.push("/RegisterUser");
-              //管理者権限
-            } else if (response.data.authority == 1) {
+              this.getDepList();
+              this.$router.push("/registerUser");
+            } else if (response.data.authority == AUTHORITY.ADMIN) {
+              /** 管理者権限の場合 */
               this.setLoginUser(response.data);
-              this.depList(response.data.depList);
-              this.loginStatus();
-              //authorityの値をstateに格納
-              this.$store.dispatch("setAuthority", response.data.authority);
+              this.getDepList();
+              this.switchLoginStatus(true);
               //全従業員情報を取得
-              axios
-                .get("/showEmployeeList")
-                .then((response) => {
-                  this.employeeList(response.data);
-                })
-                .catch((e) => {
-                  alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
-                });
-              this.$router.push("/Home");
-              //従業員権限
-            } else if (response.data.authority == 2) {
+              this.getEmployeeList();
+              this.$router.push("/home");
+            } else if (response.data.authority == AUTHORITY.USER) {
+              /** ユーザー権限の場合 */
               this.setLoginUser(response.data);
-              this.depList(response.data.depList);
-              this.loginStatus();
-              //authorityの値をstateに格納
-              this.$store.dispatch("setAuthority", response.data.authority);
-              this.$router.push("/Home");
-              //メールアドレスが不正の場合
-            } else if (response.data.authority == 3) {
-              <div class="my-2">
-        <v-btn>Normal</v-btn>
-      </div>;
+              this.setDepList(response.data.depList);
+              this.switchLoginStatus(true);
+              this.$router.push("/home");
+            } else if (response.data.authority == AUTHORITY.OUTSIDER) {
+              /** メールアドレスのドメインが組織外のユーザーの場合 */
+              this.deleteLoginUser();
               firebase.auth().signOut();
               this.err = `メールアドレスは@rakus-partners.co.jp、
 または@rakus.co.jpのものをお使いください`;
             }
+            // お知らせ一覧を取得、表示用にstateに格納
+            this.$store.dispatch("setNewsPost", response.data.postedNewsList);
           });
         this.loading = true;
       } else {

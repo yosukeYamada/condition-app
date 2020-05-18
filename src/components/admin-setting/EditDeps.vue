@@ -14,6 +14,7 @@
             <b-form-input
               size="sm"
               placeholder="追加する部署名を入力"
+              v-model="inputAddDepName"
             ></b-form-input>
           </v-list-item-title>
         </v-list-item-content>
@@ -88,19 +89,22 @@
 
 <script>
 import moment from "moment";
-// import axios from "axios";
+import axios from "axios";
 
 export default {
   data() {
     return {
-      depList: [],
       inputNewDepName: "",
       inputAddDepName: "",
     };
   },
+  computed: {
+    depList: function() {
+      return this.$store.state.depList;
+    },
+  },
   methods: {
     toDate(stringDate) {
-      // "2020-04-27T00:00:00.000+0000"
       return moment(stringDate).format("YYYY-MM-DD HH:mm");
     },
     getUpdateUserName(updateUserId) {
@@ -112,60 +116,90 @@ export default {
       return updateUserName;
     },
     addNewDep() {
-      alert("まだ実装できてません！");
-      alert(this.depList);
-      console.log(this.inputAddDepName);
-      //   axios
-      //     .post("/addNewDep", {
-      //       depName: this.inputAddDepName,
-      //       updateUserId: this.$store.state.loginUser.userId,
-      //     })
-      //     .then((response) => {
-      //       alert("部署名の変更が完了しました！");
-      //       this.inputNewDepName = "";
-      //       console.log(response.data);
-      //     })
-      //     .catch((error) => {
-      //       alert("部署名の変更に失敗しました！");
-      //       console.error(error);
-      //     });
+      /** 入力値チェックが完了してからこのメソッドを実行するようにする */
+      this.$store.dispatch("addNewDep", {
+        depName: this.inputAddDepName,
+        registerUserId: this.$store.state.loginUser.userId,
+      });
+      this.inputAddDepName = "";
     },
     changeDepName(depId, version) {
-      alert("まだ実装できてません！");
-      console.log({ depId: depId, version: version });
-      //   axios
-      //     .post("/changeDepName", {
-      //       depId: depId,
-      //       depName: this.inputNewDepName,
-      //       updateUserId: this.$store.state.loginUser.userId,
-      //       version: version,
-      //     })
-      //     .then((response) => {
-      //       alert("部署名の変更が完了しました！");
-      //       this.inputNewDepName = "";
-      //       console.log(response.data);
-      //     })
-      //     .catch((error) => {
-      //       alert("部署名の変更に失敗しました！");
-      //       console.error(error);
-      //     });
+      axios
+        .post("/editDeps/exclusiveProcessing", {
+          depId: depId,
+          version: version,
+        })
+        .then((isCheck) => {
+          if (isCheck.data) {
+            this.$store.dispatch("changeDepName", {
+              depId: depId,
+              depName: this.inputNewDepName,
+              updateUserId: this.$store.state.loginUser.userId,
+            });
+          } else {
+            alert(
+              "他のユーザーが先に変更処理を行いました。\n更新ボタンを押して画面を再読み込みし、最新の状態を確認してください。"
+            );
+          }
+        })
+        .catch((error) => {
+          alert("エラーが発生しました。\nしばらくの後、再度実行してください。");
+          console.error(error);
+          return false;
+        });
     },
     deleteDep(depName, depId, version) {
       let isOK = window.confirm(
-        "本当に" +
-          depName +
-          "を削除してもよろしいでしょうか？\n\n※ 削除する部署には従業員が1名も所属していないことを確認してください"
+        "本当に" + depName + "を削除してもよろしいでしょうか？"
       );
       if (isOK) {
-        console.log({ depId: depId, version: version });
+        axios
+          .post("/editDeps/exclusiveProcessing", {
+            depId: depId,
+            version: version,
+          })
+          .then((isCheck) => {
+            if (isCheck.data) {
+              axios
+                .post("/editDeps/checkIsEmployeeBelong", { depId })
+                .then((isEmployeeBelong) => {
+                  if (isEmployeeBelong.data) {
+                    this.$store.dispatch("deleteDep", {
+                      depName,
+                      depId,
+                      updateUserId: this.$store.state.loginUser.userId,
+                    });
+                  } else {
+                    alert(
+                      depName +
+                        "には所属している従業員がいるため削除できません。"
+                    );
+                  }
+                })
+                .catch((error) => {
+                  alert(
+                    "Bエラーが発生しました。\nしばらくの後、再度実行してください。"
+                  );
+                  console.error(error);
+                });
+            } else {
+              alert(
+                "他のユーザーが先に変更処理を行いました。\n更新ボタンを押して画面を再読み込みし、最新の状態を確認してください。"
+              );
+            }
+          })
+          .catch((error) => {
+            alert(
+              "Aエラーが発生しました。\nしばらくの後、再度実行してください。"
+            );
+            console.error(error);
+            return false;
+          });
       }
     },
     vlistItemClick() {
       /** コンソールエラー回避とUI機能の維持のため置いておく */
     },
-  },
-  created() {
-    this.depList = this.$store.state.depList;
   },
 };
 </script>

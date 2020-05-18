@@ -4,15 +4,11 @@
       <b-card
         class="text-left"
         border-variant="success"
-        header="ユーザー登録"
+        header="ユーザー情報の更新"
         header-bg-variant="success"
         header-text-variant="white"
         style="border-width:2px;"
       >
-        <b-card-text>
-          <p class="mb-0">あなたはまだユーザー登録が完了していません。</p>
-          <p>Rakuppoを利用するにはユーザー登録を完了してください。</p>
-        </b-card-text>
         <b-card-text>
           <ValidationProvider
             :rules="{ userName: /([^ -~｡-ﾟ])/ }"
@@ -27,7 +23,6 @@
                 id="input-name"
                 type="text"
                 v-model="userName"
-                placeholder="ラクス太郎"
                 maxlength="20"
               />
               <p>{{ errors[0] }}</p>
@@ -47,23 +42,13 @@
                 id="input-name-kana"
                 type="text"
                 v-model="userNameKana"
-                placeholder="らくすたろう"
                 maxlength="20"
               />
               <div>{{ errors[0] }}</div>
             </b-form-group>
           </ValidationProvider>
-          <b-form-group
-            label="メールアドレス"
-            label-for="input-email"
-            description="ログイン時に入力したメールアドレスを入力してください"
-          >
-            <b-form-input
-              id="input-email"
-              type="email"
-              v-model="mailAddress"
-              disabled="disabled"
-            />
+          <b-form-group label="メールアドレス" label-for="input-email">
+            <b-form-input id="input-email" type="email" v-model="mailAddress" />
           </b-form-group>
           <ValidationObserver>
             <b-form-group label="入社年月">
@@ -116,8 +101,8 @@
           <b-button
             class="mr-3"
             variant="outline-success"
-            @click.prevent="handleSubmit(registerUser)"
-            >登録</b-button
+            @click.prevent="handleSubmit(updateUser)"
+            >更新</b-button
           >
           <b-button variant="outline-danger" @click.prevent="resetButton()"
             >リセット</b-button
@@ -129,10 +114,11 @@
 </template>
 
 <script>
+import moment from "moment";
 import axios from "axios";
 import { mapActions } from "vuex";
 export default {
-  name: "RegisterUser",
+  name: "UpdateUserForm",
   data() {
     return {
       selectYears: [2016, 2017, 2018, 2019, 2020],
@@ -160,6 +146,8 @@ export default {
       hireYear: null,
       hireMonth: null,
       depId: null,
+      userId: null,
+      updateUserId: null,
     };
   },
   computed: {
@@ -178,11 +166,13 @@ export default {
     this.makeDepList();
   },
   methods: {
-    registerUser() {
+    updateUser() {
       this.userName = this.userName.replace("　", "");
       this.userNameKana = this.userNameKana.replace("　", "");
       axios
-        .post("/registerUser", {
+        .post("/updateUser", {
+          userId: this.userId,
+          updateUserId: this.updateUserId,
           userName: this.userName,
           userNameKana: this.userNameKana,
           depId: this.depId,
@@ -191,20 +181,18 @@ export default {
           mailAddress: this.mailAddress,
         })
         .then((response) => {
-          this.setLoginUser(response.data);
-          //authorityの値をstateに格納
-          this.$store.dispatch("setAuthority", response.data.authority);
-          this.loginStatus();
-          alert("登録が完了しました！");
-          this.$router.push("/home");
-
-          // お知らせ一覧を取得、表示用にstateに格納
-          this.$store.dispatch("setNewsPost", response.data.postedNewsList);
+          this.$store.dispatch("employeeList", response.data);
+          alert("更新が完了しました！");
+          this.$router.push("/UpdateUser");
+        })
+        .catch((e) => {
+          alert("コンディション登録の送信に失敗しました：" + e);
         });
     },
     resetButton() {
       this.userName = "";
       this.userNameKana = "";
+      this.mailAddress = "";
       this.hireYear = null;
       this.hireMonth = null;
       this.depId = null;
@@ -227,7 +215,14 @@ export default {
     },
   },
   mounted() {
-    this.mailAddress = this.$store.state.loginUser.mailList[0].mailName;
+    this.userId = this.$route.params.userId;
+    this.userName = this.$route.params.name;
+    this.userNameKana = this.$route.params.kana;
+    this.mailAddress = this.$route.params.mail;
+    this.depId = this.$route.params.depId;
+    this.hireYear = moment(this.$route.params.hireDate).format("YYYY");
+    this.hireMonth = moment(this.$route.params.hireDate).format("M");
+    this.updateUserId = this.$store.state.loginUser.userId;
   },
 };
 </script>

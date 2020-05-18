@@ -1,71 +1,72 @@
 <template>
-    <b-modal id="authority-modal" centered title="管理者権限の付与・削除">
-      <v-subheader>
-        <b-row>
-          <b-col sm="10" class="pr-0 pb-1">
-            <v-autocomplete
-              v-model="item"
-              :items="employeeList"
-              label="メールアドレスで管理者を追加"
-              item-text="email"
-              item-value="item"
-              return-object
-            >
-              <template v-slot:selection="data">
-                <v-chip
-                  v-bind="data.attrs"
-                  :input-value="data.selected"
-                  @click="data.select"
-                >
-                  {{ data.item.name }}
-                </v-chip>
+  <b-modal id="authority-modal" centered title="管理者権限の付与・削除">
+    <v-subheader>
+      <b-row>
+        <b-col sm="10" class="pr-0 pb-1">
+          <v-autocomplete
+            v-model="item"
+            :items="employeeList"
+            label="メールアドレスで管理者を追加"
+            item-text="email"
+            item-value="item"
+            return-object
+          >
+            <template v-slot:selection="data">
+              <v-chip
+                v-bind="data.attrs"
+                :input-value="data.selected"
+                @click="data.select"
+              >
+                {{ data.item.name }}
+              </v-chip>
+            </template>
+            <template v-slot:item="data">
+              <template v-if="typeof data.item !== 'object'">
+                <v-list-item-content v-text="data.item"></v-list-item-content>
               </template>
-              <template v-slot:item="data">
-                <template v-if="typeof data.item !== 'object'">
-                  <v-list-item-content v-text="data.item"></v-list-item-content>
-                </template>
-                <template v-else>
-                  <v-list-item-content>
-                    <v-list-item-title
-                      v-html="data.item.name"
-                    ></v-list-item-title>
-                    <v-list-item-subtitle
-                      v-html="data.item.email"
-                    ></v-list-item-subtitle>
-                  </v-list-item-content>
-                </template>
+              <template v-else>
+                <v-list-item-content>
+                  <v-list-item-title
+                    v-html="data.item.name"
+                  ></v-list-item-title>
+                  <v-list-item-subtitle
+                    v-html="data.item.email"
+                  ></v-list-item-subtitle>
+                </v-list-item-content>
               </template>
-            </v-autocomplete>
-          </b-col>
-          <b-col sm="2" class="pb-1">
-            <b-button size="sm" @click="addAdminAuthority()">追加</b-button>
-          </b-col>
-        </b-row>
-      </v-subheader>
-      <v-list two-line subheader>
-        <v-subheader>管理者ユーザーの一覧</v-subheader>
-        <v-list-item
-          v-for="(admin, i) in adminList"
-          :key="i"
-          @click="vlistItemClick"
-        >
-          <v-list-item-content>
-            <v-list-item-title v-text="admin.name"></v-list-item-title>
-            <v-list-item-subtitle v-text="admin.email"></v-list-item-subtitle>
-          </v-list-item-content>
+            </template>
+          </v-autocomplete>
+        </b-col>
+        <b-col sm="2" class="pb-1">
+          <b-button size="sm" @click="addAdminAuthority()">追加</b-button>
+        </b-col>
+      </b-row>
+    </v-subheader>
+    <v-list two-line subheader>
+      <v-subheader>管理者ユーザーの一覧</v-subheader>
+      <v-list-item
+        v-for="(admin, i) in adminList"
+        :key="i"
+        @click="vlistItemClick"
+      >
+        <v-list-item-content>
+          <v-list-item-title v-text="admin.name"></v-list-item-title>
+          <v-list-item-subtitle v-text="admin.email"></v-list-item-subtitle>
+        </v-list-item-content>
 
-          <v-list-item-action>
-            <v-btn @click="deleteAdminAuthority(admin)" icon>
-              <v-icon color="red darken-3">mdi-close-circle-outline</v-icon>
-            </v-btn>
-          </v-list-item-action>
-        </v-list-item>
-      </v-list>
-    </b-modal>
+        <v-list-item-action>
+          <v-btn @click="deleteAdminAuthority(admin)" icon>
+            <v-icon color="red darken-3">mdi-close-circle-outline</v-icon>
+          </v-btn>
+        </v-list-item-action>
+      </v-list-item>
+    </v-list>
+  </b-modal>
 </template>
 
 <script>
 import axios from "axios";
+import AUTHORITY from "@/assets/js/Authority.js";
 import "vue-simple-suggest/dist/styles.css";
 // import { mapGetters } from "vuex";
 export default {
@@ -79,7 +80,7 @@ export default {
   methods: {
     setAdminList() {
       let adminList = this.$store.state.employeeList.filter(
-        (employee) => employee.authority === 1
+        (employee) => employee.authority === AUTHORITY.ADMIN
       );
       this.adminList = adminList.map((employee) => {
         try {
@@ -99,7 +100,7 @@ export default {
     },
     setEmployeeList() {
       let employees = this.$store.state.employeeList.filter(
-        (employee) => employee.authority === 2
+        (employee) => employee.authority === AUTHORITY.USER
       );
       this.employeeList = employees.map((employee) => {
         try {
@@ -125,7 +126,7 @@ export default {
         axios
           .post("/changeAuthority", {
             email: this.item.email,
-            authority: 1,
+            authority: AUTHORITY.ADMIN,
             updateUserId: this.$store.state.loginUser.userId,
             version: this.item.version,
           })
@@ -158,7 +159,7 @@ export default {
         axios
           .post("/changeAuthority", {
             email: admin.email,
-            authority: 2,
+            authority: AUTHORITY.USER,
             updateUserId: this.$store.state.loginUser.userId,
             version: admin.version,
           })

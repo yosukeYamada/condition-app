@@ -22,9 +22,14 @@ export default {
 
   mounted() {
     this.loginCheck();
+    axios.get("/information")
+      .then((response) => {
+        this.setInformation(response.data.informationList)
+        this.setCategory(response.data.category)
+      })
   },
   methods: {
-    ...mapActions(["setLoginUser"]),
+    ...mapActions(["setLoginUser","setInformation", "setCategory"],),
     loginCheck() {
       firebase.auth().onAuthStateChanged((user) => {
         if (!user) {
@@ -35,7 +40,7 @@ export default {
           console.log("ログインしています");
           if (this.$store.state.loginUser === null) {
             axios
-              .post("/api/user/findByMailAndAuthority", {
+              .post("/loginCheck", {
                 mail: firebase.auth().currentUser.email,
               })
               .then((response) => {

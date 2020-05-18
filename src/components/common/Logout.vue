@@ -24,12 +24,12 @@ export default {
     logout() {
       firebase.auth().signOut();
       this.$router.push("/");
-      this.changeLoginStatus();
+      this.switchLoginStatus(false);
     },
-    ...mapActions(["changeLoginStatus"])
+    ...mapActions(["switchLoginStatus"]),
   },
   computed: {
-    ...mapGetters(["userName", "photoURL"])
+    ...mapGetters(["userName", "photoURL"]),
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <v-breadcrumbs class="py-0 pl-1" :items="items">
+    <v-breadcrumbs :items="items">
       <template v-slot:item="{ item }">
         <v-breadcrumbs-item :disabled="item.disabled">
           <router-link :class="item.class" :to="item.path">
@@ -13,19 +13,19 @@
       </template>
     </v-breadcrumbs>
     <b-row align-v="center" align-h="center">
-      <b-col lg="6" md="8">
-        <EditDeps />
+      <b-col lg="9" md="10" sm="12">
+        <PostInfo />
       </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
-import EditDeps from "@/components/admin-setting/EditDeps.vue";
+import PostInfo from "@/components/admin-setting/PostInfo.vue";
 
 export default {
   components: {
-    EditDeps,
+    PostInfo,
   },
   data() {
     return {
@@ -37,9 +37,9 @@ export default {
           class: [],
         },
         {
-          text: "部署名の変更、追加及び削除",
+          text: "トップページのNews投稿",
           disabled: true,
-          path: "",
+          path: "/postInformation",
           class: ["grey--text"],
         },
       ],

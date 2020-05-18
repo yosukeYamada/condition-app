@@ -3,14 +3,15 @@ import Vuex from "vuex";
 import firebase from "firebase/app";
 import "firebase/auth";
 import createPersistedState from "vuex-persistedstate";
+import axios from "axios";
 
 Vue.use(Vuex);
 
 const initialState = {
   loginUser: {
     authority: 2, // 初期値は1(一般ユーザー権限)で指定
-    dailyPost: {},
-    dep: {},
+    dailyPost: [],
+    dep: {}, // 削除する
     depId: 0,
     hireDate: "",
     registerDate: "",
@@ -40,26 +41,21 @@ const initialState = {
   employeeList: [],
   loginStatus: false,
 
+  filterDepName: "",
 
-  filterDepName:"",
+  filterHireYear: "",
 
-  filterHireYear:"",
+  filterHireMonth: "",
 
-  filterHireMonth:"",
-
-  filter:{
-    depName:"",
-    hireYear:"",
-    hireMonth:""
-    
+  filter: {
+    depName: "",
+    hireYear: "",
+    hireMonth: "",
   },
-
-  newsPost:{},
-
-
-
-  editPost:[]
-
+  editPost: [],
+  newsPost: [],
+  information: [],
+  category: [],
 };
 
 export default new Vuex.Store({
@@ -74,58 +70,109 @@ export default new Vuex.Store({
     deleteLoginUser(state) {
       state.loginUser = null;
     },
+    /**
+     * ログイン状態を切り替えるメソッド
+     * @param {*} isLogin ログイン状態
+     */
+    switchLoginStatus(state, isLogin) {
+      state.loginStatus = isLogin;
+    },
     setAuthority(state, authority) {
       state.loginUser.authority = authority;
     },
-    employeeList(state, employeeList) {
+    /**
+     * employeeListに取得した従業員一覧をセットするメソッド
+     * @param {*} employeeList 従業員一覧
+     */
+    setEmployeeList(state, employeeList) {
       state.employeeList = employeeList;
     },
-    loginStatus(state) {
-      state.loginStatus = true;
-    },
-    changeLoginStatus(state) {
-      state.loginStatus = false;
+    /**
+     * depListに取得した部署一覧をセットするメソッド
+     * @param {*} depList 部署一覧
+     */
+    setDepList(state, depList) {
+      state.depList = depList;
     },
     setDairyPost(state, dailyPost) {
       state.loginUser.dailyPost = dailyPost;
     },
-    depList(state, depList) {
-      state.depList = depList;
-    },
 
-    setFilterDepName(state,filterDepName){
-      state.filter.depName = filterDepName
+    setFilterDepName(state, filterDepName) {
+      state.filter.depName = filterDepName;
     },
-    setFilterHireYear(state,filterHireYear){
-      state.filter.hireYear = filterHireYear
+    setFilterHireYear(state, filterHireYear) {
+      state.filter.hireYear = filterHireYear;
     },
-    setFilterHireMonth(state,filterHireMonth){
-      state.filter.hireMonth = filterHireMonth
+    setFilterHireMonth(state, filterHireMonth) {
+      state.filter.hireMonth = filterHireMonth;
     },
-    setData(state,data){
-      state.employeeList = data
-    },
-
-    setNewsPost(state,newsPost){
+    setNewsPost(state, newsPost) {
       state.newsPost = newsPost;
     },
 
     setEditPost(state, editPost) {
-      state.editPost = editPost
+      state.editPost = editPost;
     },
-    setFilter(state,filter){
-      state.filter = filter
-    }
-    
-
-
-
-
+    setFilter(state, filter) {
+      state.filter = filter;
+    },
+    setInformation(state, information) {
+      state.information = information;
+    },
+    setCategory(state, category) {
+      state.category = category;
+    },
+    /**
+     * depListに新しいdepを追加するメソッド
+     * @param {*} state
+     * @param {*} newDep 新しい部署情報
+     */
+    addNewDep(state, newDep) {
+      state.depList.push(newDep);
+    },
+    /**
+     * depListのdepの情報を新しい部署名に更新するメソッド
+     * @param {*} state
+     * @param {*} newDepName 名前を変更する部署情報
+     */
+    changeDepName(state, newDepName) {
+      state.depList.map((dep) => {
+        if (dep.depId === newDepName.depId) {
+          dep.depName = newDepName.depName;
+          dep.updateUserId = newDepName.updateUserId;
+          dep.updateDate = newDepName.updateDate;
+          dep.version = newDepName.version;
+        }
+      });
+    },
+    /**
+     * depListからdepを削除するメソッド
+     * @param {*} state
+     * @param {*} depId 部署ID
+     */
+    deleteDep(state, depId) {
+      state.depList = state.depList.filter((dep) => dep.depId !== depId);
+    },
+    deleteUser(state, userId) {
+      state.employeeList = state.employeeList.filter(
+        (employee) => employee.userId !== userId
+      );
+    },
   },
   actions: {
     login() {
       const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(googleAuthProvider);
+    },
+    /**
+     * ログイン状態を切り替えるメソッド
+     * @components/login/Login.vue
+     * @components/common/Logout.vue
+     * @param {*} isLogin ログイン状態(true ログインしている / false ログインしていない)
+     */
+    switchLoginStatus({ commit }, isLogin) {
+      commit("switchLoginStatus", isLogin);
     },
     setLoginUser({ commit }, user) {
       commit("setLoginUser", user);
@@ -133,61 +180,121 @@ export default new Vuex.Store({
     setFirebaseUser({ commit }, user) {
       commit("setFirebaseUser", user);
     },
-    logout() {
-      firebase.auth().signOut();
-    },
     deleteLoginUser({ commit }) {
       commit("deleteLoginUser");
     },
     setAuthority({ commit }, authority) {
       commit("setAuthority", authority);
     },
-    employeeList({ commit }, employeeList) {
-      commit("employeeList", employeeList);
+    /**
+     * 従業員一覧を取得するメソッド
+     * @components/login/Login.vue
+     */
+    getEmployeeList({ commit }) {
+      axios
+        .get("/showEmployeeList")
+        .then((response) => {
+          commit("setEmployeeList", response.data);
+        })
+        .catch((e) => {
+          alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
+        });
     },
-    loginStatus({ commit }) {
-      commit("loginStatus");
-    },
-    depList({ commit }, depList) {
-      commit("depList", depList);
-    },
-    changeLoginStatus({ commit }) {
-      commit("changeLoginStatus");
+    /**
+     * 部署一覧を取得するメソッド
+     * @components/login/Login.vue
+     */
+    getDepList({ commit }) {
+      axios.get("/getDepList").then((response) => {
+        commit("setDepList", response.data);
+      });
     },
     setDairyPost({ commit }, dailyPost) {
       commit("setDairyPost", dailyPost);
     },
-
-    setFilterDepName({commit},filterDepName){
-      commit("setFilterDepName",filterDepName)
-    },
-    setFilterHireYear({commit},filterHireYear){
-      commit("setFilterHireYear",filterHireYear)
-    },
-    setFilterHireMonth({commit},filterHireMonth){
-      commit("setFilterHireMonth",filterHireMonth)
-    },
-    setData({commit},data){
-      commit("setData",data)
-    },
-    setFilter({commit},filter){
-      commit('setFilter',filter)
-    }
-   
-  },
-  modules: {
-    
-
     setNewsPost({ commit }, newsPost) {
       commit("setNewsPost", newsPost);
     },
-
-
-
-    setEditPost({commit}, editPost) {
-      commit("setEditPost", editPost)
-    }
-
+    setInformation({ commit }, information) {
+      commit("setInformation", information);
+    },
+    setCategory({ commit }, category) {
+      commit("setCategory", category);
+    },
+    setData({ commit }, data) {
+      commit("setData", data);
+    },
+    /**
+     * 部署の新規追加を行うメソッド
+     * @components/admin-setting/EditDeps.vueで利用
+     * @param {*} newDepData
+     */
+    addNewDep({ commit }, newDepData) {
+      axios
+        .post("/editDeps/addNewDep", newDepData)
+        .then((response) => {
+          alert("部署の新規追加が完了しました！");
+          commit("addNewDep", response.data);
+        })
+        .catch((error) => {
+          alert("部署の新規追加に失敗しました！");
+          console.error(error);
+        });
+    },
+    /**
+     * 既存の部署名の変更を行うメソッド
+     * @components/admin-setting/EditDeps.vueで利用
+     * @param {*} newDepName 名前を変更する部署情報
+     */
+    changeDepName({ commit }, newDepName) {
+      axios
+        .post("/editDeps/changeDepName", newDepName)
+        .then((response) => {
+          alert("部署名の変更が完了しました！");
+          commit("changeDepName", response.data);
+        })
+        .catch((error) => {
+          alert("部署名の変更に失敗しました！");
+          console.error(error);
+        });
+    },
+    setFilterHireYear({ commit }, filterHireYear) {
+      commit("setFilterHireYear", filterHireYear);
+    },
+    setFilterDepName({ commit }, filterDepName) {
+      commit("setFilterDepName", filterDepName);
+    },
+    setFilterHireMonth({ commit }, filterHireMonth) {
+      commit("setFilterHireMonth", filterHireMonth);
+    },
+    /**
+     * 既存の部署を削除するメソッド
+     * @components/admin-setting/EditDeps.vueで利用
+     * @param {*} deletedDep 削除する部署情報
+     */
+    deleteDep({ commit }, deletedDep) {
+      axios
+        .post("/editDeps/deleteDep", {
+          depId: deletedDep.depId,
+          updateUserId: deletedDep.updateUserId,
+        })
+        .then(() => {
+          alert(deletedDep.depName + "の削除に成功しました");
+          commit("deleteDep", deletedDep.depId);
+        })
+        .catch((error) => {
+          console.error(error);
+          alert("登録されている部署の削除に失敗しました。");
+        });
+    },
+    deleteUser({ commit }, employee) {
+      commit("deleteUser", employee.userId);
+    },
+  },
+  modules: {
+    setNewsPost({ commit }, newsPost) {
+      commit("setNewsPost", newsPost);
+    },
   },
   getters: {
     userName: (state) => (state.loginUser ? state.loginUser.userName : ""),
@@ -199,8 +306,16 @@ export default new Vuex.Store({
     getStatus: function(state) {
       return state.loginStatus;
     },
+    //従業員リストを部署名と入社年月で絞り込む
+    filterDepName: function(state) {
+      let data = state.employeeList;
 
-  
+      //部署名で検索
+      if (state.filterDepName !== "") {
+        data = data.filter((employeeList) => employeeList.dep.depName);
+      }
+      return data;
+    },
   },
   plugins: [createPersistedState({ storage: window.sessionStorage })], // オプションを追加
 });

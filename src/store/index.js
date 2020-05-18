@@ -109,6 +109,9 @@ export default new Vuex.Store({
     deleteDep(state, depId) {
       state.depList = state.depList.filter((dep) => dep.depId !== depId);
     },
+    deleteUser(state,userId){
+      state.employeeList = state.employeeList.filter((employee)=>employee.userId !== userId);
+    }
   },
   actions: {
     login() {
@@ -199,6 +202,9 @@ export default new Vuex.Store({
           alert("登録されている部署の削除に失敗しました。");
         });
     },
+    deleteUser({commit},employee){
+      commit("deleteUser",employee.userId);
+    }
   },
   modules: {
     setNewsPost({ commit }, newsPost) {

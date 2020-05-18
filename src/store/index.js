@@ -43,6 +43,17 @@ const initialState = {
 
   filterDepName:"",
 
+  filterHireYear:"",
+
+  filterHireMonth:"",
+
+  filter:{
+    depName:"",
+    hireYear:"",
+    hireMonth:""
+    
+  },
+
   newsPost:{},
 
 
@@ -83,7 +94,13 @@ export default new Vuex.Store({
     },
 
     setFilterDepName(state,filterDepName){
-      state.filterDepName = filterDepName
+      state.filter.depName = filterDepName
+    },
+    setFilterHireYear(state,filterHireYear){
+      state.filter.hireYear = filterHireYear
+    },
+    setFilterHireMonth(state,filterHireMonth){
+      state.filter.hireMonth = filterHireMonth
     },
     setData(state,data){
       state.employeeList = data
@@ -93,11 +110,16 @@ export default new Vuex.Store({
       state.newsPost = newsPost;
     },
 
-
-
     setEditPost(state, editPost) {
       state.editPost = editPost
+    },
+    setFilter(state,filter){
+      state.filter = filter
     }
+    
+
+
+
 
   },
   actions: {
@@ -139,9 +161,19 @@ export default new Vuex.Store({
     setFilterDepName({commit},filterDepName){
       commit("setFilterDepName",filterDepName)
     },
+    setFilterHireYear({commit},filterHireYear){
+      commit("setFilterHireYear",filterHireYear)
+    },
+    setFilterHireMonth({commit},filterHireMonth){
+      commit("setFilterHireMonth",filterHireMonth)
+    },
     setData({commit},data){
       commit("setData",data)
+    },
+    setFilter({commit},filter){
+      commit('setFilter',filter)
     }
+   
   },
   modules: {
     
@@ -168,18 +200,7 @@ export default new Vuex.Store({
       return state.loginStatus;
     },
 
-    //従業員リストを部署名と入社年月で絞り込む
-    filterDepName:function(state){
-      let data  = state.employeeList;
-     
-      //部署名で検索
-      if(state.filterDepName !== ""){
-        data = data.filter(
-          (employeeList) => employeeList.dep.depName
-        );
-      }
-      return data
-    }
+  
   },
   plugins: [createPersistedState({ storage: window.sessionStorage })], // オプションを追加
 });

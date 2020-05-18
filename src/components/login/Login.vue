@@ -107,7 +107,9 @@ export default {
               this.$router.push("/Home");
               //メールアドレスが不正の場合
             } else if (response.data.authority == 3) {
-              this.deleteLoginUser();
+              <div class="my-2">
+        <v-btn>Normal</v-btn>
+      </div>;
               firebase.auth().signOut();
               this.err = `メールアドレスは@rakus-partners.co.jp、
 または@rakus.co.jpのものをお使いください`;

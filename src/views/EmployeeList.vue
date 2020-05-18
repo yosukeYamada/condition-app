@@ -1,8 +1,11 @@
 <template>
   <b-col>
-    <h2 class="mb-4">従業員一覧 </h2>
+    <h2 class="mb-4">従業員一覧</h2>
 
     <SearchByDepName></SearchByDepName>
+    <SearchByHireYear></SearchByHireYear>
+    <SearchByHireMonth></SearchByHireMonth>
+    <!-- <Test></Test> -->
 
     <EmployeeListHeader class="mb-5" />
     <EmployeeList :employee-list="childEmployeeList" />
@@ -16,12 +19,18 @@ import EmployeeList from "../components/employee-list/EmployeeList.vue";
 import axios from "axios";
 // import { mapGetters } from "vuex";
 import SearchByDepName from "../components/employee-list/SearchByDepName";
+import SearchByHireYear from "../components/employee-list/SearchByHireYear";
+import SearchByHireMonth from "../components/employee-list/SearchByHireMonth";
+// import Test from "../components/employee-list/Test";
 
 export default {
   components: {
     EmployeeListHeader,
     EmployeeList,
     SearchByDepName,
+    SearchByHireYear,
+    SearchByHireMonth,
+    // Test
   },
   data() {
     return {
@@ -29,8 +38,8 @@ export default {
       employeeList: [],
       childEmployeeList: [],
 
-      //絞り込み検索用
-      filterDepName: "",
+      // //絞り込み検索用
+      // filterDepName: "",
     };
   },
 
@@ -39,9 +48,20 @@ export default {
       this.masterList = this.$store.state.employeeList;
     },
   },
+
+  //watcherのメソッドを算出
   computed: {
-    getFilterDepName: function() {
-      return this.$store.state.filterDepName;
+    // getFilterDepName: function() {
+    //   return this.$store.state.filterDepName;
+    // },
+    // getFilterHireYear: function() {
+    //   return this.$store.state.filterHireYear;
+    // },
+    // getFilterHireMonth: function() {
+    //   return this.$store.state.filterHireMonth;
+    // },
+    getFilter: function() {
+      return this.$store.state.filter;
     },
   },
   watch: {
@@ -80,24 +100,164 @@ export default {
       this.employeeList = employeeList;
       this.childEmployeeList = employeeList;
     },
-    getFilterDepName: function() {
-      console.log("watcher");
+    // getFilterDepName: function() {
+    //   console.log("watcher");
+    //   console.log(this.$store.state.filterDepName);
+    //   //部署名で検索
 
-      //部署名で検索
-      if (this.$store.state.filterDepName !== "") {
-        if (this.$store.state.filterDepName === "全ての社員") {
-          console.log("全ての社員"+this.childEmployeeList)
-           this.childEmployeeList = this.employeeList
-        } else {
-          this.childEmployeeList = this.employeeList.filter((employee) => {
-            if (employee.dep === this.$store.state.filterDepName) {
-              console.log("部署ごと"+employee)
+    //   if (this.$store.state.filterDepName === "") {
+    //     console.log("1");
+    //     //検索欄から部署名は消したが、入社年または入社月が残っている場合はそれでフィルターをかける
+    //     if (
+    //       this.$store.state.filterHireYear !== "" ||
+    //       this.$store.state.filterHireMonth !== ""
+    //     ) {
+    //       console.log("2");
+    //       this.childEmployeeList = this.employeeList.filter((employee) => {
+    //         if (
+    //           moment(employee.hireDate).format("YYYY") ===
+    //           this.$store.state.filterHireYear
+    //         ) {
+    //           console.log("3");
+    //           var data = this.$store.state.filterHireMonth;
+    //           if (parseInt(moment(employee.hireDate).format("M")) === data) {
+    //             return employee;
+    //           }
+    //         }
+    //       });
+    //     }
+    //   } else if (this.$store.state.filterDepName !== "") {
+    //     this.childEmployeeList = this.employeeList.filter((employee) => {
+    //       if (employee.dep === this.$store.state.filterDepName) {
+    //         // console.log("部署ごと" + employee);
+    //         return employee;
+    //       }
+    //     });
+    //   }
+    // },
+    // getFilterHireYear: function() {
+    //   //入社月で検索
+    //   if (this.$store.state.filterHireYear === "") {
+    //     console.log("watcher");
+
+    //     this.childEmployeeList = this.employeeList;
+    //   } else {
+    //     this.childEmployeeList = this.employeeList.filter((employee) => {
+    //       if (
+    //         moment(employee.hireDate).format("YYYY") ===
+    //         this.$store.state.filterHireYear
+    //       ) {
+    //         console.log("入社年" + employee.hireDate);
+    //         return employee;
+    //       }
+    //     });
+    //   }
+    // },
+    // getFilterHireMonth: function() {
+    //   //入社月で検索
+    //   if (this.$store.state.filterHireMonth === "") {
+    //     this.childEmployeeList = this.employeeList;
+    //   } else {
+    //     var data = this.$store.state.filterHireMonth;
+    //     console.log("dataの中身" + data);
+    //     this.childEmployeeList = this.employeeList.filter((employee) => {
+    //       if (parseInt(moment(employee.hireDate).format("M")) === data) {
+    //         console.log("入社年" + employee.hireDate);
+    //         return employee;
+    //       }
+    //     });
+    //   }
+    // },
+
+    // 'getFilter.depName':function(){
+    //   console.log('呼ばれました')
+    //   //部署名での検索
+    //   if (this.$store.state.filter.depName !== "") {
+    //     console.log('部署'+this.$store.state.filter.depName)
+    //     this.childEmployeeList = this.employeeList.filter((employee) => {
+    //       if(employee.dep === this.$store.state.filter.depName){
+    //         return employee
+    //       }
+    //       // console.log("部署ごと" + employee);
+    //     });
+    //   }
+
+    // },
+
+    // 'getFilter.hireYear':function(){
+    //   //入社した年での検索
+
+    //   if (this.$store.state.filter.hireYear !== "") {
+    //     console.log('入社年'+this.$store.state.filter.hireYear)
+    //     this.childEmployeeList = this.employeeList.filter((employee) => {
+    //       if(moment(employee.hireDate).format("YYYY") ===
+    //         this.$store.state.filter.hireYear){
+    //           return employee
+    //         }
+
+    //     });
+    //   }
+
+    // },
+
+    // 'getFilter.hireMonth':function(){
+    //   //入社した月での検索
+
+    //   if (this.$store.state.filter.hireMonth !== "") {
+    //     console.log('入社月'+this.$store.state.filter.hireMonth)
+    //     this.childEmployeeList = this.employeeList.filter((employee) => {
+    //       if(parseInt(moment(employee.hireDate).format("M")) ===
+    //         this.$store.state.filter.hireMonth){
+    //           return employee
+    //         }
+
+    //     });
+    //   }
+
+    // }
+
+    getFilter: {
+      handler: function() {
+        this.childEmployeeList = this.employeeList
+
+        if (this.$store.state.filter.depName !== "") {
+          console.log("部署" + this.$store.state.filter.depName);
+          this.childEmployeeList = this.childEmployeeList.filter((employee) => {
+            if (employee.dep === this.$store.state.filter.depName) {
+              console.log("部署ごと" + employee);
               return employee;
             }
           });
         }
-       
-      }
+        if (this.$store.state.filter.hireYear !== "") {
+          console.log("入社年" + this.$store.state.filter.hireYear)
+          console.log("childEmployeeList"+this.childEmployeeList)
+          this.childEmployeeList = this.childEmployeeList.filter((employee) => {
+            console.log("employeeHiredata"+employee.hireDate)
+            if (employee.hireDate.substr(0,4) === this.$store.state.filter.hireYear
+            ) {
+              console.log("入社年はこれ" + employee.hireDate.substr(0,4));
+              
+              return employee;
+            }
+          });
+        }
+
+
+        if (this.$store.state.filter.hireMonth !== "") {
+          this.childEmployeeList = this.childEmployeeList.filter((employee) => {
+            if (
+              parseInt(moment(employee.hireDate).format("M")) ===
+              this.$store.state.filter.hireMonth
+            ) {
+              console.log("入社月は" + parseInt(moment(employee.hireDate).format("M")));
+              console.log("入社月はこちら"+employee.hireDate)
+              return employee;
+            }
+          });
+        }
+      },
+      deep: true,
     },
   },
 
@@ -122,7 +282,6 @@ export default {
       });
     //filterDepNameの初期値をstateに格納
     // this.$store.dispatch("setFilterDepName", this.filterDepName);
-    console.log("1:stateのfilterQueryの中身" + this.$store.state.filterDepName);
   },
 };
 </script>

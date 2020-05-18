@@ -32,6 +32,15 @@ Vue.component("v-fa", FontAwesomeIcon);
 import firebase from "firebase";
 Vue.config.productionTip = false;
 
+// ElementUI
+import ElementUI from 'element-ui'
+
+// ElementUIでの言語設定、datePickerとかで適用される
+import locale from 'element-ui/lib/locale/lang/ja'
+import 'element-ui/lib/theme-chalk/index.css'
+
+Vue.use(ElementUI, {locale});
+
 // Your web app's Firebase configuration
 var firebaseConfig = {
   apiKey: "AIzaSyCkTAVQThEpr3S4e_cMkP4xbTSvfDD6rVo",

@@ -1,34 +1,61 @@
 <template>
-  <v-container id="depName">
-    <v-row align="left">
-      <v-col class="d-flex" cols="14" sm="6">
+  <!-- <v-container id="depName">
+    <v-row align="center">
+      <v-col class="d-flex" cols="14" sm="3">
         <v-select
           :items="depName"
           label="部署名"
           v-model="filterDepName"
-          @change="handleChangeQuery()"
+          @change="changeDepName()"
         ></v-select>
       </v-col>
     </v-row>
-  </v-container>
+  </v-container> -->
+<el-select v-model="inputDepName" clearable @change="changeDepName()" placeholder="部署名">
+    <el-option
+      v-for="depName in depNames"
+      :key="depName.value"
+      :label="depName.label"
+      :value="depName.value">
+    </el-option>
+  </el-select>  
 </template>
 <script>
 import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      depName: [
-        "アプリエンジニア",
+       
 
-        "クラウドエンジニア",
-
-        "機械学習エンジニア",
-
-        "内勤",
-
-        "全ての社員"
+      depNames: [{
+        
+       value: "アプリエンジニア",
+       label: "アプリエンジニア"
+       },
+     {
+        value: "クラウドエンジニア",
+        label: "クラウドエンジニア"
+    },
+     {
+        value: "機械学習エンジニア",
+        label: "機械学習エンジニア"
+  },
+     {
+       value: "内勤",
+       label: "内勤"
+     },
+     {
+        value: "全ての社員",
+        label: "全ての社員"
+      }
       ],
       filterDepName: "",
+
+      
+        inputDepName:"",
+        
+       
+      
 
       filteredEmployeeList: {},
     };
@@ -36,38 +63,23 @@ export default {
   computed: {
     ...mapGetters(["filterEmployeeList"]),
   },
+  created(){
+    this.$store.dispatch("setFilterDepName",this.inputDepName)
+  },
   beforeDestroy() {
+    // this.$store.dispatch("setFilterDepName", "");
+
     this.$store.dispatch("setFilterDepName", "");
   },
   methods: {
     //従業員絞り込み用のメソッド
-    handleChangeQuery() {
-      
-      this.$store.dispatch("setFilterDepName", this.filterDepName);
-      console.log("2:filterQueryの中身" + this.$store.state.filterDepName);
-      //従業員リストを部署名と入社年月で絞り込む
+    changeDepName() {
+      // this.$store.dispatch("setFilterDepName", this.filterDepName);
+      // console.log("2:filterの中身" + this.$store.state.filterDepName);
 
-      // let data = this.$store.state.employeeList;
-
-      // 部署名で検索
-      // if (this.$store.state.filterQuery !== "") {
-      //   data = data.filter(
-      //    (employeeList) => employeeList.dep.depName === this.$store.state.filterQuery
-      //   );
-      // }
-      // this.$store.dispatch("employeeList",this.filterEmployeeList)
-      // console.log(this.$store.state.employeeList)
-      // console.log(this.filterEmployeeList)
+      this.$store.dispatch("setFilterDepName",this.inputDepName)
     },
   },
-  // mounted() {
-  //   //filterQueryの初期値をstateに格納
-  //   this.$store.dispatch("setFilterQuery", this.filterQuery);
-  //   console.log('2番目')
-  // },
 };
 </script>
-<style>
-
-
-</style>
+<style></style>

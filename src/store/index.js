@@ -60,12 +60,23 @@ const initialState = {
 export default new Vuex.Store({
   state: initialState,
   mutations: {
+    /**
+     * ログインしてるユーザーをstateにセットする
+     * @param {*} user ユーザー
+     */
     setLoginUser(state, user) {
       state.loginUser = user;
     },
+     /**
+     * firebaseの情報をstateにセットする
+     * @param {*} user ユーザー
+     */
     setFirebaseUser(state, user) {
       state.firebaseUser = user;
     },
+    /**
+     * ログインしてるユーザーの情報を削除する
+     */
     deleteLoginUser(state) {
       state.loginUser = null;
     },
@@ -96,7 +107,6 @@ export default new Vuex.Store({
     setDairyPost(state, dailyPost) {
       state.loginUser.dailyPost = dailyPost;
     },
-
     setFilterDepName(state, filterDepName) {
       state.filter.depName = filterDepName;
     },
@@ -112,9 +122,17 @@ export default new Vuex.Store({
     setFilter(state, filter) {
       state.filter = filter;
     },
+    /**
+     * トップページのNewsをstateにセットする
+     * @param {*} information 情報
+     */
     setInformation(state, information) {
       state.information = information;
     },
+    /**
+     * トップページのNewsのカテゴリーをstateにセットする
+     * @param {*} vategory カテゴリー
+     */
     setCategory(state, category) {
       state.category = category;
     },
@@ -156,6 +174,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    /**
+     * Google認証ログインを使ってログイン作業をする
+     */
     login() {
       const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(googleAuthProvider);
@@ -169,12 +190,23 @@ export default new Vuex.Store({
     switchLoginStatus({ commit }, isLogin) {
       commit("switchLoginStatus", isLogin);
     },
+    /**
+     * ログインしてるユーザーをstateにセットする
+     * @param {*} user ユーザー
+     */
     setLoginUser({ commit }, user) {
       commit("setLoginUser", user);
     },
+    /**
+     * firebaseの情報をstateにセットする
+     * @param {*} user ユーザー
+     */
     setFirebaseUser({ commit }, user) {
       commit("setFirebaseUser", user);
     },
+    /**
+     * ログインしてるユーザーの情報を削除する
+     */
     deleteLoginUser({ commit }) {
       commit("deleteLoginUser");
     },
@@ -213,9 +245,17 @@ export default new Vuex.Store({
     setNewsPost({ commit }, newsPost) {
       commit("setNewsPost", newsPost);
     },
+    /**
+     * トップページのNewsをstateにセットする
+     * @param {*} information 情報
+     */
     setInformation({ commit }, information) {
       commit("setInformation", information);
     },
+    /**
+     * トップページのNewsのカテゴリーをstateにセットする
+     * @param {*} vategory カテゴリー
+     */
     setCategory({ commit }, category) {
       commit("setCategory", category);
     },
@@ -299,12 +339,14 @@ export default new Vuex.Store({
     },
   },
   getters: {
+    /**
+     * ログインユーザーの名前を取得する
+     */
     userName: (state) => (state.loginUser ? state.loginUser.userName : ""),
-    photoURL: (state) =>
-      state.firebaseUser ? state.firebaseUser.photoURL : "",
-    employeeMotivation: (state) => (userId) => {
-      state.employeeList.filter((elm) => elm.userId === userId);
-    },
+    /**
+     * ログインユーザーのアイコンをfirebaseから取得する
+     */
+    photoURL: (state) => state.firebaseUser ? state.firebaseUser.photoURL : "",
     getStatus: function(state) {
       return state.loginStatus;
     },

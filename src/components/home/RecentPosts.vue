@@ -19,6 +19,7 @@
 </template>
 <script>
 import store from "../../store/index"
+import moment from "moment";
 export default {
   watch: {},
   data() {
@@ -32,13 +33,6 @@ export default {
       var latestPosts = []
       var resultPosts = []
       var preToday = new Date();
-      var today = new Date(
-        preToday.getFullYear(),
-        preToday.getMonth(),
-        preToday.getDate(),
-        0,
-        0
-      );
      
       for(let i = 0; i < param.length; i++){
         var latestPost = {
@@ -77,7 +71,7 @@ export default {
       }
       
       for(let i = 0; i < latestPosts.length; i++){
-        if(latestPosts[i].date.getTime() !== today.getTime()){
+        if(moment(preToday).isAfter(latestPosts[i].date,"day")){
           var resultPost = {
             date: "",
             name: "",
@@ -92,7 +86,7 @@ export default {
       return resultPosts;
     },
   },
-  mounted() {
+  created() {
     this.items = store.state.employeeList
     this.latestPosts = this.setLatestPosts(this.items)
   },

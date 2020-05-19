@@ -19,7 +19,7 @@
           </v-list-item-title>
         </v-list-item-content>
         <v-list-item-action-text class="pl-4">
-          <b-button variant="outline-success" size="sm" @click="addNewDep()"
+          <b-button variant="outline-success" :disabled="inputAddDepName === ''" size="sm" @click="addNewDep()"
             >追加</b-button
           >
         </v-list-item-action-text>
@@ -57,7 +57,8 @@
           <v-list-item-action-text class="pl-4">
             <b-button
               variant="outline-success"
-              size="sm"
+              size="sm" 
+              :disabled="inputNewDepName === ''"
               @click="changeDepName(dep.depId, dep.version)"
               >変更</b-button
             >
@@ -141,6 +142,7 @@ export default {
               "他のユーザーが先に変更処理を行いました。\n更新ボタンを押して画面を再読み込みし、最新の状態を確認してください。"
             );
           }
+          this.inputNewDepName = ""
         })
         .catch((error) => {
           alert("エラーが発生しました。\nしばらくの後、再度実行してください。");

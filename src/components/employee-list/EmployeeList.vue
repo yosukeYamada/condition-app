@@ -35,16 +35,13 @@
 </template>
 
 <script>
-
-
+import axios from "axios"
 export default {
   props: {
     employeeList: Array,
   },
   watch: {
     employeeList: function() {
-      this.$store.dispatch("getEmployeeList")
-      console.log('EmployeeListという'+this.$store.state.employeeList)
       this.items = this.employeeList;
     },
   },
@@ -135,9 +132,17 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("getEmployeeList")
+        //全従業員を検索する
+       axios
+      .get("/showEmployeeList")
+      .then((response) => {
+        console.log(response.data)
+        this.$store.dispatch("setEmployeeList", response.data);
+      })
+      .catch((e) => {
+        alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
+      });
     this.items = this.employeeList;
-    console.log("EmployeeList"+this.$store.state.employeeList)
   },
 };
 </script>

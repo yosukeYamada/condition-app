@@ -20,6 +20,8 @@ import SearchByDepName from "../components/employee-list/SearchByDepName";
 import SearchByHireYear from "../components/employee-list/SearchByHireYear";
 import SearchByHireMonth from "../components/employee-list/SearchByHireMonth";
 import { mapActions } from "vuex";
+import axios from "axios"
+
 
 export default {
   components: {
@@ -40,7 +42,6 @@ export default {
 
   methods: {
     getMasterList() {
-       
       this.masterList = this.$store.state.employeeList;
     },
     ...mapActions(["getEmployeeList"]),
@@ -85,8 +86,11 @@ export default {
           };
         }
       });
-      this.employeeList = employeeList;
-      this.childEmployeeList = employeeList;
+      this.$nextTick(function(){
+
+        this.employeeList = employeeList;
+        this.childEmployeeList = employeeList;
+      })
     },
 
     getFilter: {
@@ -126,8 +130,19 @@ export default {
     },
   },
   created() {
-    this.getEmployeeList()
     this.getMasterList();
+    //全従業員を検索する
+       axios
+      .get("/showEmployeeList")
+      .then((response) => {
+        console.log(response.data)
+        this.$store.dispatch("setEmployeeList", response.data);
+      })
+      .catch((e) => {
+        alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
+      });
+
+    
     
   }
 };

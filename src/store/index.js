@@ -52,7 +52,6 @@ const initialState = {
     hireYear: "",
     hireMonth: "",
   },
-  editPost: [],
   newsPost: [],
   information: [],
   category: [],
@@ -109,10 +108,6 @@ export default new Vuex.Store({
     },
     setNewsPost(state, newsPost) {
       state.newsPost = newsPost;
-    },
-
-    setEditPost(state, editPost) {
-      state.editPost = editPost;
     },
     setFilter(state, filter) {
       state.filter = filter;

@@ -19,7 +19,7 @@ import EmployeeList from "../components/employee-list/EmployeeList.vue";
 import SearchByDepName from "../components/employee-list/SearchByDepName";
 import SearchByHireYear from "../components/employee-list/SearchByHireYear";
 import SearchByHireMonth from "../components/employee-list/SearchByHireMonth";
-
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -40,8 +40,10 @@ export default {
 
   methods: {
     getMasterList() {
+       
       this.masterList = this.$store.state.employeeList;
     },
+    ...mapActions(["getEmployeeList"]),
   },
 
   //watcherのメソッドを算出
@@ -124,8 +126,9 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("getEmployeeList")
+    this.getEmployeeList()
     this.getMasterList();
+    
   }
 };
 </script>

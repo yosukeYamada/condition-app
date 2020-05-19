@@ -35,12 +35,16 @@
 </template>
 
 <script>
+
+
 export default {
   props: {
     employeeList: Array,
   },
   watch: {
     employeeList: function() {
+      this.$store.dispatch("getEmployeeList")
+      console.log('EmployeeListという'+this.$store.state.employeeList)
       this.items = this.employeeList;
     },
   },
@@ -131,7 +135,9 @@ export default {
     },
   },
   mounted() {
+    this.$store.dispatch("getEmployeeList")
     this.items = this.employeeList;
+    console.log("EmployeeList"+this.$store.state.employeeList)
   },
 };
 </script>

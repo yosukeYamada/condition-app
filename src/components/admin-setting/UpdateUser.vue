@@ -12,6 +12,7 @@
             depId: item.depId,
             depName: item.depName,
             hireDate: item.hireDate,
+            version: item.version,
           },
         }"
       >

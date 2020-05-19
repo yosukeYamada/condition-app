@@ -35,17 +35,18 @@ const routes = [
     path: "/",
     name: "Top",
     component: Top,
+    
   },
   {
     path: "/home",
     name: "Home",
-    //ログインしていたら上記のパスに飛ぶことを許可する
     component: Home,
+    //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
       if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -58,7 +59,7 @@ const routes = [
       if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -71,7 +72,7 @@ const routes = [
       if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -84,7 +85,7 @@ const routes = [
       if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -97,7 +98,7 @@ const routes = [
       if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -110,7 +111,7 @@ const routes = [
       if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -123,7 +124,7 @@ const routes = [
       if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -136,7 +137,7 @@ const routes = [
       if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -159,7 +160,7 @@ const routes = [
       if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -172,7 +173,7 @@ const routes = [
       if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -185,7 +186,7 @@ const routes = [
       if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },

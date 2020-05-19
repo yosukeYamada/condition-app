@@ -24,6 +24,7 @@
                 type="text"
                 v-model="userName"
                 maxlength="20"
+                required
               />
               <p>{{ errors[0] }}</p>
             </b-form-group>
@@ -43,13 +44,22 @@
                 type="text"
                 v-model="userNameKana"
                 maxlength="20"
+                required
               />
               <div>{{ errors[0] }}</div>
             </b-form-group>
           </ValidationProvider>
-          <b-form-group label="メールアドレス" label-for="input-email">
-            <b-form-input id="input-email" type="email" v-model="mailAddress" />
-          </b-form-group>
+          <ValidationProvider rules="required|email" v-slot="{ errors }">
+            <b-form-group label="メールアドレス" label-for="input-email">
+              <b-form-input
+                id="input-email"
+                type="email"
+                v-model="mailAddress"
+                required
+              />
+              <div>{{ errors[0] }}</div>
+            </b-form-group>
+          </ValidationProvider>
           <ValidationObserver>
             <b-form-group label="入社年月">
               <b-row>
@@ -58,7 +68,7 @@
                     rules="checkRequiredHireMonthYear|hireMonthYear:@month"
                     v-slot="{ errors }"
                   >
-                    <b-form-select name="year" v-model="hireYear">
+                    <b-form-select name="year" v-model="hireYear" required>
                       <option disabled selected>年</option>
                       <option v-for="i in selectYears" :key="i" :value="i">
                         {{ i }}
@@ -69,7 +79,7 @@
                 </b-col>
                 <b-col>
                   <ValidationProvider name="month" rules="required">
-                    <b-form-select name="month" v-model="hireMonth">
+                    <b-form-select name="month" v-model="hireMonth" required>
                       <option disabled selected>月</option>
                       <option v-for="i in hireMonthList" :key="i" :value="i">{{
                         i
@@ -83,10 +93,8 @@
           <div>
             <ValidationProvider rules="required" v-slot="{ errors }">
               <b-form-group label="部門">
-                <b-form-select v-model="depId">
-                  <option value="null" disabled
-                    >部門名を選択してください</option
-                  >
+                <b-form-select v-model="depId" required>
+                  <option selected disabled>部門名を選択してください</option>
                   <option
                     v-for="(dep, i) in selectDeps"
                     :key="i"
@@ -148,6 +156,7 @@ export default {
       depId: null,
       userId: null,
       updateUserId: null,
+      version: null,
     };
   },
   computed: {
@@ -179,14 +188,19 @@ export default {
           hireYear: this.hireYear,
           hireMonth: this.hireMonth,
           mailAddress: this.mailAddress,
+          version: this.version,
         })
         .then((response) => {
-          this.$store.dispatch("employeeList", response.data);
-          alert("更新が完了しました！");
-          this.$router.push("/UpdateUser");
+          if (response.data == "null") {
+            alert("他の管理者が更新しています");
+          } else {
+            this.$store.dispatch("employeeList", response.data);
+            alert("更新が完了しました！");
+            this.$router.push("/UpdateUser");
+          }
         })
         .catch((e) => {
-          alert("コンディション登録の送信に失敗しました：" + e);
+          alert("ユーザー情報の更新の送信に失敗しました：" + e);
         });
     },
     resetButton() {
@@ -223,6 +237,28 @@ export default {
     this.hireYear = moment(this.$route.params.hireDate).format("YYYY");
     this.hireMonth = moment(this.$route.params.hireDate).format("M");
     this.updateUserId = this.$store.state.loginUser.userId;
+    this.version = this.$route.params.version;
   },
 };
 </script>
+
+<style scoped>
+/* 入力エラーのスタイル */
+input[type="text"]:invalid,
+input[type="email"]:required,
+input[type="email"]:invalid,
+select:required {
+  color: #630015;
+  background-color: #ffd9e1;
+}
+
+/* 入力値が正常な時のスタイル */
+input[type="text"]:valid,
+input[type="email"]:valid,
+select:valid,
+textarea:valid {
+  color: #333;
+  border-color: #ccc;
+  background: #fff;
+}
+</style>

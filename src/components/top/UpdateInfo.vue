@@ -7,7 +7,7 @@
 
         <div class="information">
 
-        <div v-for="(info, i) in information" :key="i" class="mb-2">
+        <div v-for="(info, i) in informationList" :key="i" class="mb-2">
 
           <div class="font-weight-black">
             {{ info.informationDate | moment}}
@@ -45,7 +45,6 @@ export default {
     return {
       title: "News",
       style: { backgroundColor: "#28A745", height: "22px", width: "118px", color: "white" },
-      information:[],
     };
   },
   filters: {
@@ -59,19 +58,23 @@ export default {
         this.setInformation(response.data.informationList)
         this.setCategory(response.data.category)
       })
-    var informationList = []
-    for(  var num in this.$store.state.information  ) {
-      var information = 
-      { informationId: "", informationTitle:"", informationDate:"", informationContent: "", category:[] }
-      information.informationId = this.$store.state.information[num].informationId
-      information.informationTitle = this.$store.state.information[num].informationTitle
-      information.informationDate = this.$store.state.information[num].informationDate
-      information.informationContent = this.$store.state.information[num].informationContent
-      information.category = this.$store.state.category.filter(
-        (category) => category.categoryId === this.$store.state.information[num].categoryId)
-      informationList.push(information)
+  },
+  computed : {
+    informationList() {
+      var informationList = []
+      for(  var num in this.$store.state.information  ) {
+        var information = 
+        { informationId: "", informationTitle:"", informationDate:"", informationContent: "", category:[] }
+        information.informationId = this.$store.state.information[num].informationId
+        information.informationTitle = this.$store.state.information[num].informationTitle
+        information.informationDate = this.$store.state.information[num].informationDate
+        information.informationContent = this.$store.state.information[num].informationContent
+        information.category = this.$store.state.category.filter(
+          (category) => category.categoryId === this.$store.state.information[num].categoryId)
+        informationList.push(information)
+      }
+      return informationList
     }
-    this.information = informationList
   },
   methods: {
     ...mapActions(["setInformation", "setCategory"],),

@@ -124,7 +124,6 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("getEmployeeList")
     this.getMasterList();
   }
 };

@@ -20,6 +20,7 @@ import SearchByDepName from "../components/employee-list/SearchByDepName";
 import SearchByHireYear from "../components/employee-list/SearchByHireYear";
 import SearchByHireMonth from "../components/employee-list/SearchByHireMonth";
 
+
 export default {
   components: {
     EmployeeListHeader,
@@ -123,7 +124,8 @@ export default {
     },
   },
   created() {
+    this.$store.dispatch("getEmployeeList")
     this.getMasterList();
-  },
+  }
 };
 </script>

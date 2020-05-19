@@ -67,7 +67,7 @@ export default new Vuex.Store({
     setLoginUser(state, user) {
       state.loginUser = user;
     },
-     /**
+    /**
      * firebaseの情報をstateにセットする
      * @param {*} user ユーザー
      */
@@ -335,6 +335,17 @@ export default new Vuex.Store({
     },
     deleteUser({ commit }, employee) {
       commit("deleteUser", employee.userId);
+
+    },
+    /**
+     * お知らせ投稿一覧を取得するメソッド
+     * @components/login/Login.vue
+     */
+    getNewsList({ commit }) {
+      axios.get("/showNewsList").then((response) => {
+        commit("setNewsPost", response.data);
+      });
+
     },
   },
   getters: {
@@ -345,19 +356,10 @@ export default new Vuex.Store({
     /**
      * ログインユーザーのアイコンをfirebaseから取得する
      */
-    photoURL: (state) => state.firebaseUser ? state.firebaseUser.photoURL : "",
+    photoURL: (state) =>
+      state.firebaseUser ? state.firebaseUser.photoURL : "",
     getStatus: function(state) {
       return state.loginStatus;
-    },
-    //従業員リストを部署名と入社年月で絞り込む
-    filterDepName: function(state) {
-      let data = state.employeeList;
-
-      //部署名で検索
-      if (state.filterDepName !== "") {
-        data = data.filter((employeeList) => employeeList.dep.depName);
-      }
-      return data;
     },
   },
   plugins: [createPersistedState({ storage: window.sessionStorage })], // オプションを追加

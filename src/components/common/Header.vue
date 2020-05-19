@@ -1,7 +1,12 @@
 <template>
   <div>
     <b-navbar type="dark" variant="success">
-      <router-link to="/login">
+      <!-- ログイン中に表示させておくロゴ -->
+      <router-link  v-if="this.$store.state.loginStatus" to="/login">
+        <b-navbar-brand class="ml-1 mr-5 display-1 font-weight-bold">Rakuppo</b-navbar-brand>
+      </router-link>
+      <!-- ログアウト時に表示させておくロゴ -->
+      <router-link  v-if="this.$store.state.loginStatus === false" to="/">
         <b-navbar-brand class="ml-1 mr-5 display-1 font-weight-bold">Rakuppo</b-navbar-brand>
       </router-link>
         <v-app-bar-nav-icon class="mr-auto ml-5 text-white" id="app" v-if="this.$store.state.loginStatus">
@@ -13,5 +18,10 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+
+
+
+
+};
 </script>

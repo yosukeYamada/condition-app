@@ -83,7 +83,6 @@ export default {
         }
       });
       this.employeeList = employeeList;
-
       this.childEmployeeList = employeeList;
     },
 

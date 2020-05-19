@@ -22,14 +22,9 @@ export default {
 
   mounted() {
     this.loginCheck();
-    axios.get("/information")
-      .then((response) => {
-        this.setInformation(response.data.informationList)
-        this.setCategory(response.data.category)
-      })
   },
   methods: {
-    ...mapActions(["setLoginUser","setInformation", "setCategory"],),
+    ...mapActions(["setLoginUser"],),
     loginCheck() {
       firebase.auth().onAuthStateChanged((user) => {
         if (!user) {

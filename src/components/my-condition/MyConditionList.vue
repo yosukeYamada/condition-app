@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import moment from "moment";
 export default {
   data() {
@@ -108,9 +107,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions([
-      "setEditPost",
-    ]),
+    
     transferIcon(param) {
       if (param === "快晴") {
         return ["fas", "sun"];

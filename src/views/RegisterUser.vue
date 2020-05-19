@@ -1,11 +1,11 @@
 <template>
-  <div id="registerUser">
-    <b-container>
-      <b-row align-v="center" align-h="center">
+  <b-container>
+    <b-row align-v="center" align-h="center">
+      <b-col lg="8">
         <RegisterUser />
-      </b-row>
-    </b-container>
-  </div>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>

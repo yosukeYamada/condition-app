@@ -1,5 +1,10 @@
 <template>
-  <el-select v-model="filterHireMonth" clearable placeholder="入社した月">
+  <el-select
+    id="mouth"
+    v-model="filterHireMonth"
+    clearable
+    placeholder="入社した月"
+  >
     <el-option
       v-for="month in hireMonth"
       :key="month.value"
@@ -95,4 +100,9 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+#mouth:hover {
+  cursor: pointer;
+  border-color: #60eeff;
+}
+</style>

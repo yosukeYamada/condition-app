@@ -19,7 +19,7 @@ import BreadCrumbs from "@/components/common/BreadCrumbs.vue";
 export default {
   components: {
     UpdateUser,
-    BreadCrumbs
+    BreadCrumbs,
   },
   data() {
     return {
@@ -30,21 +30,21 @@ export default {
           text: "管理者設定",
           disabled: false,
           path: "/adminSetting",
-          class: []
+          class: [],
         },
         {
           text: "ユーザー情報の更新・削除",
           disabled: true,
           path: "",
-          class: ["grey--text"]
-        }
-      ]
+          class: ["grey--text"],
+        },
+      ],
     };
   },
   methods: {
     getMasterList() {
       this.masterList = this.$store.state.employeeList;
-    }
+    },
   },
   watch: {
     masterList: function() {
@@ -59,11 +59,11 @@ export default {
           depId: elm.dep.depId,
           depName: elm.dep.depName,
           hireDate: hireDate,
-          version:elm.version
+          version: elm.version,
         };
       });
       this.employeeList = employeeList;
-    }
+    },
   },
 
   created() {
@@ -71,12 +71,12 @@ export default {
     //全従業員情報を取得
     axios
       .get("/showEmployeeList")
-      .then(response => {
+      .then((response) => {
         this.$store.dispatch("employeeList", response.data);
       })
-      .catch(e => {
+      .catch((e) => {
         alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
       });
-  }
+  },
 };
 </script>

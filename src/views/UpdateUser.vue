@@ -25,20 +25,20 @@ export default {
     return {
       masterList: [],
       employeeList: [],
-      items:[
-            {
-        text: "管理者設定",
-        disabled: false,
-        path: "/adminSetting",
-        class: [],
-      },
-      {
-        text: "ユーザー情報の更新・削除",
-        disabled: true,
-        path: "",
-        class: ["grey--text"],
-      },
-      ]
+      items: [
+        {
+          text: "管理者設定",
+          disabled: false,
+          path: "/adminSetting",
+          class: [],
+        },
+        {
+          text: "ユーザー情報の更新・削除",
+          disabled: true,
+          path: "",
+          class: ["grey--text"],
+        },
+      ],
     };
   },
   methods: {
@@ -59,6 +59,7 @@ export default {
           depId: elm.dep.depId,
           depName: elm.dep.depName,
           hireDate: hireDate,
+          version: elm.version,
         };
       });
       this.employeeList = employeeList;

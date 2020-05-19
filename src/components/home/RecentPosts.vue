@@ -18,8 +18,8 @@
   
 </template>
 <script>
-import store from "../../store/index"
 import moment from "moment";
+import axios from "axios";
 export default {
   watch: {},
   data() {
@@ -87,8 +87,16 @@ export default {
     },
   },
   created() {
-    this.items = store.state.employeeList
-    this.latestPosts = this.setLatestPosts(this.items)
+    axios.get("/showEmployeeList")
+    .then((response) => {
+
+      this.$store.dispatch("setEmployeeList", response.data);
+
+      this.items = this.$store.state.employeeList;
+
+      this.latestPosts = this.setLatestPosts(this.items);
+
+    })
   },
 };
 </script>

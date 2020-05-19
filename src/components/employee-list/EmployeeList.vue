@@ -42,7 +42,10 @@ export default {
   },
   watch: {
     employeeList: function() {
-      this.items = this.employeeList;
+     this.$nextTick(function(){
+
+       this.items = this.employeeList;
+     })
     },
   },
   data() {

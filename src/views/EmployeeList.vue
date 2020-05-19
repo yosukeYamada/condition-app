@@ -2,12 +2,10 @@
   <b-col>
     <h2 class="mb-4">従業員一覧</h2>
 
-    
-
     <EmployeeListHeader class="mb-5" />
     <SearchByDepName></SearchByDepName>
     <SearchByHireYear></SearchByHireYear>
-    <SearchByHireMonth></SearchByHireMonth><br>
+    <SearchByHireMonth></SearchByHireMonth><br />
     <EmployeeList :employee-list="childEmployeeList" />
   </b-col>
 </template>
@@ -20,8 +18,7 @@ import SearchByDepName from "../components/employee-list/SearchByDepName";
 import SearchByHireYear from "../components/employee-list/SearchByHireYear";
 import SearchByHireMonth from "../components/employee-list/SearchByHireMonth";
 import { mapActions } from "vuex";
-import axios from "axios"
-
+import axios from "axios";
 
 export default {
   components: {
@@ -30,7 +27,6 @@ export default {
     SearchByDepName,
     SearchByHireYear,
     SearchByHireMonth,
-    
   },
   data() {
     return {
@@ -86,11 +82,9 @@ export default {
           };
         }
       });
-      this.$nextTick(function(){
+      this.employeeList = employeeList;
 
-        this.employeeList = employeeList;
-        this.childEmployeeList = employeeList;
-      })
+      this.childEmployeeList = employeeList;
     },
 
     getFilter: {
@@ -132,18 +126,15 @@ export default {
   created() {
     this.getMasterList();
     //全従業員を検索する
-       axios
+    axios
       .get("/showEmployeeList")
       .then((response) => {
-        console.log(response.data)
+        console.log(response.data);
         this.$store.dispatch("setEmployeeList", response.data);
       })
       .catch((e) => {
         alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
       });
-
-    
-    
-  }
+  },
 };
 </script>

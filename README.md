@@ -1,29 +1,17 @@
-# condition-app
+# Rakuppo
+働く人のコンディション管理を行うアプリケーションのフロントサイドアプリケーション
 
-## Project setup
-```
-npm install
-```
+## Development Environment
+- Node.js v12.14.1
+- @vue/cli 4.1.2
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Tools
+- Firebase Hosting, Authentication
+- Vuetify
+- Bootstrap-vue 
+- chartjs-vue
+- VeeValidate
+etc...
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Link
+<a href="https://github.com/yosukeYamada/condition">サーバーアプリケーションはこちら</a>

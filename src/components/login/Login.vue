@@ -90,7 +90,7 @@ export default {
             } else if (response.data.authority == AUTHORITY.USER) {
               /** ユーザー権限の場合 */
               this.setLoginUser(response.data);
-              this.setDepList(response.data.depList);
+              this.getDepList();
               this.switchLoginStatus(true);
               this.$router.push("/home");
             } else if (response.data.authority == AUTHORITY.OUTSIDER) {

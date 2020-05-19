@@ -207,6 +207,9 @@ export default new Vuex.Store({
     setDairyPost({ commit }, dailyPost) {
       commit("setDairyPost", dailyPost);
     },
+    setEmployeeList({ commit }, employeeList) {
+      commit("setEmployeeList", employeeList);
+    },
     setNewsPost({ commit }, newsPost) {
       commit("setNewsPost", newsPost);
     },
@@ -282,8 +285,8 @@ export default new Vuex.Store({
           alert("登録されている部署の削除に失敗しました。");
         });
     },
-    deleteUser({commit},employee){
-      commit("deleteUser",employee.userId);
+    deleteUser({ commit }, employee) {
+      commit("deleteUser", employee.userId);
     },
     /**
      * お知らせ投稿一覧を取得するメソッド
@@ -291,8 +294,8 @@ export default new Vuex.Store({
      */
     getNewsList({ commit }) {
       axios.get("/showNewsList").then((response) => {
-          commit("setNewsPost", response.data);
-        })
+        commit("setNewsPost", response.data);
+      });
     },
   },
   getters: {

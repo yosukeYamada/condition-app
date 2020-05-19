@@ -194,7 +194,7 @@ export default {
           if (response.data == "null") {
             alert("他の管理者が更新しています");
           } else {
-            this.$store.dispatch("employeeList", response.data);
+            this.$store.dispatch("setEmployeeList", response.data);
             alert("更新が完了しました！");
             this.$router.push("/UpdateUser");
           }

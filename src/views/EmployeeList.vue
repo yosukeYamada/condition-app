@@ -2,12 +2,12 @@
   <b-col>
     <h2 class="mb-4">従業員一覧</h2>
 
-    <SearchByDepName></SearchByDepName>
-    <SearchByHireYear></SearchByHireYear>
-    <SearchByHireMonth></SearchByHireMonth>
-    <!-- <Test></Test> -->
+    
 
     <EmployeeListHeader class="mb-5" />
+    <SearchByDepName></SearchByDepName>
+    <SearchByHireYear></SearchByHireYear>
+    <SearchByHireMonth></SearchByHireMonth><br>
     <EmployeeList :employee-list="childEmployeeList" />
   </b-col>
 </template>
@@ -19,7 +19,6 @@ import EmployeeList from "../components/employee-list/EmployeeList.vue";
 import SearchByDepName from "../components/employee-list/SearchByDepName";
 import SearchByHireYear from "../components/employee-list/SearchByHireYear";
 import SearchByHireMonth from "../components/employee-list/SearchByHireMonth";
-// import Test from "../components/employee-list/Test";
 
 export default {
   components: {
@@ -28,7 +27,7 @@ export default {
     SearchByDepName,
     SearchByHireYear,
     SearchByHireMonth,
-    // Test
+    
   },
   data() {
     return {
@@ -46,15 +45,6 @@ export default {
 
   //watcherのメソッドを算出
   computed: {
-    // getFilterDepName: function() {
-    //   return this.$store.state.filterDepName;
-    // },
-    // getFilterHireYear: function() {
-    //   return this.$store.state.filterHireYear;
-    // },
-    // getFilterHireMonth: function() {
-    //   return this.$store.state.filterHireMonth;
-    // },
     getFilter: function() {
       return this.$store.state.filter;
     },
@@ -101,25 +91,18 @@ export default {
         this.childEmployeeList = this.employeeList;
 
         if (this.$store.state.filter.depName !== "") {
-          console.log("部署" + this.$store.state.filter.depName);
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
             if (employee.dep === this.$store.state.filter.depName) {
-              console.log("部署ごと" + employee);
               return employee;
             }
           });
         }
         if (this.$store.state.filter.hireYear !== "") {
-          console.log("入社年" + this.$store.state.filter.hireYear);
-          console.log("childEmployeeList" + this.childEmployeeList);
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
-            console.log("employeeHiredata" + employee.hireDate);
             if (
               employee.hireDate.substr(0, 4) ===
               this.$store.state.filter.hireYear
             ) {
-              console.log("入社年はこれ" + employee.hireDate.substr(0, 4));
-
               return employee;
             }
           });
@@ -131,10 +114,6 @@ export default {
               parseInt(moment(employee.hireDate).format("M")) ===
               this.$store.state.filter.hireMonth
             ) {
-              console.log(
-                "入社月は" + parseInt(moment(employee.hireDate).format("M"))
-              );
-              console.log("入社月はこちら" + employee.hireDate);
               return employee;
             }
           });

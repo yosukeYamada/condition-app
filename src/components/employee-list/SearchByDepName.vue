@@ -1,15 +1,10 @@
 <template>
-  <el-select
-    v-model="inputDepName"
-    clearable
-    @change="changeDepName()"
-    placeholder="部署名"
-  >
+  <el-select v-model="filterDepName" clearable placeholder="部署名">
     <el-option
-      v-for="depName in depNames"
-      :key="depName.value"
-      :label="depName.label"
-      :value="depName.value"
+      v-for="depName in this.$store.state.depList"
+      :key="depName.depId"
+      :label="depName.depName"
+      :value="depName.depId"
     >
     </el-option>
   </el-select>
@@ -19,32 +14,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      depNames: [
-        {
-          value: "アプリエンジニア",
-          label: "アプリエンジニア",
-        },
-        {
-          value: "クラウドエンジニア",
-          label: "クラウドエンジニア",
-        },
-        {
-          value: "機械学習エンジニア",
-          label: "機械学習エンジニア",
-        },
-        {
-          value: "内勤",
-          label: "内勤",
-        },
-        {
-          value: "全ての社員",
-          label: "全ての社員",
-        },
-      ],
-
       depNameArray: [],
-
-      filterDepName: "",
 
       inputDepName: "",
 
@@ -57,6 +27,14 @@ export default {
     setDepNameArray: function() {
       return this.$store.state.depList;
     },
+    filterDepName: {
+      get() {
+        return this.inputDepName;
+      },
+      set(value) {
+        this.inputDepName = value;
+      },
+    },
   },
   watch: {
     /** storeのdepListの変更の監視 */
@@ -65,31 +43,17 @@ export default {
       depNameArray.push("全ての従業員");
       this.depNameArray = depNameArray;
     },
-  },
-  created() {
-    this.$store.dispatch("setFilterDepName", this.inputDepName);
-  },
-  beforeDestroy() {
-    // this.$store.dispatch("setFilterDepName", "");
-
-    this.$store.dispatch("setFilterDepName", "");
-  },
-  methods: {
-    //従業員絞り込み用のメソッド
-
-    changeDepName() {
-      // this.$store.dispatch("setFilterDepName", this.filterDepName);
-      // console.log("2:filterの中身" + this.$store.state.filterDepName);
-    },
-    handleChangeQuery() {
-      this.$store.dispatch("setFilterDepName", this.filterDepName);
-      //従業員リストを部署名と入社年月で絞り込む
-
+    //カテゴリー検索（部署名）の変更の監視
+    filterDepName: function() {
       this.$store.dispatch("setFilterDepName", this.inputDepName);
     },
   },
+
+  beforeDestroy() {
+    this.$store.dispatch("setFilterDepName", "");
+  },
+
   mounted() {
-    /** セレクトボックスの部署一覧を初期化 */
     let depNameArray = this.$store.state.depList.map((dep) => dep.depName);
     depNameArray.push("全ての従業員");
     this.depNameArray = depNameArray;

@@ -2,24 +2,22 @@
   <b-col>
     <h2 class="mb-4">従業員一覧</h2>
 
-    
-
     <EmployeeListHeader class="mb-5" />
     <SearchByDepName></SearchByDepName>
     <SearchByHireYear></SearchByHireYear>
-    <SearchByHireMonth></SearchByHireMonth><br>
+    <SearchByHireMonth></SearchByHireMonth><br />
     <EmployeeList :employee-list="childEmployeeList" />
   </b-col>
 </template>
 
 <script>
+import axios from "axios";
 import moment from "moment";
 import EmployeeListHeader from "@/components/employee-list/EmployeeListHeader.vue";
 import EmployeeList from "../components/employee-list/EmployeeList.vue";
 import SearchByDepName from "../components/employee-list/SearchByDepName";
 import SearchByHireYear from "../components/employee-list/SearchByHireYear";
 import SearchByHireMonth from "../components/employee-list/SearchByHireMonth";
-
 
 export default {
   components: {
@@ -28,7 +26,6 @@ export default {
     SearchByDepName,
     SearchByHireYear,
     SearchByHireMonth,
-    
   },
   data() {
     return {
@@ -124,8 +121,16 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("getEmployeeList")
     this.getMasterList();
-  }
+    //全従業員情報を取得
+    axios
+      .get("/showEmployeeList")
+      .then((response) => {
+        this.$store.dispatch("setEmployeeList", response.data);
+      })
+      .catch((e) => {
+        alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
+      });
+  },
 };
 </script>

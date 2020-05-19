@@ -4,7 +4,11 @@
     <b-row align-v="center" align-h="center">
       <b-col>
         <h2 class="mb-4">ユーザー情報の更新・削除</h2>
-        <UpdateUser :employee-list="employeeList" />
+        <SearchByUserName></SearchByUserName>
+        <SearchByDepName></SearchByDepName>
+        <SearchByHireYear></SearchByHireYear>
+        <SearchByHireMonth></SearchByHireMonth>
+        <UpdateUser :employee-list="childEmployeeList" />
       </b-col>
     </b-row>
   </b-container>
@@ -15,16 +19,25 @@ import moment from "moment";
 import UpdateUser from "../components/admin-setting/UpdateUser";
 import axios from "axios";
 import BreadCrumbs from "@/components/common/BreadCrumbs.vue";
+import SearchByDepName from "../components/employee-list/SearchByDepName";
+import SearchByHireYear from "../components/employee-list/SearchByHireYear";
+import SearchByHireMonth from "../components/employee-list/SearchByHireMonth";
+import SearchByUserName from "../components/update/SearchByUserName";
 
 export default {
   components: {
     UpdateUser,
     BreadCrumbs,
+    SearchByDepName,
+    SearchByHireYear,
+    SearchByHireMonth,
+    SearchByUserName,
   },
   data() {
     return {
       masterList: [],
       employeeList: [],
+      childEmployeeList: [],
       items: [
         {
           text: "管理者設定",
@@ -40,6 +53,11 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    getFilter: function() {
+      return this.$store.state.filter;
+    },
   },
   methods: {
     getMasterList() {
@@ -63,6 +81,51 @@ export default {
         };
       });
       this.employeeList = employeeList;
+      this.childEmployeeList = employeeList;
+    },
+    getFilter: {
+      handler: function() {
+        this.childEmployeeList = this.employeeList;
+
+        if (this.$store.state.filter.depName !== "") {
+          this.childEmployeeList = this.childEmployeeList.filter((employee) => {
+            if (employee.depId === this.$store.state.filter.depName) {
+              return employee;
+            }
+          });
+        }
+        if (this.$store.state.filter.hireYear !== "") {
+          this.childEmployeeList = this.childEmployeeList.filter((employee) => {
+            if (
+              employee.hireDate.substr(0, 4) ===
+              this.$store.state.filter.hireYear
+            ) {
+              return employee;
+            }
+          });
+        }
+
+        if (this.$store.state.filter.hireMonth !== "") {
+          this.childEmployeeList = this.childEmployeeList.filter((employee) => {
+            if (
+              parseInt(moment(employee.hireDate).format("M")) ===
+              this.$store.state.filter.hireMonth
+            ) {
+              return employee;
+            }
+          });
+        }
+        if (this.$store.state.filter.userName !== "") {
+          this.childEmployeeList = this.childEmployeeList.filter((employee) => {
+            if (
+              employee.name.indexOf(this.$store.state.filter.userName) !== -1
+            ) {
+              return employee;
+            }
+          });
+        }
+      },
+      deep: true,
     },
   },
 

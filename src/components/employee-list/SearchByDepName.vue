@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="filterDepName" clearable placeholder="部署名">
+  <el-select id="dep" v-model="filterDepName" clearable placeholder="部署名">
     <el-option
       v-for="depName in this.$store.state.depList"
       :key="depName.depId"
@@ -60,4 +60,9 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+#dep:hover {
+  cursor: pointer;
+  border-color: #60eeff;
+}
+</style>

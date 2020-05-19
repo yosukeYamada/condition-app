@@ -191,7 +191,7 @@ export default {
           version: this.version,
         })
         .then((response) => {
-          if (response.data == "null") {
+          if (response.data == "") {
             alert("他の管理者が更新しています");
           } else {
             this.$store.dispatch("setEmployeeList", response.data);

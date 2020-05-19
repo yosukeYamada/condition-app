@@ -36,8 +36,8 @@ export default {
     axios
         .get("/showNewsList")
         .then((response) => {
-          this.$store.dispatch("setNewsPost", response.data);
-          this.newsPostList = this.$store.state.newsPost;
+          this.$store.dispatch("setNewsPostList", response.data);
+          this.newsPostList = this.$store.state.newsPostList;
         })
   },
 };

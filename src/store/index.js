@@ -52,7 +52,7 @@ const initialState = {
     hireYear: "",
     hireMonth: "",
   },
-  newsPost: [],
+  newsPostList: [],
   information: [],
   category: [],
 };
@@ -116,8 +116,12 @@ export default new Vuex.Store({
     setFilterHireMonth(state, filterHireMonth) {
       state.filter.hireMonth = filterHireMonth;
     },
-    setNewsPost(state, newsPost) {
-      state.newsPost = newsPost;
+    /**
+     * お知らせ一覧をstateにセットする
+     * @param {*} newsPostList お知らせ一覧
+     */
+    setNewsPostList(state, newsPostList) {
+      state.newsPostList = newsPostList;
     },
     setFilter(state, filter) {
       state.filter = filter;
@@ -242,8 +246,12 @@ export default new Vuex.Store({
     setEmployeeList({ commit }, employeeList) {
       commit("setEmployeeList", employeeList);
     },
-    setNewsPost({ commit }, newsPost) {
-      commit("setNewsPost", newsPost);
+    /**
+     * お知らせ一覧をstateにセットする
+     * @param {*} newsPostList お知らせ一覧
+     */
+    setNewsPostList({ commit }, newsPostList) {
+      commit("setNewsPostList", newsPostList);
     },
     /**
      * トップページのNewsをstateにセットする
@@ -327,15 +335,6 @@ export default new Vuex.Store({
     },
     deleteUser({ commit }, employee) {
       commit("deleteUser", employee.userId);
-    },
-    /**
-     * お知らせ投稿一覧を取得するメソッド
-     * @components/login/Login.vue
-     */
-    getNewsList({ commit }) {
-      axios.get("/showNewsList").then((response) => {
-        commit("setNewsPost", response.data);
-      });
     },
   },
   getters: {

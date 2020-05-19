@@ -71,8 +71,8 @@ export default {
             newsComment: this.inputNews
           })
           .then(response => {
-            this.$store.dispatch("setNewsPost", response.data);
-            this.newsPostList = this.$store.state.newsPost;
+            this.$store.dispatch("setNewsPostList", response.data);
+            this.newsPostList = this.$store.state.newsPostList;
             this.inputNews = "";
           })
           .catch(e => {
@@ -95,7 +95,7 @@ export default {
     },
   },
   created() {
-    this.newsPostList = this.$store.state.newsPost;
+    this.newsPostList = this.$store.state.newsPostList;
   }
 };
 </script>

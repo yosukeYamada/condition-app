@@ -1,17 +1,6 @@
 <template>
   <b-container>
-    <v-breadcrumbs class="py-0 pl-1" :items="items">
-      <template v-slot:item="{ item }">
-        <v-breadcrumbs-item :disabled="item.disabled">
-          <router-link :class="item.class" :to="item.path">
-            {{ item.text }}
-          </router-link>
-        </v-breadcrumbs-item>
-      </template>
-      <template v-slot:divider>
-        <v-icon>mdi-chevron-right</v-icon>
-      </template>
-    </v-breadcrumbs>
+    <BreadCrumbs :items="items" />
     <b-row align-v="center" align-h="center">
       <b-col lg="6" md="8">
         <EditDeps />
@@ -22,10 +11,11 @@
 
 <script>
 import EditDeps from "@/components/admin-setting/EditDeps.vue";
-
+import BreadCrumbs from "@/components/common/BreadCrumbs.vue";
 export default {
   components: {
     EditDeps,
+    BreadCrumbs,
   },
   data() {
     return {

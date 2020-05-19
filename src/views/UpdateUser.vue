@@ -72,7 +72,7 @@ export default {
     axios
       .get("/showEmployeeList")
       .then((response) => {
-        this.$store.dispatch("employeeList", response.data);
+        this.$store.dispatch("setEmployeeList", response.data);
       })
       .catch((e) => {
         alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);

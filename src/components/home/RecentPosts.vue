@@ -86,7 +86,7 @@ export default {
       return resultPosts;
     },
   },
-  mounted() {
+  created() {
     this.items = store.state.employeeList
     this.latestPosts = this.setLatestPosts(this.items)
   },

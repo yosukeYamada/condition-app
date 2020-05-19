@@ -1,7 +1,6 @@
 <template>
   <b-modal id="news-post" ok-title="閉じる" ok-only centeredcentered title="お知らせの投稿">
     <ValidationObserver v-slot="{invalid, passes}">
-      <form @click.prevent="passes(addNews)">
       <ValidationProvider rules="required" v-slot="{ errors }">
         <v-subheader>
           <b-row>
@@ -15,19 +14,20 @@
               ></b-form-input>
             </b-col>
             <b-col sm="2" class="pb-1">
-              <b-button size="sm" :disabled="invalid">投稿</b-button>
+              <form @click.prevent="passes(addNews)">
+                <b-button size="sm" :disabled="invalid">投稿</b-button>
+              </form>
             </b-col>
             <p>{{errors[0]}}</p>
           </b-row>
         </v-subheader>
       </ValidationProvider>
-      </form>
     </ValidationObserver>
 
     <v-list two-line subheader>
       <v-subheader>お知らせ一覧</v-subheader>
       <div id="PostedNewsList">
-        <v-list-item v-for="(newsPost, i) in newsPostList" :key="i" @click="vlistItemClick">
+        <v-list-item v-for="(newsPost, i) in newsPostList" :key="i">
           <v-list-item-content>
             <v-list-item-title>{{ newsPost.newsDate | moment }}</v-list-item-title>
             <v-list-item-subtitle>{{ newsPost.newsComment }}</v-list-item-subtitle>
@@ -61,7 +61,6 @@ export default {
   },
   methods: {
     addNews() {
-
       let isAdd = window.confirm(
         "「" + this.inputNews + "」をお知らせしますか？"
       );
@@ -72,8 +71,8 @@ export default {
             newsComment: this.inputNews
           })
           .then(response => {
-            this.$store.dispatch("setNewsPost", response.data);
-            this.newsPostList = this.$store.state.newsPost;
+            this.$store.dispatch("setNewsPostList", response.data);
+            this.newsPostList = this.$store.state.newsPostList;
             this.inputNews = "";
           })
           .catch(e => {
@@ -94,12 +93,9 @@ export default {
         this.newsPostList.splice(index, 1);
       }
     },
-    vlistItemClick() {
-      /** コンソールエラー回避とUI機能の維持のため置いておく */
-    }
   },
   created() {
-    this.newsPostList = this.$store.state.newsPost;
+    this.newsPostList = this.$store.state.newsPostList;
   }
 };
 </script>

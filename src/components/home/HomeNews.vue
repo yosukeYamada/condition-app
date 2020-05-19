@@ -20,6 +20,7 @@
 
 <script>
 import moment from "moment";
+import axios from "axios";
 export default {
   data() {
     return {
@@ -32,8 +33,13 @@ export default {
     }
   },
   created() {
-    this.newsPostList = this.$store.state.newsPost;
-  }
+    axios
+        .get("/showNewsList")
+        .then((response) => {
+          this.$store.dispatch("setNewsPostList", response.data);
+          this.newsPostList = this.$store.state.newsPostList;
+        })
+  },
 };
 </script>
 

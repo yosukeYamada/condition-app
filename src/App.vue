@@ -19,7 +19,6 @@ export default {
     Header,
     SideMenu,
   },
-
   mounted() {
     this.loginCheck();
   },

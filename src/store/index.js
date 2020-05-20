@@ -56,6 +56,10 @@ const initialState = {
   newsPostList: [],
   information: [],
   category: [],
+
+  //リロードすると消えてしまうNews、従業員詳細
+  infoDetail:[],
+  empDetail:[]
 };
 
 export default new Vuex.Store({
@@ -197,6 +201,7 @@ export default new Vuex.Store({
       );
     },
 
+
     /**
      * 自分の投稿をstoreのemployeeListのdailyPostに格納する
      * @param {*} myDailyPost 自分の今日の投稿内容
@@ -207,8 +212,29 @@ export default new Vuex.Store({
       employee.userId === state.loginUser.userId
       ).dailyPost
       = myDailyPost
-    }
+    },
     
+
+    //リロードすると消えてしまうNews詳細
+    setInfoDetail(state, infoDetail) {
+      state.infoDetail = infoDetail
+    },
+    setInfoDetailId(state, informationId) {
+      state.infoDetail.push({
+        informationId : informationId
+      })
+    },
+
+    //リロードすると消えてしまうEmp詳細
+    setEmpDetail(state, empDetail) {
+      state.empDetail = empDetail
+    },
+    setEmpDetailId(state, userId) {
+      state.empDetail.push({
+        userId: userId
+      })
+    },
+
   },
   actions: {
     /**
@@ -397,14 +423,33 @@ export default new Vuex.Store({
         commit("setNewsPost", response.data);
       });
     },
+    
     /**
      * 自分の投稿をstoreのemployeeListのdailyPostに格納する
      * @param {*} myDailyPost 自分の今日の投稿内容
      */
     setMyDailyPost({commit},myDailyPost){
       commit("setMyDailyPost",myDailyPost)
-    }
+    },
+
+
+    //リロードすると消えてしまうNews詳細
+    setInfoDetail({commit}, infoDetail) {
+      commit('setInfoDetail', infoDetail)
+    },
+    setInfoDetailId({commit}, informationId) {
+      commit('setInfoDetailId', informationId)
+    },
+
+    //リロードすると消えてしまうEmp詳細
+    setEmpDetail({commit}, empDetail) {
+      commit('setEmpDetail', empDetail)
+    },
+    setEmpDetailId({commit}, userId) {
+      commit('setEmpDetail', userId)
   },
+},
+
   getters: {
     /**
      * ログインユーザーの名前を取得する
@@ -413,11 +458,11 @@ export default new Vuex.Store({
     /**
      * ログインユーザーのアイコンをfirebaseから取得する
      */
-    photoURL: (state) =>
-      state.firebaseUser ? state.firebaseUser.photoURL : "",
+    photoURL: (state) =>(state.firebaseUser ? state.firebaseUser.photoURL : ""),
     getStatus: function(state) {
       return state.loginStatus;
     },
   },
+
   plugins: [createPersistedState({ storage: window.sessionStorage })], // オプションを追加
 });

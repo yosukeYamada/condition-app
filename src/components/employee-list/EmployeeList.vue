@@ -1,5 +1,9 @@
 <template>
-  <v-data-table :headers="headers" :items="items" class="elevation-1 card">
+  <v-data-table
+    :headers="headers"
+    :items="employees"
+    class="elevation-1 card"
+  >
     <template v-slot:item.name="{ item }">
       <router-link
         :to="{ name: 'EmployeeCondition', params: { userId: item.userId } }"
@@ -35,10 +39,14 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   props: {
     employeeList: Array,
+  },
+  computed: {
+    employees() {
+      return this.employeeList;
+    },
   },
   watch: {
     employeeList: function() {
@@ -132,20 +140,7 @@ export default {
     },
   },
   mounted() {
-    //全従業員を検索する
-    axios
-      .get("/showEmployeeList")
-      .then((response) => {
-        console.log(response.data);
-        this.$store.dispatch("setEmployeeList", response.data);
-      })
-      .catch((e) => {
-        alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
-      });
-      this.$nextTick(function(){
-
-        this.items = this.employeeList;
-      })
+    this.items = this.employeeList;
   },
 };
 </script>

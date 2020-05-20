@@ -196,6 +196,19 @@ export default new Vuex.Store({
         (employee) => employee.userId !== userId
       );
     },
+
+    /**
+     * 自分の投稿をstoreのemployeeListのdailyPostに格納する
+     * @param {*} myDailyPost 自分の今日の投稿内容
+     */
+    setMyDailyPost(state,myDailyPost){
+      console.log('mutation')
+      state.employeeList.filter((employee)=>
+      employee.userId === state.loginUser.userId
+      ).dailyPost
+      = myDailyPost
+    }
+    
   },
   actions: {
     /**
@@ -384,6 +397,13 @@ export default new Vuex.Store({
         commit("setNewsPost", response.data);
       });
     },
+    /**
+     * 自分の投稿をstoreのemployeeListのdailyPostに格納する
+     * @param {*} myDailyPost 自分の今日の投稿内容
+     */
+    setMyDailyPost({commit},myDailyPost){
+      commit("setMyDailyPost",myDailyPost)
+    }
   },
   getters: {
     /**

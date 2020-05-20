@@ -60,7 +60,7 @@
           >
           <v-list-item-subtitle
             >最終更新者：{{
-              getUpdateUserName(admin.updateUserId) + "さん"
+              getUpdateUserName(admin.updateUserId)
             }}</v-list-item-subtitle
           >
         </v-list-item-content>
@@ -219,19 +219,27 @@ export default {
      * @param stringDate 文字列の日付
      */
     toDate(stringDate) {
-      return moment(stringDate).format("YYYY-MM-DD HH:mm");
+      if (stringDate !== null) {
+        return moment(stringDate).format("YYYY-MM-DD HH:mm");
+      } else {
+        return "-";
+      }
     },
     /**
      * ユーザーIDからユーザー名を取得するメソッド
      * @param updateUserId ユーザー名を取得したいユーザーのID
      */
     getUpdateUserName(updateUserId) {
-      let updateUserName = this.$store.state.employeeList.find((employee) => {
-        if (employee.userId === updateUserId) {
-          return employee;
-        }
-      }).userName;
-      return updateUserName;
+      if (updateUserId !== null) {
+        let updateUserName = this.$store.state.employeeList.find((employee) => {
+          if (employee.userId === updateUserId) {
+            return employee;
+          }
+        }).userName;
+        return updateUserName + "さん";
+      } else {
+        return "-";
+      }
     },
     vlistItemClick() {
       /** コンソールエラー回避とUI機能の維持のため置いておく */

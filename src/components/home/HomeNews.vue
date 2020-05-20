@@ -15,7 +15,7 @@
         <p class="mb-1">{{ newsPost.newsComment }}</p>
       </b-list-group-item>
     </b-list-group>
-    <b-card-text v-if="newsPostList.length === 0">
+    <b-card-text class="p-3" v-if="newsPostList.length === 0">
       <p class="grey--text">現在お知らせはありません</p>
     </b-card-text>
   </b-card>

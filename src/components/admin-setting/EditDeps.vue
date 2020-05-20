@@ -35,7 +35,7 @@
             >
             <v-list-item-subtitle
               >最終更新者：{{
-                getUpdateUserName(dep.updateUserId) + "さん"
+                getUpdateUserName(dep.updateUserId)
               }}</v-list-item-subtitle
             >
           </v-list-item-content>
@@ -106,15 +106,23 @@ export default {
   },
   methods: {
     toDate(stringDate) {
-      return moment(stringDate).format("YYYY-MM-DD HH:mm");
+      if(stringDate !== null ){
+        return moment(stringDate).format("YYYY-MM-DD HH:mm");
+      }else{
+        return "-"
+      }
     },
     getUpdateUserName(updateUserId) {
-      let updateUserName = this.$store.state.employeeList.find((employee) => {
-        if (employee.userId === updateUserId) {
-          return employee;
-        }
-      }).userName;
-      return updateUserName;
+      if(updateUserId !== null){
+        let updateUserName = this.$store.state.employeeList.find((employee) => {
+          if (employee.userId === updateUserId) {
+            return employee;
+          }
+        }).userName;
+        return updateUserName + "さん";
+      }else{
+        return "-"
+      }
     },
     addNewDep() {
       /** 入力値チェックが完了してからこのメソッドを実行するようにする */

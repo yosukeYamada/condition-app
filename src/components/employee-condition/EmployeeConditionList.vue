@@ -28,7 +28,7 @@
 
 <script>
 import moment from "moment";
-
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -62,29 +62,46 @@ export default {
       ],
     };
   },
-  mounted() {
+  created() {
+    this.setEmpDetailId(this.$route.params.userId)
+
+    console.log(this.$store.state.empDetail)
+
     var list = this.$store.state.employeeList.filter(
-      (elm) => elm.userId === this.$route.params.userId
+      (elm) => elm.userId === this.$store.state.empDetail
     );
-    for (let num in list[0].dailyPost) {
-      this.employeeList.push({
-        date: moment(list[0].dailyPost[num].date).format("YYYY-MM-DD"),
+
+    // this.setEmpDetail(list.)
+
+    console.log(list)
+
+    for (let num in this.$store.state.empDetail) {
+      var employeeList = []
+      employeeList.push({
+        date: moment(this.$store.state.empDetail[num].date).format("YYYY-MM-DD"),
         motivation:
-          list[0].dailyPost[num].postedMotivation.motivation.motivationName,
+          this.$store.state.empDetait[num].postedMotivation.motivation.motivationName,
         condition:
-          list[0].dailyPost[num].postedCondition.condition.conditionName,
+          this.$store.state.empDetail[num].postedCondition.condition.conditionName,
         performance:
-          list[0].dailyPost[num].postedPerformance.performance.performanceName,
-        comment: list[0].dailyPost[num].postedComment.comment,
+          this.$store.state.empDetail[num].postedPerformance.performance.performanceName,
+        comment: this.$store.state.empDetail[num].postedComment.comment,
       });
     }
+    this.setEmpDetail(employeeList)
+    this.employeeList = this.$store.state.empDetail
   },
   filters: {
     moment: function(date) {
       return moment(date).format("YYYY年MM月");
     },
   },
+  beforeDestroy() {
+    this.$store.dispatch("setEmpDetail", "");
+  },
   methods: {
+    ...mapActions(['setEmpDetail', 'setEmpDetailId']),
+
     transferIcon(param) {
       if (param === "快晴") {
         return ["fas", "sun"];

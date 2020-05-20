@@ -56,6 +56,10 @@ const initialState = {
   newsPostList: [],
   information: [],
   category: [],
+
+  //リロードすると消えてしまうNews、従業員詳細
+  infoDetail:[],
+  empDetail:[]
 };
 
 export default new Vuex.Store({
@@ -195,6 +199,26 @@ export default new Vuex.Store({
       state.employeeList = state.employeeList.filter(
         (employee) => employee.userId !== userId
       );
+    },
+
+    //リロードすると消えてしまうNews詳細
+    setInfoDetail(state, infoDetail) {
+      state.infoDetail = infoDetail
+    },
+    setInfoDetailId(state, informationId) {
+      state.infoDetail.push({
+        informationId : informationId
+      })
+    },
+
+    //リロードすると消えてしまうEmp詳細
+    setEmpDetail(state, empDetail) {
+      state.empDetail = empDetail
+    },
+    setEmpDetailId(state, userId) {
+      state.empDetail.push({
+        userId: userId
+      })
     },
   },
   actions: {
@@ -384,6 +408,22 @@ export default new Vuex.Store({
         commit("setNewsPost", response.data);
       });
     },
+
+    //リロードすると消えてしまうNews詳細
+    setInfoDetail({commit}, infoDetail) {
+      commit('setInfoDetail', infoDetail)
+    },
+    setInfoDetailId({commit}, informationId) {
+      commit('setInfoDetailId', informationId)
+    },
+
+    //リロードすると消えてしまうEmp詳細
+    setEmpDetail({commit}, empDetail) {
+      commit('setEmpDetail', empDetail)
+    },
+    setEmpDetailId({commit}, userId) {
+      commit('setEmpDetail', userId)
+    }
   },
   getters: {
     /**

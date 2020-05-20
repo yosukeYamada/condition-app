@@ -1,86 +1,96 @@
 <script>
-// ここでこのコンポーネントで使用するグラフの種類を定義する。
-// 今回はドーナツグラフなのでDoughnutとなる。
-import { Doughnut } from 'vue-chartjs'
-import moment from "moment";
+import { Doughnut, mixins } from "vue-chartjs";
+const { reactiveProp } = mixins;
 
-export default ({
+export default {
   extends: Doughnut,
-  data() {
-    return {
-      items: [],
-      latestPosts: [],
-      datas: {
-        // 表示するデータ
-        datasets: [
-          {
-            data: [90, 10],
-            backgroundColor: ['#89c3eb']
-          }
-        ]
-      },
-      options: {
-        responsive: true
+  mixins: [reactiveProp],
+  props: ["chartData", "options", "isGetData"],
+  watch: {
+    isGetData: {
+      handler: function() {
+        this.renderChart(this.chartData, this.options);
       }
     }
   },
   mounted() {
-    this.renderChart(this.datas, this.options)
-  },
-  methods: {
-    setLatestPosts(param) {
-      var latestPosts = [];
-      var resultPosts = [];
-      var preToday = new Date();
+    this.addPlugin({
+      afterDraw(chart) {
+        let ctx = chart.ctx;
+        chart.data.datasets.forEach((dataset, i) => {
+          let dataSum = 0;
+          dataset.data.forEach(element => {
+            dataSum += element;
+          });
 
-      for (let i = 0; i < param.length; i++) {
-        var latestPost = {
-          date: "",
-          name: "",
-          post: ""
-        };
-        //投稿が０の場合
-        if (param[i].dailyPost.length === 0) {
-          latestPost.date = "2020-05-13T00:43:14.943+0000"; //今日以前の日付
-          latestPost.name = param[i].userName;
-          latestPost.post = "未投稿";
-          latestPosts.push(latestPost);
-          //投稿がある場合
-        } else {
-          latestPost.date = param[i].dailyPost[0].date;
-          latestPost.name = param[i].userName;
-          latestPost.post = "";
-          latestPosts.push(latestPost);
-        }
-      }
-      for (let i = 0; i < latestPosts.length; i++) {
-        // var dateStr = param[i].dailyPost[0].date
-        var str = latestPosts[i].date;
-        var result = str.split("T");
-        var result2 = result[0].split("-");
-        var rdate = new Date(result2[0], result2[1] - 1, result2[2], 0, 0);
-        latestPosts[i].date = rdate;
-      }
+          // 中央にテキスト表示
+          let fontSize = 15;
+          let fontStyle = "normal";
+          let fontFamily = "Helvetica Neue";
+          ctx.fillStyle = "#000";
+          // eslint-disable-next-line no-undef
+          ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
 
-      for (let i = 0; i < latestPosts.length; i++) {
-        if (moment(preToday).isAfter(latestPosts[i].date, "day")) {
-          var resultPost = {
-            date: "",
-            name: "",
-            post: ""
-          };
-          resultPost.date = latestPosts[i].date;
-          resultPost.name = latestPosts[i].name;
-          resultPost.post = "未投稿";
-          resultPosts.push(resultPost);
-        }
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+
+          // position(第二, 第三引数は適宜調整)
+          ctx.fillText(
+            "本日の入力値",
+            chart.width / 2,
+            chart.height / 2
+          );
+
+          let meta = chart.getDatasetMeta(i);
+
+          if (!meta.hidden) {
+            meta.data.forEach(function(element, index) {
+              // フォントの設定
+              let fontSize = 14;
+              let fontStyle = "normal";
+              let fontFamily = "Helvetica Neue";
+              ctx.fillStyle = "#FFFFFF";
+              // 設定を適用
+              // eslint-disable-next-line no-undef
+              ctx.font = Chart.helpers.fontString(
+                fontSize,
+                fontStyle,
+                fontFamily
+              );
+              // ラベルをパーセント表示に変更
+              let labelString = chart.data.labels[index];
+              let dataString =
+                Math.round((dataset.data[index] / dataSum) * 100).toString() +
+                "%";
+
+              //0％のラベルは非表示にする
+              if (dataString == "0%") {
+                dataString = "";
+                labelString = "";
+              }
+              // positionの設定
+              ctx.textAlign = "center";
+              ctx.textBaseline = "middle";
+
+              let padding = -2;
+              let position = element.tooltipPosition();
+              // ツールチップに変更内容を表示
+              ctx.fillText(
+                labelString,
+                position.x,
+                position.y - fontSize / 2 - padding
+              ); // title
+              ctx.fillText(
+                dataString,
+                position.x,
+                position.y + fontSize / 2 - padding
+              ); // データの百分率
+            });
+          }
+        });
       }
-      return resultPosts;
-    }
-  },
-  created() {
-    this.items = this.$store.state.employeeList
-    this.latestPosts = this.setLatestPosts(this.items)
+    });
+    this.renderChart(this.chartData, this.options);
   }
-})
+};
 </script>

@@ -6,7 +6,7 @@
           border-variant="success"
           style="border-width:1px;"
           class="mx-auto p-4 rounded-0"
-          v-for="(info, i) in information"
+          v-for="(info, i) in informationList"
           :key="i"
         >
           <b-card-text>
@@ -29,19 +29,26 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import moment from "moment";
 export default {
   data() {
     return {
-      information: [],
+      informationList: [],
     };
   },
   created() {
-    this.information = this.$store.state.information.filter(
-      (elm) => elm.informationId === this.$route.params.informationId
+    this.setInfoDetailId(this.$route.params.informationId)
+
+    var information = this.$store.state.information.filter(
+      (elm) => elm.informationId === this.$store.state.infoDetail[0].informationId
     );
+    
+    this.setInfoDetail(information)
+    this.informationList = this.$store.state.infoDetail
   },
   methods: {
+    ...mapActions(['setInfoDetail','setInfoDetailId']),
     transferSentence(sentence) {
       return sentence.replace("\n", "<br>");
     },
@@ -50,6 +57,9 @@ export default {
     moment: function(date) {
       return moment(date).format("YYYY/MM/DD");
     },
+  },
+  beforeDestroy() {
+    this.$store.dispatch("setInfoDetail", "");
   },
 };
 </script>

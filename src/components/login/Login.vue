@@ -2,7 +2,7 @@
   <div>
     <b-card class="text-center py-3 shadow-sm" v-show="!loading">
       <b-card-text>
-        <p class="err" style="white-space:pre-wrap; word-wrap:break-word;">
+        <p class="text-danger" style="white-space:pre-wrap; word-wrap:break-word;">
           {{ err }}
         </p>
         <p class="display-2 font-weight-bold text-success mb-5">Rakuppo</p>
@@ -110,16 +110,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.loading {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-}
-
-.err {
-  color: red;
-}
-</style>

@@ -5,19 +5,24 @@
     header-bg-variant="success"
     header-text-variant="white"
     style="border-width:2px;"
-  >           
-   <v-container class="bottom">
-    <v-form ref="form" class="form" v-model="contactFormValidation.valid" lazy-validation>
-      <v-text-field
-        v-model="title"
-        :rules="contactFormValidation.nameRules"
-        label="タイトル"
-        required
-      ></v-text-field>
+  >
+    <v-container class="bottom">
+      <v-form
+        ref="form"
+        class="form"
+        v-model="contactFormValidation.valid"
+        lazy-validation
+      >
+        <v-text-field
+          v-model="title"
+          :rules="contactFormValidation.nameRules"
+          label="タイトル"
+          required
+        ></v-text-field>
         <v-select
           v-model="categoryId"
           :items="categories"
-          :rules="[v => !!v || 'カテゴリーを選択してください']"
+          :rules="[(v) => !!v || 'カテゴリーを選択してください']"
           label="カテゴリー"
           item-text="categoryName"
           item-value="categoryId"
@@ -37,7 +42,7 @@
           large
           variant="outline-success"
           class="mt-4 font-weight-bold"
-        >投稿
+          >投稿
         </b-button>
 
         <v-snackbar
@@ -46,8 +51,8 @@
           :timeout="3000"
           top
           class="font-weight-bold"
-          >
-          {{snackBar.message}}
+        >
+          {{ snackBar.message }}
         </v-snackbar>
       </v-form>
     </v-container>
@@ -58,65 +63,63 @@
 import { mapActions } from "vuex";
 import axios from "axios";
 export default {
-    data: () => ({
-        title: '',
-        content: '',
-        categoryId:"",
-        categories:[],
-        contactFormValidation: {
-        valid: false,
-        nameRules: [v => !!v || 'タイトルは必須項目です'],
-        contentsRules: [v => !!v || '内容は必須項目です']
-      },
-      snackBar: {
-        show: false,
-        color: '',
-        message: ''
-      },
-    }),
-    methods: {
-      ...mapActions(["setInformation"],),
-      post: function () {
-        if (this.$refs.form.validate()) {
-          axios.post("/information/insert", {
+  data: () => ({
+    title: "",
+    content: "",
+    categoryId: "",
+    categories: [],
+    contactFormValidation: {
+      valid: false,
+      nameRules: [(v) => !!v || "タイトルは必須項目です"],
+      contentsRules: [(v) => !!v || "内容は必須項目です"],
+    },
+    snackBar: {
+      show: false,
+      color: "",
+      message: "",
+    },
+  }),
+  methods: {
+    ...mapActions(["setInformation"]),
+    post: function() {
+      if (this.$refs.form.validate()) {
+        axios
+          .post("/information/insert", {
             title: this.title,
             content: this.content,
-            categoryId : this.categoryId,
-            registerUserId: this.$store.state.loginUser.userId
+            categoryId: this.categoryId,
+            registerUserId: this.$store.state.loginUser.userId,
           })
-            .then((response) => {
-              this.setInformation(response.data)
-              this.formReset()
-              this.showSnackBar(
-                'success',
-                '投稿完了しました。'
-              )
-            })
-            .catch(err => {
-              this.showSnackBar(
-                'error',
-                '投稿に失敗しました。時間をおいて再度お試しください。'
-              )
-              console.log(err)
-            })
-        }
-      },
-      showSnackBar: function (color, message) {
-        this.snackBar.message = message
-        this.snackBar.color = color
-        this.snackBar.show = true
-      },
-      formReset: function () {
-        this.$refs.form.reset()
+          .then((response) => {
+            this.setInformation(response.data);
+            this.formReset();
+            this.showSnackBar("success", "投稿完了しました。");
+          })
+          .catch((err) => {
+            this.showSnackBar(
+              "error",
+              "投稿に失敗しました。時間をおいて再度お試しください。"
+            );
+            console.log(err);
+          });
       }
     },
-    created() {
-      for( var num in this.$store.state.category) {
-        this.categories.push({
-          categoryId: this.$store.state.category[num].categoryId,
-          categoryName : this.$store.state.category[num].categoryName}
-        )
-      }
+    showSnackBar: function(color, message) {
+      this.snackBar.message = message;
+      this.snackBar.color = color;
+      this.snackBar.show = true;
     },
-  }
+    formReset: function() {
+      this.$refs.form.reset();
+    },
+  },
+  created() {
+    for (var num in this.$store.state.category) {
+      this.categories.push({
+        categoryId: this.$store.state.category[num].categoryId,
+        categoryName: this.$store.state.category[num].categoryName,
+      });
+    }
+  },
+};
 </script>

@@ -188,7 +188,7 @@ export default {
                 })
                 .catch((error) => {
                   alert(
-                    "Bエラーが発生しました。\nしばらくの後、再度実行してください。"
+                    "エラーが発生しました。\nしばらくの後、再度実行してください。"
                   );
                   console.error(error);
                 });
@@ -200,7 +200,7 @@ export default {
           })
           .catch((error) => {
             alert(
-              "Aエラーが発生しました。\nしばらくの後、再度実行してください。"
+              "エラーが発生しました。\nしばらくの後、再度実行してください。"
             );
             console.error(error);
             return false;

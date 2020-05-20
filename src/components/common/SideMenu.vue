@@ -44,7 +44,7 @@
               </v-list-item-content>
             </v-list-item>
 
-            <template v-if="authority === 1">
+            <template v-if="authority === ADMIN">
               <v-list-item>
                 <v-list-item-icon>
                   <v-icon> mdi mdi-format-list-bulleted</v-icon>
@@ -59,7 +59,7 @@
               </v-list-item>
             </template>
 
-            <template v-if="authority === 1">
+            <template v-if="authority === ADMIN">
               <v-list-item>
                 <v-list-item-icon>
                   <v-icon> mdi mdi-chart-line</v-icon>
@@ -73,7 +73,7 @@
                 </v-list-item-content>
               </v-list-item>
             </template>
-            <template v-if="authority === 1">
+            <template v-if="authority === ADMIN">
               <v-list-item>
                 <v-list-item-icon>
                   <v-icon> mdi mdi-cog-outline</v-icon>
@@ -99,6 +99,7 @@
 import Logout from "@/components/common/Logout";
 import axios from "axios";
 import { mapActions } from "vuex";
+import AUTHORITY from "@/assets/js/Authority.js";
 
 export default {
   components: {
@@ -106,6 +107,7 @@ export default {
   },
   data() {
     return {
+      ADMIN: AUTHORITY.ADMIN,
       logoutClass: ["px-4", "my-5", "fixed-bottom"],
     };
   },
@@ -141,6 +143,7 @@ export default {
     },
   },
   mounted() {
+    this.abjustLogout();
     window.addEventListener("resize", this.abjustLogout);
   },
 };

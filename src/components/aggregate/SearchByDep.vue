@@ -15,9 +15,7 @@ export default {
   data() {
     return {
       depNameArray: [],
-
       inputDepName: "",
-
       filteredAggregateList: {},
     };
   },
@@ -48,15 +46,13 @@ export default {
       this.$store.dispatch("setFilterDepName", this.inputDepName);
     },
   },
-
-  beforeDestroy() {
-    this.$store.dispatch("setFilterDepName", "");
-  },
-
   mounted() {
     let depNameArray = this.$store.state.depList.map((dep) => dep.depName);
     depNameArray.push("全ての従業員");
     this.depNameArray = depNameArray;
+  },
+  beforeDestroy() {
+    this.$store.dispatch("setFilterDepName", "");
   },
 };
 </script>

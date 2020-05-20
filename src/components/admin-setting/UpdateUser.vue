@@ -20,23 +20,28 @@
       </router-link>
     </template>
     <template v-slot:item.delete="{ item }">
-      <v-fa :icon="['fas', 'trash-alt']" size="lg" @click="deleteConfirm(item)" class="delete"></v-fa>
+      <v-fa
+        :icon="['fas', 'trash-alt']"
+        size="lg"
+        @click="deleteConfirm(item)"
+        class="delete"
+      ></v-fa>
     </template>
   </v-data-table>
 </template>
 
 <script>
-import {mapActions} from "vuex"
-import Status from "@/assets/js/Status"
-import axios from "axios"
+import { mapActions } from "vuex";
+import Status from "@/assets/js/Status";
+import axios from "axios";
 export default {
   props: {
-    employeeList: Array
+    employeeList: Array,
   },
   watch: {
     employeeList: function() {
       this.items = this.employeeList;
-    }
+    },
   },
   data() {
     return {
@@ -44,68 +49,70 @@ export default {
         {
           value: "name",
           text: "名前",
-          sortable: true
+          sortable: true,
         },
         {
           value: "kana",
           text: "ふりがな",
-          sortable: true
+          sortable: true,
         },
         {
           value: "mail",
           text: "メールアドレス",
-          sortable: true
+          sortable: true,
         },
         {
           value: "depName",
           text: "部署名",
-          sortable: true
+          sortable: true,
         },
         {
           value: "hireDate",
           text: "入社月",
-          sortable: true
+          sortable: true,
         },
         {
           value: "update",
           text: "更新",
-          sortable: false
+          sortable: false,
         },
         {
           value: "delete",
           text: "削除",
-          sortable: false
-        }
+          sortable: false,
+        },
       ],
       items: [],
       deleteStatus: Status.DELETED,
-      loginUserId:this.$store.state.loginUser.userId
+      loginUserId: this.$store.state.loginUser.userId,
     };
   },
   methods: {
+    ...mapActions(["deleteUser"]),
     deleteConfirm(user) {
       if (confirm("削除してよろしいですか？")) {
-        axios.post("/status", {
-          userId: user.userId,
-          userVersion: user.version,
-          updateUserStatus: this.deleteStatus,
-          updateUserId:this.loginUserId
-        }).then(
-          this.deleteUser(user.userId),
-          alert("削除しました"),
-          this.$router.push("/")
-        ).catch(
-          alert("問題が発生しました。もう1度作業をやり直してください。"),
-          this.$router.push("/top")
-        );
-
+        axios
+          .post("/status", {
+            userId: user.userId,
+            userVersion: user.version,
+            updateUserStatus: this.deleteStatus,
+            updateUserId: this.loginUserId,
+          })
+          .then(
+            this.deleteUser(user.userId),
+            alert("削除しました"),
+            this.$router.push("/")
+          )
+          .catch(
+            alert("問題が発生しました。もう1度作業をやり直してください。"),
+            this.$router.push("/top")
+          );
       }
     },
-        ...mapActions(["deleteUser"]),
   },
   mounted() {
     this.items = this.employeeList;
-  }
+  },
 };
 </script>
 <style>

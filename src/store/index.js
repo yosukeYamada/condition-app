@@ -201,6 +201,17 @@ export default new Vuex.Store({
       );
     },
 
+    /**
+     * 自分の投稿をstoreのemployeeListのdailyPostに格納する
+     * @param {*} myDailyPost 自分の今日の投稿内容
+     */
+    setMyDailyPost(state, myDailyPost) {
+      console.log("mutation");
+      state.employeeList.filter(
+        (employee) => employee.userId === state.loginUser.userId
+      ).dailyPost = myDailyPost;
+    },
+
     //リロードすると消えてしまうNews詳細
     setInfoDetail(state, infoDetail) {
       state.infoDetail = infoDetail;
@@ -423,6 +434,14 @@ export default new Vuex.Store({
       });
     },
 
+    /**
+     * 自分の投稿をstoreのemployeeListのdailyPostに格納する
+     * @param {*} myDailyPost 自分の今日の投稿内容
+     */
+    setMyDailyPost({ commit }, myDailyPost) {
+      commit("setMyDailyPost", myDailyPost);
+    },
+
     //リロードすると消えてしまうNews詳細
     setInfoDetail({ commit }, infoDetail) {
       commit("setInfoDetail", infoDetail);
@@ -447,6 +466,7 @@ export default new Vuex.Store({
       commit("updateUserAuthority", updatedUser);
     },
   },
+
   getters: {
     /**
      * ログインユーザーの名前を取得する
@@ -461,5 +481,6 @@ export default new Vuex.Store({
       return state.loginStatus;
     },
   },
+
   plugins: [createPersistedState({ storage: window.sessionStorage })], // オプションを追加
 });

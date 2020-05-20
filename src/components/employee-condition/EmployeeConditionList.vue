@@ -62,25 +62,38 @@ export default {
       ],
     };
   },
+  computed:{
+    empDetail(){
+      return this.employeeList
+    }
+
+  },
   created() {
     this.setEmpDetailId(this.$route.params.userId)
 
-    console.log(this.$store.state.empDetail)
-
-    var list = this.$store.state.employeeList.filter(
+    // console.log(this.$store.state.empDetail)
+    
+    let list = this.$store.state.employeeList.filter(
       (elm) => elm.userId === this.$store.state.empDetail
     );
-
-    // this.setEmpDetail(list.)
-
     console.log(list)
+    
+    
+       
+        this.setEmpDetail(list[0].dailyPost)
+      
+      
+    
+
+    console.log(list[0].dailyPost)
+    console.log(this.$store.state.empDetail)
 
     for (let num in this.$store.state.empDetail) {
       var employeeList = []
       employeeList.push({
         date: moment(this.$store.state.empDetail[num].date).format("YYYY-MM-DD"),
         motivation:
-          this.$store.state.empDetait[num].postedMotivation.motivation.motivationName,
+          this.$store.state.empDetail[num].postedMotivation.motivation.motivationName,
         condition:
           this.$store.state.empDetail[num].postedCondition.condition.conditionName,
         performance:

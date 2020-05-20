@@ -11,6 +11,7 @@
 </template>
 
 <script>
+
 import moment from "moment";
 import EmployeeListHeader from "@/components/employee-list/EmployeeListHeader.vue";
 import EmployeeList from "../components/employee-list/EmployeeList.vue";
@@ -18,7 +19,7 @@ import SearchByDepName from "../components/employee-list/SearchByDepName";
 import SearchByHireYear from "../components/employee-list/SearchByHireYear";
 import SearchByHireMonth from "../components/employee-list/SearchByHireMonth";
 import { mapActions } from "vuex";
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   components: {
@@ -37,6 +38,7 @@ export default {
   },
 
   methods: {
+    
     getMasterList() {
       
       this.masterList = this.$store.state.employeeList;
@@ -124,17 +126,18 @@ export default {
     },
   },
   created() {
-    this.getMasterList();
+    
     //全従業員を検索する
-    axios
-      .get("/showEmployeeList")
-      .then((response) => {
-        console.log(response.data);
-        this.$store.dispatch("setEmployeeList", response.data);
-      })
-      .catch((e) => {
-        alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
-      });
+    // axios
+    //   .get("/showEmployeeList")
+    //   .then((response) => {
+    //     console.log('axios')
+    //     this.$store.dispatch("setEmployeeList", response.data);
+    //   })
+    //   .catch((e) => {
+    //     alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
+    //   });
+    this.getMasterList();
   },
 };
 </script>

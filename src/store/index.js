@@ -206,10 +206,9 @@ export default new Vuex.Store({
      * @param {*} myDailyPost 自分の今日の投稿内容
      */
     setMyDailyPost(state, myDailyPost) {
-      console.log("mutation");
       state.employeeList.filter(
         (employee) => employee.userId === state.loginUser.userId
-      ).dailyPost = myDailyPost;
+      )[0].dailyPost = myDailyPost;
     },
 
     //リロードすると消えてしまうNews詳細

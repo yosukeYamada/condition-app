@@ -39,6 +39,7 @@
 <script>
 import moment from "moment";
 import EmployeeConditionList from "@/components/employee-condition/EmployeeConditionList.vue";
+import { mapActions } from "vuex";
 // import BreadCrumbs from "@/components/common/BreadCrumbs.vue";
 export default {
   components: {
@@ -70,6 +71,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['setEmpDetail', 'setEmpDetailId']),
     /** 部署IDを部署名に変換するメソッド */
     transferDepName(depId) {
       let dep = this.$store.state.depList.find((dep) => dep.depId === depId);
@@ -77,6 +79,7 @@ export default {
     },
   },
   mounted() {
+    
     this.employee = this.$store.state.employeeList.find(
       (elm) => elm.userId === this.$route.params.userId
     );

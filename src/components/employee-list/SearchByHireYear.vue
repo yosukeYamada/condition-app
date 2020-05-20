@@ -100,7 +100,6 @@ export default {
           label: "2001",
         },
       ],
-
       inputHireYear: "",
     };
   },
@@ -124,9 +123,7 @@ export default {
       this.$store.dispatch("setFilterHireYear", this.inputHireYear);
     },
   },
-
   beforeDestroy() {
-    // this.$store.dispatch("setFilterHireYear", "");
     this.$store.dispatch("setFilterHireYear", "");
   },
 };

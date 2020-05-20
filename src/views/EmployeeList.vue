@@ -1,29 +1,35 @@
 <template>
-  <b-col>
-    <h2 class="mb-4">従業員一覧</h2>
-
-    <EmployeeListHeader class="mb-5" />
-    <SearchByDepName></SearchByDepName>
-    <SearchByHireYear></SearchByHireYear>
-    <SearchByHireMonth></SearchByHireMonth><br />
-    <EmployeeList :employee-list="childEmployeeList" />
-  </b-col>
+  <b-container fluid>
+    <b-row align-v="center" align-h="center">
+      <b-col lg="11">
+        <h2 class="mb-4">従業員一覧</h2>
+        <b-row>
+          <b-col cols="12" sm="4" md="3" lg="2">
+            <SearchByDepName></SearchByDepName>
+          </b-col>
+          <b-col cols="6" sm="4" md="3" lg="2">
+            <SearchByHireYear></SearchByHireYear>
+          </b-col>
+          <b-col cols="6" sm="4" md="3" lg="2">
+            <SearchByHireMonth></SearchByHireMonth>
+          </b-col>
+        </b-row>
+        <EmployeeList :employee-list="childEmployeeList" />
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
-
 import moment from "moment";
-import EmployeeListHeader from "@/components/employee-list/EmployeeListHeader.vue";
-import EmployeeList from "../components/employee-list/EmployeeList.vue";
-import SearchByDepName from "../components/employee-list/SearchByDepName";
-import SearchByHireYear from "../components/employee-list/SearchByHireYear";
-import SearchByHireMonth from "../components/employee-list/SearchByHireMonth";
+import EmployeeList from "@/components/employee-list/EmployeeList.vue";
+import SearchByDepName from "@/components/employee-list/SearchByDepName";
+import SearchByHireYear from "@/components/employee-list/SearchByHireYear";
+import SearchByHireMonth from "@/components/employee-list/SearchByHireMonth";
 import { mapActions } from "vuex";
-// import axios from "axios";
 
 export default {
   components: {
-    EmployeeListHeader,
     EmployeeList,
     SearchByDepName,
     SearchByHireYear,
@@ -38,9 +44,7 @@ export default {
   },
 
   methods: {
-    
     getMasterList() {
-      
       this.masterList = this.$store.state.employeeList;
     },
     ...mapActions(["getEmployeeList"]),
@@ -88,11 +92,9 @@ export default {
       this.employeeList = employeeList;
       this.childEmployeeList = employeeList;
     },
-
     getFilter: {
       handler: function() {
         this.childEmployeeList = this.employeeList;
-
         if (this.$store.state.filter.depName !== "") {
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
             if (employee.dep === this.$store.state.filter.depName) {
@@ -110,7 +112,6 @@ export default {
             }
           });
         }
-
         if (this.$store.state.filter.hireMonth !== "") {
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
             if (
@@ -126,17 +127,6 @@ export default {
     },
   },
   created() {
-    
-    //全従業員を検索する
-    // axios
-    //   .get("/showEmployeeList")
-    //   .then((response) => {
-    //     console.log('axios')
-    //     this.$store.dispatch("setEmployeeList", response.data);
-    //   })
-    //   .catch((e) => {
-    //     alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
-    //   });
     this.getMasterList();
   },
 };

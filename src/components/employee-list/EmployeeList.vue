@@ -1,9 +1,5 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="employees"
-    class="elevation-1 card"
-  >
+  <v-data-table :headers="headers" :items="employees" class="elevation-1 card">
     <template v-slot:item.name="{ item }">
       <router-link
         :to="{ name: 'EmployeeCondition', params: { userId: item.userId } }"
@@ -39,7 +35,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     employeeList: Array,
@@ -50,12 +45,8 @@ export default {
     },
   },
   watch: {
-    
     employeeList: function() {
-      
-
-        this.items = this.employeeList;
-      
+      this.items = this.employeeList;
     },
   },
   data() {
@@ -119,7 +110,7 @@ export default {
       } else if (param === "嵐") {
         return ["fas", "cloud-showers-heavy"];
       } else {
-        return ["fas", "question"];
+        return ["fas", "minus"];
       }
     },
     /** 天候によって色を返すメソッド */
@@ -135,7 +126,7 @@ export default {
       } else if (param === "嵐") {
         return { color: "#0075c2" };
       } else {
-        return { color: "black" };
+        return { color: "#a9a9a9" };
       }
     },
     /** 部署IDを部署名に変換するメソッド */
@@ -145,10 +136,7 @@ export default {
     },
   },
   mounted() {
-    
-
-      this.items = this.employeeList;
-    
+    this.items = this.employeeList;
   },
 };
 </script>

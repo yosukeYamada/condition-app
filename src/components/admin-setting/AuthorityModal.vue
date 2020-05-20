@@ -230,7 +230,7 @@ export default {
         if (employee.userId === updateUserId) {
           return employee;
         }
-      }).userName;
+      })
       return updateUserName;
     },
     vlistItemClick() {

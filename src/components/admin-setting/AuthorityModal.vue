@@ -51,7 +51,18 @@
       >
         <v-list-item-content>
           <v-list-item-title v-text="admin.name"></v-list-item-title>
-          <v-list-item-subtitle v-text="admin.email"></v-list-item-subtitle>
+          <v-list-item-subtitle
+            class="mb-2"
+            v-text="admin.email"
+          ></v-list-item-subtitle>
+          <v-list-item-subtitle
+            >最終更新日：{{ toDate(admin.updateDate) }}</v-list-item-subtitle
+          >
+          <v-list-item-subtitle
+            >最終更新者：{{
+              getUpdateUserName(admin.updateUserId)
+            }}</v-list-item-subtitle
+          >
         </v-list-item-content>
 
         <v-list-item-action>
@@ -68,7 +79,8 @@
 import axios from "axios";
 import AUTHORITY from "@/assets/js/Authority.js";
 import "vue-simple-suggest/dist/styles.css";
-// import { mapGetters } from "vuex";
+import moment from "moment";
+
 export default {
   data() {
     return {
@@ -78,6 +90,9 @@ export default {
     };
   },
   methods: {
+    /**
+     * 管理者一覧の取得を行うメソッド
+     * */
     setAdminList() {
       let adminList = this.$store.state.employeeList.filter(
         (employee) => employee.authority === AUTHORITY.ADMIN
@@ -88,16 +103,23 @@ export default {
             name: employee.userName,
             email: employee.mailList[0].mailName,
             version: employee.version,
+            updateUserId: employee.updateUserId,
+            updateDate: employee.updateDate,
           };
         } catch (error) {
           return {
             name: employee.userName,
             email: "",
             version: "",
+            updateUserId: "",
+            updateDate: "",
           };
         }
       });
     },
+    /**
+     * オートコンプリート用の従業員一覧の取得を行うメソッド
+     */
     setEmployeeList() {
       let employees = this.$store.state.employeeList.filter(
         (employee) => employee.authority === AUTHORITY.USER
@@ -118,6 +140,9 @@ export default {
         }
       });
     },
+    /**
+     * 管理者権限の付与を行うメソッド
+     */
     addAdminAuthority() {
       let isAdd = window.confirm(
         this.item.name + "を管理者ユーザーに追加しますか？"
@@ -134,7 +159,9 @@ export default {
             if (response.data.email == "null") {
               alert("そのメールアドレスは登録されていません");
             } else if (response.data.version == "null") {
-              alert("version番号被り");
+              alert(
+                "他のユーザーが先に変更処理を行いました。\n更新ボタンを押して画面を再読み込みし、最新の状態を確認してください。"
+              );
             } else {
               alert(response.data.name + "さんに管理者権限を付与しました");
               this.adminList.push({
@@ -147,11 +174,18 @@ export default {
               );
               this.employeeList.splice(index, 1);
             }
+          })
+          .catch((e) => {
+            alert("管理者権限の付与に失敗しました");
+            console.error(e);
           });
-      } // .catch(alert("管理者権限の付与に失敗しました"));
+      }
     },
+    /**
+     * 管理者権限の削除を行うメソッド
+     * @param admin 削除する管理者ユーザー情報
+     */
     deleteAdminAuthority(admin) {
-      console.log(admin);
       let isDelete = window.confirm(
         admin.name + "さんを管理者ユーザーから削除しますか？"
       );
@@ -174,7 +208,37 @@ export default {
             });
             alert(response.data.name + "さんを管理者ユーザーから削除しました");
           })
-          .catch(() => alert("管理者権限の変更に失敗しました"));
+          .catch((e) => {
+            alert("管理者権限の変更に失敗しました");
+            console.error(e);
+          });
+      }
+    },
+    /**
+     * 文字列の日付をフォーマットするメソッド
+     * @param stringDate 文字列の日付
+     */
+    toDate(stringDate) {
+      if (stringDate !== null) {
+        return moment(stringDate).format("YYYY-MM-DD HH:mm");
+      } else {
+        return "-";
+      }
+    },
+    /**
+     * ユーザーIDからユーザー名を取得するメソッド
+     * @param updateUserId ユーザー名を取得したいユーザーのID
+     */
+    getUpdateUserName(updateUserId) {
+      if (updateUserId !== null) {
+        let updateUserName = this.$store.state.employeeList.find((employee) => {
+          if (employee.userId === updateUserId) {
+            return employee;
+          }
+        }).userName;
+        return updateUserName + "さん";
+      } else {
+        return "-";
       }
     },
     vlistItemClick() {

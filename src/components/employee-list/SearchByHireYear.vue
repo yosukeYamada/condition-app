@@ -1,5 +1,10 @@
 <template>
-  <el-select v-model="filterHireYear" clearable placeholder="入社した年">
+  <el-select
+    id="year"
+    v-model="filterHireYear"
+    clearable
+    placeholder="入社した年"
+  >
     <el-option
       v-for="year in hireYear"
       :key="year.value"
@@ -126,4 +131,9 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+#year:hover {
+  cursor: pointer;
+  border-color: #60eeff;
+}
+</style>

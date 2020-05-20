@@ -48,6 +48,7 @@ const initialState = {
   filterHireMonth: "",
 
   filter: {
+    userName: "",
     depName: "",
     hireYear: "",
     hireMonth: "",
@@ -107,14 +108,33 @@ export default new Vuex.Store({
     setDairyPost(state, dailyPost) {
       state.loginUser.dailyPost = dailyPost;
     },
+    /**
+     * 検索用の部署名をstateにセットする
+     * @param {*} filterDepName 検索時に使用する部署名
+     */
     setFilterDepName(state, filterDepName) {
       state.filter.depName = filterDepName;
     },
+    /**
+     * 検索用の入社年をstateにセットする
+     * @param {*} filterHireYear 検索時に使用する入社年
+     */
     setFilterHireYear(state, filterHireYear) {
       state.filter.hireYear = filterHireYear;
     },
+    /**
+     * 検索用の入社月をstateにセットする
+     * @param {*} filterHireMonth 検索時に使用する入社月
+     */
     setFilterHireMonth(state, filterHireMonth) {
       state.filter.hireMonth = filterHireMonth;
+    },
+    /**
+     * 検索用のユーザー名をstateにセットする
+     * @param {*} filterUserName 検索時に使用するユーザー名
+     */
+    setFilterUserName(state, filterUserName) {
+      state.filter.userName = filterUserName;
     },
     /**
      * お知らせ一覧をstateにセットする
@@ -304,14 +324,33 @@ export default new Vuex.Store({
           console.error(error);
         });
     },
+    /**
+     * 入社年を使用し、絞り込み検索する
+     * @param {*} filterHireYear 検索時に使用する入社年
+     */
     setFilterHireYear({ commit }, filterHireYear) {
       commit("setFilterHireYear", filterHireYear);
     },
+    /**
+     * 部署名を使用し、絞り込み検索する
+     * @param {*} filterDepName 検索時に使用する部署名
+     */
     setFilterDepName({ commit }, filterDepName) {
       commit("setFilterDepName", filterDepName);
     },
+    /**
+     * 入社月を使用し、絞り込み検索する
+     * @param {*} filterHireMonth 検索時に使用する入社月
+     */
     setFilterHireMonth({ commit }, filterHireMonth) {
       commit("setFilterHireMonth", filterHireMonth);
+    },
+    /**
+     * ユーザー名を使用し、絞り込み検索する
+     * @param {*} filterUserName 検索時に使用するユーザー名
+     */
+    setFilterUserName({ commit }, filterUserName) {
+      commit("setFilterUserName", filterUserName);
     },
     /**
      * 既存の部署を削除するメソッド
@@ -335,7 +374,6 @@ export default new Vuex.Store({
     },
     deleteUser({ commit }, employee) {
       commit("deleteUser", employee.userId);
-
     },
     /**
      * お知らせ投稿一覧を取得するメソッド
@@ -345,7 +383,6 @@ export default new Vuex.Store({
       axios.get("/showNewsList").then((response) => {
         commit("setNewsPost", response.data);
       });
-
     },
   },
   getters: {

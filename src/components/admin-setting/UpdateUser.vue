@@ -16,7 +16,7 @@
           },
         }"
       >
-        <v-fa :icon="['fas', 'edit']" size="lg" class="edit"></v-fa>
+        <v-fa :icon="['fas', 'edit']" size="lg" class="edit text-primary"></v-fa>
       </router-link>
     </template>
     <template v-slot:item.delete="{ item }">
@@ -24,7 +24,7 @@
         :icon="['fas', 'trash-alt']"
         size="lg"
         @click="deleteConfirm(item)"
-        class="delete"
+        class="delete text-secondary"
       ></v-fa>
     </template>
   </v-data-table>
@@ -122,10 +122,10 @@ export default {
 }
 .edit:hover {
   cursor: pointer;
-  color: crimson;
+  color: blue!important;
 }
 .delete:hover {
   cursor: pointer;
-  color: blue;
+  color: crimson!important;
 }
 </style>

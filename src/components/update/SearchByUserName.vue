@@ -43,11 +43,11 @@ export default {
 </script>
 <style>
 #inputUserName {
-  width: 54%;
+  width: 100%;
 }
 #inputUserName:hover {
-  width: 54%;
+  width: 100%;
   cursor: pointer;
-  border-color: #60eeff;
+  border-color: #89c997;
 }
 </style>

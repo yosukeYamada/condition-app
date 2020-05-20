@@ -131,6 +131,6 @@ export default {
 <style>
 #year:hover {
   cursor: pointer;
-  border-color: #60eeff;
+  border-color: #89c997;
 }
 </style>

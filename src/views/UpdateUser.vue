@@ -4,10 +4,20 @@
     <b-row align-v="center" align-h="center">
       <b-col>
         <h2 class="mb-4">ユーザー情報の更新・削除</h2>
-        <SearchByUserName></SearchByUserName>
-        <SearchByDepName></SearchByDepName>
-        <SearchByHireYear></SearchByHireYear>
-        <SearchByHireMonth></SearchByHireMonth>
+        <b-row>
+          <b-col cols="12" sm="10" md="10" lg="6">
+            <SearchByUserName></SearchByUserName>
+          </b-col>
+          <b-col cols="10" sm="4" md="3" lg="2">
+            <SearchByDepName></SearchByDepName>
+          </b-col>
+          <b-col cols="6" sm="4" md="3" lg="2">
+            <SearchByHireYear></SearchByHireYear>
+          </b-col>
+          <b-col cols="6" sm="4" md="3" lg="2">
+            <SearchByHireMonth></SearchByHireMonth>
+          </b-col>
+        </b-row>
         <UpdateUser :employee-list="childEmployeeList" />
       </b-col>
     </b-row>

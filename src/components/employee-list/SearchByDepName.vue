@@ -59,6 +59,6 @@ export default {
 <style>
 #dep:hover {
   cursor: pointer;
-  border-color: #60eeff;
+  border-color: #89c997;
 }
 </style>

@@ -13,25 +13,18 @@
             <div class="pl-1 mb-1 font-weight-black">
               {{ info.informationDate | moment }}
             </div>
-            <b-row align-v="center" class="px-4" v-for="(category, i) in info.category" :key="i">
+            <b-row align-v="center" class="px-4">
               <div
                 class="px-2 mb-2 mt-1 pt-1 mr-4 name overline"
                 :style="style"
               >
-                {{ category.categoryName }}
+                {{ info.category.categoryName }}
               </div>
-
-              <router-link
-                :to="{
-                  name: 'Information',
-                  params: { informationId: info.informationId },
-                }"
-                class="link gray--text"
-              >
+              <div @click="toPage(info)" class="link gray--text">
                 <div class=" text-secondary">
                   {{ info.informationTitle }}
                 </div>
-              </router-link>
+              </div>
             </b-row>
           </div>
         </div>
@@ -61,39 +54,13 @@ export default {
       return moment(date).format("YYYY/MM/DD");
     },
   },
-  created() {
-    axios.get("/information").then((response) => {
-      this.setInformation(response.data.informationList);
-      this.setCategory(response.data.category);
-    });
-  },
   computed: {
     informationList() {
       var informationList = [];
-      for (var num in this.$store.state.information) {
-        var information = {
-          informationId: "",
-          informationTitle: "",
-          informationDate: "",
-          informationContent: "",
-          category: [],
-        };
-        information.informationId = this.$store.state.information[
-          num
-        ].informationId;
-        information.informationTitle = this.$store.state.information[
-          num
-        ].informationTitle;
-        information.informationDate = this.$store.state.information[
-          num
-        ].informationDate;
-        information.informationContent = this.$store.state.information[
-          num
-        ].informationContent;
-        information.category = this.$store.state.category.filter(
-          (category) =>
-            category.categoryId ===
-            this.$store.state.information[num].categoryId
+      for (let num in this.$store.state.information) {
+        let information = this.$store.state.information[num];
+        information.category = this.$store.state.category.find(
+          (category) => category.categoryId === information.categoryId
         );
         informationList.push(information);
       }
@@ -102,6 +69,18 @@ export default {
   },
   methods: {
     ...mapActions(["setInformation", "setCategory"]),
+    toPage(info) {
+      this.$router.push({
+        name: "Information",
+        query: { info: encodeURIComponent(JSON.stringify(info)) },
+      });
+    },
+  },
+  created() {
+    axios.get("/information").then((response) => {
+      this.setInformation(response.data.informationList);
+      this.setCategory(response.data.category);
+    });
   },
 };
 </script>

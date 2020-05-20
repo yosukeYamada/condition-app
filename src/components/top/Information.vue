@@ -1,13 +1,12 @@
 <template>
   <b-container>
+    <BreadCrumbs :items="items" />
     <b-row align-v="center" align-h="center">
       <b-col lg="10">
         <b-card
           border-variant="success"
           style="border-width:1px;"
           class="mx-auto p-4 rounded-0"
-          v-for="(info, i) in informationList"
-          :key="i"
         >
           <b-card-text>
             <div
@@ -29,26 +28,37 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import moment from "moment";
+import BreadCrumbs from "@/components/common/BreadCrumbs.vue";
+
 export default {
+  components: {
+    BreadCrumbs,
+  },
   data() {
     return {
-      informationList: [],
+      items: [
+        {
+          text: "トップ",
+          disabled: false,
+          path: "/",
+          class: [],
+        },
+        {
+          text: "更新情報詳細",
+          disabled: true,
+          path: "",
+          class: ["grey--text"],
+        },
+      ],
     };
   },
-  created() {
-    this.setInfoDetailId(this.$route.params.informationId)
-
-    var information = this.$store.state.information.filter(
-      (elm) => elm.informationId === this.$store.state.infoDetail[0].informationId
-    );
-    
-    this.setInfoDetail(information)
-    this.informationList = this.$store.state.infoDetail
+  computed: {
+    info() {
+      return JSON.parse(decodeURIComponent(this.$route.query.info));
+    },
   },
   methods: {
-    ...mapActions(['setInfoDetail','setInfoDetailId']),
     transferSentence(sentence) {
       return sentence.replace("\n", "<br>");
     },
@@ -57,9 +67,6 @@ export default {
     moment: function(date) {
       return moment(date).format("YYYY/MM/DD");
     },
-  },
-  beforeDestroy() {
-    this.$store.dispatch("setInfoDetail", "");
   },
 };
 </script>

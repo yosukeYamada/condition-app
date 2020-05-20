@@ -35,7 +35,6 @@ const routes = [
     path: "/",
     name: "Top",
     component: Top,
-    
   },
   {
     path: "/home",
@@ -147,7 +146,7 @@ const routes = [
     component: EditDeps,
   },
   {
-    path: "/information/informationId=:informationId",
+    path: "/information",
     name: "Information",
     component: Information,
   },

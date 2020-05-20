@@ -124,30 +124,12 @@
 <script>
 import moment from "moment";
 import axios from "axios";
-import { mapActions } from "vuex";
+
 export default {
   name: "UpdateUserForm",
   data() {
     return {
-      selectYears: [2016, 2017, 2018, 2019, 2020],
-      selectDeps: [
-        {
-          name: "アプリエンジニア",
-          value: 1,
-        },
-        {
-          name: "クラウドエンジニア",
-          value: 2,
-        },
-        {
-          name: "機械学習エンジニア",
-          value: 3,
-        },
-        {
-          name: "内勤",
-          value: 4,
-        },
-      ],
+      selectYears: [],
       userName: null,
       userNameKana: null,
       mailAddress: null,
@@ -169,10 +151,9 @@ export default {
       }
       return 12;
     },
-  },
-  created() {
-    this.makeYearList();
-    this.makeDepList();
+    selectDeps() {
+      return this.$store.state.depList;
+    },
   },
   methods: {
     updateUser() {
@@ -211,7 +192,6 @@ export default {
       this.hireMonth = null;
       this.depId = null;
     },
-    ...mapActions(["setLoginUser", "loginStatus"]),
     makeYearList() {
       var now = new Date();
       var nowYear = now.getFullYear();
@@ -222,11 +202,9 @@ export default {
       }
       this.selectYears = yearList;
     },
-    makeDepList() {
-      var depList = [];
-      depList = this.$store.state.depList;
-      this.selectDeps = depList;
-    },
+  },
+  created() {
+    this.makeYearList();
   },
   mounted() {
     this.userId = this.$route.params.userId;

@@ -1,10 +1,16 @@
 <template>
   <div>
+    <v-alert
+      v-if="err !== ''"
+      outlined
+      type="error"
+      style="white-space:pre-wrap;"
+      text
+    >
+      {{ err }}
+    </v-alert>
     <b-card class="text-center py-3 shadow-sm" v-show="!loading">
       <b-card-text>
-        <p class="err" style="white-space:pre-wrap; word-wrap:break-word;">
-          {{ err }}
-        </p>
         <p class="display-2 font-weight-bold text-success mb-5">Rakuppo</p>
         <p>あなたの今日のコンディションを記録しましょう</p>
         <v-btn
@@ -54,8 +60,6 @@ export default {
       "setLoginUser",
       "setFirebaseUser",
       "deleteLoginUser",
-      "setLoading",
-      "setLoadings",
       "switchLoginStatus",
       "getEmployeeList",
       "getDepList",
@@ -97,8 +101,8 @@ export default {
               /** メールアドレスのドメインが組織外のユーザーの場合 */
               this.deleteLoginUser();
               firebase.auth().signOut();
-              this.err = `メールアドレスは@rakus-partners.co.jp、
-または@rakus.co.jpのものをお使いください`;
+              this.err =
+                "メールドメインがrakus-partners.co.jp\nまたはrakus.co.jpのユーザーのみログインできます";
             }
           });
         this.loading = true;
@@ -110,16 +114,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.loading {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-}
-
-.err {
-  color: red;
-}
-</style>

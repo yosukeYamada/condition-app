@@ -58,8 +58,8 @@ const initialState = {
   category: [],
 
   //リロードすると消えてしまうNews、従業員詳細
-  infoDetail:[],
-  empDetail:[]
+  infoDetail: [],
+  empDetail: [],
 };
 
 export default new Vuex.Store({
@@ -201,42 +201,49 @@ export default new Vuex.Store({
       );
     },
 
-
     /**
      * 自分の投稿をstoreのemployeeListのdailyPostに格納する
      * @param {*} myDailyPost 自分の今日の投稿内容
      */
-    setMyDailyPost(state,myDailyPost){
-      
-      state.employeeList.filter((employee)=>
-      employee.userId === state.loginUser.userId
-      )[0].dailyPost = myDailyPost
-      
-      
-      
+    setMyDailyPost(state, myDailyPost) {
+      state.employeeList.filter(
+        (employee) => employee.userId === state.loginUser.userId
+      )[0].dailyPost = myDailyPost;
     },
-    
 
     //リロードすると消えてしまうNews詳細
     setInfoDetail(state, infoDetail) {
-      state.infoDetail = infoDetail
+      state.infoDetail = infoDetail;
     },
     setInfoDetailId(state, informationId) {
       state.infoDetail.push({
-        informationId : informationId
-      })
+        informationId: informationId,
+      });
     },
 
     //リロードすると消えてしまうEmp詳細
     setEmpDetail(state, empDetail) {
-      state.empDetail = empDetail
+      state.empDetail = empDetail;
     },
     setEmpDetailId(state, userId) {
       state.empDetail.push({
-        userId: userId
-      })
+        userId: userId,
+      });
     },
-
+    /**
+     * ユーザー権限の更新をemployeeList内のユーザー情報に反映するメソッド
+     * @param {*} updatedUser 更新されたユーザー情報
+     */
+    updateUserAuthority(state, updatedUser) {
+      state.employeeList.map((employee) => {
+        if (employee.userId === updatedUser.userId) {
+          employee.updateUserId = updatedUser.updateUserId;
+          employee.updateDate = updatedUser.updateDate;
+          employee.version = updatedUser.version;
+          employee.authority = updatedUser.authority;
+        }
+      });
+    },
   },
   actions: {
     /**
@@ -425,32 +432,39 @@ export default new Vuex.Store({
         commit("setNewsPost", response.data);
       });
     },
-    
+
     /**
      * 自分の投稿をstoreのemployeeListのdailyPostに格納する
      * @param {*} myDailyPost 自分の今日の投稿内容
      */
-    setMyDailyPost({commit},myDailyPost){
-      commit("setMyDailyPost",myDailyPost)
+    setMyDailyPost({ commit }, myDailyPost) {
+      commit("setMyDailyPost", myDailyPost);
     },
-
 
     //リロードすると消えてしまうNews詳細
-    setInfoDetail({commit}, infoDetail) {
-      commit('setInfoDetail', infoDetail)
+    setInfoDetail({ commit }, infoDetail) {
+      commit("setInfoDetail", infoDetail);
     },
-    setInfoDetailId({commit}, informationId) {
-      commit('setInfoDetailId', informationId)
+    setInfoDetailId({ commit }, informationId) {
+      commit("setInfoDetailId", informationId);
     },
 
     //リロードすると消えてしまうEmp詳細
-    setEmpDetail({commit}, empDetail) {
-      commit('setEmpDetail', empDetail)
+    setEmpDetail({ commit }, empDetail) {
+      commit("setEmpDetail", empDetail);
     },
-    setEmpDetailId({commit}, userId) {
-      commit('setEmpDetail', userId)
+    setEmpDetailId({ commit }, userId) {
+      commit("setEmpDetail", userId);
+    },
+    /**
+     * ユーザー権限を変更した際に更新したユーザー情報をemployeeListに反映するメソッド
+     * @/components/admin-setting/AuthorityModal.vue
+     * @param {*} updatedUser 更新されたユーザー情報
+     */
+    updateUserAuthority({ commit }, updatedUser) {
+      commit("updateUserAuthority", updatedUser);
+    },
   },
-},
 
   getters: {
     /**
@@ -460,7 +474,8 @@ export default new Vuex.Store({
     /**
      * ログインユーザーのアイコンをfirebaseから取得する
      */
-    photoURL: (state) =>(state.firebaseUser ? state.firebaseUser.photoURL : ""),
+    photoURL: (state) =>
+      state.firebaseUser ? state.firebaseUser.photoURL : "",
     getStatus: function(state) {
       return state.loginStatus;
     },

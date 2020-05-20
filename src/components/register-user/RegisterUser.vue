@@ -142,7 +142,6 @@ export default {
       hireYear: null,
       hireMonth: null,
       depId: null,
-      selectDepList: [],
     };
   },
   computed: {
@@ -155,11 +154,15 @@ export default {
       }
       return 12;
     },
+    /** 部署一覧 */
+    selectDepList() {
+      return this.$store.state.depList.map((dep) => ({
+        name: dep.depName,
+        value: dep.depId,
+      }));
+    },
   },
-  created() {
-    this.makeYearList();
-    this.makeDepList();
-  },
+
   methods: {
     ...mapActions(["setLoginUser", "switchLoginStatus"]),
     registerUser() {
@@ -200,19 +203,12 @@ export default {
       }
       this.selectYears = yearList;
     },
-    /**
-     * storeから部署一覧を取得して選択肢にセットするメソッド
-     */
-    makeDepList() {
-      return this.$store.state.depList.map((dep) => ({
-        name: dep.depName,
-        value: dep.depId,
-      }));
-    },
+  },
+  created() {
+    this.makeYearList();
   },
   mounted() {
     this.mailAddress = this.$store.state.loginUser.mailList[0].mailName;
-    this.selectDepList = this.makeDepList();
   },
 };
 </script>

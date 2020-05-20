@@ -8,7 +8,7 @@
             <HomeNews />
           </b-col>
         </b-row>
-        <b-row v-if="authority === 1">
+        <b-row v-if="authority === ADMIN">
           <b-col sm="6">
             <RecentPosts />
           </b-col>
@@ -25,16 +25,22 @@
 import HomeNews from "@/components/home/HomeNews";
 import RecentPosts from "@/components/home/RecentPosts";
 import InputRate from "@/components/home/InputRate";
+import AUTHORITY from "@/assets/js/Authority.js";
 export default {
   components: {
     HomeNews,
     RecentPosts,
-    InputRate
+    InputRate,
+  },
+  data() {
+    return {
+      ADMIN: AUTHORITY.ADMIN,
+    };
   },
   computed: {
     authority: function() {
       return this.$store.state.loginUser.authority;
-    }
-  }
+    },
+  },
 };
 </script>

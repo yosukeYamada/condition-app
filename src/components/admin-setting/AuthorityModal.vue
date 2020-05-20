@@ -190,13 +190,13 @@ export default {
 
               /** ステップ3:storeの従業員一覧内のユーザー情報を更新する */
               let updatedUser = {
+                userId: response.data.userId,
                 updateUserId: response.data.updateUserId,
                 updateDate: response.data.updateDate,
                 version: response.data.version,
                 authority: response.data.authority,
               };
-              console.log(updatedUser); // 下を実装したら削除する
-              //this.$store.dispatch("updateUserAuthority", updatedUser);
+              this.$store.dispatch("updateUserAuthority", updatedUser);
 
               /** ステップ4:フォームを空にする */
               this.item = "";
@@ -232,7 +232,7 @@ export default {
             this.employeeList.push({
               name: response.data.userName,
               email: admin.email,
-              version:response.data.version
+              version: response.data.version,
             });
             alert(
               response.data.userName + "さんを管理者ユーザーから削除しました"

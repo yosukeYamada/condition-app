@@ -79,19 +79,12 @@ import axios from "axios";
 
 export default {
   data() {
-  return {
-      userId: "",
-      loading: false,
-      comment:null,
-      motivationId: "",
-      conditonId: "",
-      performanceId: "",
-
+    return {
       param: {
         motivationSelected: this.$route.params.motivationId,
         conditionSelected: this.$route.params.conditionId,
         performanceSelected: this.$route.params.performanceId,
-        comment: this.$route.params.comment
+        comment: this.$route.params.comment,
       },
       radioItems: [
         {
@@ -132,12 +125,14 @@ export default {
           conditionId: this.param.conditionSelected,
           performanceId: this.param.performanceSelected,
           comment: this.param.comment,
-          dailyPostId: this.$route.params.dailyPostId
+          dailyPostId: this.$route.params.dailyPostId,
         })
         .then((response) => {
-          if(response.data[0].version == 0) {
-            alert('version番号被り')
-            this.$router.push('/')
+          if (response.data[0].version === 0) {
+            alert(
+              "他のユーザーが先に変更処理を行いました。\n更新ボタンを押して画面を再読み込みし、最新の状態を確認してください。"
+            );
+            this.$router.push("/");
           } else {
             this.$store.dispatch("setDairyPost", response.data);
           }
@@ -146,8 +141,8 @@ export default {
           alert("コンディション編集の送信に失敗しました：" + e);
         });
 
-      alert("編集しました！");
-      this.$router.push("/MyCondition");
+      alert("投稿内容の変更に成功しました。");
+      this.$router.push("/myCondition");
     },
   },
 };

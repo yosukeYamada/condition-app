@@ -1,7 +1,7 @@
 <template>
   <b-modal id="authority-modal" centered title="管理者権限の付与・削除">
     <v-subheader>
-      <b-row>
+      <b-row align-v="center">
         <b-col sm="10" class="pr-0 pb-1">
           <v-autocomplete
             v-model="item"
@@ -38,7 +38,12 @@
           </v-autocomplete>
         </b-col>
         <b-col sm="2" class="pb-1">
-          <b-button size="sm" @click="addAdminAuthority()">追加</b-button>
+          <b-button
+            :disabled="item === ''"
+            size="sm"
+            @click="addAdminAuthority()"
+            >追加</b-button
+          >
         </b-col>
       </b-row>
     </v-subheader>
@@ -92,7 +97,7 @@ export default {
   methods: {
     /**
      * 管理者一覧の取得を行うメソッド
-     * */
+     */
     setAdminList() {
       let adminList = this.$store.state.employeeList.filter(
         (employee) => employee.authority === AUTHORITY.ADMIN
@@ -156,23 +161,45 @@ export default {
             version: this.item.version,
           })
           .then((response) => {
-            if (response.data.email == "null") {
+            if (response.data.authority === AUTHORITY.OUTSIDER) {
+              /** ケース1:従業員が存在しなかった場合 */
               alert("そのメールアドレスは登録されていません");
-            } else if (response.data.version == "null") {
+            } else if (response.data.version === 0) {
+              /** ケース2-1:排他制御に引っかかった場合(最新版じゃなかった場合) */
               alert(
                 "他のユーザーが先に変更処理を行いました。\n更新ボタンを押して画面を再読み込みし、最新の状態を確認してください。"
               );
             } else {
-              alert(response.data.name + "さんに管理者権限を付与しました");
+              /** ケース2-2:従業員が存在してかつ変更するデータが最新版の場合(期待する処理) */
+              alert(response.data.userName + "さんに管理者権限を付与しました");
+
+              /** ステップ1:管理者一覧にユーザー情報を追加 */
               this.adminList.push({
-                name: response.data.name,
-                email: response.data.email,
+                name: response.data.userName,
+                email: this.item.email,
+                updateUserId: response.data.updateUserId,
+                updateDate: response.data.updateDate,
+                version: response.data.version,
               });
-              this.item = "";
+
+              /** ステップ2:オートコンプリートの従業員一覧から削除 */
               let index = this.employeeList.findIndex(
                 (item) => item.email === response.data.email
               );
               this.employeeList.splice(index, 1);
+
+              /** ステップ3:storeの従業員一覧内のユーザー情報を更新する */
+              let updatedUser = {
+                updateUserId: response.data.updateUserId,
+                updateDate: response.data.updateDate,
+                version: response.data.version,
+                authority: response.data.authority,
+              };
+              console.log(updatedUser); // 下を実装したら削除する
+              //this.$store.dispatch("updateUserAuthority", updatedUser);
+
+              /** ステップ4:フォームを空にする */
+              this.item = "";
             }
           })
           .catch((e) => {
@@ -199,14 +226,17 @@ export default {
           })
           .then((response) => {
             let index = this.adminList.findIndex(
-              (item) => item.email === response.data.email
+              (item) => item.email === admin.email
             );
             this.adminList.splice(index, 1);
             this.employeeList.push({
-              name: response.data.name,
-              email: response.data.email,
+              name: response.data.userName,
+              email: admin.email,
+              version:response.data.version
             });
-            alert(response.data.name + "さんを管理者ユーザーから削除しました");
+            alert(
+              response.data.userName + "さんを管理者ユーザーから削除しました"
+            );
           })
           .catch((e) => {
             alert("管理者権限の変更に失敗しました");

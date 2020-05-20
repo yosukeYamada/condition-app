@@ -38,6 +38,7 @@ export default {
 
   methods: {
     getMasterList() {
+      
       this.masterList = this.$store.state.employeeList;
     },
     ...mapActions(["getEmployeeList"]),

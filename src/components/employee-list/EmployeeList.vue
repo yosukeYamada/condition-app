@@ -39,6 +39,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     employeeList: Array,
@@ -49,8 +50,12 @@ export default {
     },
   },
   watch: {
+    
     employeeList: function() {
-      this.items = this.employeeList;
+      
+
+        this.items = this.employeeList;
+      
     },
   },
   data() {
@@ -140,7 +145,10 @@ export default {
     },
   },
   mounted() {
-    this.items = this.employeeList;
+    
+
+      this.items = this.employeeList;
+    
   },
 };
 </script>

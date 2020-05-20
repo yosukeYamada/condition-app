@@ -136,17 +136,19 @@ export default {
           comment: this.param.comment,
         })
         .then((response) => {
-          
           this.$store.dispatch("setDairyPost", response.data);
-          this.$store.dispatch("setMyDailyPost",response.date)
-            
-          
+            this.$store.dispatch("setMyDailyPost", response.data);
+
+      
+          console.log(this.$store.state.employeeList);
         })
         .catch((e) => {
           alert("コンディション登録の送信に失敗しました：" + e);
         });
 
       alert("登録しました！");
+      //全従業員を検索する
+
       this.$router.push("/MyCondition");
     },
   },

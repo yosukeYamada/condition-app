@@ -41,6 +41,7 @@
               </v-date-picker>
             </v-menu>
           </b-col>
+            <SearchByDep/>
         </b-row>
         <small
           >※
@@ -58,12 +59,14 @@
 import MonthlyAggregate from "@/components/aggregate/MonthlyAggregate";
 import DailyAggregate from "@/components/aggregate/DailyAggregate.vue";
 import GraphDescription from "@/components/aggregate/GraphDescription.vue";
+import SearchByDep from "@/components/aggregate/SearchByDep.vue";
 
 export default {
   components: {
     DailyAggregate,
     MonthlyAggregate,
     GraphDescription,
+    SearchByDep
   },
   data() {
     return {

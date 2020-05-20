@@ -20,6 +20,7 @@ export default {
     SideMenu,
   },
   mounted() {
+    // axios.get('test/insert')
     this.loginCheck();
   },
   methods: {

@@ -7,7 +7,7 @@
     header-text-variant="white"
     no-body
   >
-    <b-list-group id="HomeNewsList" flush>
+    <b-list-group v-if="newsPostList.length !== 0" id="HomeNewsList" flush>
       <b-list-group-item v-for="(newsPost, i) in newsPostList" :key="i">
         <p class="mb-1 font-weight-bold body-2 grey--text">
           {{ newsPost.newsDate | moment }}
@@ -16,7 +16,7 @@
       </b-list-group-item>
     </b-list-group>
     <b-card-text class="p-3" v-if="newsPostList.length === 0">
-      <p class="grey--text">現在お知らせはありません</p>
+      <div class="grey--text">現在お知らせはありません</div>
     </b-card-text>
   </b-card>
 </template>

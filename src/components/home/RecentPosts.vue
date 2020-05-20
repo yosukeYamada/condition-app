@@ -7,7 +7,7 @@
     header-text-variant="white"
     no-body
   >
-    <b-list-group flush id="resent-posts-list">
+    <b-list-group v-if="latestPosts.length !== 0" flush id="resent-posts-list">
       <b-list-group-item v-for="(latestPost, i) in latestPosts" :key="i">
         <div>
           <span>{{ latestPost.name + "さん" }}</span>
@@ -16,7 +16,7 @@
       </b-list-group-item>
     </b-list-group>
     <b-card-text v-if="latestPosts.length === 0">
-      <p class="grey--text">本日の未投稿者はいません</p>
+      <div class="p-3 grey--text">本日の未投稿者はいません</div>
     </b-card-text>
   </b-card>
 </template>

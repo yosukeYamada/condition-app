@@ -1,5 +1,5 @@
 <template>
-<b-card
+  <b-card
     border-variant="success"
     style="border-width:2px;"
     header="本日の入力率"
@@ -7,10 +7,15 @@
     header-text-variant="white"
     no-body
   >
-  <div class="small">
-    <InputPieChart :chart-data="inputChartData" :options="options" :is-get-data="isGetData"></InputPieChart>
-  </div>
-</b-card>
+    <div class="small">
+      <InputPieChart 
+      :chart-data="inputChartData"
+      :options="options"
+      :is-get-data="isGetData"
+      ></InputPieChart>
+    </div>
+    <div>投稿者数 : {{ getPosted() }}人/{{ totalNnumbers.length }}人</div>
+  </b-card>
 </template>
 
 <script>
@@ -24,13 +29,16 @@ export default {
   props: ["selectedDate"],
   data() {
     return {
-      totalNnumbers:[],
+      totalNnumbers: [],
       postedNnumbers: [],
       unpostedNnumbers: [],
       isGetData: false,
       inputChartData: null,
       options: {
         responsive: true,
+        tooltips: {
+          enabled: false
+        },
         legend: {
           display: false
         }
@@ -40,11 +48,9 @@ export default {
   methods: {
     fillData() {
       this.inputChartData = {
-        labels: [this.getPosted(), this.getUnPosted()],
         datasets: [
           {
-            label: "Data",
-            backgroundColor: "#f87979",
+            backgroundColor: ["#00BCD4", "#E0F7FA"],
             data: [this.getPosted(), this.getUnPosted()]
           }
         ]
@@ -68,7 +74,7 @@ export default {
         var latestPost = {
           date: "",
           name: "",
-          post: "",
+          post: ""
         };
         //投稿が0の場合
         if (param[i].dailyPost.length === 0) {
@@ -97,7 +103,7 @@ export default {
           var resultPost = {
             date: "",
             name: "",
-            post: "",
+            post: ""
           };
           resultPost.date = latestPosts[i].date;
           resultPost.name = latestPosts[i].name;
@@ -106,20 +112,20 @@ export default {
         }
       }
       return resultPosts;
-    },
+    }
   },
   watch: {
     selectedDate: {
       handler: function() {
         this.fillData();
-      },
-    },
+      }
+    }
   },
   created() {
     this.totalNnumbers = this.$store.state.employeeList;
     this.unpostedNnumbers = this.setLatestPosts(this.totalNnumbers);
     this.fillData();
-  },
+  }
 };
 </script>
 

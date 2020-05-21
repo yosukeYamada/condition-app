@@ -22,7 +22,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
+    path: "/login",
     name: "Login",
     component: Login,
   },
@@ -32,20 +32,20 @@ const routes = [
     component: RegisterUser,
   },
   {
-    path: "/top",
+    path: "/",
     name: "Top",
     component: Top,
   },
   {
     path: "/home",
     name: "Home",
-    //ログインしていたら上記のパスに飛ぶことを許可する
     component: Home,
+    //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -55,10 +55,10 @@ const routes = [
     component: DailyPost,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -68,10 +68,10 @@ const routes = [
     component: EditDailyPost,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -81,10 +81,10 @@ const routes = [
     component: EmployeeCondition,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -94,10 +94,10 @@ const routes = [
     component: MyCondition,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -107,10 +107,10 @@ const routes = [
     component: Aggregate,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -120,10 +120,10 @@ const routes = [
     component: EmployeeList,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -133,10 +133,10 @@ const routes = [
     component: AdminSetting,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -146,9 +146,9 @@ const routes = [
     component: EditDeps,
   },
   {
-    path: "/information/informationId=:informationId",
+    path: "/information",
     name: "Information",
-    component: Information
+    component: Information,
   },
   {
     path: "/updateUser",
@@ -156,10 +156,10 @@ const routes = [
     component: UpdateUser,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -169,10 +169,10 @@ const routes = [
     component: UpdateUserForm,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },
@@ -182,10 +182,10 @@ const routes = [
     component: PostInformation,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.getters.getStatus) {
+      if (store.state.loginStatus) {
         next();
       } else {
-        next("/");
+        next("/login");
       }
     },
   },

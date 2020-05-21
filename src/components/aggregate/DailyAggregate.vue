@@ -100,6 +100,7 @@ export default {
           date: this.selectedDate,
         })
         .then((response) => {
+          console.log(response.data)
           this.conChartData.datasets[0].data = this.convertChartData(
             response.data.condition
           );

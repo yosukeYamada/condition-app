@@ -4,7 +4,21 @@
     <b-row align-v="center" align-h="center">
       <b-col>
         <h2 class="mb-4">ユーザー情報の更新・削除</h2>
-        <UpdateUser :employee-list="employeeList" />
+        <b-row>
+          <b-col cols="12" sm="10" md="10" lg="6">
+            <SearchByUserName></SearchByUserName>
+          </b-col>
+          <b-col cols="10" sm="4" md="3" lg="2">
+            <SearchByDepName></SearchByDepName>
+          </b-col>
+          <b-col cols="6" sm="4" md="3" lg="2">
+            <SearchByHireYear></SearchByHireYear>
+          </b-col>
+          <b-col cols="6" sm="4" md="3" lg="2">
+            <SearchByHireMonth></SearchByHireMonth>
+          </b-col>
+        </b-row>
+        <UpdateUser :employee-list="childEmployeeList" />
       </b-col>
     </b-row>
   </b-container>
@@ -15,36 +29,50 @@ import moment from "moment";
 import UpdateUser from "../components/admin-setting/UpdateUser";
 import axios from "axios";
 import BreadCrumbs from "@/components/common/BreadCrumbs.vue";
+import SearchByDepName from "../components/employee-list/SearchByDepName";
+import SearchByHireYear from "../components/employee-list/SearchByHireYear";
+import SearchByHireMonth from "../components/employee-list/SearchByHireMonth";
+import SearchByUserName from "../components/update/SearchByUserName";
 
 export default {
   components: {
     UpdateUser,
-    BreadCrumbs
+    BreadCrumbs,
+    SearchByDepName,
+    SearchByHireYear,
+    SearchByHireMonth,
+    SearchByUserName,
   },
   data() {
     return {
       masterList: [],
       employeeList: [],
+      childEmployeeList: [],
       items: [
         {
           text: "管理者設定",
           disabled: false,
           path: "/adminSetting",
-          class: []
+          class: [],
         },
         {
           text: "ユーザー情報の更新・削除",
           disabled: true,
           path: "",
-          class: ["grey--text"]
-        }
-      ]
+          class: ["grey--text"],
+        },
+      ],
     };
+  },
+  computed: {
+    getFilter: function() {
+      return this.$store.state.filter;
+    },
   },
   methods: {
     getMasterList() {
       this.masterList = this.$store.state.employeeList;
-    }
+    },
   },
   watch: {
     masterList: function() {
@@ -59,11 +87,56 @@ export default {
           depId: elm.dep.depId,
           depName: elm.dep.depName,
           hireDate: hireDate,
-          version:elm.version
+          version: elm.version,
         };
       });
       this.employeeList = employeeList;
-    }
+      this.childEmployeeList = employeeList;
+    },
+    getFilter: {
+      handler: function() {
+        this.childEmployeeList = this.employeeList;
+
+        if (this.$store.state.filter.depName !== "") {
+          this.childEmployeeList = this.childEmployeeList.filter((employee) => {
+            if (employee.depId === this.$store.state.filter.depName) {
+              return employee;
+            }
+          });
+        }
+        if (this.$store.state.filter.hireYear !== "") {
+          this.childEmployeeList = this.childEmployeeList.filter((employee) => {
+            if (
+              employee.hireDate.substr(0, 4) ===
+              this.$store.state.filter.hireYear
+            ) {
+              return employee;
+            }
+          });
+        }
+
+        if (this.$store.state.filter.hireMonth !== "") {
+          this.childEmployeeList = this.childEmployeeList.filter((employee) => {
+            if (
+              parseInt(moment(employee.hireDate).format("M")) ===
+              this.$store.state.filter.hireMonth
+            ) {
+              return employee;
+            }
+          });
+        }
+        if (this.$store.state.filter.userName !== "") {
+          this.childEmployeeList = this.childEmployeeList.filter((employee) => {
+            if (
+              employee.name.indexOf(this.$store.state.filter.userName) !== -1
+            ) {
+              return employee;
+            }
+          });
+        }
+      },
+      deep: true,
+    },
   },
 
   created() {
@@ -71,12 +144,12 @@ export default {
     //全従業員情報を取得
     axios
       .get("/showEmployeeList")
-      .then(response => {
-        this.$store.dispatch("employeeList", response.data);
+      .then((response) => {
+        this.$store.dispatch("setEmployeeList", response.data);
       })
-      .catch(e => {
+      .catch((e) => {
         alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
       });
-  }
+  },
 };
 </script>

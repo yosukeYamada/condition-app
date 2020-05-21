@@ -89,7 +89,6 @@ import axios from "axios";
 export default {
   data() {
     return {
-      loading: false,
       param: {
         motivationSelected: "3",
         performanceSelected: "3",
@@ -136,15 +135,14 @@ export default {
           comment: this.param.comment,
         })
         .then((response) => {
-          console.log("コンディション情報の登録に成功しました：" + response);
-
           this.$store.dispatch("setDairyPost", response.data);
+          this.$store.dispatch("setMyDailyPost", response.data);
         })
         .catch((e) => {
           alert("コンディション登録の送信に失敗しました：" + e);
         });
-
       alert("登録しました！");
+      //全従業員を検索する
       this.$router.push("/MyCondition");
     },
   },

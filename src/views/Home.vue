@@ -8,9 +8,12 @@
             <HomeNews />
           </b-col>
         </b-row>
-        <b-row>
-          <b-col sm="8">
-            <RecentPosts v-if="authority === 1" />
+        <b-row v-if="authority === ADMIN">
+          <b-col sm="6">
+            <RecentPosts />
+          </b-col>
+          <b-col sm="6">
+            <InputRate />
           </b-col>
         </b-row>
       </b-col>
@@ -21,10 +24,18 @@
 <script>
 import HomeNews from "@/components/home/HomeNews";
 import RecentPosts from "@/components/home/RecentPosts";
+import InputRate from "@/components/home/InputRate";
+import AUTHORITY from "@/assets/js/Authority.js";
 export default {
   components: {
     HomeNews,
     RecentPosts,
+    InputRate,
+  },
+  data() {
+    return {
+      ADMIN: AUTHORITY.ADMIN,
+    };
   },
   computed: {
     authority: function() {

@@ -13,14 +13,17 @@
             v-b-modal.news-post
             class="blue--text text--darken-3"
             :style="{ textDecoration: 'none' }"
-            >お知らせの投稿・削除</span>
-            <NewsPost />
+            >お知らせの投稿・削除</span
+          >
+          <NewsPost />
         </div>
         <div class="mb-2">
-          <router-link to="/postInformation" :style="{ textDecoration: 'none' }">
-            <span
-              class="blue--text text--darken-3"
-              >トップページの投稿を行う</span
+          <router-link
+            to="/postInformation"
+            :style="{ textDecoration: 'none' }"
+          >
+            <span class="blue--text text--darken-3"
+              >トップの更新情報の投稿を行う</span
             >
           </router-link>
         </div>
@@ -30,16 +33,10 @@
 </template>
 
 <script>
-import NewsPost from "@/components/admin-setting/NewsPost"
+import NewsPost from "@/components/admin-setting/NewsPost";
 export default {
   components: {
-    NewsPost
-  },
-  methods: {
-    /** モック用 */
-    toPage() {
-      alert("このページはまだ開発されてません！");
-    },
+    NewsPost,
   },
 };
 </script>

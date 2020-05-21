@@ -10,12 +10,8 @@
 
 <script>
 import Login from "@/components/login/Login.vue";
-import { mapActions } from "vuex";
 
 export default {
-  methods: {
-    ...mapActions(["setLoginUser"]),
-  },
   components: {
     Login,
   },

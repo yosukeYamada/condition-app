@@ -16,11 +16,11 @@ export default {
     return {
       depNameArray: [],
       inputDepName: "",
-      filteredEmployeeList: {},
+      filteredAggregateList: {},
     };
   },
   computed: {
-    ...mapGetters(["filterEmployeeList"]),
+    ...mapGetters(["filterAggregateList"]),
     /** storeのdepListの取得 */
     setDepNameArray: function() {
       return this.$store.state.depList;
@@ -59,6 +59,6 @@ export default {
 <style>
 #dep:hover {
   cursor: pointer;
-  border-color: #89c997;
+  border-color: #60eeff;
 }
 </style>

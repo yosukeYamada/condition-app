@@ -2,7 +2,7 @@
   <b-container>
     <b-row align-v="center" align-h="center">
       <b-col>
-        <h2 class="mb-4">私のコンディション履歴</h2>
+        <h2 class="mb-4">マイコンディション履歴</h2>
         <MyConditionList />
       </b-col>
     </b-row>

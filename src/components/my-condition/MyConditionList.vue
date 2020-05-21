@@ -1,6 +1,10 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="dailyPostList" class="card elevation-1">
+    <v-data-table
+      :headers="headers"
+      :items="dailyPostList"
+      class="card elevation-1"
+    >
       <template v-slot:item.motivation="{ item }">
         <v-fa
           :icon="transferIcon(item.motivation)"
@@ -24,10 +28,10 @@
       </template>
       <template v-slot:item.actions="{ item }">
         <v-fa
-        :icon="['fas', 'edit']"
-        size="lg"
-        @click="edit(item)"
-        class="edit"
+          :icon="['fas', 'edit']"
+          size="lg"
+          @click="edit(item)"
+          class="edit"
         >
         </v-fa>
       </template>
@@ -36,12 +40,11 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import moment from "moment";
 export default {
   data() {
     return {
-      editPost:[],
+      editPost: [],
       dailyPost: [],
       headers: [
         {
@@ -77,15 +80,15 @@ export default {
       ],
     };
   },
-  components: {
-  },
+  components: {},
   computed: {
     dailyPostList() {
       var dailyPostList = [];
       for (let num in this.$store.state.loginUser.dailyPost) {
         dailyPostList.push({
           date: moment(this.$store.state.loginUser.dailyPost[num].date).format(
-            "YYYY-MM-DD"),
+            "YYYY-MM-DD"
+          ),
           condition: this.$store.state.loginUser.dailyPost[num].postedCondition
             .condition.conditionName,
           motivation: this.$store.state.loginUser.dailyPost[num]
@@ -94,23 +97,20 @@ export default {
             .postedPerformance.performance.performanceName,
           comment: this.$store.state.loginUser.dailyPost[num].postedComment
             .comment,
-          conditionId: this.$store.state.loginUser.dailyPost[num].postedCondition
-            .condition.conditionId,
+          conditionId: this.$store.state.loginUser.dailyPost[num]
+            .postedCondition.condition.conditionId,
           motivationId: this.$store.state.loginUser.dailyPost[num]
             .postedMotivation.motivation.motivationId,
           performanceId: this.$store.state.loginUser.dailyPost[num]
             .postedPerformance.performance.performanceId,
-          version:this.$store.state.loginUser.dailyPost[num].version,
-          dailyPostId: this.$store.state.loginUser.dailyPost[num].dailyPostId
+          version: this.$store.state.loginUser.dailyPost[num].version,
+          dailyPostId: this.$store.state.loginUser.dailyPost[num].dailyPostId,
         });
       }
       return dailyPostList;
     },
   },
   methods: {
-    ...mapActions([
-      "setEditPost",
-    ]),
     transferIcon(param) {
       if (param === "快晴") {
         return ["fas", "sun"];
@@ -142,23 +142,24 @@ export default {
       }
     },
     edit(item) {
-      this.$router.push(
-        { name: 'EditDailyPost', 
-        params: 
-        { dailyPostId: item.dailyPostId,
+      this.$router.push({
+        name: "EditDailyPost",
+        params: {
+          dailyPostId: item.dailyPostId,
           motivationId: item.motivationId,
           conditionId: item.conditionId,
           performanceId: item.performanceId,
           comment: item.comment,
-          version: item.version,},
-      })
-    }
+          version: item.version,
+        },
+      });
+    },
   },
 };
 </script>
 
 <style scoped>
-  .edit:hover {
-    cursor: pointer;
-  }
+.edit:hover {
+  cursor: pointer;
+}
 </style>

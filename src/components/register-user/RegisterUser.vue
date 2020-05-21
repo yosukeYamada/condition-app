@@ -103,10 +103,10 @@
                     >部門名を選択してください</option
                   >
                   <option
-                    v-for="(dep, i) in selectDeps"
+                    v-for="(dep, i) in selectDepList"
                     :key="i"
-                    :value="dep.depId"
-                    >{{ dep.depName }}</option
+                    :value="dep.value"
+                    >{{ dep.name }}</option
                   >
                 </b-form-select>
               </b-form-group>
@@ -136,24 +136,6 @@ export default {
   data() {
     return {
       selectYears: [2016, 2017, 2018, 2019, 2020],
-      selectDeps: [
-        {
-          name: "アプリエンジニア",
-          value: 1,
-        },
-        {
-          name: "クラウドエンジニア",
-          value: 2,
-        },
-        {
-          name: "機械学習エンジニア",
-          value: 3,
-        },
-        {
-          name: "内勤",
-          value: 4,
-        },
-      ],
       userName: null,
       userNameKana: null,
       mailAddress: null,
@@ -172,12 +154,17 @@ export default {
       }
       return 12;
     },
+    /** 部署一覧 */
+    selectDepList() {
+      return this.$store.state.depList.map((dep) => ({
+        name: dep.depName,
+        value: dep.depId,
+      }));
+    },
   },
-  created() {
-    this.makeYearList();
-    this.makeDepList();
-  },
+
   methods: {
+    ...mapActions(["setLoginUser", "switchLoginStatus"]),
     registerUser() {
       this.userName = this.userName.replace("　", "");
       this.userNameKana = this.userNameKana.replace("　", "");
@@ -192,12 +179,9 @@ export default {
         })
         .then((response) => {
           this.setLoginUser(response.data);
-          //authorityの値をstateに格納
-          this.$store.dispatch("setAuthority", response.data.authority);
-          this.loginStatus();
+          this.switchLoginStatus(true);
           alert("登録が完了しました！");
           this.$router.push("/home");
-
           // お知らせ一覧を取得、表示用にstateに格納
           this.$store.dispatch("setNewsPost", response.data.postedNewsList);
         });
@@ -209,7 +193,6 @@ export default {
       this.hireMonth = null;
       this.depId = null;
     },
-    ...mapActions(["setLoginUser", "loginStatus"]),
     makeYearList() {
       var now = new Date();
       var nowYear = now.getFullYear();
@@ -220,11 +203,9 @@ export default {
       }
       this.selectYears = yearList;
     },
-    makeDepList() {
-      var depList = [];
-      depList = this.$store.state.depList;
-      this.selectDeps = depList;
-    },
+  },
+  created() {
+    this.makeYearList();
   },
   mounted() {
     this.mailAddress = this.$store.state.loginUser.mailList[0].mailName;

@@ -19,9 +19,11 @@ axios.create({
   responseType: "json"
 });
 axios.defaults.headers.common['Authorization']='Bearer ';
+// console.log(axios.defaults.baseURL)
 
 
-// axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
+axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
+console.log(axios.defaults.baseURL)
 Vue.use(VueAxios, axios);
 
 // bootstrap-vueのインポート
@@ -44,6 +46,15 @@ Vue.component("v-fa", FontAwesomeIcon);
 // firebaseのインポート
 import firebase from "firebase";
 Vue.config.productionTip = false;
+
+// ElementUI
+import ElementUI from 'element-ui'
+
+// ElementUIでの言語設定、datePickerとかで適用される
+import locale from 'element-ui/lib/locale/lang/ja'
+import 'element-ui/lib/theme-chalk/index.css'
+
+Vue.use(ElementUI, {locale});
 
 // Your web app's Firebase configuration
 var firebaseConfig = {

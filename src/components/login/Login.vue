@@ -1,8 +1,8 @@
 <template>
   <div>
+    <v-alert v-if="err !== ''" outlined type="error" style="white-space:pre-wrap;" text>{{ err }}</v-alert>
     <b-card class="text-center py-3 shadow-sm" v-show="!loading">
       <b-card-text>
-        <p class="err" style="white-space:pre-wrap; word-wrap:break-word;">{{ err }}</p>
         <p class="display-2 font-weight-bold text-success mb-5">Rakuppo</p>
         <p>あなたの今日のコンディションを記録しましょう</p>
         <v-btn
@@ -18,7 +18,7 @@
           </div>
         </v-btn>
         <div>
-          <v-btn text color="green" @click="toPage('/top')">トップに戻る</v-btn>
+          <v-btn text color="green" @click="toPage('/')">トップに戻る</v-btn>
         </div>
       </b-card-text>
     </b-card>
@@ -50,11 +50,9 @@ export default {
       "setLoginUser",
       "setFirebaseUser",
       "deleteLoginUser",
-      "setLoading",
-      "setLoadings",
-      "employeeList",
-      "loginStatus",
-      "depList"
+      "switchLoginStatus",
+      "getEmployeeList",
+      "getDepList"
     ]),
     toPage(path) {
       this.$router.push(path);
@@ -68,76 +66,83 @@ export default {
       // console.log(token);
       if (user) {
         this.setFirebaseUser(user);
-        var googleMailAddress = firebase.auth().currentUser.email
+        var googleMailAddress = firebase.auth().currentUser.email;
         axios
           .post("/loginCheck", {
             mail: googleMailAddress
           })
           .then(response => {
+            console.log("deoList"+response.data)
+            console.log(response.data)
+            this.setLoginUser(response.data);
+            this.depList(response.data.depList);
             //新規登録画面へ遷移
             if (response.data.authority == AUTHORITY.UNREGISTERED) {
-              console.log("未登録者")
+              console.log("未登録者");
               firebase
                 .auth()
                 .currentUser.getIdToken(true)
                 .then(idToken => {
+                  console.log("トークン" + idToken);
                   axios
                     .post("/signUp", {
                       mailAddress: googleMailAddress,
                       password: idToken
                     })
                     .then(() => {
-                      axios.post("/login",{mailAddress:googleMailAddress,pasword:idToken}).then(response=>{
-                        console.log(response)
-                        console.log(response.data)
-                      })
-                      this.setLoginUser(response.data);
-                      this.depList(response.data.depList);
-                      this.$router.push("/registerUser");
-                    }).catch(error=>{
-                      console.log(error)
-                      console.log("ログインに失敗しました。")
+                      console.log("サインアップします");
+                      axios
+                        .post("/login", {
+                          mailAddress: googleMailAddress,
+                          password: idToken
+                        })
+                        .then(response => {
+                          console.log("aです" + response);
+                          console.log(response);
+                          console.log(response.data);
+                          this.$router.push("/registerUser");
+                        })
+                        .catch(error => {
+                          console.log(error);
+                          console.log("エラーですか？");
+                        });
                     })
-                }).catch(error=>{
-                  console.log(error)
-                  console.log("ＡＰＩユーザ登録に失敗しました")
+                    .catch(error => {
+                      console.log(error);
+                      console.log("B+ログインに失敗しました。");
+                    });
                 })
-                
+                .catch(error => {
+                  console.log(error);
+                  console.log("C+ＡＰＩユーザ登録に失敗しました");
+                });
 
               //管理者権限
             } else if (response.data.authority == AUTHORITY.ADMIN) {
+              /** 管理者権限の場合 */
               this.setLoginUser(response.data);
-              this.depList(response.data.depList);
-              this.loginStatus();
-              //authorityの値をstateに格納
-              this.$store.dispatch("setAuthority", response.data.authority);
+              this.getDepList();
+              this.switchLoginStatus(true);
               //全従業員情報を取得
-              axios
-                .get("/showEmployeeList")
-                .then(response => {
-                  this.employeeList(response.data);
-                })
-                .catch(e => {
-                  alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
-                });
+              this.getEmployeeList();
               this.$router.push("/home");
-              //従業員権限
             } else if (response.data.authority == AUTHORITY.USER) {
+              /** ユーザー権限の場合 */
               this.setLoginUser(response.data);
-              this.depList(response.data.depList);
-              this.loginStatus();
-              //authorityの値をstateに格納
-              this.$store.dispatch("setAuthority", response.data.authority);
+              this.getDepList();
+              this.switchLoginStatus(true);
               this.$router.push("/home");
-              //メールアドレスが不正の場合
             } else if (response.data.authority == AUTHORITY.OUTSIDER) {
+              /** メールアドレスのドメインが組織外のユーザーの場合 */
               this.deleteLoginUser();
               firebase.auth().signOut();
-              this.err = `メールアドレスは@rakus-partners.co.jp、
-または@rakus.co.jpのものをお使いください`;
+              this.err =
+                "メールドメインがrakus-partners.co.jp\nまたはrakus.co.jpのユーザーのみログインできます";
             }
-            // お知らせ一覧を取得、表示用にstateに格納
-            this.$store.dispatch("setNewsPost", response.data.postedNewsList);
+          })
+          .catch(error => {
+            console.log(error);
+            console.log("失敗");
           });
         this.loading = true;
       } else {
@@ -148,16 +153,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.loading {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-}
-
-.err {
-  color: red;
-}
-</style>

@@ -119,7 +119,8 @@ export default {
     getAggregateByMonth() {
       axios
         .post("/getAggregateByMonth", {
-          date: this.selectedDate,
+          date: this.$store.state.aggregate.date,
+          depId : 0
         })
         .then((response) => {
           this.convertChartData(response.data);
@@ -130,12 +131,16 @@ export default {
         });
     },
   },
+  computed : {
+    data() {
+      return this.$store.state.aggregate.monthData;
+    }
+  },
   watch: {
-    selectedDate: {
-      handler: function() {
-        this.getAggregateByMonth();
-      },
-    },
+    data : function(newData) {
+      this.convertChartData(newData);
+      this.isGetData = this.isGetData ? false : true;
+    }
   },
   mounted() {
     this.getAggregateByMonth();

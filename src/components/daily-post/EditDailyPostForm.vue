@@ -65,7 +65,7 @@
               ></b-form-textarea>
             </b-form-group>
             <b-button variant="outline-success" @click.prevent="register()"
-              >編集する</b-button
+              >変更する</b-button
             >
           </b-form>
         </b-card-text>

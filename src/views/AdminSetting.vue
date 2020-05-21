@@ -1,8 +1,8 @@
 <template>
-  <b-container>
+  <b-container class="mt-5">
     <b-row align-v="center" align-h="center">
       <b-col>
-        <h2 class="mb-4">管理者設定</h2>
+        <div class="headline mb-4">管理者設定</div>
         <b-row>
           <AdminSetting />
         </b-row>

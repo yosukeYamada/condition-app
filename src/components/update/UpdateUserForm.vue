@@ -112,9 +112,6 @@
             @click.prevent="handleSubmit(updateUser)"
             >更新</b-button
           >
-          <b-button variant="outline-danger" @click.prevent="resetButton()"
-            >リセット</b-button
-          >
         </b-card-text>
       </b-card>
     </ValidationObserver>
@@ -183,14 +180,6 @@ export default {
         .catch((e) => {
           alert("ユーザー情報の更新の送信に失敗しました：" + e);
         });
-    },
-    resetButton() {
-      this.userName = "";
-      this.userNameKana = "";
-      this.mailAddress = "";
-      this.hireYear = null;
-      this.hireMonth = null;
-      this.depId = null;
     },
     makeYearList() {
       var now = new Date();

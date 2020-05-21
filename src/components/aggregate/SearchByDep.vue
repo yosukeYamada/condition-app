@@ -1,5 +1,5 @@
 <template>
-  <el-select id="dep" v-model="filterDepName" clearable placeholder="部署名">
+  <el-select id="dep" style="width:100%;" v-model="filterDepName" clearable placeholder="部署名">
     <el-option
       v-for="dep in this.depList"
       :key="dep.depId"
@@ -61,9 +61,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #dep:hover {
   cursor: pointer;
-  border-color: #60eeff;
+  border-color: #89c997;
 }
 </style>

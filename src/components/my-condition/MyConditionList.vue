@@ -32,6 +32,7 @@
           size="lg"
           @click="edit(item)"
           class="edit"
+          color="#2075D2"
         >
         </v-fa>
       </template>
@@ -161,5 +162,6 @@ export default {
 <style scoped>
 .edit:hover {
   cursor: pointer;
+  color:blue;
 }
 </style>

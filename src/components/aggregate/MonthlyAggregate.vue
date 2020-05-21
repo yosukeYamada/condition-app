@@ -1,6 +1,6 @@
 <template>
   <b-row>
-    <b-col sm="4">
+    <b-col xl="4" lg="4" md="12">
       <b-card>
         <b-card-text>モチベーションスコア</b-card-text>
         <MotivLineChart
@@ -10,7 +10,7 @@
         ></MotivLineChart>
       </b-card>
     </b-col>
-    <b-col sm="4">
+    <b-col xl="4" lg="4" md="12">
       <b-card>
         <b-card-text>コンディションスコア</b-card-text>
         <ConLineChart
@@ -20,7 +20,7 @@
         ></ConLineChart>
       </b-card>
     </b-col>
-    <b-col sm="4">
+    <b-col xl="4" lg="4" md="12">
       <b-card>
         <b-card-text>パフォーマンススコア</b-card-text>
         <PerfoLineChart

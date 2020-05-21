@@ -1,19 +1,18 @@
 <template>
-  <b-container>
-    <b-row align-v="center" align-h="center">
+  <b-container fluid class="mt-5">
+    <b-row align-h="center">
       <b-col>
-        <h2 class="mb-4">ホーム</h2>
-        <b-row>
-          <b-col sm="8">
+        <b-row align-v="center" align-h="center">
+          <b-col sm="12" md="12" lg="10">
             <HomeNews />
           </b-col>
         </b-row>
-        <b-row v-if="authority === ADMIN">
-          <b-col sm="6">
-            <RecentPosts />
-          </b-col>
-          <b-col sm="6">
+        <b-row align-h="center" v-if="authority === ADMIN">
+          <b-col sm="6" md="5" lg="4">
             <InputRate />
+          </b-col>
+          <b-col sm="6" md="7" lg="6">
+            <RecentPosts />
           </b-col>
         </b-row>
       </b-col>

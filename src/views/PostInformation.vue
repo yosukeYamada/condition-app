@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container class="mt-5">
     <BreadCrumbs :items="items" />
     <b-row align-v="center" align-h="center">
       <b-col lg="9" md="10" sm="12">

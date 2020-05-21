@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container class="mt-5">
     <b-row align-v="center" align-h="center">
       <DailyPostForm />
     </b-row>

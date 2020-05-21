@@ -6,18 +6,20 @@
     header-bg-variant="success"
     header-text-variant="white"
     no-body
+    class="h-100"
   >
     <b-card-text class="p-4">
-      <div class="mx-auto small">
+      <div class="mx-auto small mb-3">
         <InputPieChart
           :chartData="inputChartData"
           :options="options"
           :isGetData="isGetData"
         ></InputPieChart>
       </div>
-      <div>全社員 : {{ totalNnumbers.length }}人</div>
+      <div class="text-center font-weight-bold">{{ totalNnumbers.length }}人中{{ getPosted() }}人が入力完了</div>
+      <!-- <div>全社員 : {{ totalNnumbers.length }}人</div>
       <div>投稿した : {{ getPosted() }}人</div>
-      <div>投稿してない : {{ getUnPosted() }}人</div>
+      <div>投稿してない : {{ getUnPosted() }}人</div> -->
     </b-card-text>
   </b-card>
 </template>

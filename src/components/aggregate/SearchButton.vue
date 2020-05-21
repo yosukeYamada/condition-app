@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn @click="search()">検索</v-btn>
+    <b-button variant="outline-success" @click="search()">検索</b-button>
   </div>
 </template>
 

@@ -24,6 +24,7 @@
         :icon="['fas', 'trash-alt']"
         size="lg"
         @click="deleteConfirm(item)"
+        color="grey"
         class="delete"
       ></v-fa>
     </template>
@@ -127,10 +128,10 @@ export default {
 }
 .edit:hover {
   cursor: pointer;
-  color: crimson;
+  color: blue;
 }
 .delete:hover {
   cursor: pointer;
-  color: blue;
+  color: crimson;
 }
 </style>

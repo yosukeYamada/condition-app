@@ -1,9 +1,9 @@
 <template>
-  <b-container>
+  <b-container class="mt-5">
     <BreadCrumbs :items="items" />
     <b-row align-v="center" align-h="center">
       <b-col>
-        <h2 class="mb-4">ユーザー情報の更新・削除</h2>
+        <div class="headline mb-4">ユーザー情報の更新・削除</div>
         <b-row>
           <b-col cols="12" sm="10" md="10" lg="6">
             <SearchByUserName></SearchByUserName>
@@ -27,7 +27,6 @@
 <script>
 import moment from "moment";
 import UpdateUser from "../components/admin-setting/UpdateUser";
-// import axios from "axios";
 import BreadCrumbs from "@/components/common/BreadCrumbs.vue";
 import SearchByDepName from "../components/employee-list/SearchByDepName";
 import SearchByHireYear from "../components/employee-list/SearchByHireYear";
@@ -141,15 +140,6 @@ export default {
 
   created() {
     this.getMasterList();
-    //   //全従業員情報を取得
-    //   axios
-    //     .get("/showEmployeeList")
-    //     .then((response) => {
-    //       this.$store.dispatch("setEmployeeList", response.data);
-    //     })
-    //     .catch((e) => {
-    //       alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
-    //     });
   },
 };
 </script>

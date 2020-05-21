@@ -7,12 +7,18 @@
     header-text-variant="white"
     no-body
   >
-    <div class="small">
-      <InputPieChart :chartData="inputChartData" :options="options" :isGetData="isGetData"></InputPieChart>
-    </div>
-    <div>全社員 : {{ totalNnumbers.length }}人</div>
-    <div>投稿した : {{ getPosted() }}人</div>
-    <div>投稿してない : {{ getUnPosted() }}人</div>
+    <b-card-text class="p-4">
+      <div class="mx-auto small">
+        <InputPieChart
+          :chartData="inputChartData"
+          :options="options"
+          :isGetData="isGetData"
+        ></InputPieChart>
+      </div>
+      <div>全社員 : {{ totalNnumbers.length }}人</div>
+      <div>投稿した : {{ getPosted() }}人</div>
+      <div>投稿してない : {{ getUnPosted() }}人</div>
+    </b-card-text>
   </b-card>
 </template>
 
@@ -23,7 +29,7 @@ import moment from "moment";
 
 export default {
   components: {
-    InputPieChart
+    InputPieChart,
   },
   data() {
     return {
@@ -35,12 +41,12 @@ export default {
         responsive: true,
         cutoutPercentage: 70,
         tooltips: {
-          enabled: false
+          enabled: false,
         },
         legend: {
-          display: false
-        }
-      }
+          display: false,
+        },
+      },
     };
   },
   methods: {
@@ -51,9 +57,9 @@ export default {
             backgroundColor: ["#00BCD4", "#E0F7FA"],
             data: [this.getPosted(), this.getUnPosted()],
             inputRate:
-              (this.getPosted() / this.totalNnumbers.length) * 100 + "%"
-          }
-        ]
+              (this.getPosted() / this.totalNnumbers.length) * 100 + "%",
+          },
+        ],
       };
     },
     // 投稿人数
@@ -75,7 +81,7 @@ export default {
 
       for (let i = 0; i < param.length; i++) {
         var latestPost = {
-          date: ""
+          date: "",
         };
         //投稿が0の場合
         if (param[i].dailyPost.length === 0) {
@@ -98,24 +104,24 @@ export default {
       for (let i = 0; i < latestPosts.length; i++) {
         if (moment(preToday).isAfter(latestPosts[i].date, "day")) {
           var resultPost = {
-            date: ""
+            date: "",
           };
           resultPost.date = latestPosts[i].date;
           resultPosts.push(resultPost);
         }
       }
       return resultPosts;
-    }
+    },
   },
   created() {
-    axios.get("/showEmployeeList").then(response => {
+    axios.get("/showEmployeeList").then((response) => {
       this.$store.dispatch("setEmployeeList", response.data);
       this.totalNnumbers = this.$store.state.employeeList;
       this.unpostedNnumbers = this.setLatestPosts(this.totalNnumbers);
       this.fillData();
     });
-      this.fillData();
-  }
+    this.fillData();
+  },
 };
 </script>
 

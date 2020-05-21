@@ -5,6 +5,7 @@ import "firebase/auth";
 import createPersistedState from "vuex-persistedstate";
 import axios from "axios";
 import filter from "./filter";
+import aggregate from "./aggregate";
 
 Vue.use(Vuex);
 
@@ -535,6 +536,7 @@ export default new Vuex.Store({
   },
   modules: {
     filter,
+    aggregate
   },
 
   plugins: [createPersistedState({ storage: window.sessionStorage })], // オプションを追加

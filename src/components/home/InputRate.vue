@@ -8,11 +8,11 @@
     no-body
   >
     <div class="small">
-      <InputPieChart :chart-data="inputChartData" :options="options" :is-get-data="isGetData"></InputPieChart>
+      <InputPieChart :chartData="inputChartData" :options="options" :isGetData="isGetData"></InputPieChart>
     </div>
+    <div>全社員 : {{ totalNnumbers.length }}人</div>
     <div>投稿した : {{ getPosted() }}人</div>
     <div>投稿してない : {{ getUnPosted() }}人</div>
-    <div>全員 : {{ totalNnumbers.length }}人</div>
   </b-card>
 </template>
 
@@ -31,7 +31,6 @@ export default {
       postedNnumbers: [],
       unpostedNnumbers: [],
       isGetData: false,
-      inputChartData: null,
       options: {
         responsive: true,
         cutoutPercentage: 70,
@@ -115,6 +114,7 @@ export default {
       this.unpostedNnumbers = this.setLatestPosts(this.totalNnumbers);
       this.fillData();
     });
+      this.fillData();
   }
 };
 </script>

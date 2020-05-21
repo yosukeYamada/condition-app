@@ -42,7 +42,7 @@ export default {
   },
   computed: {
     employees() {
-      return this.employeeList;
+      return this.items;
     },
   },
   watch: {

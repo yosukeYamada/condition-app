@@ -43,8 +43,8 @@ export default {
     },
     //カテゴリー検索（部署名）の変更の監視
     filterDepName: function() {
-      this.$store.dispatch("setFilterDepName", this.inputDepName);
-      //this.$store.dispatch("filter/setFilterDepName")
+      // this.$store.dispatch("setFilterDepName", this.inputDepName);
+      this.$store.dispatch("filter/setFilterDepName",this.inputDepName)
     },
   },
   mounted() {
@@ -53,7 +53,8 @@ export default {
     this.depNameArray = depNameArray;
   },
   beforeDestroy() {
-    this.$store.dispatch("setFilterDepName", "");
+    // this.$store.dispatch("setFilterDepName", "");
+    this.$store.dispatch("filter/setFilterDepName",this.inputDepName)
   },
 };
 </script>

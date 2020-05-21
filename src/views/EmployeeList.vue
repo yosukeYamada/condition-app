@@ -27,7 +27,7 @@ import SearchByDepName from "@/components/employee-list/SearchByDepName";
 import SearchByHireYear from "@/components/employee-list/SearchByHireYear";
 import SearchByHireMonth from "@/components/employee-list/SearchByHireMonth";
 import { mapActions } from "vuex";
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   components: {
@@ -54,7 +54,8 @@ export default {
   //watcherのメソッドを算出
   computed: {
     getFilter: function() {
-      return this.$store.state.filter;
+      // return this.$store.state.filter;
+      return this.$store.state.filter.filter
     },
   },
   watch: {
@@ -96,9 +97,9 @@ export default {
     getFilter: {
       handler: function() {
         this.childEmployeeList = this.employeeList;
-        if (this.$store.state.filter.depName !== "") {
+        if (this.$store.state.filter.filter.depName !== "") {
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
-            if (employee.dep === this.$store.state.filter.depName) {
+            if (employee.dep === this.$store.state.filter.filter.depName) {
               return employee;
             }
           });
@@ -129,14 +130,14 @@ export default {
   },
   created() {
     this.getMasterList();
-    axios
-        .get("/showEmployeeList")
-        .then((response) => {
-          this.$store.dispatch("setEmployeeList", response.data);
-        })
-        .catch((e) => {
-          alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
-        });
+  //   axios
+  //       .get("/showEmployeeList")
+  //       .then((response) => {
+  //         this.$store.dispatch("setEmployeeList", response.data);
+  //       })
+  //       .catch((e) => {
+  //         alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
+  //       });
   },
 };
 </script>

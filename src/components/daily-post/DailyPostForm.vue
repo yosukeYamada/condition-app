@@ -137,6 +137,7 @@ export default {
         .then((response) => {
           this.$store.dispatch("setDairyPost", response.data);
           this.$store.dispatch("setMyDailyPost", response.data);
+          
         })
         .catch((e) => {
           alert("コンディション登録の送信に失敗しました：" + e);

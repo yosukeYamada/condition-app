@@ -209,15 +209,7 @@ export default new Vuex.Store({
         (employee) => employee.userId === state.loginUser.userId
       )[0].dailyPost = myDailyPost;
     },
-    //リロードすると消えてしまうEmp詳細
-    setEmpDetail(state, empDetail) {
-      state.empDetail = empDetail;
-    },
-    setEmpDetailId(state, userId) {
-      state.empDetail.push({
-        userId: userId,
-      });
-    },
+   
     /**
      * ユーザー権限の更新をemployeeList内のユーザー情報に反映するメソッド
      * @param {*} updatedUser 更新されたユーザー情報
@@ -433,13 +425,7 @@ export default new Vuex.Store({
     setMyDailyPost({ commit }, myDailyPost) {
       commit("setMyDailyPost", myDailyPost);
     },
-    //リロードすると消えてしまうEmp詳細
-    setEmpDetail({ commit }, empDetail) {
-      commit("setEmpDetail", empDetail);
-    },
-    setEmpDetailId({ commit }, userId) {
-      commit("setEmpDetail", userId);
-    },
+    
     /**
      * ユーザー権限を変更した際に更新したユーザー情報をemployeeListに反映するメソッド
      * @/components/admin-setting/AuthorityModal.vue

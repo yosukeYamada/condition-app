@@ -175,7 +175,7 @@ export default {
           if (response.data == "") {
             alert("他の管理者が更新しています");
           } else {
-            this.$store.dispatch("setEmployeeList", response.data);
+            this.$store.dispatch("setUpdateEmployee", response.data);
             alert("更新が完了しました！");
             this.$router.push("/UpdateUser");
           }

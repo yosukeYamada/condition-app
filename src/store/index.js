@@ -210,6 +210,41 @@ export default new Vuex.Store({
         (employee) => employee.userId === state.loginUser.userId
       )[0].dailyPost = myDailyPost;
     },
+    /**
+     *ユーザー情報の更新時更新情報をEmployeeListに格納する
+     * @param {*} updateEmployee 更新情報
+     */
+    setUpdateEmployee(state, updateEmployee) {
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].userName = updateEmployee[0].userName;
+
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].userNameKana = updateEmployee[0].userNameKana;
+
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].depId = updateEmployee[0].depId;
+
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].hireDate = updateEmployee[0].hireDate;
+
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].mailList[0].mailName = updateEmployee[0].mailList[0].mailName;
+
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].version = updateEmployee[0].version;
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].dep.depId = updateEmployee[0].depId;
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].dep.depName = updateEmployee[0].dep.depName;
+    },
 
     //リロードすると消えてしまうNews詳細
     setInfoDetail(state, infoDetail) {
@@ -439,6 +474,13 @@ export default new Vuex.Store({
      */
     setMyDailyPost({ commit }, myDailyPost) {
       commit("setMyDailyPost", myDailyPost);
+    },
+    /**
+     * ユーザー情報の更新時にstoreのemployeeListに格納する
+     * @param {*} updateEmployee 更新情報
+     */
+    setUpdateEmployee({ commit }, updateEmployee) {
+      commit("setUpdateEmployee", updateEmployee);
     },
 
     //リロードすると消えてしまうNews詳細

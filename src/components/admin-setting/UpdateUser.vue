@@ -1,5 +1,5 @@
 <template>
-  <v-data-table :headers="headers" :items="items" class="elevation-1 card">
+  <v-data-table :headers="headers" :items="employees" class="elevation-1 card">
     <template v-slot:item.update="{ item }">
       <router-link
         :to="{
@@ -16,7 +16,7 @@
           },
         }"
       >
-        <v-fa :icon="['fas', 'edit']" size="lg" class="edit text-primary"></v-fa>
+        <v-fa :icon="['fas', 'edit']" size="lg" class="edit"></v-fa>
       </router-link>
     </template>
     <template v-slot:item.delete="{ item }">
@@ -24,7 +24,7 @@
         :icon="['fas', 'trash-alt']"
         size="lg"
         @click="deleteConfirm(item)"
-        class="delete text-secondary"
+        class="delete"
       ></v-fa>
     </template>
   </v-data-table>
@@ -37,6 +37,11 @@ import axios from "axios";
 export default {
   props: {
     employeeList: Array,
+  },
+  computed: {
+    employees() {
+      return this.items;
+    },
   },
   watch: {
     employeeList: function() {
@@ -88,7 +93,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["deleteUser"]),
     deleteConfirm(user) {
       if (confirm("削除してよろしいですか？")) {
         axios
@@ -109,6 +113,7 @@ export default {
           );
       }
     },
+    ...mapActions(["deleteUser"]),
   },
   mounted() {
     this.items = this.employeeList;
@@ -122,10 +127,10 @@ export default {
 }
 .edit:hover {
   cursor: pointer;
-  color: blue!important;
+  color: crimson;
 }
 .delete:hover {
   cursor: pointer;
-  color: crimson!important;
+  color: blue;
 }
 </style>

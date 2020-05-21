@@ -4,6 +4,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import createPersistedState from "vuex-persistedstate";
 import axios from "axios";
+import filter from "./filter";
 
 Vue.use(Vuex);
 
@@ -479,6 +480,9 @@ export default new Vuex.Store({
     getStatus: function(state) {
       return state.loginStatus;
     },
+  },
+  modules:{
+    filter
   },
 
   plugins: [createPersistedState({ storage: window.sessionStorage })], // オプションを追加

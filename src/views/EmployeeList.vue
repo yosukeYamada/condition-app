@@ -27,6 +27,7 @@ import SearchByDepName from "@/components/employee-list/SearchByDepName";
 import SearchByHireYear from "@/components/employee-list/SearchByHireYear";
 import SearchByHireMonth from "@/components/employee-list/SearchByHireMonth";
 import { mapActions } from "vuex";
+import axios from "axios";
 
 export default {
   components: {
@@ -128,6 +129,14 @@ export default {
   },
   created() {
     this.getMasterList();
+    axios
+        .get("/showEmployeeList")
+        .then((response) => {
+          this.$store.dispatch("setEmployeeList", response.data);
+        })
+        .catch((e) => {
+          alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
+        });
   },
 };
 </script>

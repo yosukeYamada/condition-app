@@ -1,11 +1,12 @@
 <template>
   <v-data-table :headers="headers" :items="employees" class="elevation-1 card">
     <template v-slot:item.name="{ item }">
-      <router-link
+      <div @click="toPage(item)" class="link gray--text"><div>{{ item.name }}</div></div>
+      <!-- <router-link
         :to="{ name: 'EmployeeCondition', params: { userId: item.userId } }"
       >
         <span>{{ item.name }}</span>
-      </router-link>
+      </router-link> -->
     </template>
     <template v-slot:item.dep="{ item }">
       <span>{{ transferDepName(item.dep) }}</span>
@@ -97,6 +98,16 @@ export default {
     };
   },
   methods: {
+     toPage(item){
+       console.log(item)
+       this.$router.push({
+         name:"EmployeeCondition",
+         query:{item: encodeURIComponent(JSON.stringify(item))}
+         
+       });
+      
+     },
+
     /** 天候によって表示するアイコンを返すメソッド */
     transferIcon(param) {
       if (param === "快晴") {

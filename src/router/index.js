@@ -76,7 +76,8 @@ const routes = [
     },
   },
   {
-    path: "/employeeCondition/:userId",
+    // path: "/employeeCondition/:userId",
+    path:"/employeeCondition",
     name: "EmployeeCondition",
     component: EmployeeCondition,
     //ログインしていたら上記のパスに飛ぶことを許可する

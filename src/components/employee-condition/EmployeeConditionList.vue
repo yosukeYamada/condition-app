@@ -1,28 +1,31 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="employeeList"
+    :items="dailyPostList"
     class="elevation-1 card"
   >
+  <template v-slot:item.date="{ item }">
+      {{toDate(item.date)}}
+    </template>
     <template v-slot:item.motivation="{ item }">
       <v-fa
-        :icon="transferIcon(item.motivation)"
+        :icon="transferIcon(item.postedMotivation.motivation.motivationName)"
         size="lg"
-        :style="transferColor(item.motivation)"
+        :style="transferColor(item.postedMotivation.motivation.motivationName)"
       />
     </template>
     <template v-slot:item.condition="{ item }">
       <v-fa
-        :icon="transferIcon(item.condition)"
+        :icon="transferIcon(item.postedCondition.condition.conditionName)"
         size="lg"
-        :style="transferColor(item.condition)"
+        :style="transferColor(item.postedCondition.condition.conditionName)"
       />
     </template>
     <template v-slot:item.performance="{ item }">
       <v-fa
-        :icon="transferIcon(item.performance)"
+        :icon="transferIcon(item.postedPerformance.performance.performanceName)"
         size="lg"
-        :style="transferColor(item.performance)"
+        :style="transferColor(item.postedPerformance.performance.performanceName)"
       />
     </template>
   </v-data-table>
@@ -34,7 +37,7 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      employeeList: [],
+
       headers: [
         {
           value: "date",
@@ -65,9 +68,15 @@ export default {
     };
   },
   computed: {
-    empDetail() {
-      return this.employeeList;
-    },
+
+  
+    dailyPostList(){
+      
+     let employee = this.$store.state.employeeList.find((employee) =>
+      employee.userId === JSON.parse(decodeURIComponent(this.$route.query.item)).userId)
+     return employee.dailyPost
+    }
+
   },
   methods: {
     ...mapActions(["setEmpDetail", "setEmpDetailId"]),
@@ -101,30 +110,18 @@ export default {
         return { color: "black" };
       }
     },
+    toDate(stringDate) {
+      if(stringDate !== null ){
+        return moment(stringDate).format("YYYY-MM-DD");
+      }else{
+        return "-"
+      }
+    },
   },
   created() {
-    this.setEmpDetailId(this.$route.params.userId);
-    let list = this.$store.state.employeeList.filter(
-      (elm) => elm.userId === this.$store.state.empDetail
-    );
-    this.setEmpDetail(list[0].dailyPost);
-    for (let num in this.$store.state.empDetail) {
-      var employeeList = [];
-      employeeList.push({
-        date: moment(this.$store.state.empDetail[num].date).format(
-          "YYYY-MM-DD"
-        ),
-        motivation: this.$store.state.empDetail[num].postedMotivation.motivation
-          .motivationName,
-        condition: this.$store.state.empDetail[num].postedCondition.condition
-          .conditionName,
-        performance: this.$store.state.empDetail[num].postedPerformance
-          .performance.performanceName,
-        comment: this.$store.state.empDetail[num].postedComment.comment,
-      });
-    }
-    this.setEmpDetail(employeeList);
-    this.employeeList = this.$store.state.empDetail;
+   
+    console.log(this.dailyPostList)
+
   },
   beforeDestroy() {
     this.$store.dispatch("setEmpDetail", "");

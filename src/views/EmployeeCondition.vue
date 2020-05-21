@@ -65,6 +65,8 @@ export default {
       ],
     };
   },
+ 
+
   filters: {
     moment: function(date) {
       return moment(date).format("YYYY年MM月");
@@ -83,7 +85,7 @@ export default {
     this.employee = this.$store.state.employeeList.find(
       (elm) => elm.userId === this.$route.params.userId
     );
-    this.items[1].text = this.employee.userName + "のコンディション履歴";
+    // this.items[1].text = this.employee.userName + "のコンディション履歴";
   },
 };
 </script>

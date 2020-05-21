@@ -4,7 +4,7 @@
       <b-col lg="11">
         <div class="headline mb-4">従業員一覧</div>
         <b-row>
-          <b-col cols="12" sm="4" md="3" lg="2">
+          <b-col cols="12" sm="4" md="4" lg="3">
             <SearchByDepName></SearchByDepName>
           </b-col>
           <b-col cols="6" sm="4" md="3" lg="2">

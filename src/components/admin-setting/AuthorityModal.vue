@@ -1,52 +1,47 @@
 <template>
-  <b-modal id="authority-modal" centered title="管理者権限の付与・削除">
-    <v-subheader>
-      <b-row align-v="center">
-        <b-col sm="10" class="pr-0 pb-1">
-          <v-autocomplete
-            v-model="item"
-            :items="employeeList"
-            label="メールアドレスで管理者を追加"
-            item-text="email"
-            item-value="item"
-            return-object
-          >
-            <template v-slot:selection="data">
-              <v-chip
-                v-bind="data.attrs"
-                :input-value="data.selected"
-                @click="data.select"
-              >
-                {{ data.item.name }}
-              </v-chip>
+  <b-modal id="authority-modal"  ok-only centered title="管理者権限の付与・削除">
+    <b-row align-v="center" class="px-3 mb-3">
+      <v-subheader>管理者ユーザーの追加</v-subheader>
+      <b-col cols="12" sm="10" class="py-0">
+        <v-autocomplete
+          v-model="item"
+          :items="employeeList"
+          label="メールアドレスで管理者を追加"
+          item-text="email"
+          item-value="item"
+          return-object
+        >
+          <template v-slot:selection="data">
+            <v-chip
+              v-bind="data.attrs"
+              :input-value="data.selected"
+              @click="data.select"
+            >
+              {{ data.item.name }}
+            </v-chip>
+          </template>
+          <template v-slot:item="data">
+            <template v-if="typeof data.item !== 'object'">
+              <v-list-item-content v-text="data.item"></v-list-item-content>
             </template>
-            <template v-slot:item="data">
-              <template v-if="typeof data.item !== 'object'">
-                <v-list-item-content v-text="data.item"></v-list-item-content>
-              </template>
-              <template v-else>
-                <v-list-item-content>
-                  <v-list-item-title
-                    v-html="data.item.name"
-                  ></v-list-item-title>
-                  <v-list-item-subtitle
-                    v-html="data.item.email"
-                  ></v-list-item-subtitle>
-                </v-list-item-content>
-              </template>
+            <template v-else>
+              <v-list-item-content>
+                <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                <v-list-item-subtitle
+                  v-html="data.item.email"
+                ></v-list-item-subtitle>
+              </v-list-item-content>
             </template>
-          </v-autocomplete>
-        </b-col>
-        <b-col sm="2" class="pb-1">
-          <b-button
-            :disabled="item === ''"
-            size="sm"
-            @click="addAdminAuthority()"
-            >追加</b-button
-          >
-        </b-col>
-      </b-row>
-    </v-subheader>
+          </template>
+        </v-autocomplete>
+      </b-col>
+      <b-col cols="3" sm="2" class="pb-1 pt-0">
+        <b-button variant="outline-success" :disabled="item === ''" size="sm" @click="addAdminAuthority()"
+          >追加</b-button
+        >
+      </b-col>
+    </b-row>
+    <v-divider></v-divider>
     <v-list two-line subheader>
       <v-subheader>管理者ユーザーの一覧</v-subheader>
       <v-list-item

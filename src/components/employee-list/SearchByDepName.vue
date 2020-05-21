@@ -1,5 +1,5 @@
 <template>
-  <el-select id="dep" v-model="filterDepName" clearable placeholder="部署名">
+  <el-select id="dep" class="w-100" v-model="filterDepName" clearable placeholder="部署名">
     <el-option
       v-for="depName in this.$store.state.depList"
       :key="depName.depId"

@@ -57,9 +57,9 @@ export default {
   computed: {
     informationList() {
       var informationList = [];
-      for (let num in this.$store.state.information) {
-        let information = this.$store.state.information[num];
-        information.category = this.$store.state.category.find(
+      for (let num in this.$store.state.informationList) {
+        let information = this.$store.state.informationList[num];
+        information.category = this.$store.state.categoryList.find(
           (category) => category.categoryId === information.categoryId
         );
         informationList.push(information);
@@ -68,7 +68,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["setInformation", "setCategory"]),
+    ...mapActions(["setInformationList", "setCategoryList"]),
     toPage(info) {
       this.$router.push({
         name: "Information",
@@ -78,8 +78,8 @@ export default {
   },
   created() {
     axios.get("/information").then((response) => {
-      this.setInformation(response.data.informationList);
-      this.setCategory(response.data.category);
+      this.setInformationList(response.data.informationList);
+      this.setCategoryList(response.data.category);
     });
   },
 };

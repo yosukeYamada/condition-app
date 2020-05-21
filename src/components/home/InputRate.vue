@@ -8,25 +8,23 @@
     no-body
   >
     <div class="small">
-      <InputPieChart 
-      :chart-data="inputChartData"
-      :options="options"
-      :is-get-data="isGetData"
-      ></InputPieChart>
+      <InputPieChart :chart-data="inputChartData" :options="options" :is-get-data="isGetData"></InputPieChart>
     </div>
-    <div>投稿者数 : {{ getPosted() }}人/{{ totalNnumbers.length }}人</div>
+    <div>投稿した : {{ getPosted() }}人</div>
+    <div>投稿してない : {{ getUnPosted() }}人</div>
+    <div>全員 : {{ totalNnumbers.length }}人</div>
   </b-card>
 </template>
 
 <script>
 import InputPieChart from "@/components/home/InputPieChart";
+import axios from "axios";
 import moment from "moment";
 
 export default {
   components: {
     InputPieChart
   },
-  props: ["selectedDate"],
   data() {
     return {
       totalNnumbers: [],
@@ -36,6 +34,7 @@ export default {
       inputChartData: null,
       options: {
         responsive: true,
+        cutoutPercentage: 70,
         tooltips: {
           enabled: false
         },
@@ -51,20 +50,25 @@ export default {
         datasets: [
           {
             backgroundColor: ["#00BCD4", "#E0F7FA"],
-            data: [this.getPosted(), this.getUnPosted()]
+            data: [this.getPosted(), this.getUnPosted()],
+            inputRate:
+              (this.getPosted() / this.totalNnumbers.length) * 100 + "%"
           }
         ]
       };
     },
+    // 投稿人数
     getPosted() {
       this.totalNnumbers = this.$store.state.employeeList;
-      return this.totalNnumbers.length - this.unpostedNnumbers.length;
-      // return 1;
+      this.postedNnumbers =
+        this.totalNnumbers.length - this.unpostedNnumbers.length;
+      return this.postedNnumbers;
     },
+    // 未投稿人数
     getUnPosted() {
       return this.unpostedNnumbers.length;
-      // return 3;
     },
+    // 未投稿者のリスト
     setLatestPosts(param) {
       var latestPosts = [];
       var resultPosts = [];
@@ -72,21 +76,15 @@ export default {
 
       for (let i = 0; i < param.length; i++) {
         var latestPost = {
-          date: "",
-          name: "",
-          post: ""
+          date: ""
         };
         //投稿が0の場合
         if (param[i].dailyPost.length === 0) {
           latestPost.date = "2020-05-13T00:43:14.943+0000"; //今日以前の日付
-          latestPost.name = param[i].userName;
-          latestPost.post = "未投稿";
           latestPosts.push(latestPost);
           //投稿がある場合
         } else {
           latestPost.date = param[i].dailyPost[0].date;
-          latestPost.name = param[i].userName;
-          latestPost.post = "";
           latestPosts.push(latestPost);
         }
       }
@@ -101,30 +99,22 @@ export default {
       for (let i = 0; i < latestPosts.length; i++) {
         if (moment(preToday).isAfter(latestPosts[i].date, "day")) {
           var resultPost = {
-            date: "",
-            name: "",
-            post: ""
+            date: ""
           };
           resultPost.date = latestPosts[i].date;
-          resultPost.name = latestPosts[i].name;
-          resultPost.post = "未投稿";
           resultPosts.push(resultPost);
         }
       }
       return resultPosts;
     }
   },
-  watch: {
-    selectedDate: {
-      handler: function() {
-        this.fillData();
-      }
-    }
-  },
   created() {
-    this.totalNnumbers = this.$store.state.employeeList;
-    this.unpostedNnumbers = this.setLatestPosts(this.totalNnumbers);
-    this.fillData();
+    axios.get("/showEmployeeList").then(response => {
+      this.$store.dispatch("setEmployeeList", response.data);
+      this.totalNnumbers = this.$store.state.employeeList;
+      this.unpostedNnumbers = this.setLatestPosts(this.totalNnumbers);
+      this.fillData();
+    });
   }
 };
 </script>
@@ -133,5 +123,6 @@ export default {
 .small {
   max-height: 200px;
   max-width: 200px;
+  margin: 0px, 50px;
 }
 </style>

@@ -21,12 +21,13 @@ import { mapActions } from "vuex";
 import firebase from "firebase/app";
 export default {
   methods: {
+    ...mapActions(["switchLoginStatus","resetState"]),
     logout() {
       firebase.auth().signOut();
       this.$router.push("/");
       this.switchLoginStatus(false);
+      this.resetState();
     },
-    ...mapActions(["switchLoginStatus"]),
   },
   computed: {
     ...mapGetters(["userName", "photoURL"]),

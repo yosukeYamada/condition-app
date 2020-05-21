@@ -7,63 +7,61 @@ import axios from "axios";
 
 Vue.use(Vuex);
 
-const initialState = {
-  loginUser: {
-    authority: 2, // 初期値は1(一般ユーザー権限)で指定
-    dailyPost: [],
-    dep: {}, // 削除する
-    depId: 0,
-    hireDate: "",
-    registerDate: "",
-    registerUserId: 0,
-    status: 0,
-    updateDate: "",
-    updateUserId: 0,
-    userId: 0,
-    userName: "",
-    userNameKana: "",
-    version: 0,
-    mailList: [
-      {
-        mailId: 0,
-        mailName: "",
-        registerDate: "",
-        registerUserId: 0,
-        status: 0,
-        updateDate: "",
-        updateUserId: 0,
-        version: 0,
-      },
-    ],
-  },
-  depList: [],
-  firebaseUser: null,
-  employeeList: [],
-  loginStatus: false,
-
-  filterDepName: "",
-
-  filterHireYear: "",
-
-  filterHireMonth: "",
-
-  filter: {
-    userName: "",
-    depName: "",
-    hireYear: "",
-    hireMonth: "",
-  },
-  newsPostList: [],
-  information: [],
-  category: [],
-
-  //リロードすると消えてしまうNews、従業員詳細
-  infoDetail: [],
-  empDetail: [],
+const getDefaultState = () => {
+  return {
+    loginUser: {
+      authority: 2, // 初期値は2(一般ユーザー権限)で指定
+      dailyPost: [],
+      dep: {}, // 削除する
+      depId: 0,
+      hireDate: "",
+      registerDate: "",
+      registerUserId: 0,
+      status: 0,
+      updateDate: "",
+      updateUserId: 0,
+      userId: 0,
+      userName: "",
+      userNameKana: "",
+      version: 0,
+      mailList: [
+        {
+          mailId: 0,
+          mailName: "",
+          registerDate: "",
+          registerUserId: 0,
+          status: 0,
+          updateDate: "",
+          updateUserId: 0,
+          version: 0,
+        },
+      ],
+    },
+    firebaseUser: null,
+    loginStatus: false,
+    depList: [],
+    employeeList: [],
+    newsPostList: [],
+    informationList: [],
+    categoryList: [],
+    filter: {
+      userName: "",
+      depName: "",
+      hireYear: "",
+      hireMonth: "",
+    },
+    filterDepName: "",
+    filterHireYear: "",
+    filterHireMonth: "",
+    //リロードすると消えてしまうNews、従業員詳細
+    empDetail: [],
+  };
 };
 
+var initializeState = getDefaultState();
+
 export default new Vuex.Store({
-  state: initialState,
+  state: initializeState,
   mutations: {
     /**
      * ログインしてるユーザーをstateにセットする
@@ -154,15 +152,15 @@ export default new Vuex.Store({
      * トップページのNewsをstateにセットする
      * @param {*} information 情報
      */
-    setInformation(state, information) {
-      state.information = information;
+    setInformationList(state, information) {
+      state.informationList = information;
     },
     /**
      * トップページのNewsのカテゴリーをstateにセットする
      * @param {*} vategory カテゴリー
      */
-    setCategory(state, category) {
-      state.category = category;
+    setCategoryList(state, category) {
+      state.categoryList = category;
     },
     /**
      * depListに新しいdepを追加するメソッド
@@ -210,17 +208,6 @@ export default new Vuex.Store({
         (employee) => employee.userId === state.loginUser.userId
       )[0].dailyPost = myDailyPost;
     },
-
-    //リロードすると消えてしまうNews詳細
-    setInfoDetail(state, infoDetail) {
-      state.infoDetail = infoDetail;
-    },
-    setInfoDetailId(state, informationId) {
-      state.infoDetail.push({
-        informationId: informationId,
-      });
-    },
-
     //リロードすると消えてしまうEmp詳細
     setEmpDetail(state, empDetail) {
       state.empDetail = empDetail;
@@ -243,6 +230,12 @@ export default new Vuex.Store({
           employee.authority = updatedUser.authority;
         }
       });
+    },
+    /**
+     * stateの状態をリセットするメソッド
+     */
+    resetState(state) {
+      Object.assign(state, getDefaultState());
     },
   },
   actions: {
@@ -325,15 +318,15 @@ export default new Vuex.Store({
      * トップページのNewsをstateにセットする
      * @param {*} information 情報
      */
-    setInformation({ commit }, information) {
-      commit("setInformation", information);
+    setInformationList({ commit }, information) {
+      commit("setInformationList", information);
     },
     /**
      * トップページのNewsのカテゴリーをstateにセットする
-     * @param {*} vategory カテゴリー
+     * @param {*} category カテゴリー
      */
-    setCategory({ commit }, category) {
-      commit("setCategory", category);
+    setCategoryList({ commit }, category) {
+      commit("setCategoryList", category);
     },
     setData({ commit }, data) {
       commit("setData", data);
@@ -432,7 +425,6 @@ export default new Vuex.Store({
         commit("setNewsPost", response.data);
       });
     },
-
     /**
      * 自分の投稿をstoreのemployeeListのdailyPostに格納する
      * @param {*} myDailyPost 自分の今日の投稿内容
@@ -440,15 +432,6 @@ export default new Vuex.Store({
     setMyDailyPost({ commit }, myDailyPost) {
       commit("setMyDailyPost", myDailyPost);
     },
-
-    //リロードすると消えてしまうNews詳細
-    setInfoDetail({ commit }, infoDetail) {
-      commit("setInfoDetail", infoDetail);
-    },
-    setInfoDetailId({ commit }, informationId) {
-      commit("setInfoDetailId", informationId);
-    },
-
     //リロードすると消えてしまうEmp詳細
     setEmpDetail({ commit }, empDetail) {
       commit("setEmpDetail", empDetail);
@@ -463,6 +446,13 @@ export default new Vuex.Store({
      */
     updateUserAuthority({ commit }, updatedUser) {
       commit("updateUserAuthority", updatedUser);
+    },
+    /**
+     * stateの値を初期化するメソッド
+     * @/components/logout/Logout.vue
+     */
+    resetState({ commit }) {
+      commit("resetState");
     },
   },
 

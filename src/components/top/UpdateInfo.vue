@@ -20,11 +20,17 @@
               >
                 {{ info.category.categoryName }}
               </div>
-              <div @click="toPage(info)" class="link gray--text">
+              <router-link
+                :to="{
+                  name: 'Information',
+                  query: { info: encodeURIComponent(JSON.stringify(info)) },
+                }"
+                class="link gray--text"
+              >
                 <div class=" text-secondary">
                   {{ info.informationTitle }}
                 </div>
-              </div>
+              </router-link>
             </b-row>
           </div>
         </div>
@@ -69,12 +75,6 @@ export default {
   },
   methods: {
     ...mapActions(["setInformationList", "setCategoryList"]),
-    toPage(info) {
-      this.$router.push({
-        name: "Information",
-        query: { info: encodeURIComponent(JSON.stringify(info)) },
-      });
-    },
   },
   created() {
     axios.get("/information").then((response) => {

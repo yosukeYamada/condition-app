@@ -72,10 +72,7 @@
               max-rows="6"
             ></b-form-textarea>
           </b-form-group>
-          <b-button
-            class="float-right"
-            variant="outline-success"
-            @click.prevent="register()"
+          <b-button variant="outline-success" @click.prevent="register()"
             >登録する</b-button
           >
         </b-form>
@@ -136,7 +133,6 @@ export default {
           comment: this.param.comment,
         })
         .then((response) => {
-          console.log("コンディション情報の登録に成功しました：" + response);
           this.$store.dispatch("setDairyPost", response.data);
           this.$store.dispatch("setMyDailyPost", response.data);
         })
@@ -145,7 +141,7 @@ export default {
         });
 
       alert("登録しました！");
-      this.$router.push("/MyCondition");
+      this.$router.push("/myCondition");
     },
   },
 };

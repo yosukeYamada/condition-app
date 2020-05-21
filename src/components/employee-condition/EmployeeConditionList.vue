@@ -4,8 +4,8 @@
     :items="dailyPostList"
     class="elevation-1 card"
   >
-  <template v-slot:item.date="{ item }">
-      {{toDate(item.date)}}
+    <template v-slot:item.date="{ item }">
+      {{ toDate(item.date) }}
     </template>
     <template v-slot:item.motivation="{ item }">
       <v-fa
@@ -25,8 +25,13 @@
       <v-fa
         :icon="transferIcon(item.postedPerformance.performance.performanceName)"
         size="lg"
-        :style="transferColor(item.postedPerformance.performance.performanceName)"
+        :style="
+          transferColor(item.postedPerformance.performance.performanceName)
+        "
       />
+    </template>
+    <template v-slot:item.comment="{ item }">
+      {{ item.postedComment.comment }}
     </template>
   </v-data-table>
 </template>
@@ -37,7 +42,6 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-
       headers: [
         {
           value: "date",
@@ -68,15 +72,14 @@ export default {
     };
   },
   computed: {
-
-  
-    dailyPostList(){
-      
-     let employee = this.$store.state.employeeList.find((employee) =>
-      employee.userId === JSON.parse(decodeURIComponent(this.$route.query.item)).userId)
-     return employee.dailyPost
-    }
-
+    dailyPostList() {
+      let employee = this.$store.state.employeeList.find(
+        (employee) =>
+          employee.userId ===
+          JSON.parse(decodeURIComponent(this.$route.query.item)).userId
+      );
+      return employee.dailyPost;
+    },
   },
   methods: {
     ...mapActions(["setEmpDetail", "setEmpDetailId"]),
@@ -111,17 +114,12 @@ export default {
       }
     },
     toDate(stringDate) {
-      if(stringDate !== null ){
+      if (stringDate !== null) {
         return moment(stringDate).format("YYYY-MM-DD");
-      }else{
-        return "-"
+      } else {
+        return "-";
       }
     },
-  },
-  created() {
-   
-    console.log(this.dailyPostList)
-
   },
   beforeDestroy() {
     this.$store.dispatch("setEmpDetail", "");

@@ -4,16 +4,7 @@
       <router-link
         :to="{
           name: 'UpdateUserForm',
-          params: {
-            userId: item.userId,
-            name: item.name,
-            kana: item.kana,
-            mail: item.mail,
-            depId: item.depId,
-            depName: item.depName,
-            hireDate: item.hireDate,
-            version: item.version,
-          },
+          query: { item: encodeURIComponent(JSON.stringify(item)) },
         }"
       >
         <v-fa :icon="['fas', 'edit']" size="lg" class="edit"></v-fa>

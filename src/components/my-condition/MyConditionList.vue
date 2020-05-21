@@ -145,14 +145,7 @@ export default {
     edit(item) {
       this.$router.push({
         name: "EditDailyPost",
-        params: {
-          dailyPostId: item.dailyPostId,
-          motivationId: item.motivationId,
-          conditionId: item.conditionId,
-          performanceId: item.performanceId,
-          comment: item.comment,
-          version: item.version,
-        },
+        query: { item: encodeURIComponent(JSON.stringify(item)) },
       });
     },
   },
@@ -162,6 +155,6 @@ export default {
 <style scoped>
 .edit:hover {
   cursor: pointer;
-  color:blue;
+  color: blue;
 }
 </style>

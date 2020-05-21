@@ -16,7 +16,7 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  v-model="selectedDate"
+                  v-model="selectDate"
                   label="表示する日付を選択してください"
                   prepend-icon="event"
                   readonly
@@ -42,14 +42,15 @@
             </v-menu>
           </b-col>
             <SearchByDep/>
+            <SearchButton/>
         </b-row>
         <small
           >※
           指定した日付に該当するデータが存在しない場合はグラフは描画されません</small
         >
-        <DailyAggregate :selected-date="selectedDate" />
+        <DailyAggregate />
         <GraphDescription />
-        <MonthlyAggregate :selected-date="selectedDate" />
+        <MonthlyAggregate />
       </b-col>
     </b-row>
   </b-container>
@@ -60,13 +61,15 @@ import MonthlyAggregate from "@/components/aggregate/MonthlyAggregate";
 import DailyAggregate from "@/components/aggregate/DailyAggregate.vue";
 import GraphDescription from "@/components/aggregate/GraphDescription.vue";
 import SearchByDep from "@/components/aggregate/SearchByDep.vue";
+import SearchButton from "@/components/aggregate/SearchButton.vue";
 
 export default {
   components: {
     DailyAggregate,
     MonthlyAggregate,
     GraphDescription,
-    SearchByDep
+    SearchByDep,
+    SearchButton
   },
   data() {
     return {
@@ -76,6 +79,25 @@ export default {
   },
   created() {
     this.selectedDate = new Date().toISOString().substr(0, 10);
+    this.$store.dispatch('aggregate/setSeletedDate', this.selectedDate)
+  },
+  computed : {
+    selectDate: {
+      get() {
+        return this.selectedDate
+      },
+      set(val) {
+        this.selectedDate = val
+      }
+    }
+  },
+  watch: {
+    selectDate: function() {
+      this.$store.dispatch('aggregate/setSeletedDate', this.selectedDate)
+    }
+  },
+  beforeDestroy() {
+    this.$store.dispatch("aggregate/setSeletedDate", "");
   },
 };
 </script>

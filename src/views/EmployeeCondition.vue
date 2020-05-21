@@ -1,9 +1,9 @@
 <template>
   <b-container>
-    <!-- <BreadCrumbs :items="items" /> -->
+    <BreadCrumbs :items="items" />
     <b-row align-v="center" align-h="center">
       <b-col>
-        <!-- <b-row>
+        <b-row>
           <b-col sm="8" lg="5" md="6">
             <b-card class="py-0 px-2">
               <b-row>
@@ -29,7 +29,7 @@
               </b-row>
             </b-card>
           </b-col>
-        </b-row> -->
+        </b-row>
         <EmployeeConditionList />
       </b-col>
     </b-row>
@@ -40,11 +40,11 @@
 import moment from "moment";
 import EmployeeConditionList from "@/components/employee-condition/EmployeeConditionList.vue";
 import { mapActions } from "vuex";
-// import BreadCrumbs from "@/components/common/BreadCrumbs.vue";
+import BreadCrumbs from "@/components/common/BreadCrumbs.vue";
 export default {
   components: {
     EmployeeConditionList,
-    // BreadCrumbs,
+    BreadCrumbs,
   },
   data() {
     return {
@@ -81,11 +81,10 @@ export default {
     },
   },
   mounted() {
-    
     this.employee = this.$store.state.employeeList.find(
-      (elm) => elm.userId === this.$route.params.userId
+      (elm) => elm.userId === JSON.parse(decodeURIComponent(this.$route.query.item)).userId
     );
-    // this.items[1].text = this.employee.userName + "のコンディション履歴";
+    this.items[1].text = this.employee.userName + "のコンディション履歴";
   },
 };
 </script>

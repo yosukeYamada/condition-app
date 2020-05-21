@@ -21,6 +21,7 @@
   </b-card>
 </template>
 <script>
+import axios from "axios";
 import moment from "moment";
 export default {
   data() {
@@ -81,8 +82,12 @@ export default {
     },
   },
   created() {
-    this.items = this.$store.state.employeeList;
-    this.latestPosts = this.setLatestPosts(this.items);
+    axios.get("/showEmployeeList")
+    .then((response) => {
+      this.$store.dispatch("setEmployeeList", response.data);
+      this.items = this.$store.state.employeeList;
+      this.latestPosts = this.setLatestPosts(this.items);
+    })
   },
 };
 </script>

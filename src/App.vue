@@ -1,7 +1,7 @@
 <template>
   <v-app style="background-color:#f5f5f5">
     <Header class="mb-5" />
-        <router-view />
+    <router-view />
     <SideMenu></SideMenu>
   </v-app>
 </template>
@@ -17,21 +17,20 @@ export default {
   name: "App",
   components: {
     Header,
-    SideMenu,
+    SideMenu
   },
 
   mounted() {
     this.loginCheck();
-    axios.get("/information")
-      .then((response) => {
-        this.setInformation(response.data.informationList)
-        this.setCategory(response.data.category)
-      })
+    axios.get("/information").then(response => {
+      this.setInformation(response.data.informationList);
+      this.setCategory(response.data.category);
+    });
   },
   methods: {
-    ...mapActions(["setLoginUser","setInformation", "setCategory"],),
+    ...mapActions(["setLoginUser", "setInformation", "setCategory"]),
     loginCheck() {
-      firebase.auth().onAuthStateChanged((user) => {
+      firebase.auth().onAuthStateChanged(user => {
         if (!user) {
           /** ログインしていない場合 */
           console.log("ログインしていません");
@@ -41,15 +40,15 @@ export default {
           if (this.$store.state.loginUser === null) {
             axios
               .post("/loginCheck", {
-                mail: firebase.auth().currentUser.email,
+                mail: firebase.auth().currentUser.email
               })
-              .then((response) => {
+              .then(response => {
                 this.setLoginUser(response.data);
               });
           }
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>

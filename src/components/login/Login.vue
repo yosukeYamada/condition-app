@@ -2,9 +2,7 @@
   <div>
     <b-card class="text-center py-3 shadow-sm" v-show="!loading">
       <b-card-text>
-        <p class="err" style="white-space:pre-wrap; word-wrap:break-word;">
-          {{ err }}
-        </p>
+        <p class="err" style="white-space:pre-wrap; word-wrap:break-word;">{{ err }}</p>
         <p class="display-2 font-weight-bold text-success mb-5">Rakuppo</p>
         <p>あなたの今日のコンディションを記録しましょう</p>
         <v-btn
@@ -16,9 +14,7 @@
         >
           <div class="px-3">
             <img class="pb-1" src="@/assets/img/google_icon.png" />
-            <span class="ml-1" style="color:#6a6a6a"
-              >Googleアカウントでログイン</span
-            >
+            <span class="ml-1" style="color:#6a6a6a">Googleアカウントでログイン</span>
           </div>
         </v-btn>
         <div>
@@ -42,11 +38,11 @@ export default {
     return {
       name: "Login",
       err: "",
-      loading: true,
+      loading: true
     };
   },
   components: {
-    Loading,
+    Loading
   },
   methods: {
     ...mapActions([
@@ -58,27 +54,56 @@ export default {
       "setLoadings",
       "employeeList",
       "loginStatus",
-      "depList",
+      "depList"
     ]),
     toPage(path) {
       this.$router.push(path);
-    },
+    }
   },
+
   created() {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       this.loading = false;
+      // const token = firebase.auth().currentUser.getIdToken(true);
+      // console.log(token);
       if (user) {
         this.setFirebaseUser(user);
+        var googleMailAddress = firebase.auth().currentUser.email
         axios
           .post("/loginCheck", {
-            mail: firebase.auth().currentUser.email,
+            mail: googleMailAddress
           })
-          .then((response) => {
+          .then(response => {
             //新規登録画面へ遷移
             if (response.data.authority == AUTHORITY.UNREGISTERED) {
-              this.setLoginUser(response.data);
-              this.depList(response.data.depList);
-              this.$router.push("/registerUser");
+              console.log("未登録者")
+              firebase
+                .auth()
+                .currentUser.getIdToken(true)
+                .then(idToken => {
+                  axios
+                    .post("/signUp", {
+                      mailAddress: googleMailAddress,
+                      password: idToken
+                    })
+                    .then(() => {
+                      axios.post("/login",{mailAddress:googleMailAddress,pasword:idToken}).then(response=>{
+                        console.log(response)
+                        console.log(response.data)
+                      })
+                      this.setLoginUser(response.data);
+                      this.depList(response.data.depList);
+                      this.$router.push("/registerUser");
+                    }).catch(error=>{
+                      console.log(error)
+                      console.log("ログインに失敗しました。")
+                    })
+                }).catch(error=>{
+                  console.log(error)
+                  console.log("ＡＰＩユーザ登録に失敗しました")
+                })
+                
+
               //管理者権限
             } else if (response.data.authority == AUTHORITY.ADMIN) {
               this.setLoginUser(response.data);
@@ -89,10 +114,10 @@ export default {
               //全従業員情報を取得
               axios
                 .get("/showEmployeeList")
-                .then((response) => {
+                .then(response => {
                   this.employeeList(response.data);
                 })
-                .catch((e) => {
+                .catch(e => {
                   alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
                 });
               this.$router.push("/home");
@@ -120,7 +145,7 @@ export default {
         this.deleteLoginUser();
       }
     });
-  },
+  }
 };
 </script>
 

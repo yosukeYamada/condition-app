@@ -134,7 +134,9 @@ export default {
             );
             this.$router.push("/");
           } else {
+            console.log(response.data);
             this.$store.dispatch("setDairyPost", response.data);
+            this.$store.dispatch("setMyDailyPost", response.data);
           }
         })
         .catch((e) => {

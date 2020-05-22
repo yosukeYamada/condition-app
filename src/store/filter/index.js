@@ -48,6 +48,13 @@ export const filter = {
         commit("setFilterDepName", filterDepName);
       },
       /**
+     * 入社年を使用し、絞り込み検索する
+     * @param {*} filterHireYear 検索時に使用する入社年
+     */
+    setFilterHireYear({ commit }, filterHireYear) {
+        commit("setFilterHireYear", filterHireYear);
+      },
+      /**
        * 入社月を使用し、絞り込み検索する
        * @param {*} filterHireMonth 検索時に使用する入社月
        */

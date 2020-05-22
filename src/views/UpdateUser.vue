@@ -96,38 +96,42 @@ export default {
       handler: function() {
         this.childEmployeeList = this.employeeList;
 
-        if (this.$store.state.filter.depName !== "") {
-          this.childEmployeeList = this.childEmployeeList.filter((employee) => {
-            if (employee.depId === this.$store.state.filter.depName) {
-              return employee;
-            }
-          });
-        }
-        if (this.$store.state.filter.hireYear !== "") {
+        
+        if (this.$store.state.filter.filter.userName !== "") {
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
             if (
-              employee.hireDate.substr(0, 4) ===
-              this.$store.state.filter.hireYear
+              employee.name.indexOf(
+                this.$store.state.filter.filter.userName
+              ) !== -1
             ) {
               return employee;
             }
           });
         }
 
-        if (this.$store.state.filter.hireMonth !== "") {
+        if (this.$store.state.filter.filter.depName !== "") {
+          this.childEmployeeList = this.childEmployeeList.filter((employee) => {
+            if (employee.depId === this.$store.state.filter.filter.depName) {
+              return employee;
+            }
+          });
+        }
+        if (this.$store.state.filter.filter.hireYear !== "") {
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
             if (
-              parseInt(moment(employee.hireDate).format("M")) ===
-              this.$store.state.filter.hireMonth
+              employee.hireDate.substr(0, 4) ===
+              this.$store.state.filter.filter.hireYear
             ) {
               return employee;
             }
           });
         }
-        if (this.$store.state.filter.userName !== "") {
+
+        if (this.$store.state.filter.filter.hireMonth !== "") {
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
             if (
-              employee.name.indexOf(this.$store.state.filter.userName) !== -1
+              parseInt(moment(employee.hireDate).format("M")) ===
+              this.$store.state.filter.filter.hireMonth
             ) {
               return employee;
             }

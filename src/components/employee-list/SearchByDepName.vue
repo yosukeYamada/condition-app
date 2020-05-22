@@ -54,7 +54,7 @@ export default {
   },
   beforeDestroy() {
     // this.$store.dispatch("setFilterDepName", "");
-    this.$store.dispatch("filter/setFilterDepName",this.inputDepName)
+    this.$store.dispatch("filter/setFilterDepName","")
   },
 };
 </script>

@@ -104,9 +104,6 @@ export default {
     };
   },
 
-  created() {
-    this.$store.dispatch("setFilterHireYear", this.inputHireYear);
-  },
   computed: {
     filterHireYear: {
       get() {
@@ -120,11 +117,11 @@ export default {
   watch: {
     //カテゴリー検索（入社年）の変更の監視
     filterHireYear: function() {
-      this.$store.dispatch("setFilterHireYear", this.inputHireYear);
+      this.$store.dispatch("filter/setFilterHireYear", this.inputHireYear);
     },
   },
   beforeDestroy() {
-    this.$store.dispatch("setFilterHireYear", "");
+    this.$store.dispatch("filter/setFilterHireYear", "");
   },
 };
 </script>

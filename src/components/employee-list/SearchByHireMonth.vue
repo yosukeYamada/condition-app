@@ -84,14 +84,16 @@ export default {
   watch: {
     //カテゴリー検索（入社月）の変更の監視
     filterHireMonth() {
-      this.$store.dispatch("setFilterHireMonth", this.inputHireMonth);
+      // this.$store.dispatch("setFilterHireMonth", this.inputHireMonth);
+      this.$store.dispatch("filter/setFilterHireMonth", this.inputHireMonth);
+      
+
     },
   },
-  mounted() {
-    this.$store.dispatch("setFilterHireMonth", this.inputHireMonth);
-  },
+ 
   beforeDestroy() {
-    this.$store.dispatch("setFilterHireMonth", "");
+    // this.$store.dispatch("setFilterHireMonth", "");
+    this.$store.dispatch("filter/setFilterHireMonth", "");
   },
 };
 </script>

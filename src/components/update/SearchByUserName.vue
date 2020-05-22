@@ -28,16 +28,12 @@ export default {
   watch: {
     //ユーザー名前検索の監視
     filterUserName() {
-      this.$store.dispatch("setFilterUserName", this.inputUserName);
+      this.$store.dispatch("filter/setFilterUserName", this.inputUserName);
     },
   },
 
-  mounted() {
-    this.$store.dispatch("setFilterUserName", this.inputUserName);
-  },
-
   beforeDestroy() {
-    this.$store.dispatch("setFilterUserName", "");
+    this.$store.dispatch("filter/setFilterUserName", "");
   },
 };
 </script>

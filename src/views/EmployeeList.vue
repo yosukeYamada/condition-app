@@ -4,6 +4,9 @@
       <b-col lg="11">
         <div class="headline mb-4">従業員一覧</div>
         <b-row>
+          <b-col cols="12" sm="4" md="10" lg="4">
+            <SearchByUserName></SearchByUserName>
+          </b-col>
           <b-col cols="12" sm="4" md="4" lg="3">
             <SearchByDepName></SearchByDepName>
           </b-col>
@@ -23,6 +26,7 @@
 <script>
 import moment from "moment";
 import EmployeeList from "@/components/employee-list/EmployeeList.vue";
+import SearchByUserName from "../components/update/SearchByUserName";
 import SearchByDepName from "@/components/employee-list/SearchByDepName";
 import SearchByHireYear from "@/components/employee-list/SearchByHireYear";
 import SearchByHireMonth from "@/components/employee-list/SearchByHireMonth";
@@ -34,6 +38,7 @@ export default {
     SearchByDepName,
     SearchByHireYear,
     SearchByHireMonth,
+    SearchByUserName,
   },
   data() {
     return {
@@ -96,28 +101,44 @@ export default {
     getFilter: {
       handler: function() {
         this.childEmployeeList = this.employeeList;
+
+           if (this.$store.state.filter.filter.userName !== "") {
+          this.childEmployeeList = this.childEmployeeList.filter((employee) => {
+            if (
+              employee.name.indexOf(
+                this.$store.state.filter.filter.userName
+              ) !== -1
+            ) {
+              return employee;
+            }
+          });
+        }
+
+
         if (this.$store.state.filter.filter.depName !== "") {
+          console.log('部署')
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
             if (employee.dep === this.$store.state.filter.filter.depName) {
               return employee;
             }
           });
         }
-        if (this.$store.state.filter.hireYear !== "") {
+        if (this.$store.state.filter.filter.hireYear !== "") {
+          console.log('年')
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
             if (
               employee.hireDate.substr(0, 4) ===
-              this.$store.state.filter.hireYear
+              this.$store.state.filter.filter.hireYear
             ) {
               return employee;
             }
           });
         }
-        if (this.$store.state.filter.hireMonth !== "") {
+        if (this.$store.state.filter.filter.hireMonth !== "") {
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
             if (
               parseInt(moment(employee.hireDate).format("M")) ===
-              this.$store.state.filter.hireMonth
+              this.$store.state.filter.filter.hireMonth
             ) {
               return employee;
             }
@@ -129,6 +150,7 @@ export default {
   },
   created() {
     this.getMasterList();
+    console.log(this.$store.state.filter.filter.hireYear)
   },
 };
 </script>

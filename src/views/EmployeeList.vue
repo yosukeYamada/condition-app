@@ -148,8 +148,6 @@ export default {
   },
   created() {
     this.getMasterList();
-    console.log(this.masterList)
-    console.log(this.$store.state.employeeList)
   },
 };
 </script>

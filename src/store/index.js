@@ -46,12 +46,7 @@ const getDefaultState = () => {
     newsPostList: [],
     informationList: [],
     categoryList: [],
-    // filter: {
-    //   userName: "",
-    //   depName: "",
-    //   hireYear: "",
-    //   hireMonth: "",
-    // },
+    
   };
 };
 

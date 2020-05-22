@@ -1,5 +1,8 @@
 <template>
   <v-data-table :headers="headers" :items="employees" class="elevation-1 card">
+    <template v-slot:item.depId="{ item }">
+      <span>{{ transferDepName(item.depId) }}</span>
+    </template>
     <template v-slot:item.update="{ item }">
       <router-link
         :to="{
@@ -59,7 +62,7 @@ export default {
           sortable: true,
         },
         {
-          value: "depName",
+          value: "depId",
           text: "部署名",
           sortable: true,
         },
@@ -85,6 +88,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["deleteUser"]),
     deleteConfirm(user) {
       if (confirm("削除してよろしいですか？")) {
         axios
@@ -105,7 +109,11 @@ export default {
           );
       }
     },
-    ...mapActions(["deleteUser"]),
+    /** 部署IDを部署名に変換するメソッド */
+    transferDepName(depId) {
+      let dep = this.$store.state.depList.find((dep) => dep.depId === depId);
+      return dep.depName;
+    },
   },
   mounted() {
     this.items = this.employeeList;

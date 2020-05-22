@@ -96,7 +96,6 @@ export default {
       handler: function() {
         this.childEmployeeList = this.employeeList;
 
-        
         if (this.$store.state.filter.filter.userName !== "") {
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
             if (

@@ -99,17 +99,12 @@ export default {
     };
   },
   methods: {
-
-     toPage(item){
-       
-       this.$router.push({
-         name:"EmployeeCondition",
-         query:{item: encodeURIComponent(JSON.stringify(item))}
-         
-       });
-      
-     },
-
+    toPage(item) {
+      this.$router.push({
+        name: "EmployeeCondition",
+        query: { item: encodeURIComponent(JSON.stringify(item)) },
+      });
+    },
 
     /** 天候によって表示するアイコンを返すメソッド */
     transferIcon(param) {
@@ -151,7 +146,6 @@ export default {
   },
   mounted() {
     this.items = this.employeeList;
-    
   },
 };
 </script>

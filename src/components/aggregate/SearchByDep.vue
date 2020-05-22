@@ -1,7 +1,7 @@
 <template>
   <el-select id="dep" style="width:100%;" v-model="filterDepName" clearable placeholder="部署名">
     <el-option
-      v-for="dep in this.$store.state.depList"
+      v-for="dep in depList"
       :key="dep.depId"
       :label="dep.depName"
       :value="dep.depId"
@@ -39,7 +39,7 @@ export default {
     this.depList.splice(this.depList)
   },
   created() {
-    this.depList = this.$store.state.depList
+    this.depList = Array.from(this.$store.state.depList)
     this.depList.unshift({
       depId : 0,
       depName: '全従業員'

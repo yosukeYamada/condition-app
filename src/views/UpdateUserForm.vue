@@ -42,8 +42,13 @@ export default {
       ],
     };
   },
+  computed: {
+    userQuery() {
+      return JSON.parse(decodeURIComponent(this.$route.query.item));
+    },
+  },
   mounted() {
-    this.items[2].text = this.$route.params.name + "さんのユーザー情報の更新";
+    this.items[2].text = this.userQuery.name + "さんのユーザー情報の更新";
   },
 };
 </script>

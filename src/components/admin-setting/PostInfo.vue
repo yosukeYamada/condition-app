@@ -81,7 +81,7 @@ export default {
   }),
   methods: {
     ...mapActions(["setInformation"]),
-    post: function() {
+    post() {
       if (this.$refs.form.validate()) {
         axios
           .post("/information/insert", {
@@ -114,10 +114,10 @@ export default {
     },
   },
   created() {
-    for (var num in this.$store.state.category) {
+    for (var num in this.$store.state.categoryList) {
       this.categories.push({
-        categoryId: this.$store.state.category[num].categoryId,
-        categoryName: this.$store.state.category[num].categoryName,
+        categoryId: this.$store.state.categoryList[num].categoryId,
+        categoryName: this.$store.state.categoryList[num].categoryName,
       });
     }
   },

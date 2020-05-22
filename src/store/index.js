@@ -153,7 +153,7 @@ export default new Vuex.Store({
      * トップページのNewsをstateにセットする
      * @param {*} information 情報
      */
-    setInformationList(state, information) {
+    setInformation(state, information) {
       state.informationList = information;
     },
     /**
@@ -365,8 +365,8 @@ export default new Vuex.Store({
      * トップページのNewsをstateにセットする
      * @param {*} information 情報
      */
-    setInformationList({ commit }, information) {
-      commit("setInformationList", information);
+    setInformation({ commit }, information) {
+      commit("setInformation", information);
     },
     /**
      * トップページのNewsのカテゴリーをstateにセットする

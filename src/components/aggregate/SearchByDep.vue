@@ -1,7 +1,7 @@
 <template>
   <el-select id="dep" style="width:100%;" v-model="filterDepName" clearable placeholder="部署名">
     <el-option
-      v-for="dep in this.depList"
+      v-for="dep in this.$store.state.depList"
       :key="dep.depId"
       :label="dep.depName"
       :value="dep.depId"
@@ -15,28 +15,7 @@ export default {
   data() {
     return {
       inputDepName: 0,
-      depList:[
-        {
-          depId : 0,
-          depName: '全従業員'
-        },
-        {
-          depId : 1,
-          depName: 'アプリエンジニア'
-        },
-        {
-          depId : 2,
-          depName: 'クラウドエンジニア'
-        },
-        {
-          depId : 3,
-          depName: '機械学習エンジニア'
-        },
-        {
-          depId : 4,
-          depName: '内勤'
-        },
-      ]
+      depList:[]
     };
   },
   computed: {
@@ -57,7 +36,15 @@ export default {
   },
   beforeDestroy() {
     this.$store.dispatch("aggregate/setDepId", "");
+    this.depList.splice(this.depList)
   },
+  created() {
+    this.depList = this.$store.state.depList
+    this.depList.unshift({
+      depId : 0,
+      depName: '全従業員'
+    })
+  }
 };
 </script>
 

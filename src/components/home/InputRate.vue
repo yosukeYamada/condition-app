@@ -116,6 +116,7 @@ export default {
       this.unpostedNnumbers = this.setLatestPosts(this.totalNnumbers);
       this.fillData();
     });
+    this.fillData();
   }
 };
 </script>

@@ -151,6 +151,7 @@ export default {
   },
   mounted() {
     this.items = this.employeeList;
+    
   },
 };
 </script>

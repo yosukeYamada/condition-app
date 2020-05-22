@@ -58,7 +58,7 @@ export default {
   //watcherのメソッドを算出
   computed: {
     getFilter: function() {
-      // return this.$store.state.filter;
+      
       return this.$store.state.filter.filter
     },
   },
@@ -116,7 +116,6 @@ export default {
 
 
         if (this.$store.state.filter.filter.depName !== "") {
-          console.log('部署')
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
             if (employee.dep === this.$store.state.filter.filter.depName) {
               return employee;
@@ -124,7 +123,6 @@ export default {
           });
         }
         if (this.$store.state.filter.filter.hireYear !== "") {
-          console.log('年')
           this.childEmployeeList = this.childEmployeeList.filter((employee) => {
             if (
               employee.hireDate.substr(0, 4) ===
@@ -150,7 +148,8 @@ export default {
   },
   created() {
     this.getMasterList();
-    console.log(this.$store.state.filter.filter.hireYear)
+    console.log(this.masterList)
+    console.log(this.$store.state.employeeList)
   },
 };
 </script>

@@ -46,16 +46,12 @@ const getDefaultState = () => {
     newsPostList: [],
     informationList: [],
     categoryList: [],
-    filter: {
-      userName: "",
-      depName: "",
-      hireYear: "",
-      hireMonth: "",
-    },
-    filterDepName: "",
-    filterHireYear: "",
-    filterHireMonth: "",
-    
+    // filter: {
+    //   userName: "",
+    //   depName: "",
+    //   hireYear: "",
+    //   hireMonth: "",
+    // },
   };
 };
 
@@ -109,36 +105,9 @@ export default new Vuex.Store({
       state.depList = depList;
     },
     setDailyPost(state, dailyPost) {
-      state.loginUser.dailyPost = dailyPost;
+      state.loginUser.dailyPost.unshift(dailyPost);
     },
-    /**
-     * 検索用の部署名をstateにセットする
-     * @param {*} filterDepName 検索時に使用する部署名
-     */
-    setFilterDepName(state, filterDepName) {
-      state.filter.depName = filterDepName;
-    },
-    /**
-     * 検索用の入社年をstateにセットする
-     * @param {*} filterHireYear 検索時に使用する入社年
-     */
-    setFilterHireYear(state, filterHireYear) {
-      state.filter.hireYear = filterHireYear;
-    },
-    /**
-     * 検索用の入社月をstateにセットする
-     * @param {*} filterHireMonth 検索時に使用する入社月
-     */
-    setFilterHireMonth(state, filterHireMonth) {
-      state.filter.hireMonth = filterHireMonth;
-    },
-    /**
-     * 検索用のユーザー名をstateにセットする
-     * @param {*} filterUserName 検索時に使用するユーザー名
-     */
-    setFilterUserName(state, filterUserName) {
-      state.filter.userName = filterUserName;
-    },
+
     /**
      * お知らせ一覧をstateにセットする
      * @param {*} newsPostList お知らせ一覧
@@ -205,9 +174,10 @@ export default new Vuex.Store({
      * @param {*} myDailyPost 自分の今日の投稿内容
      */
     setMyDailyPost(state, myDailyPost) {
+
       state.employeeList.filter(
         (employee) => employee.userId === state.loginUser.userId
-      )[0].dailyPost = myDailyPost;
+      )[0].dailyPost.unshift(myDailyPost);
     },
     /**
      *ユーザー情報の更新時更新情報をEmployeeListに格納する
@@ -245,25 +215,6 @@ export default new Vuex.Store({
       )[0].dep.depName = updateEmployee[0].dep.depName;
     },
 
-    //リロードすると消えてしまうNews詳細
-    setInfoDetail(state, infoDetail) {
-      state.infoDetail = infoDetail;
-    },
-    setInfoDetailId(state, informationId) {
-      state.infoDetail.push({
-        informationId: informationId,
-      });
-    },
-
-    //リロードすると消えてしまうEmp詳細
-    setEmpDetail(state, empDetail) {
-      state.empDetail = empDetail;
-    },
-    setEmpDetailId(state, userId) {
-      state.empDetail.push({
-        userId: userId,
-      });
-    },
     /**
      * ユーザー権限の更新をemployeeList内のユーザー情報に反映するメソッド
      * @param {*} updatedUser 更新されたユーザー情報
@@ -412,34 +363,7 @@ export default new Vuex.Store({
           console.error(error);
         });
     },
-    /**
-     * 入社年を使用し、絞り込み検索する
-     * @param {*} filterHireYear 検索時に使用する入社年
-     */
-    setFilterHireYear({ commit }, filterHireYear) {
-      commit("setFilterHireYear", filterHireYear);
-    },
-    /**
-     * 部署名を使用し、絞り込み検索する
-     * @param {*} filterDepName 検索時に使用する部署名
-     */
-    setFilterDepName({ commit }, filterDepName) {
-      commit("setFilterDepName", filterDepName);
-    },
-    /**
-     * 入社月を使用し、絞り込み検索する
-     * @param {*} filterHireMonth 検索時に使用する入社月
-     */
-    setFilterHireMonth({ commit }, filterHireMonth) {
-      commit("setFilterHireMonth", filterHireMonth);
-    },
-    /**
-     * ユーザー名を使用し、絞り込み検索する
-     * @param {*} filterUserName 検索時に使用するユーザー名
-     */
-    setFilterUserName({ commit }, filterUserName) {
-      commit("setFilterUserName", filterUserName);
-    },
+
     /**
      * 既存の部署を削除するメソッド
      * @components/admin-setting/EditDeps.vueで利用
@@ -468,7 +392,7 @@ export default new Vuex.Store({
      * @components/daily-post/EditDailyPostForm.vueで利用
      * @param {*} edit 更新する投稿情報
      */
-    editDailyPost({commit},edit) {
+    editDailyPost({ commit }, edit) {
       axios
         .post("/editDailyPost/edit", {
           version: edit.version,
@@ -518,21 +442,6 @@ export default new Vuex.Store({
       commit("setUpdateEmployee", updateEmployee);
     },
 
-    //リロードすると消えてしまうNews詳細
-    setInfoDetail({ commit }, infoDetail) {
-      commit("setInfoDetail", infoDetail);
-    },
-    setInfoDetailId({ commit }, informationId) {
-      commit("setInfoDetailId", informationId);
-    },
-
-    //リロードすると消えてしまうEmp詳細
-    setEmpDetail({ commit }, empDetail) {
-      commit("setEmpDetail", empDetail);
-    },
-    setEmpDetailId({ commit }, userId) {
-      commit("setEmpDetail", userId);
-    },
     /**
      * ユーザー権限を変更した際に更新したユーザー情報をemployeeListに反映するメソッド
      * @/components/admin-setting/AuthorityModal.vue
@@ -566,7 +475,7 @@ export default new Vuex.Store({
   },
   modules: {
     filter,
-    aggregate
+    aggregate,
   },
 
   plugins: [createPersistedState({ storage: window.sessionStorage })], // オプションを追加

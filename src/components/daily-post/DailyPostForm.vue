@@ -133,7 +133,9 @@ export default {
           comment: this.param.comment,
         })
         .then((response) => {
+          // console.log(response.data)
           this.$store.dispatch("setDailyPost", response.data);
+          console.log(this.$store.state.loginUser.dailyPost)
           this.$store.dispatch("setMyDailyPost", response.data);
         })
         .catch((e) => {

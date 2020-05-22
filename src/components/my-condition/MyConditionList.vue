@@ -110,6 +110,34 @@ export default {
       }
       return dailyPostList;
     },
+    // dailyMyPost(){
+    //   var dailyMyPost = [];
+    //   dailyMyPost.push({
+    //     date: moment(this.$store.state.loginUser.dailyPost.date).format(
+    //         "YYYY-MM-DD"
+    //       ),
+    //     condition:this.$store.state.loginUser.dailyPost.postedCondition
+    //         .condition.conditionName,
+    //     motivation: this.$store.state.loginUser.dailyPost
+    //         .postedMotivation.motivation.motivationName,
+    //       performance: this.$store.state.loginUser.dailyPost
+    //         .postedPerformance.performance.performanceName,
+    //       comment: this.$store.state.loginUser.dailyPost.postedComment
+    //         .comment,
+    //       conditionId: this.$store.state.loginUser.dailyPost
+    //         .postedCondition.condition.conditionId,
+    //       motivationId: this.$store.state.loginUser.dailyPost
+    //         .postedMotivation.motivation.motivationId,
+    //       performanceId: this.$store.state.loginUser.dailyPost
+    //         .postedPerformance.performance.performanceId,
+    //       version: this.$store.state.loginUser.dailyPost.version,
+    //       dailyPostId: this.$store.state.loginUser.dailyPost.dailyPostId,
+        
+    //   })
+    //   return dailyMyPost
+
+    // },
+
   },
   methods: {
     transferIcon(param) {

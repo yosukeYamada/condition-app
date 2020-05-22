@@ -45,8 +45,8 @@
     <v-list two-line subheader>
       <v-subheader>管理者ユーザーの一覧</v-subheader>
       <v-list-item
-        v-for="(admin, i) in adminList"
-        :key="i"
+        v-for="admin in adminList"
+        :key="admin.email"
         @click="vlistItemClick"
       >
         <v-list-item-content>
@@ -195,6 +195,7 @@ export default {
 
               /** ステップ4:フォームを空にする */
               this.item = "";
+
             }
           })
           .catch((e) => {
@@ -245,6 +246,7 @@ export default {
             alert(
               response.data.userName + "さんを管理者ユーザーから削除しました"
             );
+
           })
           .catch((e) => {
             alert("管理者権限の変更に失敗しました");
@@ -287,5 +289,25 @@ export default {
     this.setAdminList();
     this.setEmployeeList();
   },
+  computed: {
+    emp() {
+      return this.$store.state.employeeList.filter(
+        (employee) => employee.authority === AUTHORITY.USER
+      );
+    },
+    adm() {
+      return this.$store.state.employeeList.filter(
+        (employee) => employee.authority === AUTHORITY.ADMIN
+      )
+    }
+  },
+  watch: {
+    emp() {
+      this.setEmployeeList()
+    },
+    adm() {
+      this.setAdminList()
+    }
+  }
 };
 </script>

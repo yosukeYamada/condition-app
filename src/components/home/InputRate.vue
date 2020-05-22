@@ -61,7 +61,6 @@ export default {
     },
     // 投稿人数
     getPosted() {
-      this.totalNnumbers = this.$store.state.employeeList;
       this.postedNnumbers =
         this.totalNnumbers.length - this.unpostedNnumbers.length;
       return this.postedNnumbers;

@@ -74,11 +74,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["setInformationList", "setCategoryList"]),
+    ...mapActions(["setInformation", "setCategoryList"]),
   },
   created() {
     axios.get("/information").then((response) => {
-      this.setInformationList(response.data.informationList);
+      this.setInformation(response.data.informationList);
       this.setCategoryList(response.data.category);
     });
   },

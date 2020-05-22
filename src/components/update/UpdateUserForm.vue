@@ -22,7 +22,7 @@
               <b-form-input
                 id="input-name"
                 type="text"
-                v-model="userName"
+                v-model="user.userName"
                 maxlength="20"
                 required
               />
@@ -42,7 +42,7 @@
               <b-form-input
                 id="input-name-kana"
                 type="text"
-                v-model="userNameKana"
+                v-model="user.userNameKana"
                 maxlength="20"
                 required
               />
@@ -54,7 +54,7 @@
               <b-form-input
                 id="input-email"
                 type="email"
-                v-model="mailAddress"
+                v-model="user.mailAddress"
                 required
               />
               <div>{{ errors[0] }}</div>
@@ -68,7 +68,7 @@
                     rules="checkRequiredHireMonthYear|hireMonthYear:@month"
                     v-slot="{ errors }"
                   >
-                    <b-form-select name="year" v-model="hireYear" required>
+                    <b-form-select name="year" v-model="user.hireYear" required>
                       <option disabled selected>年</option>
                       <option v-for="i in selectYears" :key="i" :value="i">
                         {{ i }}
@@ -79,7 +79,11 @@
                 </b-col>
                 <b-col>
                   <ValidationProvider name="month" rules="required">
-                    <b-form-select name="month" v-model="hireMonth" required>
+                    <b-form-select
+                      name="month"
+                      v-model="user.hireMonth"
+                      required
+                    >
                       <option disabled selected>月</option>
                       <option v-for="i in hireMonthList" :key="i" :value="i">{{
                         i
@@ -93,7 +97,7 @@
           <div>
             <ValidationProvider rules="required" v-slot="{ errors }">
               <b-form-group label="部門">
-                <b-form-select v-model="depId" required>
+                <b-form-select v-model="user.depId" required>
                   <option selected disabled>部門名を選択してください</option>
                   <option
                     v-for="(dep, i) in selectDeps"
@@ -112,9 +116,6 @@
             @click.prevent="handleSubmit(updateUser)"
             >更新</b-button
           >
-          <b-button variant="outline-danger" @click.prevent="resetButton()"
-            >リセット</b-button
-          >
         </b-card-text>
       </b-card>
     </ValidationObserver>
@@ -129,6 +130,7 @@ export default {
   name: "UpdateUserForm",
   data() {
     return {
+      user: {},
       selectYears: [],
       userName: null,
       userNameKana: null,
@@ -145,7 +147,7 @@ export default {
     hireMonthList() {
       var now = new Date();
       var nowYear = now.getFullYear();
-      if (this.hireYear === nowYear) {
+      if (this.user.hireYear === nowYear) {
         var nowMonth = now.getMonth() + 1;
         return nowMonth;
       }
@@ -154,28 +156,31 @@ export default {
     selectDeps() {
       return this.$store.state.depList;
     },
+    userQuery() {
+      return JSON.parse(decodeURIComponent(this.$route.query.item));
+    },
   },
   methods: {
     updateUser() {
-      this.userName = this.userName.replace("　", "");
-      this.userNameKana = this.userNameKana.replace("　", "");
+      this.user.userName = this.user.userName.replace("　", "");
+      this.user.userNameKana = this.user.userNameKana.replace("　", "");
       axios
         .post("/updateUser", {
-          userId: this.userId,
-          updateUserId: this.updateUserId,
-          userName: this.userName,
-          userNameKana: this.userNameKana,
-          depId: this.depId,
-          hireYear: this.hireYear,
-          hireMonth: this.hireMonth,
-          mailAddress: this.mailAddress,
-          version: this.version,
+          userId: this.user.userId,
+          updateUserId: this.$store.state.loginUser.userId,
+          userName: this.user.userName,
+          userNameKana: this.user.userNameKana,
+          depId: this.user.depId,
+          hireYear: this.user.hireYear,
+          hireMonth: this.user.hireMonth,
+          mailAddress: this.user.mailAddress,
+          version: this.user.version,
         })
         .then((response) => {
           if (response.data == "") {
             alert("他の管理者が更新しています");
           } else {
-            this.$store.dispatch("setEmployeeList", response.data);
+            this.$store.dispatch("setUpdateEmployee", response.data);
             alert("更新が完了しました！");
             this.$router.push("/UpdateUser");
           }
@@ -183,14 +188,6 @@ export default {
         .catch((e) => {
           alert("ユーザー情報の更新の送信に失敗しました：" + e);
         });
-    },
-    resetButton() {
-      this.userName = "";
-      this.userNameKana = "";
-      this.mailAddress = "";
-      this.hireYear = null;
-      this.hireMonth = null;
-      this.depId = null;
     },
     makeYearList() {
       var now = new Date();
@@ -207,15 +204,12 @@ export default {
     this.makeYearList();
   },
   mounted() {
-    this.userId = this.$route.params.userId;
-    this.userName = this.$route.params.name;
-    this.userNameKana = this.$route.params.kana;
-    this.mailAddress = this.$route.params.mail;
-    this.depId = this.$route.params.depId;
-    this.hireYear = moment(this.$route.params.hireDate).format("YYYY");
-    this.hireMonth = moment(this.$route.params.hireDate).format("M");
-    this.updateUserId = this.$store.state.loginUser.userId;
-    this.version = this.$route.params.version;
+    this.user = this.userQuery;
+    this.user.hireYear = moment(this.userQuery.hireDate).format("YYYY");
+    this.user.hireMonth = moment(this.userQuery.hireDate).format("M");
+    this.user.userNameKana = this.userQuery.kana
+    this.user.userName = this.userQuery.name
+    this.user.mailAddress = this.userQuery.mail
   },
 };
 </script>

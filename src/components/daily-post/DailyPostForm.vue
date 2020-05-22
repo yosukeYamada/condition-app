@@ -72,10 +72,7 @@
               max-rows="6"
             ></b-form-textarea>
           </b-form-group>
-          <b-button
-            class="float-right"
-            variant="outline-success"
-            @click.prevent="register()"
+          <b-button variant="outline-success" @click.prevent="register()"
             >登録する</b-button
           >
         </b-form>
@@ -89,6 +86,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      loading: false,
       param: {
         motivationSelected: "3",
         performanceSelected: "3",
@@ -137,14 +135,13 @@ export default {
         .then((response) => {
           this.$store.dispatch("setDairyPost", response.data);
           this.$store.dispatch("setMyDailyPost", response.data);
-          
         })
         .catch((e) => {
           alert("コンディション登録の送信に失敗しました：" + e);
         });
+
       alert("登録しました！");
-      //全従業員を検索する
-      this.$router.push("/MyCondition");
+      this.$router.push("/myCondition");
     },
   },
 };

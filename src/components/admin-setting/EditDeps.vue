@@ -40,7 +40,7 @@
             >
           </v-list-item-content>
         </template>
-        <v-list-item @click="vlistItemClick()" dense>
+        <v-list-item class="pl-3" @click="vlistItemClick()" dense>
           <v-list-item-icon class="mb-0 mr-3 pt-4">
             <v-icon v-text="'mdi-pencil'"></v-icon>
           </v-list-item-icon>
@@ -64,7 +64,7 @@
             >
           </v-list-item-action-text>
         </v-list-item>
-        <v-list-item @click="vlistItemClick()" dense>
+        <v-list-item class="pl-3" @click="vlistItemClick()" dense>
           <v-list-item-icon class="mb-0 mr-3 pt-1">
             <v-icon v-text="'mdi-delete'"></v-icon>
           </v-list-item-icon>

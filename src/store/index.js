@@ -5,6 +5,7 @@ import "firebase/auth";
 import createPersistedState from "vuex-persistedstate";
 import axios from "axios";
 import filter from "./filter";
+import aggregate from "./aggregate";
 
 Vue.use(Vuex);
 
@@ -208,7 +209,61 @@ export default new Vuex.Store({
         (employee) => employee.userId === state.loginUser.userId
       )[0].dailyPost = myDailyPost;
     },
-   
+    /**
+     *ユーザー情報の更新時更新情報をEmployeeListに格納する
+     * @param {*} updateEmployee 更新情報
+     */
+    setUpdateEmployee(state, updateEmployee) {
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].userName = updateEmployee[0].userName;
+
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].userNameKana = updateEmployee[0].userNameKana;
+
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].depId = updateEmployee[0].depId;
+
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].hireDate = updateEmployee[0].hireDate;
+
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].mailList[0].mailName = updateEmployee[0].mailList[0].mailName;
+
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].version = updateEmployee[0].version;
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].dep.depId = updateEmployee[0].depId;
+      state.employeeList.filter(
+        (employee) => employee.userId === updateEmployee[0].userId
+      )[0].dep.depName = updateEmployee[0].dep.depName;
+    },
+
+    //リロードすると消えてしまうNews詳細
+    setInfoDetail(state, infoDetail) {
+      state.infoDetail = infoDetail;
+    },
+    setInfoDetailId(state, informationId) {
+      state.infoDetail.push({
+        informationId: informationId,
+      });
+    },
+
+    //リロードすると消えてしまうEmp詳細
+    setEmpDetail(state, empDetail) {
+      state.empDetail = empDetail;
+    },
+    setEmpDetailId(state, userId) {
+      state.empDetail.push({
+        userId: userId,
+      });
+    },
     /**
      * ユーザー権限の更新をemployeeList内のユーザー情報に反映するメソッド
      * @param {*} updatedUser 更新されたユーザー情報
@@ -424,7 +479,29 @@ export default new Vuex.Store({
     setMyDailyPost({ commit }, myDailyPost) {
       commit("setMyDailyPost", myDailyPost);
     },
-    
+    /**
+     * ユーザー情報の更新時にstoreのemployeeListに格納する
+     * @param {*} updateEmployee 更新情報
+     */
+    setUpdateEmployee({ commit }, updateEmployee) {
+      commit("setUpdateEmployee", updateEmployee);
+    },
+
+    //リロードすると消えてしまうNews詳細
+    setInfoDetail({ commit }, infoDetail) {
+      commit("setInfoDetail", infoDetail);
+    },
+    setInfoDetailId({ commit }, informationId) {
+      commit("setInfoDetailId", informationId);
+    },
+
+    //リロードすると消えてしまうEmp詳細
+    setEmpDetail({ commit }, empDetail) {
+      commit("setEmpDetail", empDetail);
+    },
+    setEmpDetailId({ commit }, userId) {
+      commit("setEmpDetail", userId);
+    },
     /**
      * ユーザー権限を変更した際に更新したユーザー情報をemployeeListに反映するメソッド
      * @/components/admin-setting/AuthorityModal.vue
@@ -456,8 +533,9 @@ export default new Vuex.Store({
       return state.loginStatus;
     },
   },
-  modules:{
-    filter
+  modules: {
+    filter,
+    aggregate
   },
 
   plugins: [createPersistedState({ storage: window.sessionStorage })], // オプションを追加

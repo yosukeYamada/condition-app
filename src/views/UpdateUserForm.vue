@@ -1,8 +1,8 @@
 <template>
-  <b-container>
+  <b-container class="mt-5">
     <BreadCrumbs :items="items" />
     <b-row align-v="center" align-h="center">
-      <b-col sm="12" md="10" lg="8">
+      <b-col sm="12" md="10" lg="8" xl="8">
         <UpdateUserForm />
       </b-col>
     </b-row>

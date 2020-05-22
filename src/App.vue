@@ -1,7 +1,7 @@
 <template>
   <v-app style="background-color:#f5f5f5">
-    <Header class="mb-5" />
-        <router-view />
+    <Header />
+    <router-view />
     <SideMenu></SideMenu>
   </v-app>
 </template>
@@ -24,7 +24,7 @@ export default {
     this.loginCheck();
   },
   methods: {
-    ...mapActions(["setLoginUser"],),
+    ...mapActions(["setLoginUser"]),
     loginCheck() {
       firebase.auth().onAuthStateChanged((user) => {
         if (!user) {

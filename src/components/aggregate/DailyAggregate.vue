@@ -3,39 +3,29 @@
     <b-row>
       <b-col sm="4">
         <b-card>
-          <MotivPieChart
-            :chart-data="motivChartData"
-            :options="options"
-            :is-get-data="isGetData"
-          ></MotivPieChart>
+          <MotivPieChart :chart-data="motivChartData" :options="options" :is-get-data="isGetData"></MotivPieChart>
         </b-card>
       </b-col>
       <b-col sm="4">
         <b-card>
-          <ConPieChart
-            :chart-data="conChartData"
-            :options="options"
-            :isGetData="isGetData"
-          ></ConPieChart>
+          <ConPieChart :chart-data="conChartData" :options="options" :isGetData="isGetData"></ConPieChart>
         </b-card>
       </b-col>
       <b-col sm="4">
         <b-card>
-          <PerfoPieChart
-            :chart-data="perfoChartData"
-            :options="options"
-            :is-get-data="isGetData"
-          ></PerfoPieChart>
+          <PerfoPieChart :chart-data="perfoChartData" :options="options" :is-get-data="isGetData"></PerfoPieChart>
         </b-card>
       </b-col>
     </b-row>
   </div>
 </template>
+
 <script>
 import axios from "axios";
 import ConPieChart from "@/components/aggregate/ConPieChart";
 import MotivPieChart from "@/components/aggregate/MotivPieChart";
 import PerfoPieChart from "@/components/aggregate/PerfoPieChart";
+// import func from '../../../vue-temp/vue-editor-bridge';
 const labels = ["快晴", "晴れ", "曇り", "雨", "嵐"];
 const backgroundColor = ["#ea5550", "#f3981d", "#b2cbe4", "#68a4d9", "#0075c2"];
 
@@ -43,45 +33,46 @@ export default {
   components: {
     ConPieChart,
     MotivPieChart,
-    PerfoPieChart,
+    PerfoPieChart
   },
   props: ["selectedDate"],
   data() {
     return {
+      depId: "",
       isGetData: false,
       conChartData: {
         labels: labels,
         datasets: [
           {
             data: [],
-            backgroundColor: backgroundColor,
-          },
-        ],
+            backgroundColor: backgroundColor
+          }
+        ]
       },
       motivChartData: {
         labels: labels,
         datasets: [
           {
             data: [],
-            backgroundColor: backgroundColor,
-          },
-        ],
+            backgroundColor: backgroundColor
+          }
+        ]
       },
       perfoChartData: {
         labels: labels,
         datasets: [
           {
             data: [],
-            backgroundColor: backgroundColor,
-          },
-        ],
+            backgroundColor: backgroundColor
+          }
+        ]
       },
       options: {
         responsive: true,
         legend: {
-          display: false,
-        },
-      },
+          display: false
+        }
+      }
     };
   },
   methods: {
@@ -97,10 +88,10 @@ export default {
     getAggregateByDay() {
       axios
         .post("/getAggregateByDay", {
-          date: this.selectedDate,
+          date: this.$store.state.aggregate.date,
+          depId: 0
         })
-        .then((response) => {
-          console.log(response.data)
+        .then(response => {
           this.conChartData.datasets[0].data = this.convertChartData(
             response.data.condition
           );
@@ -112,20 +103,32 @@ export default {
           );
           this.isGetData = this.isGetData ? false : true;
         })
-        .catch((e) => {
+        .catch(e => {
           alert(e);
         });
-    },
+    }
+  },
+  computed: {
+    data() {
+      return this.$store.state.aggregate.dayData;
+    }
   },
   watch: {
-    selectedDate: {
-      handler: function() {
-        this.getAggregateByDay();
-      },
-    },
+    data: function(newData) {
+      this.conChartData.datasets[0].data = this.convertChartData(
+        newData.condition
+      );
+      this.motivChartData.datasets[0].data = this.convertChartData(
+        newData.motivation
+      );
+      this.perfoChartData.datasets[0].data = this.convertChartData(
+        newData.performance
+      );
+      this.isGetData = this.isGetData ? false : true;
+    }
   },
   created() {
     this.getAggregateByDay();
-  },
+  }
 };
 </script>

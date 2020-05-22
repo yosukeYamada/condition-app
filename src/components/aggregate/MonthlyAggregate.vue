@@ -1,6 +1,6 @@
 <template>
   <b-row>
-    <b-col sm="4">
+    <b-col xl="4" lg="4" md="12">
       <b-card>
         <b-card-text>モチベーションスコア</b-card-text>
         <MotivLineChart
@@ -10,7 +10,7 @@
         ></MotivLineChart>
       </b-card>
     </b-col>
-    <b-col sm="4">
+    <b-col xl="4" lg="4" md="12">
       <b-card>
         <b-card-text>コンディションスコア</b-card-text>
         <ConLineChart
@@ -20,7 +20,7 @@
         ></ConLineChart>
       </b-card>
     </b-col>
-    <b-col sm="4">
+    <b-col xl="4" lg="4" md="12">
       <b-card>
         <b-card-text>パフォーマンススコア</b-card-text>
         <PerfoLineChart
@@ -119,7 +119,8 @@ export default {
     getAggregateByMonth() {
       axios
         .post("/getAggregateByMonth", {
-          date: this.selectedDate,
+          date: this.$store.state.aggregate.date,
+          depId : 0
         })
         .then((response) => {
           this.convertChartData(response.data);
@@ -130,12 +131,16 @@ export default {
         });
     },
   },
+  computed : {
+    data() {
+      return this.$store.state.aggregate.monthData;
+    }
+  },
   watch: {
-    selectedDate: {
-      handler: function() {
-        this.getAggregateByMonth();
-      },
-    },
+    data : function(newData) {
+      this.convertChartData(newData);
+      this.isGetData = this.isGetData ? false : true;
+    }
   },
   mounted() {
     this.getAggregateByMonth();

@@ -1,7 +1,7 @@
 <template>
-  <b-container>
+  <b-container class="mt-5">
     <b-row align-v="center" align-h="center">
-      <b-col lg="8">
+      <b-col sm="12" md="10" lg="8" xl="8">
         <RegisterUser />
       </b-col>
     </b-row>

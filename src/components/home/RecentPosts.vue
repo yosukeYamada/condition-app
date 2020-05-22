@@ -6,6 +6,7 @@
     header-bg-variant="success"
     header-text-variant="white"
     no-body
+    class="h-100"
   >
     <b-list-group v-if="latestPosts.length !== 0" flush id="resent-posts-list">
       <b-list-group-item v-for="(latestPost, i) in latestPosts" :key="i">
@@ -94,7 +95,7 @@ export default {
 
 <style scoped>
 #resent-posts-list {
-  max-height: 200px;
+  max-height: 250px;
   overflow-y: scroll;
   overflow-x: hidden;
 }

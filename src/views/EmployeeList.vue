@@ -1,10 +1,10 @@
 <template>
-  <b-container fluid>
+  <b-container fluid class="mt-5">
     <b-row align-v="center" align-h="center">
       <b-col lg="11">
-        <h2 class="mb-4">従業員一覧</h2>
+        <div class="headline mb-4">従業員一覧</div>
         <b-row>
-          <b-col cols="12" sm="4" md="3" lg="2">
+          <b-col cols="12" sm="4" md="4" lg="3">
             <SearchByDepName></SearchByDepName>
           </b-col>
           <b-col cols="6" sm="4" md="3" lg="2">
@@ -27,7 +27,6 @@ import SearchByDepName from "@/components/employee-list/SearchByDepName";
 import SearchByHireYear from "@/components/employee-list/SearchByHireYear";
 import SearchByHireMonth from "@/components/employee-list/SearchByHireMonth";
 import { mapActions } from "vuex";
-// import axios from "axios";
 
 export default {
   components: {
@@ -130,14 +129,6 @@ export default {
   },
   created() {
     this.getMasterList();
-  //   axios
-  //       .get("/showEmployeeList")
-  //       .then((response) => {
-  //         this.$store.dispatch("setEmployeeList", response.data);
-  //       })
-  //       .catch((e) => {
-  //         alert("従業員一覧を取得するAPIとの通信に失敗しました:" + e);
-  //       });
   },
 };
 </script>

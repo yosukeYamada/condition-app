@@ -1,55 +1,32 @@
 <template>
-  <b-container>
+  <b-container fluid class="mt-5">
     <b-row align-v="center" align-h="center">
-      <b-col>
-        <h2 class="mb-4">集計グラフ</h2>
+      <b-col xl="11" lg="11">
+        <div class="headline mb-4">集計グラフ</div>
         <b-row>
-          <b-col sm="4" class="pb-0">
-            <v-menu
-              ref="menu"
-              v-model="menu"
-              :close-on-content-click="false"
-              :return-value.sync="selectedDate"
-              transition="scale-transition"
-              offset-y
-              min-width="290px"
+          <b-col xl="3" lg="3" md="4" sm="4" class="pb-0">
+            <el-date-picker
+              v-model="selectedDate"
+              type="date"
+              placeholder="日付を選択"
+              class="w-100"
             >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="selectedDate"
-                  label="表示する日付を選択してください"
-                  prepend-icon="event"
-                  readonly
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                v-model="selectedDate"
-                locale="ja-ja"
-                :day-format="(date) => new Date(date).getDate()"
-                no-title
-                scrollable
-              >
-                <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                <v-btn
-                  text
-                  color="primary"
-                  @click="$refs.menu.save(selectedDate)"
-                  >OK</v-btn
-                >
-              </v-date-picker>
-            </v-menu>
+            </el-date-picker>
           </b-col>
-            <SearchByDep/>
+          <b-col xl="3" lg="3" md="4" sm="4">
+            <SearchByDep />
+          </b-col>
+          <b-col xl="1" lg="2" md="3" sm="2">
+            <SearchButton />
+          </b-col>
         </b-row>
         <small
           >※
           指定した日付に該当するデータが存在しない場合はグラフは描画されません</small
         >
-        <DailyAggregate :selected-date="selectedDate" />
+        <DailyAggregate />
         <GraphDescription />
-        <MonthlyAggregate :selected-date="selectedDate" />
+        <MonthlyAggregate />
       </b-col>
     </b-row>
   </b-container>
@@ -60,22 +37,43 @@ import MonthlyAggregate from "@/components/aggregate/MonthlyAggregate";
 import DailyAggregate from "@/components/aggregate/DailyAggregate.vue";
 import GraphDescription from "@/components/aggregate/GraphDescription.vue";
 import SearchByDep from "@/components/aggregate/SearchByDep.vue";
+import SearchButton from "@/components/aggregate/SearchButton.vue";
+import moment from "moment";
 
 export default {
   components: {
     DailyAggregate,
     MonthlyAggregate,
     GraphDescription,
-    SearchByDep
+    SearchByDep,
+    SearchButton,
   },
   data() {
     return {
       selectedDate: String,
-      menu: false,
     };
   },
   created() {
     this.selectedDate = new Date().toISOString().substr(0, 10);
+    this.$store.dispatch("aggregate/setSeletedDate", this.selectedDate);
+  },
+  computed: {
+    selectDate: {
+      get() {
+        return moment(this.selectedDate).format("YYYY-MM-DD");
+      },
+      set(val) {
+        this.selectedDate = val;
+      },
+    },
+  },
+  watch: {
+    selectDate: function(newSelectedDate) {
+      this.$store.dispatch("aggregate/setSeletedDate", newSelectedDate);
+    },
+  },
+  beforeDestroy() {
+    this.$store.dispatch("aggregate/setSeletedDate", "");
   },
 };
 </script>

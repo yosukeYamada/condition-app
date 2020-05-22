@@ -1,77 +1,84 @@
 <template>
-  <div>
-    <b-col>
-      <b-card
-        class="text-left"
-        border-variant="success"
-        style="border-width:2px;"
-        header="今日のコンディション編集"
-        header-bg-variant="success"
-        header-text-variant="white"
-      >
-        <b-card-text class="pt-2">
-          <b-form>
-            <b-form-group
-              class="pt-4"
-              label="今日のモチベーションはどれくらいですか？"
+  <b-col lg="8">
+    <b-card
+      class="text-left"
+      border-variant="success"
+      style="border-width:2px;"
+      header="今日のコンディション編集"
+      header-bg-variant="success"
+      header-text-variant="white"
+    >
+      <b-card-text class="pt-2">
+        <b-form>
+          <b-form-group
+            class="pt-4"
+            label="今日のモチベーションはどれくらいですか？"
+          >
+            <b-form-radio-group
+              class="text-center"
+              v-model="param.motivationSelected"
             >
-              <b-form-radio-group v-model="param.motivationSelected">
-                <b-form-radio
-                  class="pr-5 pb-4"
-                  v-for="(item, i) in radioItems"
-                  :key="i"
-                  :value="item.value"
-                  ><v-fa :icon="item.icon" size="2x" :style="item.style"
-                /></b-form-radio>
-              </b-form-radio-group>
-            </b-form-group>
-            <b-form-group class="pt-4" label="今日の体調はどうですか？">
-              <b-form-radio-group v-model="param.conditionSelected">
-                <b-form-radio
-                  class="pr-5 pb-4"
-                  v-for="(item, i) in radioItems"
-                  :key="i"
-                  :value="item.value"
-                  ><v-fa :icon="item.icon" size="2x" :style="item.style"
-                /></b-form-radio>
-              </b-form-radio-group>
-            </b-form-group>
-            <b-form-group
-              class="pt-4"
-              label="今日やることの目標のイメージはできていますか？"
+              <b-form-radio
+                class="pr-5 pb-4"
+                v-for="(item, i) in radioItems"
+                :key="i"
+                :value="item.value"
+                ><v-fa :icon="item.icon" size="2x" :style="item.style"
+              /></b-form-radio>
+            </b-form-radio-group>
+          </b-form-group>
+          <b-form-group class="pt-4" label="今日の体調はどうですか？">
+            <b-form-radio-group
+              class="text-center"
+              v-model="param.conditionSelected"
             >
-              <b-form-radio-group v-model="param.performanceSelected">
-                <b-form-radio
-                  class="pr-5 pb-4"
-                  v-for="(item, i) in radioItems"
-                  :key="i"
-                  :value="item.value"
-                  ><v-fa :icon="item.icon" size="2x" :style="item.style"
-                /></b-form-radio>
-              </b-form-radio-group>
-            </b-form-group>
-            <b-form-group
-              class="mb-4"
-              label="なにかコメントはありますか？"
-              label-for="input-comment"
+              <b-form-radio
+                class="pr-5 pb-4"
+                v-for="(item, i) in radioItems"
+                :key="i"
+                :value="item.value"
+                ><v-fa :icon="item.icon" size="2x" :style="item.style"
+              /></b-form-radio>
+            </b-form-radio-group>
+          </b-form-group>
+          <b-form-group
+            class="pt-4"
+            label="今日やることの目標のイメージはできていますか？"
+          >
+            <b-form-radio-group
+              class="text-center"
+              v-model="param.performanceSelected"
             >
-              <b-form-textarea
-                class="mt-3"
-                id="input-comment"
-                v-model="param.comment"
-                placeholder="コメントがあれば入力してください"
-                rows="3"
-                max-rows="6"
-              ></b-form-textarea>
-            </b-form-group>
-            <b-button variant="outline-success" @click.prevent="register()"
-              >編集する</b-button
-            >
-          </b-form>
-        </b-card-text>
-      </b-card>
-    </b-col>
-  </div>
+              <b-form-radio
+                class="pr-5 pb-4"
+                v-for="(item, i) in radioItems"
+                :key="i"
+                :value="item.value"
+                ><v-fa :icon="item.icon" size="2x" :style="item.style"
+              /></b-form-radio>
+            </b-form-radio-group>
+          </b-form-group>
+          <b-form-group
+            class="mb-4"
+            label="なにかコメントはありますか？"
+            label-for="input-comment"
+          >
+            <b-form-textarea
+              class="mt-3"
+              id="input-comment"
+              v-model="param.comment"
+              placeholder="コメントがあれば入力してください"
+              rows="3"
+              max-rows="6"
+            ></b-form-textarea>
+          </b-form-group>
+          <b-button variant="outline-success" @click.prevent="register()"
+            >変更する</b-button
+          >
+        </b-form>
+      </b-card-text>
+    </b-card>
+  </b-col>
 </template>
 
 <script>
@@ -81,10 +88,10 @@ export default {
   data() {
     return {
       param: {
-        motivationSelected: this.$route.params.motivationId,
-        conditionSelected: this.$route.params.conditionId,
-        performanceSelected: this.$route.params.performanceId,
-        comment: this.$route.params.comment,
+        motivationSelected: Number,
+        conditionSelected: Number,
+        performanceSelected: Number,
+        comment: String,
       },
       radioItems: [
         {
@@ -115,17 +122,22 @@ export default {
       ],
     };
   },
+  computed: {
+    dailyPost() {
+      return JSON.parse(decodeURIComponent(this.$route.query.item));
+    },
+  },
   methods: {
     register() {
       axios
         .post("/editDailyPost/edit", {
-          version: this.$route.params.version,
+          version: this.dailyPost.version,
           updateUserId: this.$store.state.loginUser.userId,
           motivationId: this.param.motivationSelected,
           conditionId: this.param.conditionSelected,
           performanceId: this.param.performanceSelected,
           comment: this.param.comment,
-          dailyPostId: this.$route.params.dailyPostId,
+          dailyPostId: this.dailyPost.dailyPostId,
         })
         .then((response) => {
           if (response.data[0].version === 0) {
@@ -135,6 +147,7 @@ export default {
             this.$router.push("/");
           } else {
             this.$store.dispatch("setDairyPost", response.data);
+            this.$store.dispatch("setMyDailyPost", response.data);
           }
         })
         .catch((e) => {
@@ -144,6 +157,12 @@ export default {
       alert("投稿内容の変更に成功しました。");
       this.$router.push("/myCondition");
     },
+  },
+  mounted() {
+    this.param.motivationSelected = this.dailyPost.motivationId;
+    this.param.conditionSelected = this.dailyPost.conditionId;
+    this.param.performanceSelected = this.dailyPost.performanceId;
+    this.param.comment = this.dailyPost.comment;
   },
 };
 </script>

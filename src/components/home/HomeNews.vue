@@ -46,7 +46,7 @@ export default {
 
 <style scoped>
 #HomeNewsList {
-  max-height: 200px;
+  height: 30vh;
   overflow-y: scroll;
   overflow-x: hidden;
 }

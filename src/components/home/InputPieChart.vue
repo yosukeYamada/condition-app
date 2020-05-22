@@ -18,7 +18,7 @@ export default {
       afterDraw(chart) {
         let ctx = chart.ctx;
         // 中央にテキスト表示
-        let fontSize = 40;
+        let fontSize = 35;
         let fontStyle = "normal";
         let fontFamily = "Helvetica Neue";
         ctx.fillStyle = "#000";
@@ -29,7 +29,7 @@ export default {
 
         // 入力率の表示(第二, 第三引数は適宜調整)
         ctx.fillText(
-          chart.data.datasets[0].inputRate,
+          chart.data.datasets[0].inputRate + "%",
           chart.width / 2,
           chart.height / 2
         );

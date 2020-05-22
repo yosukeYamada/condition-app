@@ -245,6 +245,14 @@ export default new Vuex.Store({
         }
       });
     },
+    /**
+     * トークンをセットするメソッド.
+     * 
+     * @param {*} token トークン 
+     */
+    setToken(state,token){
+      state.token = token
+    }
   },
   actions: {
     /**
@@ -465,6 +473,9 @@ export default new Vuex.Store({
     updateUserAuthority({ commit }, updatedUser) {
       commit("updateUserAuthority", updatedUser);
     },
+    setToken({commit},token){
+      commit("setToken",token);
+    }
   },
 
   getters: {

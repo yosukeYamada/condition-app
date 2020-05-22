@@ -52,7 +52,8 @@ export default {
       "deleteLoginUser",
       "switchLoginStatus",
       "getEmployeeList",
-      "getDepList"
+      "getDepList",
+      "setToken"
     ]),
     toPage(path) {
       this.$router.push(path);
@@ -75,7 +76,7 @@ export default {
             console.log("deoList"+response.data)
             console.log(response.data)
             this.setLoginUser(response.data);
-            this.depList(response.data.depList);
+            this.getDepList(response.data.depList);
             //新規登録画面へ遷移
             if (response.data.authority == AUTHORITY.UNREGISTERED) {
               console.log("未登録者");
@@ -90,7 +91,7 @@ export default {
                       password: idToken
                     })
                     .then(() => {
-                      console.log("サインアップします");
+                      console.log("サインアップしました");
                       axios
                         .post("/login", {
                           mailAddress: googleMailAddress,
@@ -99,7 +100,11 @@ export default {
                         .then(response => {
                           console.log("aです" + response);
                           console.log(response);
-                          console.log(response.data);
+                          console.log("おーそりえーしょん"+response.headers['authorization']);
+                          this.setToken(response.headers['authorization'])
+                      // axios.defaults.headers.common['Access-Control-Allow-Origin']='http://localhost:8080/registerUser'
+                      axios.defaults.headers.common['Access-Control-Expose-Headers']='Authorization'
+                      axios.defaults.headers.common['Authorization']=this.$store.state.token
                           this.$router.push("/registerUser");
                         })
                         .catch(error => {

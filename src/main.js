@@ -18,7 +18,7 @@ axios.create({
   },
   responseType: "json"
 });
-axios.defaults.headers.common['Authorization']='Bearer ';
+axios.defaults.headers.common['Authorization']=1
 // console.log(axios.defaults.baseURL)
 
 

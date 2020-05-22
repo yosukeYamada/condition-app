@@ -54,8 +54,7 @@ const getDefaultState = () => {
     filterDepName: "",
     filterHireYear: "",
     filterHireMonth: "",
-    //リロードすると消えてしまうNews、従業員詳細
-    empDetail: [],
+    
   };
 };
 

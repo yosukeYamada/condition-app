@@ -99,7 +99,7 @@ export default {
   },
   methods: {
      toPage(item){
-       console.log(item)
+       
        this.$router.push({
          name:"EmployeeCondition",
          query:{item: encodeURIComponent(JSON.stringify(item))}

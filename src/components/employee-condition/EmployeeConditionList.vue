@@ -33,7 +33,6 @@
 
 <script>
 import moment from "moment";
-import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -79,7 +78,7 @@ export default {
 
   },
   methods: {
-    ...mapActions(["setEmpDetail", "setEmpDetailId"]),
+    
     transferIcon(param) {
       if (param === "快晴") {
         return ["fas", "sun"];
@@ -118,13 +117,7 @@ export default {
       }
     },
   },
-  created() {
-   
-    console.log(this.dailyPostList)
+ 
 
-  },
-  beforeDestroy() {
-    this.$store.dispatch("setEmpDetail", "");
-  },
 };
 </script>

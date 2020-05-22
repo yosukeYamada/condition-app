@@ -109,7 +109,7 @@ export default new Vuex.Store({
     setDepList(state, depList) {
       state.depList = depList;
     },
-    setDairyPost(state, dailyPost) {
+    setDailyPost(state, dailyPost) {
       state.loginUser.dailyPost = dailyPost;
     },
     /**
@@ -349,8 +349,8 @@ export default new Vuex.Store({
         commit("setDepList", response.data);
       });
     },
-    setDairyPost({ commit }, dailyPost) {
-      commit("setDairyPost", dailyPost);
+    setDailyPost({ commit }, dailyPost) {
+      commit("setDailyPost", dailyPost);
     },
     setEmployeeList({ commit }, employeeList) {
       commit("setEmployeeList", employeeList);
@@ -463,6 +463,37 @@ export default new Vuex.Store({
     },
     deleteUser({ commit }, employee) {
       commit("deleteUser", employee.userId);
+    },
+    /**
+     * 毎日の投稿を編集するメソッド
+     * @components/daily-post/EditDailyPostForm.vueで利用
+     * @param {*} edit 更新する投稿情報
+     */
+    editDailyPost({commit},edit) {
+      axios
+        .post("/editDailyPost/edit", {
+          version: edit.version,
+          updateUserId: edit.updateUserId,
+          motivationId: edit.motivationId,
+          conditionId: edit.conditionId,
+          performanceId: edit.performanceId,
+          comment: edit.comment,
+          dailyPostId: edit.dailyPostId,
+        })
+        .then((response) => {
+          if (response.data[0].version === 0) {
+            alert(
+              "他のユーザーが先に変更処理を行いました。\n更新ボタンを押して画面を再読み込みし、最新の状態を確認してください。"
+            );
+            this.$router.push("/");
+          } else {
+            commit("setDailyPost", response.data);
+            commit("setMyDailyPost", response.data);
+          }
+        })
+        .catch((e) => {
+          alert("コンディション編集の送信に失敗しました：" + e);
+        });
     },
     /**
      * お知らせ投稿一覧を取得するメソッド

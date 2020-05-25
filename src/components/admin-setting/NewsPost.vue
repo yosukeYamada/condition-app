@@ -67,7 +67,7 @@ export default {
   data() {
     return {
       item: "",
-      newsPostList: [],
+      newsPostList1: [],
       inputNews: "",
     };
   },
@@ -106,7 +106,7 @@ export default {
           newsId: newsId,
         });
         // リアルタイム表示
-        let index = this.newsId;
+        let index = this.newsPostList;
         this.newsPostList.splice(index, 1);
       }
     },
@@ -115,8 +115,18 @@ export default {
     },
   },
   created() {
-    this.newsPostList = this.$store.state.newsPostList;
+    this.newsPostList1 = this.$store.state.newsPostList;
   },
+  // computed:{
+  //   newsPostList(){
+  //     return this.newsPostList1;
+  //   }
+  // },
+  // watch:{
+  //   newsPostList(){
+  //     this.newsPostList1 = this.$store.state.newsPostList;
+  //   }
+  // },
 };
 </script>
 

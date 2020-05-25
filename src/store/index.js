@@ -88,6 +88,7 @@ export default new Vuex.Store({
      */
     setEmployeeList(state, employeeList) {
       state.employeeList = employeeList;
+      alert("従業員一覧の取得処理が完了しました")
     },
     /**
      * depListに取得した部署一覧をセットするメソッド
@@ -298,9 +299,6 @@ export default new Vuex.Store({
     },
     setDailyPost({ commit }, dailyPost) {
       commit("setDailyPost", dailyPost);
-    },
-    setEmployeeList({ commit }, employeeList) {
-      commit("setEmployeeList", employeeList);
     },
     /**
      * お知らせ一覧をstateにセットする

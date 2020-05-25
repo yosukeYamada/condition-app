@@ -10,38 +10,41 @@
   >
     <b-card-text class="p-4">
       <div class="mx-auto rate mb-3">
-        <InputPieChart :chartData="inputChartData" :options="options" :isGetData="isGetData"></InputPieChart>
+        <InputPieChart
+          :chartData="inputChartData"
+          :options="options"
+          :isGetData="isGetData"
+        ></InputPieChart>
       </div>
-      <div class="text-center font-weight-bold">{{ totalNnumbers.length }}人中{{ getPosted() }}人が入力完了</div>
+      <div class="text-center font-weight-bold">
+        {{ totalNumbers }}人中{{ posted }}人が入力完了
+      </div>
     </b-card-text>
   </b-card>
 </template>
 
 <script>
 import InputPieChart from "@/components/home/InputPieChart";
-import axios from "axios";
 import moment from "moment";
 
 export default {
   components: {
-    InputPieChart
+    InputPieChart,
   },
   data() {
     return {
-      totalNnumbers: [],
-      postedNnumbers: [],
-      unpostedNnumbers: [],
+      inputChartData: {},
       isGetData: false,
       options: {
         responsive: true,
         cutoutPercentage: 70,
         tooltips: {
-          enabled: false
+          enabled: false,
         },
         legend: {
-          display: false
-        }
-      }
+          display: false,
+        },
+      },
     };
   },
   methods: {
@@ -50,42 +53,30 @@ export default {
         datasets: [
           {
             backgroundColor: ["#00BCD4", "#E0F7FA"],
-            data: [this.getPosted(), this.getUnPosted()],
-            inputRate: (
-              (this.getPosted() / this.totalNnumbers.length) *
-              100
-            ).toFixed(1)
-          }
-        ]
+            data: [this.posted(), this.unPosted()],
+            inputRate: ((this.posted / this.totalNumbers) * 100).toFixed(1),
+          },
+        ],
       };
-    },
-    // 投稿人数
-    getPosted() {
-      this.postedNnumbers =
-        this.totalNnumbers.length - this.unpostedNnumbers.length;
-      return this.postedNnumbers;
-    },
-    // 未投稿人数
-    getUnPosted() {
-      return this.unpostedNnumbers.length;
+      alert("fillData!!");
     },
     // 未投稿者のリスト
-    setLatestPosts(param) {
+    async setLatestPosts(employeeList) {
       var latestPosts = [];
       var resultPosts = [];
       var preToday = new Date();
 
-      for (let i = 0; i < param.length; i++) {
+      for (let i = 0; i < employeeList.length; i++) {
         var latestPost = {
-          date: ""
+          date: "",
         };
         //投稿が0の場合
-        if (param[i].dailyPost.length === 0) {
+        if (employeeList[i].dailyPost.length === 0) {
           latestPost.date = "2020-05-13T00:43:14.943+0000"; //今日以前の日付
           latestPosts.push(latestPost);
           //投稿がある場合
         } else {
-          latestPost.date = param[i].dailyPost[0].date;
+          latestPost.date = employeeList[i].dailyPost[0].date;
           latestPosts.push(latestPost);
         }
       }
@@ -100,28 +91,40 @@ export default {
       for (let i = 0; i < latestPosts.length; i++) {
         if (moment(preToday).isAfter(latestPosts[i].date, "day")) {
           var resultPost = {
-            date: ""
+            date: "",
           };
           resultPost.date = latestPosts[i].date;
           resultPosts.push(resultPost);
         }
       }
+      alert("setLatestPost!!");
       return resultPosts;
-    }
+    },
   },
-  created() {
-    axios.get("/showEmployeeList").then(response => {
-      this.$store.dispatch("setEmployeeList", response.data);
-      this.totalNnumbers = this.$store.state.employeeList;
-      this.unpostedNnumbers = this.setLatestPosts(this.totalNnumbers);
-      this.fillData();
-    });
-    this.fillData();
-  }
+  computed: {
+    totalNumbers: () => {
+      return this.$store.state.employeeList.length;
+    },
+    unPosted() {
+      return this.unpostedNnumbers.length;
+    },
+    // 投稿人数
+    posted() {
+      return this.totalNumbers - this.unPosted;
+    },
+  },
+  mounted() {
+    let drawChart = () => {
+      this.setLatestPosts(
+        this.$store.state.employeeList
+      ).then(this.fillData());
+    };
+    drawChart();
+  },
 };
 </script>
 
-<style>
+<style scoped>
 .rate {
   max-height: 200px;
   max-width: 200px;

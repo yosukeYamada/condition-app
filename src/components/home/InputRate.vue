@@ -11,9 +11,9 @@
     <b-card-text class="p-4">
       <div class="mx-auto rate mb-3">
         <InputPieChart
-          :chartData="inputChartData"
+          :input-chart-data="inputChartData"
           :options="options"
-          :isGetData="isGetData"
+          :is-get-data="isGetData"
         ></InputPieChart>
       </div>
       <div class="text-center font-weight-bold">
@@ -33,7 +33,15 @@ export default {
   },
   data() {
     return {
-      inputChartData: {},
+      unPosted: 0,
+      inputChartData: {
+        datasets: [
+          {
+            backgroundColor: ["#00BCD4", "#E0F7FA"],
+            data: [1, 1],
+          },
+        ],
+      },
       isGetData: false,
       options: {
         responsive: true,
@@ -53,73 +61,46 @@ export default {
         datasets: [
           {
             backgroundColor: ["#00BCD4", "#E0F7FA"],
-            data: [this.posted(), this.unPosted()],
-            inputRate: ((this.posted / this.totalNumbers) * 100).toFixed(1),
+            data: [this.posted, this.unPosted],
           },
         ],
       };
+      this.isGetData = this.isGetData ? false : true;
       alert("fillData!!");
     },
     // 未投稿者のリスト
-    async setLatestPosts(employeeList) {
-      var latestPosts = [];
-      var resultPosts = [];
-      var preToday = new Date();
-
+    setUnPosted() {
+      var employeeList = this.$store.state.employeeList;
+      var today = new Date();
       for (let i = 0; i < employeeList.length; i++) {
-        var latestPost = {
-          date: "",
-        };
-        //投稿が0の場合
         if (employeeList[i].dailyPost.length === 0) {
-          latestPost.date = "2020-05-13T00:43:14.943+0000"; //今日以前の日付
-          latestPosts.push(latestPost);
-          //投稿がある場合
+          /** 投稿数が0の場合 */
+          this.unPosted++;
         } else {
-          latestPost.date = employeeList[i].dailyPost[0].date;
-          latestPosts.push(latestPost);
+          /** 投稿がある場合 */
+          if (
+            moment(employeeList[i].dailyPost[0].date).isBefore(today, "day")
+          ) {
+            /** 最新の投稿日が今日より前の場合 */
+            this.unPosted++;
+          }
         }
       }
-      for (let i = 0; i < latestPosts.length; i++) {
-        var str = latestPosts[i].date;
-        var result = str.split("T");
-        var result2 = result[0].split("-");
-        var rdate = new Date(result2[0], result2[1] - 1, result2[2], 0, 0);
-        latestPosts[i].date = rdate;
-      }
-
-      for (let i = 0; i < latestPosts.length; i++) {
-        if (moment(preToday).isAfter(latestPosts[i].date, "day")) {
-          var resultPost = {
-            date: "",
-          };
-          resultPost.date = latestPosts[i].date;
-          resultPosts.push(resultPost);
-        }
-      }
-      alert("setLatestPost!!");
-      return resultPosts;
+      alert("setUnPosted!!");
     },
   },
   computed: {
-    totalNumbers: () => {
+    totalNumbers() {
       return this.$store.state.employeeList.length;
-    },
-    unPosted() {
-      return this.unpostedNnumbers.length;
     },
     // 投稿人数
     posted() {
       return this.totalNumbers - this.unPosted;
     },
   },
-  mounted() {
-    let drawChart = () => {
-      this.setLatestPosts(
-        this.$store.state.employeeList
-      ).then(this.fillData());
-    };
-    drawChart();
+  async mounted() {
+    await this.setUnPosted();
+    this.fillData();
   },
 };
 </script>

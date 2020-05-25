@@ -25,6 +25,7 @@ import HomeNews from "@/components/home/HomeNews";
 import RecentPosts from "@/components/home/RecentPosts";
 import InputRate from "@/components/home/InputRate";
 import AUTHORITY from "@/assets/js/Authority.js";
+
 export default {
   components: {
     HomeNews,

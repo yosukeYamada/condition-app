@@ -60,7 +60,7 @@ export default {
             backgroundColor: "rgba(240,100,100,0.2)",
             radius: 0,
             hitRadius: 4, // マウスポインタ検出のための円の半径
-            borderWidth: 2, // 線の太さ
+            borderWidth: 1, // 線の太さ
           },
         ],
       },
@@ -74,7 +74,7 @@ export default {
             backgroundColor: "rgba(92,184,92,0.2)",
             radius: 0,
             hitRadius: 4, // マウスポインタ検出のための円の半径
-            borderWidth: 2, // 線の太さ
+            borderWidth: 1, // 線の太さ
           },
         ],
       },
@@ -88,15 +88,27 @@ export default {
             backgroundColor: "rgba(245,124,0,0.2)",
             radius: 0,
             hitRadius: 4, // マウスポインタ検出のための円の半径
-            borderWidth: 2, // 線の太さ
+            borderWidth: 1, // 線の太さ
           },
         ],
       },
       options: {
+        legend: {
+          display: false,
+        },
         responsive: true,
         display: true,
         maintainAspectRatio: false,
-        scales: { yAxes: [{ ticks: { suggestedMax: 5 } }] },
+        scales: {
+          yAxes: [{ ticks: { suggestedMax: 5 } }],
+          xAxes: [
+            {
+              ticks: {
+                autoSkip: true, //横幅が狭くなったときに表示を間引くか否か
+              },
+            },
+          ],
+        },
       },
     };
   },
@@ -120,7 +132,7 @@ export default {
       axios
         .post("/getAggregateByMonth", {
           date: this.$store.state.aggregate.date,
-          depId : 0
+          depId: 0,
         })
         .then((response) => {
           this.convertChartData(response.data);
@@ -131,16 +143,16 @@ export default {
         });
     },
   },
-  computed : {
+  computed: {
     data() {
       return this.$store.state.aggregate.monthData;
-    }
+    },
   },
   watch: {
-    data : function(newData) {
+    data: function(newData) {
       this.convertChartData(newData);
       this.isGetData = this.isGetData ? false : true;
-    }
+    },
   },
   mounted() {
     this.getAggregateByMonth();

@@ -30,7 +30,7 @@
                 placeholder="ラクス太郎"
                 maxlength="20"
               />
-              <p>{{ errors[0] }}</p>
+              <small class="text-danger">{{ errors[0] }}</small>
             </b-form-group>
           </ValidationProvider>
 
@@ -50,7 +50,7 @@
                 placeholder="らくすたろう"
                 maxlength="20"
               />
-              <div>{{ errors[0] }}</div>
+              <small class="text-danger">{{ errors[0] }}</small>
             </b-form-group>
           </ValidationProvider>
           <b-form-group
@@ -79,7 +79,7 @@
                         {{ i }}
                       </option>
                     </b-form-select>
-                    <p>{{ errors[0] }}</p>
+                    <small class="text-danger">{{ errors[0] }}</small>
                   </ValidationProvider>
                 </b-col>
                 <b-col>
@@ -110,7 +110,7 @@
                   >
                 </b-form-select>
               </b-form-group>
-              <p>{{ errors[0] }}</p>
+              <small class="text-danger">{{ errors[0] }}</small>
             </ValidationProvider>
           </div>
           <b-button

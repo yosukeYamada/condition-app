@@ -3,14 +3,12 @@ import { Doughnut, mixins } from "vue-chartjs";
 
 export default {
   extends: Doughnut,
-  mixins: [Doughnut, mixins.reactiveData],
+  mixins: [mixins.reactiveData],
   props: ["inputChartData", "options", "isGetData"],
   watch: {
-    isGetData: {
-      handler: function() {
-        this.renderChart(this.inputChartData, this.options);
-        this.drawInputRate();
-      },
+    isGetData: function() {
+      this.renderChart(this.inputChartData, this.options);
+      this.drawInputRate();
     },
   },
   methods: {
@@ -20,9 +18,9 @@ export default {
           let inputDataArray = chart.data.datasets[0].data;
           let total = inputDataArray[0] + inputDataArray[1];
           let inputRate = ((inputDataArray[0] / total) * 100).toFixed(1);
-            if (isNaN(inputRate)) {
-              inputRate = 100;
-            }
+          if (isNaN(inputRate)) {
+            inputRate = 100;
+          }
           let ctx = chart.ctx;
           // 中央にテキスト表示
           let fontSize = 35;

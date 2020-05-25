@@ -35,8 +35,5 @@ export default {
     Develop,
     Footer,
   },
-  mounted(){
-    console.log(this.$store.state.employeeList)
-  }
 };
 </script>

@@ -25,6 +25,7 @@ import HomeNews from "@/components/home/HomeNews";
 import RecentPosts from "@/components/home/RecentPosts";
 import InputRate from "@/components/home/InputRate";
 import AUTHORITY from "@/assets/js/Authority.js";
+import store from "../store";
 
 export default {
   components: {
@@ -41,6 +42,11 @@ export default {
     authority: function() {
       return this.$store.state.loginUser.authority;
     },
+  },
+  async beforeRouteEnter(to, from, next) {
+    if (store.state.employeeList.length === 0)
+      await store.dispatch("getEmployeeList");
+    next();
   },
 };
 </script>

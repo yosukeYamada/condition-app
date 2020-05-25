@@ -67,6 +67,9 @@ export default {
     toPage(path) {
       this.$router.push(path);
     },
+    unRegistered(){
+
+    }
   },
   mounted() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -77,7 +80,7 @@ export default {
           .post("/loginCheck", {
             mail: firebase.auth().currentUser.email,
           })
-          .then(async (response) => {
+          .then((response) => {
             if (response.data.authority == AUTHORITY.UNREGISTERED) {
               /** 未登録ユーザーだった場合 */
               this.setLoginUser(response.data);
@@ -89,7 +92,7 @@ export default {
               this.getDepList();
               this.switchLoginStatus(true);
               //全従業員情報を取得
-              await this.getEmployeeList();
+              // await this.getEmployeeList();
               this.$router.push("/home");
             } else if (response.data.authority == AUTHORITY.USER) {
               /** ユーザー権限の場合 */
@@ -111,11 +114,6 @@ export default {
         this.deleteLoginUser();
       }
     });
-  },
-  async beforeRouteEnter(to, from, next) {
-    await this.$store.dispatch("getEmployeeList");
-    alert("beforeRouteEnter")
-    next();
   },
 };
 </script>

@@ -17,7 +17,7 @@
         ></InputPieChart>
       </div>
       <div class="text-center font-weight-bold">
-        {{ totalNumbers }}人中{{ posted }}人が入力完了
+        {{ totalNumbers }}人中{{ totalNumbers - unPosted }}人が入力完了
       </div>
     </b-card-text>
   </b-card>
@@ -66,7 +66,6 @@ export default {
         ],
       };
       this.isGetData = this.isGetData ? false : true;
-      alert("fillData!!");
     },
     // 未投稿者のリスト
     setUnPosted() {
@@ -86,7 +85,13 @@ export default {
           }
         }
       }
-      alert("setUnPosted!!");
+    },
+  },
+  watch: {
+    totalNumbers: async function() {
+      await this.setUnPosted();
+      await this.fillData();
+      this.isGetData = this.isGetData ? false : true;
     },
   },
   computed: {

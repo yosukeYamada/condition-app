@@ -6,6 +6,7 @@
         <b-row>
           <b-col xl="3" lg="3" md="4" sm="4" class="pb-0">
             <el-date-picker
+              :clearable=false
               v-model="selectedDate"
               type="date"
               placeholder="日付を選択"

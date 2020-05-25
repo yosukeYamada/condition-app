@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="dailyPostList"
+      :items="dailyPost"
       class="card elevation-1"
     >
       <template v-slot:item.motivation="{ item }">
@@ -42,11 +42,12 @@
 
 <script>
 import moment from "moment";
+import axios from "axios";
 export default {
   data() {
     return {
       editPost: [],
-      dailyPost: [],
+      dailyPostList: [],
       headers: [
         {
           value: "date",
@@ -81,36 +82,40 @@ export default {
       ],
     };
   },
-  components: {},
+  created() {
+    axios
+      .post("/showDailyPosts", {
+        userId: this.$store.state.loginUser.userId,
+      })
+      .then((response) => {
+        this.dailyPostList = response.data;
+      });
+  },
   computed: {
-    dailyPostList() {
-      var dailyPostList = [];
-      for (let num in this.$store.state.loginUser.dailyPost) {
-        dailyPostList.push({
-          date: moment(this.$store.state.loginUser.dailyPost[num].date).format(
-            "YYYY-MM-DD"
-          ),
-          condition: this.$store.state.loginUser.dailyPost[num].postedCondition
-            .condition.conditionName,
-          motivation: this.$store.state.loginUser.dailyPost[num]
-            .postedMotivation.motivation.motivationName,
-          performance: this.$store.state.loginUser.dailyPost[num]
-            .postedPerformance.performance.performanceName,
-          comment: this.$store.state.loginUser.dailyPost[num].postedComment
-            .comment,
-          conditionId: this.$store.state.loginUser.dailyPost[num]
-            .postedCondition.condition.conditionId,
-          motivationId: this.$store.state.loginUser.dailyPost[num]
-            .postedMotivation.motivation.motivationId,
-          performanceId: this.$store.state.loginUser.dailyPost[num]
-            .postedPerformance.performance.performanceId,
-          version: this.$store.state.loginUser.dailyPost[num].version,
-          dailyPostId: this.$store.state.loginUser.dailyPost[num].dailyPostId,
+    dailyPost() {
+      var dailyPost = [];
+      for (let num in this.dailyPostList) {
+        dailyPost.push({
+          date: moment(this.dailyPostList[num].date).format("YYYY-MM-DD"),
+          condition: this.dailyPostList[num].postedCondition.condition
+            .conditionName,
+          motivation: this.dailyPostList[num].postedMotivation.motivation
+            .motivationName,
+          performance: this.dailyPostList[num].postedPerformance.performance
+            .performanceName,
+          comment: this.dailyPostList[num].postedComment.comment,
+          conditionId: this.dailyPostList[num].postedCondition.condition
+            .conditionId,
+          motivationId: this.dailyPostList[num].postedMotivation.motivation
+            .motivationId,
+          performanceId: this.dailyPostList[num].postedPerformance.performance
+            .performanceId,
+          version: this.dailyPostList[num].version,
+          dailyPostId: this.dailyPostList[num].dailyPostId,
         });
       }
-      return dailyPostList;
+      return dailyPost;
     },
-
   },
   methods: {
     transferIcon(param) {

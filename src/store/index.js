@@ -13,8 +13,6 @@ const getDefaultState = () => {
   return {
     loginUser: {
       authority: 2, // 初期値は2(一般ユーザー権限)で指定
-      dailyPost: [],
-      dep: {}, // 削除する
       depId: 0,
       hireDate: "",
       registerDate: "",
@@ -46,7 +44,6 @@ const getDefaultState = () => {
     newsPostList: [],
     informationList: [],
     categoryList: [],
-    
   };
 };
 
@@ -99,9 +96,9 @@ export default new Vuex.Store({
     setDepList(state, depList) {
       state.depList = depList;
     },
-    setDailyPost(state, dailyPost) {
-      state.loginUser.dailyPost.unshift(dailyPost);
-    },
+    // setDailyPost(state, dailyPost) {
+    //   state.loginUser.dailyPost.unshift(dailyPost);
+    // },
 
     /**
      * お知らせ一覧をstateにセットする
@@ -169,10 +166,18 @@ export default new Vuex.Store({
      * @param {*} myDailyPost 自分の今日の投稿内容
      */
     setMyDailyPost(state, myDailyPost) {
-
+      state.employeeList
+        .filter((employee) => employee.userId === state.loginUser.userId)[0]
+        .dailyPost.unshift(myDailyPost);
+    },
+    /**
+     * 自分の投稿をstoreのemployeeListのdailyPostに格納する
+     * @param {*} editMyDailyPost 自分の今日の投稿内容
+     */
+    editMyDailyPost(state, editMyDailyPost) {
       state.employeeList.filter(
         (employee) => employee.userId === state.loginUser.userId
-      )[0].dailyPost.unshift(myDailyPost);
+      )[0].dailyPost[0] = editMyDailyPost;
     },
     /**
      *ユーザー情報の更新時更新情報をEmployeeListに格納する
@@ -205,9 +210,6 @@ export default new Vuex.Store({
       state.employeeList.filter(
         (employee) => employee.userId === updateEmployee[0].userId
       )[0].dep.depId = updateEmployee[0].depId;
-      state.employeeList.filter(
-        (employee) => employee.userId === updateEmployee[0].userId
-      )[0].dep.depName = updateEmployee[0].dep.depName;
     },
 
     /**
@@ -383,37 +385,6 @@ export default new Vuex.Store({
       commit("deleteUser", employee.userId);
     },
     /**
-     * 毎日の投稿を編集するメソッド
-     * @components/daily-post/EditDailyPostForm.vueで利用
-     * @param {*} edit 更新する投稿情報
-     */
-    editDailyPost({ commit }, edit) {
-      axios
-        .post("/editDailyPost/edit", {
-          version: edit.version,
-          updateUserId: edit.updateUserId,
-          motivationId: edit.motivationId,
-          conditionId: edit.conditionId,
-          performanceId: edit.performanceId,
-          comment: edit.comment,
-          dailyPostId: edit.dailyPostId,
-        })
-        .then((response) => {
-          if (response.data[0].version === 0) {
-            alert(
-              "他のユーザーが先に変更処理を行いました。\n更新ボタンを押して画面を再読み込みし、最新の状態を確認してください。"
-            );
-            this.$router.push("/");
-          } else {
-            commit("setDailyPost", response.data);
-            commit("setMyDailyPost", response.data);
-          }
-        })
-        .catch((e) => {
-          alert("コンディション編集の送信に失敗しました：" + e);
-        });
-    },
-    /**
      * お知らせ投稿一覧を取得するメソッド
      * @components/login/Login.vue
      */
@@ -428,6 +399,13 @@ export default new Vuex.Store({
      */
     setMyDailyPost({ commit }, myDailyPost) {
       commit("setMyDailyPost", myDailyPost);
+    },
+    /**
+     * 自分の編集した投稿内容をstoreのemployeeListのdailyPostに更新する
+     * @param {*} editMyDailyPost 自分の今日の投稿編集内容
+     */
+    editMyDailyPost({ commit }, editMyDailyPost) {
+      commit("editMyDailyPost", editMyDailyPost);
     },
     /**
      * ユーザー情報の更新時にstoreのemployeeListに格納する

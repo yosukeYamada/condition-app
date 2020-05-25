@@ -82,6 +82,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -127,15 +128,21 @@ export default {
   },
   methods: {
     register() {
-      this.$store.dispatch("editDailyPost", {
-        version: this.dailyPost.version,
-        updateUserId: this.$store.state.loginUser.userId,
-        motivationId: this.param.motivationSelected,
-        conditionId: this.param.conditionSelected,
-        performanceId: this.param.performanceSelected,
-        comment: this.param.comment,
-        dailyPostId: this.dailyPost.dailyPostId,
-      })
+      axios
+        .post("/editDailyPost/edit", {
+          updateUserId: this.$store.state.loginUser.userId,
+          motivationId: this.param.motivationSelected,
+          conditionId: this.param.conditionSelected,
+          performanceId: this.param.performanceSelected,
+          comment: this.param.comment,
+          dailyPostId: this.dailyPost.dailyPostId,
+        })
+        .then((response) => {
+          this.$store.dispatch("editMyDailyPost", response.data);
+        })
+        .catch((e) => {
+          alert("コンディション編集の送信に失敗しました：" + e);
+        });
       alert("投稿内容の変更に成功しました。");
       this.$router.push("/myCondition");
     },

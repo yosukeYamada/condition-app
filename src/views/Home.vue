@@ -12,7 +12,7 @@
             <InputRate />
           </b-col>
           <b-col sm="6" md="7" lg="6">
-            <RecentPosts />
+            <UnansweredList />
           </b-col>
         </b-row>
       </b-col>
@@ -22,7 +22,7 @@
 
 <script>
 import HomeNews from "@/components/home/HomeNews";
-import RecentPosts from "@/components/home/RecentPosts";
+import UnansweredList from "@/components/home/UnansweredList";
 import InputRate from "@/components/home/InputRate";
 import AUTHORITY from "@/assets/js/Authority.js";
 import store from "../store";
@@ -30,7 +30,7 @@ import store from "../store";
 export default {
   components: {
     HomeNews,
-    RecentPosts,
+    UnansweredList,
     InputRate,
   },
   data() {

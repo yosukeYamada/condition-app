@@ -83,8 +83,7 @@ export default {
           name: elm.userName,
           kana: elm.userNameKana,
           mail: elm.mailList[0].mailName,
-          depId: elm.dep.depId,
-          depName: elm.dep.depName,
+          depId: elm.depId,
           hireDate: hireDate,
           version: elm.version,
         };

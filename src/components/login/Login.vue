@@ -67,9 +67,6 @@ export default {
     toPage(path) {
       this.$router.push(path);
     },
-    unRegistered(){
-
-    }
   },
   mounted() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -91,8 +88,6 @@ export default {
               this.setLoginUser(response.data);
               this.getDepList();
               this.switchLoginStatus(true);
-              //全従業員情報を取得
-              // await this.getEmployeeList();
               this.$router.push("/home");
             } else if (response.data.authority == AUTHORITY.USER) {
               /** ユーザー権限の場合 */

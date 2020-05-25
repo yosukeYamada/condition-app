@@ -44,7 +44,10 @@ export default {
     },
   },
   async beforeRouteEnter(to, from, next) {
-    if (store.state.employeeList.length === 0)
+    if (
+      store.state.loginUser.authority === AUTHORITY.ADMIN &&
+      store.state.employeeList.length === 0
+    )
       await store.dispatch("getEmployeeList");
     next();
   },

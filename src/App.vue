@@ -27,12 +27,8 @@ export default {
     ...mapActions(["setLoginUser"]),
     loginCheck() {
       firebase.auth().onAuthStateChanged((user) => {
-        if (!user) {
-          /** ログインしていない場合 */
-          console.log("ログインしていません");
-        } else {
+        if (user) {
           /** ログインしている場合 */
-          console.log("ログインしています");
           if (this.$store.state.loginUser === null) {
             axios
               .post("/loginCheck", {

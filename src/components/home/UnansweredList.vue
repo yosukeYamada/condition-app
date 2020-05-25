@@ -15,7 +15,7 @@
     >
       <b-list-group-item v-for="(unanswered, i) in unansweredList" :key="i">
         <div>
-          <span>{{ unanswered.userName + "さん" }}</span>
+          <v-fa :icon="['far','frown']" size="lg" class="blue--text text--darken-2 mr-4"></v-fa><span>{{ unanswered.userName + "さん" }}</span>
         </div>
       </b-list-group-item>
     </b-list-group>

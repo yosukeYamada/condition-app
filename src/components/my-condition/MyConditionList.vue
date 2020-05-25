@@ -42,12 +42,10 @@
 
 <script>
 import moment from "moment";
-import axios from "axios";
 export default {
   data() {
     return {
       editPost: [],
-      dailyPostList: [],
       headers: [
         {
           value: "date",
@@ -82,15 +80,7 @@ export default {
       ],
     };
   },
-  created() {
-    axios
-      .post("/showDailyPosts", {
-        userId: this.$store.state.loginUser.userId,
-      })
-      .then((response) => {
-        this.dailyPostList = response.data;
-      });
-  },
+  props: ["dailyPostList"],
   computed: {
     dailyPost() {
       var dailyPost = [];

@@ -17,16 +17,16 @@ export default {
   name: "App",
   components: {
     Header,
-    SideMenu,
+    SideMenu
   },
   mounted() {
     // axios.get('test/insert')
-    this.loginCheck();
+    // this.loginCheck();
   },
   methods: {
     ...mapActions(["setLoginUser"]),
     loginCheck() {
-      firebase.auth().onAuthStateChanged((user) => {
+      firebase.auth().onAuthStateChanged(user => {
         if (!user) {
           /** ログインしていない場合 */
           console.log("ログインしていません");
@@ -36,15 +36,15 @@ export default {
           if (this.$store.state.loginUser === null) {
             axios
               .post("/loginCheck", {
-                mail: firebase.auth().currentUser.email,
+                mail: firebase.auth().currentUser.email
               })
-              .then((response) => {
+              .then(response => {
                 this.setLoginUser(response.data);
               });
           }
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>

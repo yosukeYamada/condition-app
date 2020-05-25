@@ -44,6 +44,11 @@ export default {
   components: {
     Loading
   },
+  computed:{
+    token() {
+      return this.$store.state.token
+    }
+  },
   methods: {
     ...mapActions([
       "login",
@@ -63,8 +68,6 @@ export default {
   created() {
     firebase.auth().onAuthStateChanged(user => {
       this.loading = false;
-      // const token = firebase.auth().currentUser.getIdToken(true);
-      // console.log(token);
       if (user) {
         this.setFirebaseUser(user);
         var googleMailAddress = firebase.auth().currentUser.email;
@@ -73,70 +76,75 @@ export default {
             mail: googleMailAddress
           })
           .then(response => {
-            console.log("deoList"+response.data)
-            console.log(response.data)
             this.setLoginUser(response.data);
             this.getDepList(response.data.depList);
             //新規登録画面へ遷移
             if (response.data.authority == AUTHORITY.UNREGISTERED) {
-              console.log("未登録者");
-              firebase
-                .auth()
-                .currentUser.getIdToken(true)
-                .then(idToken => {
-                  console.log("トークン" + idToken);
+              axios
+                .post("/signUp", {
+                  mailAddress: googleMailAddress,
+                  password: googleMailAddress
+                })
+                .then(() => {
+                  // APIへログイン
                   axios
-                    .post("/signUp", {
+                    .post("/login", {
                       mailAddress: googleMailAddress,
-                      password: idToken
+                      password: googleMailAddress
                     })
-                    .then(() => {
-                      console.log("サインアップしました");
-                      axios
-                        .post("/login", {
-                          mailAddress: googleMailAddress,
-                          password: idToken
-                        })
-                        .then(response => {
-                          console.log("aです" + response);
-                          console.log(response);
-                          console.log("おーそりえーしょん"+response.headers['authorization']);
-                          this.setToken(response.headers['authorization'])
-                      // axios.defaults.headers.common['Access-Control-Allow-Origin']='http://localhost:8080/registerUser'
-                      axios.defaults.headers.common['Access-Control-Expose-Headers']='Authorization'
-                      axios.defaults.headers.common['Authorization']=this.$store.state.token
-                          this.$router.push("/registerUser");
-                        })
-                        .catch(error => {
-                          console.log(error);
-                          console.log("エラーですか？");
-                        });
+                    .then(apiLoginResponse => {
+                      this.setToken(apiLoginResponse.headers["authorization"]);
+                      this.$router.push("/registerUser");
                     })
                     .catch(error => {
                       console.log(error);
-                      console.log("B+ログインに失敗しました。");
                     });
                 })
                 .catch(error => {
                   console.log(error);
-                  console.log("C+ＡＰＩユーザ登録に失敗しました");
                 });
-
               //管理者権限
             } else if (response.data.authority == AUTHORITY.ADMIN) {
               /** 管理者権限の場合 */
-              this.setLoginUser(response.data);
-              this.getDepList();
-              this.switchLoginStatus(true);
-              //全従業員情報を取得
-              this.getEmployeeList();
-              this.$router.push("/home");
+              /** APIへログイン */
+              axios
+                .post("/login", {
+                  mailAddress: googleMailAddress,
+                  password: googleMailAddress
+                })
+                .then(apiLoginResponse => {
+                  this.setLoginUser(response.data);
+                  this.getDepList();
+                  this.switchLoginStatus(true);
+                  Promise.resolve()
+                    .then(() =>
+                      this.setToken(apiLoginResponse.headers["authorization"])
+                    )
+                    .then(() => axios.defaults.headers.common["Authorization"] = this.token)
+                    .then(() => this.getEmployeeList())
+                    .then(() => this.$router.push("/home"));
+                  //全従業員情報を取得
+                })
+                .catch(error => {
+                  console.log(error);
+                });
             } else if (response.data.authority == AUTHORITY.USER) {
               /** ユーザー権限の場合 */
-              this.setLoginUser(response.data);
-              this.getDepList();
-              this.switchLoginStatus(true);
-              this.$router.push("/home");
+              axios
+                .post("/login", {
+                  mailAddress: googleMailAddress,
+                  password: googleMailAddress
+                })
+                .then(apiLoginResponse => {
+                  this.setToken(apiLoginResponse.headers["authorization"]);
+                  this.setLoginUser(response.data);
+                  this.getDepList();
+                  this.switchLoginStatus(true);
+                  this.$router.push("/home");
+                })
+                .catch(error => {
+                  console.log(error);
+                });
             } else if (response.data.authority == AUTHORITY.OUTSIDER) {
               /** メールアドレスのドメインが組織外のユーザーの場合 */
               this.deleteLoginUser();

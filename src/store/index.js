@@ -8,7 +8,7 @@ import axios from "axios";
 Vue.use(Vuex);
 
 const initialState = {
-  token:null,
+  token:"",
   loginUser: {
     authority: 2, // 初期値は1(一般ユーザー権限)で指定
     dailyPost: [],

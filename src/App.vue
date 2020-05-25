@@ -21,7 +21,7 @@ export default {
   },
   mounted() {
     // axios.get('test/insert')
-    this.loginCheck();
+    // this.loginCheck();
   },
   methods: {
     ...mapActions(["setLoginUser"],),

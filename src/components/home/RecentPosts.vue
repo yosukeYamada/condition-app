@@ -95,7 +95,7 @@ export default {
 
 <style scoped>
 #resent-posts-list {
-  max-height: 250px;
+  height: 40vh;
   overflow-y: scroll;
   overflow-x: hidden;
 }

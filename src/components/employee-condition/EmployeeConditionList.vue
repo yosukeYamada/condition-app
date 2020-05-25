@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import moment from "moment";
 export default {
   data() {
@@ -68,17 +69,15 @@ export default {
           sortable: true,
         },
       ],
+      dailyPostList:[]
     };
   },
-  computed: {
-    dailyPostList() {
-      let employee = this.$store.state.employeeList.find(
-        (employee) =>
-          employee.userId ===
-          JSON.parse(decodeURIComponent(this.$route.query.item)).userId
-      );
-      return employee.dailyPost;
-    },
+  created() {
+    axios.post("/showDailyPosts",{ 
+      userId:JSON.parse(decodeURIComponent(this.$route.query.item)).userId 
+    }).then((response) => {
+      this.dailyPostList = response.data
+    })
   },
   methods: {
     

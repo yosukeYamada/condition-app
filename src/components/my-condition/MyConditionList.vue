@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import moment from "moment";
 export default {
   data() {
@@ -79,33 +80,41 @@ export default {
           sortable: true,
         },
       ],
+      myDailyPostList:[]
     };
   },
   components: {},
+  created() {
+    axios.post('/showDailyPosts', {
+      userId:JSON.parse(decodeURIComponent(this.$store.state.loginUser.userId))
+    }).then((response) => {
+      this.myDailyPostList = response.data
+    })
+  },
   computed: {
     dailyPostList() {
       var dailyPostList = [];
-      for (let num in this.$store.state.loginUser.dailyPost) {
+      for (let num in this.myDailyPostList) {
         dailyPostList.push({
-          date: moment(this.$store.state.loginUser.dailyPost[num].date).format(
+          date: moment(this.myDailyPostList[num].date).format(
             "YYYY-MM-DD"
           ),
-          condition: this.$store.state.loginUser.dailyPost[num].postedCondition
+          condition: this.myDailyPostList[num].postedCondition
             .condition.conditionName,
-          motivation: this.$store.state.loginUser.dailyPost[num]
+          motivation: this.myDailyPostList[num]
             .postedMotivation.motivation.motivationName,
-          performance: this.$store.state.loginUser.dailyPost[num]
+          performance: this.myDailyPostList[num]
             .postedPerformance.performance.performanceName,
-          comment: this.$store.state.loginUser.dailyPost[num].postedComment
+          comment: this.myDailyPostList[num].postedComment
             .comment,
-          conditionId: this.$store.state.loginUser.dailyPost[num]
+          conditionId: this.myDailyPostList[num]
             .postedCondition.condition.conditionId,
-          motivationId: this.$store.state.loginUser.dailyPost[num]
+          motivationId: this.myDailyPostList[num]
             .postedMotivation.motivation.motivationId,
-          performanceId: this.$store.state.loginUser.dailyPost[num]
+          performanceId: this.myDailyPostList[num]
             .postedPerformance.performance.performanceId,
-          version: this.$store.state.loginUser.dailyPost[num].version,
-          dailyPostId: this.$store.state.loginUser.dailyPost[num].dailyPostId,
+          version: this.myDailyPostList[num].version,
+          dailyPostId: this.myDailyPostList[num].dailyPostId,
         });
       }
       return dailyPostList;

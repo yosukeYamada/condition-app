@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
 import { mapActions } from "vuex";
 import Status from "@/assets/js/Status";
 import axios from "axios";
@@ -88,7 +89,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["deleteUser"]),
+    ...mapActions(["deleteUser","switchLoginStatus","resetState"]),
     deleteConfirm(user) {
       if (confirm("削除してよろしいですか？")) {
         axios
@@ -100,8 +101,17 @@ export default {
           })
           .then(() => {
             this.deleteUser(user.userId),
-              alert("削除しました"),
-              this.$router.push("/adminSetting");
+              alert("削除しました")
+
+              if(user.userId == this.$store.state.loginUser.userId) {
+                firebase.auth().signOut();
+                this.$router.push("/");
+                this.switchLoginStatus(false);
+                this.resetState();
+              } else {
+                this.$router.push("/adminSetting");
+              }
+
           })
           .catch((e) => {
             alert("問題が発生しました。もう1度作業をやり直してください。" + e),

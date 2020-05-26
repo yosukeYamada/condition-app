@@ -19,9 +19,14 @@ import "../validate/validate.js";
 //   },
 //   responseType: "json",
 // });
+var token = store.state.token
+store.state.watch(token,()=>{
+  token = store.state.token
+})
 axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
 axios.defaults.headers.common["Access-Control-Expose-Headers"] = "Authorization";
-axios.defaults.headers.common["Authorization"] = store.state.token
+axios.defaults.headers.common["Authorization"] = token
+// token
 // console.log(axios.defaults.baseURL)
 
 Vue.use(VueAxios, axios);

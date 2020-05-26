@@ -67,6 +67,7 @@ export default {
           value: "comment",
           text: "コメント",
           sortable: true,
+          width: '55%'
         },
       ],
       dailyPostList:[]

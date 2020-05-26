@@ -205,7 +205,7 @@ export default new Vuex.Store({
       )[0].version = updateEmployee[0].version;
       state.employeeList.filter(
         (employee) => employee.userId === updateEmployee[0].userId
-      )[0].dep.depId = updateEmployee[0].depId;
+      )[0].depId = updateEmployee[0].depId;
     },
 
     /**

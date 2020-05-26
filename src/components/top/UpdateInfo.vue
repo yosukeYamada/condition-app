@@ -8,7 +8,7 @@
     >
       <v-card-text class="mt-2">
         <div class="headline font-weight-black mb-4">{{ title }}</div>
-        <div class="information">
+        <div class="information" v-if="informationList.length !== 0">
           <div v-for="(info, i) in informationList" :key="i" class="mb-2">
             <div class="pl-1 mb-1 font-weight-black">
               {{ info.informationDate | moment }}
@@ -27,13 +27,14 @@
                 }"
                 class="link gray--text"
               >
-                <div class=" text-secondary">
+                <div class="text-secondary">
                   {{ info.informationTitle }}
                 </div>
               </router-link>
             </b-row>
           </div>
         </div>
+        <div class="grey--text pl-1 mb-4 font-weight-black" v-if="informationList.length === 0">現在お知らせはありません</div>
       </v-card-text>
     </v-card>
   </b-col>

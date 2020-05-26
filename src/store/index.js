@@ -96,10 +96,6 @@ export default new Vuex.Store({
     setDepList(state, depList) {
       state.depList = depList;
     },
-    // setDailyPost(state, dailyPost) {
-    //   state.loginUser.dailyPost.unshift(dailyPost);
-    // },
-
     /**
      * お知らせ一覧をstateにセットする
      * @param {*} newsPostList お知らせ一覧
@@ -298,9 +294,6 @@ export default new Vuex.Store({
     },
     setDailyPost({ commit }, dailyPost) {
       commit("setDailyPost", dailyPost);
-    },
-    setEmployeeList({ commit }, employeeList) {
-      commit("setEmployeeList", employeeList);
     },
     /**
      * お知らせ一覧をstateにセットする

@@ -97,10 +97,6 @@ export default new Vuex.Store({
     setDepList(state, depList) {
       state.depList = depList;
     },
-    // setDailyPost(state, dailyPost) {
-    //   state.loginUser.dailyPost.unshift(dailyPost);
-    // },
-
     /**
      * お知らせ一覧をstateにセットする
      * @param {*} newsPostList お知らせ一覧
@@ -308,9 +304,6 @@ export default new Vuex.Store({
     setDailyPost({ commit }, dailyPost) {
       commit("setDailyPost", dailyPost);
     },
-    setEmployeeList({ commit }, employeeList) {
-      commit("setEmployeeList", employeeList);
-    },
     /**
      * お知らせ一覧をstateにセットする
      * @param {*} newsPostList お知らせ一覧
@@ -390,8 +383,8 @@ export default new Vuex.Store({
           alert("登録されている部署の削除に失敗しました。");
         });
     },
-    deleteUser({ commit }, employee) {
-      commit("deleteUser", employee.userId);
+    deleteUser({ commit }, userId) {
+      commit("deleteUser", userId);
     },
     /**
      * お知らせ投稿一覧を取得するメソッド

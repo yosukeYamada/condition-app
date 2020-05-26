@@ -76,6 +76,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import firebase from "firebase/app";
 import axios from "axios";
 import AUTHORITY from "@/assets/js/Authority.js";
 import "vue-simple-suggest/dist/styles.css";
@@ -90,6 +92,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["switchLoginStatus","resetState"]),
     /**
      * 管理者一覧の取得を行うメソッド
      */
@@ -247,6 +250,16 @@ export default {
               response.data.userName + "さんを管理者ユーザーから削除しました"
             );
 
+              let loginUser = this.$store.state.employeeList.filter(
+                  (loginUser) => loginUser.userId === this.$store.state.loginUser.userId
+                )
+              if(loginUser[0].authority == AUTHORITY.USER) {
+                firebase.auth().signOut();
+                this.$router.push("/");
+                this.switchLoginStatus(false);
+                this.resetState();
+              }
+
           })
           .catch((e) => {
             alert("管理者権限の変更に失敗しました");
@@ -299,7 +312,7 @@ export default {
       return this.$store.state.employeeList.filter(
         (employee) => employee.authority === AUTHORITY.ADMIN
       )
-    }
+    },
   },
   watch: {
     emp() {
@@ -307,7 +320,7 @@ export default {
     },
     adm() {
       this.setAdminList()
-    }
+    },
   }
 };
 </script>

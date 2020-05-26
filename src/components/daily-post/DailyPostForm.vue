@@ -82,6 +82,7 @@
 </template>
 <script>
 import axios from "axios";
+import AUTHORITY from "@/assets/js/Authority.js";
 
 export default {
   data() {
@@ -133,6 +134,7 @@ export default {
           comment: this.param.comment,
         })
         .then((response) => {
+          if(this.$store.state.loginUser.authority === AUTHORITY.ADMIN)
           this.$store.dispatch("setMyDailyPost", response.data);
         })
         .catch((e) => {

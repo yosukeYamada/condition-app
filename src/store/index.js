@@ -383,7 +383,7 @@ export default new Vuex.Store({
      */
     getNewsList({ commit }) {
       axios.get("/showNewsList").then((response) => {
-        commit("setNewsPost", response.data);
+        commit("setNewsPostList", response.data);
       });
     },
     /**

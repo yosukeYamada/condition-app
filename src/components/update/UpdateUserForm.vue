@@ -26,7 +26,7 @@
                 maxlength="20"
                 required
               />
-              <p>{{ errors[0] }}</p>
+              <small class="text-danger">{{ errors[0] }}</small>
             </b-form-group>
           </ValidationProvider>
 
@@ -46,7 +46,7 @@
                 maxlength="20"
                 required
               />
-              <div>{{ errors[0] }}</div>
+              <small class="text-danger">{{ errors[0] }}</small>
             </b-form-group>
           </ValidationProvider>
           <ValidationProvider rules="required|email" v-slot="{ errors }">
@@ -57,7 +57,7 @@
                 v-model="user.mailAddress"
                 required
               />
-              <div>{{ errors[0] }}</div>
+              <small class="text-danger">{{ errors[0] }}</small>
             </b-form-group>
           </ValidationProvider>
           <ValidationObserver>
@@ -74,7 +74,7 @@
                         {{ i }}
                       </option>
                     </b-form-select>
-                    <p>{{ errors[0] }}</p>
+                    <small class="text-danger">{{ errors[0] }}</small>
                   </ValidationProvider>
                 </b-col>
                 <b-col>
@@ -107,7 +107,7 @@
                   >
                 </b-form-select>
               </b-form-group>
-              <p>{{ errors[0] }}</p>
+              <small class="text-danger">{{ errors[0] }}</small>
             </ValidationProvider>
           </div>
           <b-button
@@ -207,9 +207,9 @@ export default {
     this.user = this.userQuery;
     this.user.hireYear = moment(this.userQuery.hireDate).format("YYYY");
     this.user.hireMonth = moment(this.userQuery.hireDate).format("M");
-    this.user.userNameKana = this.userQuery.kana
-    this.user.userName = this.userQuery.name
-    this.user.mailAddress = this.userQuery.mail
+    this.user.userNameKana = this.userQuery.kana;
+    this.user.userName = this.userQuery.name;
+    this.user.mailAddress = this.userQuery.mail;
   },
 };
 </script>

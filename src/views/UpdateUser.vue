@@ -86,6 +86,7 @@ export default {
           depId: elm.depId,
           hireDate: hireDate,
           version: elm.version,
+          status: elm.status
         };
       });
       this.employeeList = employeeList;

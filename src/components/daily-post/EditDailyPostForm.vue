@@ -83,6 +83,7 @@
 
 <script>
 import axios from "axios";
+import AUTHORITY from "@/assets/js/Authority.js";
 export default {
   data() {
     return {
@@ -138,7 +139,10 @@ export default {
           dailyPostId: this.dailyPost.dailyPostId,
         })
         .then((response) => {
-          this.$store.dispatch("editMyDailyPost", response.data);
+          if(this.$store.state.loginUser.authority === AUTHORITY.ADMIN){
+
+            this.$store.dispatch("editMyDailyPost", response.data);
+          }
         })
         .catch((e) => {
           alert("コンディション編集の送信に失敗しました：" + e);

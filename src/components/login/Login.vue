@@ -45,9 +45,9 @@ export default {
   components: {
     Loading
   },
-  computed:{
+  computed: {
     token() {
-      return this.$store.state.token
+      return this.$store.state.token;
     }
   },
   methods: {
@@ -93,8 +93,14 @@ export default {
                       password: googleMailAddress
                     })
                     .then(apiLoginResponse => {
-                      this.setToken(apiLoginResponse.headers["authorization"]);
-                      this.$router.push("/registerUser");
+                      Promise.resolve()
+                      .then(() =>
+                        this.setToken(apiLoginResponse.headers["authorization"])
+                      )
+                      .then(() =>
+                        this.$router.push("/registerUser"))
+              
+
                     })
                     .catch(error => {
                       console.log(error);
@@ -120,7 +126,12 @@ export default {
                     .then(() =>
                       this.setToken(apiLoginResponse.headers["authorization"])
                     )
-                    .then(() => axios.defaults.headers.common["Authorization"] = this.token)
+                    .then(
+                      () =>
+                        (axios.defaults.headers.common[
+                          "Authorization"
+                        ] = this.token)
+                    )
                     .then(() => this.getEmployeeList())
                     .then(() => this.$router.push("/home"));
                   //全従業員情報を取得
@@ -136,11 +147,20 @@ export default {
                   password: googleMailAddress
                 })
                 .then(apiLoginResponse => {
-                  this.setToken(apiLoginResponse.headers["authorization"]);
                   this.setLoginUser(response.data);
                   this.getDepList();
                   this.switchLoginStatus(true);
-                  this.$router.push("/home");
+                  Promise.resolve()
+                    .then(() =>
+                      this.setToken(apiLoginResponse.headers["authorization"])
+                    )
+                    .then(
+                      () =>
+                        (axios.defaults.headers.common[
+                          "Authorization"
+                        ] = this.token)
+                    )
+                    .then(() => this.$router.push("/home"));
                 })
                 .catch(error => {
                   console.log(error);

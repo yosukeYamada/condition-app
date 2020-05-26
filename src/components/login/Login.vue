@@ -42,6 +42,7 @@ import firebase from "firebase/app";
 import { mapActions } from "vuex";
 import Loading from "@/components/common/Loading.vue";
 import AUTHORITY from "@/assets/js/Authority.js";
+import STATUS from "@/assets/js/Status.js";
 
 export default {
   data() {
@@ -68,7 +69,7 @@ export default {
       this.$router.push(path);
     },
   },
-  created() {
+  mounted() {
     firebase.auth().onAuthStateChanged((user) => {
       this.loading = false;
       if (user) {
@@ -88,8 +89,6 @@ export default {
               this.setLoginUser(response.data);
               this.getDepList();
               this.switchLoginStatus(true);
-              //全従業員情報を取得
-              this.getEmployeeList();
               this.$router.push("/home");
             } else if (response.data.authority == AUTHORITY.USER) {
               /** ユーザー権限の場合 */
@@ -103,6 +102,12 @@ export default {
               firebase.auth().signOut();
               this.err =
                 "メールドメインがrakus-partners.co.jp\nまたはrakus.co.jpのユーザーのみログインできます";
+            } else if(response.data.status == STATUS.DELETED) {
+              /** メールアドレスのドメインが組織外のユーザーの場合 */
+              this.deleteLoginUser();
+              firebase.auth().signOut();
+              this.err =
+                "アカウントが削除されているためログインできません";
             }
           });
         this.loading = true;

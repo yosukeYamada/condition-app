@@ -42,17 +42,16 @@
 
 <script>
 import moment from "moment";
-import axios from "axios";
 export default {
   data() {
     return {
       editPost: [],
-      dailyPostList: [],
       headers: [
         {
           value: "date",
           text: "投稿日",
           sortable: true,
+          width: '15%'
         },
         {
           value: "motivation",
@@ -73,6 +72,7 @@ export default {
           value: "comment",
           text: "コメント",
           sortable: true,
+          width: '50%'
         },
         {
           value: "actions",
@@ -82,15 +82,7 @@ export default {
       ],
     };
   },
-  created() {
-    axios
-      .post("/showDailyPosts", {
-        userId: this.$store.state.loginUser.userId,
-      })
-      .then((response) => {
-        this.dailyPostList = response.data;
-      });
-  },
+  props: ["dailyPostList"],
   computed: {
     dailyPost() {
       var dailyPost = [];

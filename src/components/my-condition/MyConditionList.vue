@@ -51,6 +51,7 @@ export default {
           value: "date",
           text: "投稿日",
           sortable: true,
+          width: '15%'
         },
         {
           value: "motivation",
@@ -71,6 +72,7 @@ export default {
           value: "comment",
           text: "コメント",
           sortable: true,
+          width: '50%'
         },
         {
           value: "actions",

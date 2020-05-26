@@ -98,15 +98,15 @@ export default {
             updateUserStatus: this.deleteStatus,
             updateUserId: this.loginUserId,
           })
-          .then(
+          .then(() => {
             this.deleteUser(user.userId),
-            alert("削除しました"),
-            this.$router.push("/")
-          )
-          .catch(
-            alert("問題が発生しました。もう1度作業をやり直してください。"),
-            this.$router.push("/top")
-          );
+              alert("削除しました"),
+              this.$router.push("/adminSetting");
+          })
+          .catch((e) => {
+            alert("問題が発生しました。もう1度作業をやり直してください。" + e),
+              this.$router.push("/top");
+          });
       }
     },
     /** 部署IDを部署名に変換するメソッド */

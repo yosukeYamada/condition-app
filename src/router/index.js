@@ -30,6 +30,15 @@ const routes = [
     path: "/registerUser",
     name: "RegisterUser",
     component: RegisterUser,
+
+    //ログインしていたら上記のパスに飛ぶことを許可しない
+    beforeEnter(to, from, next) {
+      if (!(store.state.loginStatus)) {
+        next();
+      }else{
+        next("/home")
+      }
+    },
   },
   {
     path: "/",
@@ -77,7 +86,7 @@ const routes = [
   },
   {
     // path: "/employeeCondition/:userId",
-    path:"/employeeCondition",
+    path: "/employeeCondition",
     name: "EmployeeCondition",
     component: EmployeeCondition,
     //ログインしていたら上記のパスに飛ぶことを許可する

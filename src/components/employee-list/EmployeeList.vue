@@ -93,6 +93,7 @@ export default {
           value: "comment",
           text: "コメント",
           sortable: true,
+          width: '30%'
         },
       ],
       items: [],

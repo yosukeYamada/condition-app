@@ -374,8 +374,8 @@ export default new Vuex.Store({
           alert("登録されている部署の削除に失敗しました。");
         });
     },
-    deleteUser({ commit }, employee) {
-      commit("deleteUser", employee.userId);
+    deleteUser({ commit }, userId) {
+      commit("deleteUser", userId);
     },
     /**
      * お知らせ投稿一覧を取得するメソッド

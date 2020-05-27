@@ -1,17 +1,14 @@
 <template>
   <b-container class="mt-5">
-    <BreadCrumbs :items="items" />
-    <UpdateInfo/>
+    <EditInfo/>
   </b-container>
 </template>
 
 <script>
-import BreadCrumbs from "@/components/common/BreadCrumbs.vue";
-import UpdateInfo from "@/components/top/UpdateInfo.vue";
+import EditInfo from "@/components/top/EditInfo.vue";
 export default {
   components: {
-    BreadCrumbs,
-    UpdateInfo,
+    EditInfo
   },
   data() {
     return {

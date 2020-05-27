@@ -94,7 +94,6 @@ export default {
             version: this.info.version
           })
           .then((response) => {
-            console.log(response)
             if(response.data === Status.HOLD) {
               alert(
                 "他のユーザーが先に変更処理を行いました。\n更新ボタンを押して画面を再読み込みし、最新の状態を確認してください。"

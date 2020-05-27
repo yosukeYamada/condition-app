@@ -68,6 +68,7 @@ export default {
         axios.post('/info/delete', {
           informationId: this.info.informationId,
           status: Status.DELETED,
+          version: this.info.version,
           updateUserId : this.$store.state.loginUser.userId
         }).then((response) => {
           if(response.data === Status.HOLD) {
@@ -81,7 +82,7 @@ export default {
         })
       }
     }
-  }
+  },
 };
 </script>
 

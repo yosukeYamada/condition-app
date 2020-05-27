@@ -8,6 +8,16 @@
     no-body
     class="h-100"
   >
+    <el-select id="dep" style="width:100%;" v-model="filterDepName" placeholder="部署名">
+      <el-option
+        v-for="dep in this.depList"
+        :key="dep.depId"
+        :label="dep.depName"
+        :value="dep.depId"
+      >
+      </el-option>
+    </el-select>
+
     <b-list-group
       v-if="unansweredList.length !== 0"
       flush
@@ -34,22 +44,36 @@
     </b-card-text>
   </b-card>
 </template>
+
 <script>
 import moment from "moment";
 export default {
   data() {
     return {
       unansweredList: [],
+      inputDepName: 0,
+      depList:[]
     };
   },
   watch: {
     employeeList: function() {
-      this.unansweredList = this.setUnansweredList();
+      this.unansweredList = this.setUnansweredList
     },
+    filterDepName: function() {
+      this.$store.dispatch("filter/setFilterDepName",this.inputDepName)
+    }
   },
   computed: {
     employeeList() {
       return this.$store.state.employeeList;
+    },
+    filterDepName: {
+      get() {
+        return this.inputDepName;
+      },
+      set(value) {
+        this.inputDepName = value;
+      },
     },
   },
   methods: {
@@ -83,7 +107,15 @@ export default {
   },
   mounted() {
     this.unansweredList = this.setUnansweredList();
-    console.log(this.unansweredList)
+
+    this.depList = Array.from(this.$store.state.depList)
+    this.depList.unshift({
+      depId : 0,
+      depName: '全従業員'
+    })
+  },
+  beforeDestroy() {
+    this.$store.dispatch("filter/setFilterDepName","")
   },
 };
 </script>

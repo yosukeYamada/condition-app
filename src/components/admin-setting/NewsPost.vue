@@ -78,7 +78,7 @@ export default {
           .then(response => {
             this.$store.dispatch("setNewsPostList", response.data);
             this.newsPostList = this.$store.state.newsPostList;
-            this.inputNews = "";
+            this.inputNews = null;
             alert("お知らせを投稿しました！");
           })
           .catch(e => {

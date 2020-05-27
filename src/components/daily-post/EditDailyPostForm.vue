@@ -129,26 +129,31 @@ export default {
   },
   methods: {
     register() {
-      axios
-        .post("/editDailyPost/edit", {
-          updateUserId: this.$store.state.loginUser.userId,
-          motivationId: this.param.motivationSelected,
-          conditionId: this.param.conditionSelected,
-          performanceId: this.param.performanceSelected,
-          comment: this.param.comment,
-          dailyPostId: this.dailyPost.dailyPostId,
-        })
-        .then((response) => {
-          if(this.$store.state.loginUser.authority === AUTHORITY.ADMIN){
-
-            this.$store.dispatch("editMyDailyPost", response.data);
-          }
-        })
-        .catch((e) => {
-          alert("コンディション編集の送信に失敗しました：" + e);
-        });
-      alert("投稿内容の変更に成功しました。");
-      this.$router.push("/myCondition");
+      Promise.resolve()
+        .then(() =>
+          axios
+            .post("/editDailyPost/edit", {
+              updateUserId: this.$store.state.loginUser.userId,
+              motivationId: this.param.motivationSelected,
+              conditionId: this.param.conditionSelected,
+              performanceId: this.param.performanceSelected,
+              comment: this.param.comment,
+              dailyPostId: this.dailyPost.dailyPostId,
+            })
+            .then((response) => {
+              if (this.$store.state.loginUser.authority === AUTHORITY.ADMIN) {
+                this.$store.dispatch("editMyDailyPost", response.data);
+              }
+              alert("投稿内容の変更に成功しました。")
+            })
+            .catch((e) => {
+              alert("コンディション編集の送信に失敗しました：" + e);
+            })
+        )
+        .then(
+          () => 
+          this.$router.push("/myCondition")
+        );
     },
   },
   mounted() {

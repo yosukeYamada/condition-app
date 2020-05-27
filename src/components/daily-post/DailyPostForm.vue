@@ -125,24 +125,28 @@ export default {
   },
   methods: {
     register() {
-      axios
-        .post("/registerDailyPost", {
-          userId: this.$store.state.loginUser.userId,
-          motivationId: this.param.motivationSelected,
-          conditionId: this.param.conditionSelected,
-          performanceId: this.param.performanceSelected,
-          comment: this.param.comment,
-        })
-        .then((response) => {
-          if(this.$store.state.loginUser.authority === AUTHORITY.ADMIN)
-          this.$store.dispatch("setMyDailyPost", response.data);
-        })
-        .catch((e) => {
-          alert("コンディション登録の送信に失敗しました：" + e);
-        });
-
-      alert("登録しました！");
-      this.$router.push("/myCondition");
+      Promise.resolve()
+        .then(() =>
+          axios
+            .post("/registerDailyPost", {
+              userId: this.$store.state.loginUser.userId,
+              motivationId: this.param.motivationSelected,
+              conditionId: this.param.conditionSelected,
+              performanceId: this.param.performanceSelected,
+              comment: this.param.comment,
+            })
+            .then((response) => {
+              if (this.$store.state.loginUser.authority === AUTHORITY.ADMIN){
+                this.$store.dispatch("setMyDailyPost", response.data);
+            }
+              alert("登録しました！")
+            })
+            .catch((e) => {
+              alert("コンディション登録の送信に失敗しました：" + e);
+            })
+        )
+        .then(() => 
+        this.$router.push("/myCondition"));
     },
   },
 };

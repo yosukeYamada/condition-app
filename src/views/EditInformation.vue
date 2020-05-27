@@ -1,20 +1,14 @@
 <template>
   <b-container class="mt-5">
     <BreadCrumbs :items="items" />
-    <b-row align-v="center" align-h="center">
-      <b-col lg="9" md="10" sm="12">
-        <PostInfo />
-      </b-col>
-    </b-row>
+    編集用
   </b-container>
 </template>
 
 <script>
-import PostInfo from "@/components/admin-setting/PostInfo.vue";
 import BreadCrumbs from "@/components/common/BreadCrumbs.vue";
 export default {
   components: {
-    PostInfo,
     BreadCrumbs,
   },
   data() {
@@ -28,15 +22,15 @@ export default {
         },
         {
           text: "トップページのNews投稿",
-          disabled: true,
+          disabled: false,
           path: "/postInformation",
-          class: ["grey--text"],
+          class: [],
         },
         {
           text: "トップページのNews編集・削除",
-          disabled: false,
+          disabled: true,
           path: "/editInformation",
-          class: [],
+          class: ["grey--text"],
         },
       ],
     };

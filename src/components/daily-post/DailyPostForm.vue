@@ -136,15 +136,16 @@ export default {
               comment: this.param.comment,
             })
             .then((response) => {
-              if (this.$store.state.loginUser.authority === AUTHORITY.ADMIN)
+              if (this.$store.state.loginUser.authority === AUTHORITY.ADMIN){
                 this.$store.dispatch("setMyDailyPost", response.data);
+            }
+              alert("登録しました！")
             })
             .catch((e) => {
               alert("コンディション登録の送信に失敗しました：" + e);
             })
         )
         .then(() => 
-        alert("登録しました！"), 
         this.$router.push("/myCondition"));
     },
   },

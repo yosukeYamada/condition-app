@@ -144,13 +144,14 @@ export default {
               if (this.$store.state.loginUser.authority === AUTHORITY.ADMIN) {
                 this.$store.dispatch("editMyDailyPost", response.data);
               }
+              alert("投稿内容の変更に成功しました。")
             })
             .catch((e) => {
               alert("コンディション編集の送信に失敗しました：" + e);
             })
         )
         .then(
-          () => alert("投稿内容の変更に成功しました。"),
+          () => 
           this.$router.push("/myCondition")
         );
     },

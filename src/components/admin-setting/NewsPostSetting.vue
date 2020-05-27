@@ -23,7 +23,7 @@
             :style="{ textDecoration: 'none' }"
           >
             <span class="blue--text text--darken-3"
-              >トップの更新情報の投稿を行う</span
+              >トップの更新情報の投稿・編集・削除</span
             >
           </router-link>
         </div>

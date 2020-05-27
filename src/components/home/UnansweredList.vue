@@ -16,15 +16,21 @@
       <b-list-group-item v-for="(unanswered, i) in unansweredList" :key="i">
         <div>
           <b-row>
-          <b-col>未投稿
-          <v-fa :icon="['far','frown']" size="lg" class="blue--text text--darken-2 mr-4"></v-fa>
-          </b-col>
-          <b-col>
-          <span>{{ transferDepName(unanswered.depId) }}</span>
-          </b-col>
-          <b-col>
-          <span>{{ unanswered.userName + "さん" }}</span>
-          </b-col>
+            <b-col
+             lg="1"
+              >
+              <v-fa
+                :icon="['far', 'frown']"
+                size="lg"
+                class="blue--text text--darken-2 mr-4"
+              ></v-fa>
+            </b-col>
+            <b-col lg="3">
+              <span>{{ transferDepName(unanswered.depId) }}</span>
+            </b-col>
+            <b-col lg="8">
+              <span>{{ unanswered.userName + "さん" }}</span>
+            </b-col>
           </b-row>
         </div>
       </b-list-group-item>
@@ -83,7 +89,7 @@ export default {
   },
   mounted() {
     this.unansweredList = this.setUnansweredList();
-    console.log(this.unansweredList)
+    console.log(this.unansweredList);
   },
 };
 </script>

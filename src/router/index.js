@@ -17,8 +17,8 @@ import store from "../store/index.js";
 import EditDeps from "@/views/EditDeps.vue";
 import PostInformation from "@/views/PostInformation.vue";
 import Information from "@/views/Information.vue";
+import EditInformationList from "@/views/EditInformationList.vue";
 import EditInformation from "@/views/EditInformation.vue";
-import PostEditedInformation from "@/views/PostEditedInformation.vue";
 
 Vue.use(VueRouter);
 
@@ -35,10 +35,10 @@ const routes = [
 
     //ログインしていたら上記のパスに飛ぶことを許可しない
     beforeEnter(to, from, next) {
-      if (!(store.state.loginStatus)) {
+      if (!store.state.loginStatus) {
         next();
-      }else{
-        next("/home")
+      } else {
+        next("/home");
       }
     },
   },
@@ -202,9 +202,9 @@ const routes = [
     },
   },
   {
-    path: "/editInformation",
-    name: "EditInformation",
-    component: EditInformation,
+    path: "/editInformationList",
+    name: "EditInformationList",
+    component: EditInformationList,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
       if (store.state.loginStatus) {
@@ -215,9 +215,9 @@ const routes = [
     },
   },
   {
-    path: "/postEditedInformation",
-    name: "PostEditedInformation",
-    component: PostEditedInformation,
+    path: "/editInformation",
+    name: "EditInformation",
+    component: EditInformation,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
       if (store.state.loginStatus) {

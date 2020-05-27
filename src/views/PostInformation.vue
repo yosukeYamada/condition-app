@@ -27,16 +27,10 @@ export default {
           class: [],
         },
         {
-          text: "トップページのNews投稿",
+          text: "トップの更新情報の投稿",
           disabled: true,
-          path: "/postInformation",
+          path: "/postInformationList",
           class: ["grey--text"],
-        },
-        {
-          text: "トップページのNews編集・削除",
-          disabled: false,
-          path: "/editInformation",
-          class: [],
         },
       ],
     };

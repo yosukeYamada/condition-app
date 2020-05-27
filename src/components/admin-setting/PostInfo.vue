@@ -1,7 +1,7 @@
 <template>
   <b-card
     border-variant="success"
-    header="トップページのNews投稿"
+    header="トップの更新情報の投稿"
     header-bg-variant="success"
     header-text-variant="white"
     style="border-width:2px;"

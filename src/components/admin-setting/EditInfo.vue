@@ -1,7 +1,7 @@
 <template>
   <b-card
     border-variant="success"
-    header="トップページのNews編集"
+    header="更新情報の編集・削除"
     header-bg-variant="success"
     header-text-variant="white"
     style="border-width:2px;"
@@ -37,12 +37,20 @@
         ></v-textarea>
         <b-button
           :disabled="!contactFormValidation.valid"
-          @click="post()"
+          @click="update()"
           block
           large
           variant="outline-success"
           class="mt-4 font-weight-bold"
           >更新
+        </b-button>
+        <b-button
+          @click="del()"
+          block
+          large
+          variant="outline-danger"
+          class="mt-4 font-weight-bold"
+          >削除
         </b-button>
 
         <v-snackbar
@@ -82,7 +90,7 @@ export default {
   }),
   methods: {
     ...mapActions(["setInformation"]),
-    post() {
+    update() {
       if (this.$refs.form.validate()) {
         axios
           .post("/info/update", {
@@ -91,10 +99,10 @@ export default {
             content: this.content,
             categoryId: this.categoryId,
             updateUserId: this.$store.state.loginUser.userId,
-            version: this.info.version
+            version: this.info.version,
           })
           .then((response) => {
-            if(response.data === Status.HOLD) {
+            if (response.data === Status.HOLD) {
               alert(
                 "他のユーザーが先に変更処理を行いました。\n更新ボタンを押して画面を再読み込みし、最新の状態を確認してください。"
               );
@@ -102,8 +110,8 @@ export default {
               this.setInformation(response.data);
               this.formReset();
               alert("更新完了しました");
-              this.$router.push("/editInformation")
-              }
+              this.$router.push("/editInformationList");
+            }
           })
           .catch((err) => {
             this.showSnackBar(
@@ -111,6 +119,27 @@ export default {
               "更新に失敗しました。時間をおいて再度お試しください。"
             );
             console.log(err);
+          });
+      }
+    },
+    del() {
+      if (confirm("削除してよろしいですか？")) {
+        axios
+          .post("/info/delete", {
+            informationId: this.info.informationId,
+            status: Status.DELETED,
+            version: this.info.version,
+            updateUserId: this.$store.state.loginUser.userId,
+          })
+          .then((response) => {
+            if (response.data === Status.HOLD) {
+              alert(
+                "他のユーザーが先に変更処理を行いました。\n更新ボタンを押して画面を再読み込みし、最新の状態を確認してください。"
+              );
+            } else {
+              alert("削除しました");
+              this.$router.push("/editInformationList");
+            }
           });
       }
     },
@@ -130,14 +159,14 @@ export default {
         categoryName: this.$store.state.categoryList[num].categoryName,
       });
     }
-    this.title = this.info.informationTitle
-    this.categoryId = this.info.categoryId
-    this.content = this.info.informationContent
+    this.title = this.info.informationTitle;
+    this.categoryId = this.info.categoryId;
+    this.content = this.info.informationContent;
   },
   computed: {
     info() {
       return JSON.parse(decodeURIComponent(this.$route.query.info));
-    }
-  }
+    },
+  },
 };
 </script>

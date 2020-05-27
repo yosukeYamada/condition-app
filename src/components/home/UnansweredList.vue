@@ -15,7 +15,17 @@
     >
       <b-list-group-item v-for="(unanswered, i) in unansweredList" :key="i">
         <div>
-          <v-fa :icon="['far','frown']" size="lg" class="blue--text text--darken-2 mr-4"></v-fa><span>{{ unanswered.userName + "さん" }}</span>
+          <b-row>
+          <b-col>未投稿
+          <v-fa :icon="['far','frown']" size="lg" class="blue--text text--darken-2 mr-4"></v-fa>
+          </b-col>
+          <b-col>
+          <span>{{ transferDepName(unanswered.depId) }}</span>
+          </b-col>
+          <b-col>
+          <span>{{ unanswered.userName + "さん" }}</span>
+          </b-col>
+          </b-row>
         </div>
       </b-list-group-item>
     </b-list-group>
@@ -65,9 +75,15 @@ export default {
       }
       return unansweredList;
     },
+    /** 部署IDを部署名に変換するメソッド */
+    transferDepName(depId) {
+      let dep = this.$store.state.depList.find((dep) => dep.depId === depId);
+      return dep.depName;
+    },
   },
   mounted() {
     this.unansweredList = this.setUnansweredList();
+    console.log(this.unansweredList)
   },
 };
 </script>

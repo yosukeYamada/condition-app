@@ -3,7 +3,7 @@
     <b-card
       border-variant="success"
       style="border-width:2px;"
-      header="投稿関連"
+      header="投稿関連の設定"
       header-bg-variant="success"
       header-text-variant="white"
     >
@@ -13,7 +13,7 @@
             v-b-modal.news-post
             class="blue--text text--darken-3"
             :style="{ textDecoration: 'none' }"
-            >お知らせの投稿・削除</span
+            >ホームのお知らせの投稿・削除</span
           >
           <NewsPost />
         </div>
@@ -23,7 +23,17 @@
             :style="{ textDecoration: 'none' }"
           >
             <span class="blue--text text--darken-3"
-              >トップの更新情報の投稿・編集・削除</span
+              >トップの更新情報の投稿</span
+            >
+          </router-link>
+        </div>
+        <div class="mb-2">
+          <router-link
+            to="/editInformationList"
+            :style="{ textDecoration: 'none' }"
+          >
+            <span class="blue--text text--darken-3"
+              >トップの更新情報の編集・削除</span
             >
           </router-link>
         </div>

@@ -1,16 +1,16 @@
 <template>
-  <b-col>
-    <v-card
-      class="px-1"
-      tile
-      outlined
-      style="border-width:4px; max-height:350px"
+  <b-col  lg="9" md="10" sm="12">
+    <b-card
+      border-variant="success"
+      header="投稿されている更新情報の一覧"
+      header-bg-variant="success"
+      header-text-variant="white"
+      style="border-width:2px;"
     >
-      <v-card-text class="mt-2">
-        <div class="headline font-weight-black mb-4">{{ title }}</div>
-        <div class="information" v-if="informationList.length !== 0">
+      <b-card-text class="mt-2">
+        <div v-if="informationList.length !== 0">
           <div v-for="(info, i) in informationList" :key="i" class="mb-2">
-            <div class="pl-1 mb-1 font-weight-black">
+            <div class="pl-1 mb-1 font-weight-bold">
               {{ info.informationDate | moment }}
             </div>
             <b-row align-v="center" class="px-4">
@@ -22,7 +22,7 @@
               </div>
               <router-link
                 :to="{
-                  name: 'Information',
+                  name: 'EditInformation',
                   query: { info: encodeURIComponent(JSON.stringify(info)) },
                 }"
                 class="link gray--text"
@@ -34,9 +34,14 @@
             </b-row>
           </div>
         </div>
-        <div class="grey--text pl-1 mb-4 font-weight-black" v-if="informationList.length === 0">現在お知らせはありません</div>
-      </v-card-text>
-    </v-card>
+        <div
+          class="grey--text pl-1 mb-4 font-weight-black"
+          v-if="informationList.length === 0"
+        >
+          現在お知らせはありません
+        </div>
+      </b-card-text>
+    </b-card>
   </b-col>
 </template>
 
@@ -48,7 +53,6 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      title: "Information",
       style: {
         backgroundColor: "#28A745",
         width: "98px",
@@ -92,10 +96,5 @@ export default {
 }
 .link {
   text-decoration: none;
-}
-.information {
-  max-height: 200px;
-  overflow-y: scroll;
-  overflow-x: hidden;
 }
 </style>

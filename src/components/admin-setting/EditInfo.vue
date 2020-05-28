@@ -1,7 +1,7 @@
 <template>
   <b-card
     border-variant="success"
-    header="トップの更新情報の投稿"
+    header="更新情報の編集・削除"
     header-bg-variant="success"
     header-text-variant="white"
     style="border-width:2px;"
@@ -37,12 +37,20 @@
         ></v-textarea>
         <b-button
           :disabled="!contactFormValidation.valid"
-          @click="post()"
+          @click="update()"
           block
           large
           variant="outline-success"
           class="mt-4 font-weight-bold"
-          >投稿
+          >更新
+        </b-button>
+        <b-button
+          @click="del()"
+          block
+          large
+          variant="outline-danger"
+          class="mt-4 font-weight-bold"
+          >削除
         </b-button>
 
         <v-snackbar
@@ -62,6 +70,7 @@
 <script>
 import { mapActions } from "vuex";
 import axios from "axios";
+import Status from "@/assets/js/Status";
 export default {
   data: () => ({
     title: "",
@@ -81,27 +90,56 @@ export default {
   }),
   methods: {
     ...mapActions(["setInformation"]),
-    post() {
+    update() {
       if (this.$refs.form.validate()) {
         axios
-          .post("/information/insert", {
+          .post("/info/update", {
+            informationId: this.info.informationId,
             title: this.title,
             content: this.content,
             categoryId: this.categoryId,
-            registerUserId: this.$store.state.loginUser.userId,
+            updateUserId: this.$store.state.loginUser.userId,
+            version: this.info.version,
           })
           .then((response) => {
-            this.setInformation(response.data);
-            this.formReset();
-            alert("投稿完了しました。");
-            this.$router.push("/adminSetting")
+            if (response.data === Status.HOLD) {
+              alert(
+                "他のユーザーが先に変更処理を行いました。\n更新ボタンを押して画面を再読み込みし、最新の状態を確認してください。"
+              );
+            } else {
+              this.setInformation(response.data);
+              this.formReset();
+              alert("更新完了しました");
+              this.$router.push("/editInformationList");
+            }
           })
           .catch((err) => {
             this.showSnackBar(
               "error",
-              "投稿に失敗しました。時間をおいて再度お試しください。"
+              "更新に失敗しました。時間をおいて再度お試しください。"
             );
             console.log(err);
+          });
+      }
+    },
+    del() {
+      if (confirm("削除してよろしいですか？")) {
+        axios
+          .post("/info/delete", {
+            informationId: this.info.informationId,
+            status: Status.DELETED,
+            version: this.info.version,
+            updateUserId: this.$store.state.loginUser.userId,
+          })
+          .then((response) => {
+            if (response.data === Status.HOLD) {
+              alert(
+                "他のユーザーが先に変更処理を行いました。\n更新ボタンを押して画面を再読み込みし、最新の状態を確認してください。"
+              );
+            } else {
+              alert("削除しました");
+              this.$router.push("/editInformationList");
+            }
           });
       }
     },
@@ -121,6 +159,14 @@ export default {
         categoryName: this.$store.state.categoryList[num].categoryName,
       });
     }
+    this.title = this.info.informationTitle;
+    this.categoryId = this.info.categoryId;
+    this.content = this.info.informationContent;
+  },
+  computed: {
+    info() {
+      return JSON.parse(decodeURIComponent(this.$route.query.info));
+    },
   },
 };
 </script>

@@ -58,7 +58,6 @@ export default {
   //watcherのメソッドを算出
   computed: {
     getFilter: function() {
-      
       return this.$store.state.filter.filter
     },
   },

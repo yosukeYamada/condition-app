@@ -1,9 +1,9 @@
 <template>
   <b-modal id="news-post" ok-title="閉じる" ok-only centeredcentered title="お知らせの投稿">
     <ValidationObserver v-slot="{ invalid, passes }">
-        <v-subheader>お知らせの追加</v-subheader>
-      <ValidationProvider>
-        <small class="px-3 text-danger">{{ errors }}</small>
+      <v-subheader>お知らせの追加</v-subheader>
+      <ValidationProvider rules="required" v-slot="{ errors }">
+        <small v-if="errors.length !== 0" class="px-3 text-danger">{{ errors[0] }}</small>
         <b-row align-v="center" class="px-3 mb-4">
           <b-col cols="12" sm="10" class="py-0 pb-1">
             <b-form-input v-model="inputNews" type="text" size="sm" placeholder="お知らせを追加" required></b-form-input>
@@ -78,7 +78,7 @@ export default {
           .then(response => {
             this.$store.dispatch("setNewsPostList", response.data);
             this.newsPostList = this.$store.state.newsPostList;
-            this.inputNews = '';
+            this.inputNews = null;
             alert("お知らせを投稿しました！");
           })
           .catch(e => {

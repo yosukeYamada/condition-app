@@ -2,20 +2,18 @@
   <b-container class="mt-5">
     <BreadCrumbs :items="items" />
     <b-row align-v="center" align-h="center">
-      <b-col lg="9" md="10" sm="12">
-        <PostInfo />
-      </b-col>
+      <InformationList />
     </b-row>
   </b-container>
 </template>
 
 <script>
-import PostInfo from "@/components/admin-setting/PostInfo.vue";
 import BreadCrumbs from "@/components/common/BreadCrumbs.vue";
+import InformationList from "@/components/admin-setting/InformationList.vue";
 export default {
   components: {
-    PostInfo,
     BreadCrumbs,
+    InformationList,
   },
   data() {
     return {
@@ -27,9 +25,9 @@ export default {
           class: [],
         },
         {
-          text: "トップの更新情報の投稿",
+          text: "トップの更新情報の編集・削除",
           disabled: true,
-          path: "/postInformationList",
+          path: "/editInformation",
           class: ["grey--text"],
         },
       ],

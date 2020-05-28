@@ -7,6 +7,7 @@
             <HomeNews />
           </b-col>
         </b-row>
+            <ChatBox/>
         <b-row align-h="center" v-if="authority === ADMIN">
           <b-col sm="6" md="5" lg="4">
             <InputRate />
@@ -22,6 +23,7 @@
 
 <script>
 import HomeNews from "@/components/home/HomeNews";
+import ChatBox from "@/components/home/ChatBox";
 import UnansweredList from "@/components/home/UnansweredList";
 import InputRate from "@/components/home/InputRate";
 import AUTHORITY from "@/assets/js/Authority.js";
@@ -32,6 +34,7 @@ export default {
     HomeNews,
     UnansweredList,
     InputRate,
+    ChatBox
   },
   data() {
     return {

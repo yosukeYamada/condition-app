@@ -42,7 +42,7 @@
               <span>{{ unanswered.userName + "さん" }}</span>
             </b-col>
             <b-col lg="2">
-              <b-btn variant="danger" class="contact">連絡</b-btn>
+              <b-btn variant="danger" class="contact" @click="info">連絡</b-btn>
             </b-col>
           </b-row>
         </div>
@@ -112,10 +112,12 @@ export default {
       let dep = this.$store.state.depList.find((dep) => dep.depId === depId);
       return dep.depName;
     },
+    info() {
+      
+    }
   },
   mounted() {
     this.unansweredList = this.setUnanswered();
-
     this.depList = Array.from(this.$store.state.depList)
     this.depList.unshift({
       depId : 0,

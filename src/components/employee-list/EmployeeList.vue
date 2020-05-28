@@ -33,6 +33,9 @@
         :style="transferColor(item.performance)"
       />
     </template>
+    <template v-slot:item.comment="{ item }">
+      {{ item.comment | truncate  }}
+    </template>
   </v-data-table>
 </template>
 
@@ -40,6 +43,16 @@
 export default {
   props: {
     employeeList: Array,
+  },
+  filters: {
+    truncate: function(value) {
+      var length = 20;
+      var ommision = "...";
+      if (value.length <= length) {
+        return value;
+      }
+      return value.substring(0, length) + ommision;
+    }
   },
   computed: {
     employees() {

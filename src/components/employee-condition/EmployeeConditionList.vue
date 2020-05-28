@@ -31,7 +31,7 @@
       />
     </template>
     <template v-slot:item.comment="{ item }">
-      {{ item.postedComment.comment }}
+      {{ item.postedComment.comment | truncate }}
     </template>
   </v-data-table>
 </template>
@@ -72,6 +72,16 @@ export default {
       ],
       dailyPostList:[]
     };
+  },
+  filters: {
+    truncate: function(value) {
+      var length = 20;
+      var ommision = "...";
+      if (value.length <= length) {
+        return value;
+      }
+      return value.substring(0, length) + ommision;
+    }
   },
   created() {
     axios.post("/showDailyPosts",{ 

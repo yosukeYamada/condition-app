@@ -63,6 +63,7 @@
             label="なにかコメントはありますか？"
             label-for="input-comment"
           >
+          <div v-if="error" id="comment">200字以内でコメントしてください</div>
             <b-form-textarea
               class="mt-3"
               id="input-comment"
@@ -70,9 +71,12 @@
               placeholder="コメントがあれば入力してください"
               rows="3"
               max-rows="6"
+              @keyup="keyUp"
+              
             ></b-form-textarea>
+            
           </b-form-group>
-          <b-button variant="outline-success" @click.prevent="register()"
+          <b-button v-bind:disabled="isPush" variant="outline-success" @click.prevent="register()"
             >登録する</b-button
           >
         </b-form>
@@ -88,6 +92,8 @@ export default {
   data() {
     return {
       loading: false,
+      isPush:false,
+      error :false,
       param: {
         motivationSelected: "3",
         performanceSelected: "3",
@@ -136,18 +142,39 @@ export default {
               comment: this.param.comment,
             })
             .then((response) => {
-              if (this.$store.state.loginUser.authority === AUTHORITY.ADMIN){
+              if (this.$store.state.loginUser.authority === AUTHORITY.ADMIN) {
                 this.$store.dispatch("setMyDailyPost", response.data);
-            }
-              alert("登録しました！")
+              }
+              alert("登録しました！");
             })
             .catch((e) => {
               alert("コンディション登録の送信に失敗しました：" + e);
             })
         )
-        .then(() => 
-        this.$router.push("/myCondition"));
+        .then(() => this.$router.push("/myCondition"));
     },
+    keyUp(){
+        if((this.param.comment).length > 200 ){
+          this.error = true
+          this.isPush = true
+        }else if((this.param.comment).length <= 200){
+          this.error =false
+          this.isPush = false
+
+        }
+      
+
+    }
+
+
+
   },
 };
 </script>
+<style>
+#comment{
+  color:red
+}
+
+
+</style>

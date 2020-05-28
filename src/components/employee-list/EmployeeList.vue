@@ -34,7 +34,7 @@
       />
     </template>
     <template v-slot:item.comment="{ item }">
-      {{ item.comment | truncate  }}
+      {{ item.comment | truncate }}
     </template>
   </v-data-table>
 </template>
@@ -52,7 +52,7 @@ export default {
         return value;
       }
       return value.substring(0, length) + ommision;
-    }
+    },
   },
   computed: {
     employees() {
@@ -106,7 +106,7 @@ export default {
           value: "comment",
           text: "コメント",
           sortable: true,
-          width: '30%'
+          width: "30%",
         },
       ],
       items: [],

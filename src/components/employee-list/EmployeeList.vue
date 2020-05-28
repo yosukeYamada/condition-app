@@ -33,6 +33,10 @@
         :style="transferColor(item.performance)"
       />
     </template>
+    <template v-slot:item.comment="{ item }">
+      <!-- <span :cutComment="cut(item.comment)"></span> -->
+      {{ cut(item.comment) }}
+    </template>
   </v-data-table>
 </template>
 
@@ -93,7 +97,7 @@ export default {
           value: "comment",
           text: "コメント",
           sortable: true,
-          width: '30%'
+          width: "30%",
         },
       ],
       items: [],
@@ -105,6 +109,15 @@ export default {
         name: "EmployeeCondition",
         query: { item: encodeURIComponent(JSON.stringify(item)) },
       });
+    },
+    cut(comment) {
+      var cutComment = comment;
+      if (cutComment.length > 20) {
+        var cut = "...";
+        var commnetSubster = cutComment.substr(0, 20);
+        return commnetSubster + cut;
+      }
+      return comment;
     },
 
     /** 天候によって表示するアイコンを返すメソッド */

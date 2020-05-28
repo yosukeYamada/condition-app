@@ -8,7 +8,7 @@
     no-body
     class="h-100"
   >
-    <el-select id="dep" style="width:100%;" v-model="filterDepName" placeholder="部署名">
+    <el-select id="dep" style="width:100%;" v-model="depName" placeholder="部署名">
       <el-option
         v-for="dep in this.depList"
         :key="dep.depId"
@@ -19,11 +19,11 @@
     </el-select>
 
     <b-list-group
-      v-if="unansweredList.length !== 0"
+      v-if="this.unansweredList.length !== 0"
       flush
       id="resent-posts-list"
     >
-      <b-list-group-item v-for="(unanswered, i) in unansweredList" :key="i">
+      <b-list-group-item v-for="(unanswered, i) in this.unansweredList" :key="i">
         <div>
           <b-row>
             <b-col
@@ -35,11 +35,14 @@
                 class="blue--text text--darken-2 mr-4"
               ></v-fa>
             </b-col>
-            <b-col lg="3">
+            <b-col lg="4">
               <span>{{ transferDepName(unanswered.depId) }}</span>
             </b-col>
-            <b-col lg="8">
+            <b-col lg="4">
               <span>{{ unanswered.userName + "さん" }}</span>
+            </b-col>
+            <b-col lg="2">
+              <b-btn variant="danger" class="contact">連絡</b-btn>
             </b-col>
           </b-row>
         </div>
@@ -57,34 +60,33 @@ export default {
   data() {
     return {
       unansweredList: [],
-      inputDepName: 0,
+      depName: 0,
       depList:[]
     };
   },
   watch: {
     employeeList: function() {
-      this.unansweredList = this.setUnansweredList
+      this.unansweredList = this.setUnanswered()
     },
-    filterDepName: function() {
-      this.$store.dispatch("filter/setFilterDepName",this.inputDepName)
-    }
+    depName: function() {
+      if(this.depName == 0) {
+        this.unansweredList = this.setUnanswered()
+      } else {
+        this.unansweredList = this.setUnanswered().filter(
+          (employee) => 
+            employee.depId === this.depName
+        )
+      }
+    },
   },
   computed: {
     employeeList() {
       return this.$store.state.employeeList;
     },
-    filterDepName: {
-      get() {
-        return this.inputDepName;
-      },
-      set(value) {
-        this.inputDepName = value;
-      },
-    },
   },
   methods: {
     /** 従業員一覧から未投稿者一覧を作成 */
-    setUnansweredList() {
+    setUnanswered() {
       var unansweredList = []; //未投稿者のリスト
       var preToday = new Date(); //今日の日付
       var employeeList = this.employeeList;
@@ -112,16 +114,13 @@ export default {
     },
   },
   mounted() {
-    this.unansweredList = this.setUnansweredList();
+    this.unansweredList = this.setUnanswered();
 
     this.depList = Array.from(this.$store.state.depList)
     this.depList.unshift({
       depId : 0,
       depName: '全従業員'
     })
-  },
-  beforeDestroy() {
-    this.$store.dispatch("filter/setFilterDepName","")
   },
 };
 </script>
@@ -131,5 +130,10 @@ export default {
   height: 40vh;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+.contact {
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
 }
 </style>

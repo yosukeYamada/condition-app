@@ -150,6 +150,7 @@ export default {
   },
 };
 </script>
+
 <style>
 .theme--light.v-data-table thead tr th {
   background-color: #28a745 !important;

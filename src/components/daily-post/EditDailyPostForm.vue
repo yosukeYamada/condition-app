@@ -63,6 +63,7 @@
             label="なにかコメントはありますか？"
             label-for="input-comment"
           >
+            <div v-if="error" id="comment">200字以内でコメントしてください</div>
             <b-form-textarea
               class="mt-3"
               id="input-comment"
@@ -70,9 +71,13 @@
               placeholder="コメントがあれば入力してください"
               rows="3"
               max-rows="6"
+              @keyup="keyUp"
             ></b-form-textarea>
           </b-form-group>
-          <b-button variant="outline-success" @click.prevent="register()"
+          <b-button
+            v-bind:disabled="isPush"
+            variant="outline-success"
+            @click.prevent="register()"
             >変更する</b-button
           >
         </b-form>
@@ -87,6 +92,8 @@ import AUTHORITY from "@/assets/js/Authority.js";
 export default {
   data() {
     return {
+      error: false,
+      isPush: false,
       param: {
         motivationSelected: Number,
         conditionSelected: Number,
@@ -144,16 +151,22 @@ export default {
               if (this.$store.state.loginUser.authority === AUTHORITY.ADMIN) {
                 this.$store.dispatch("editMyDailyPost", response.data);
               }
-              alert("投稿内容の変更に成功しました。")
+              alert("投稿内容の変更に成功しました。");
             })
             .catch((e) => {
               alert("コンディション編集の送信に失敗しました：" + e);
             })
         )
-        .then(
-          () => 
-          this.$router.push("/myCondition")
-        );
+        .then(() => this.$router.push("/myCondition"));
+    },
+    keyUp() {
+      if ((this.param.comment).length > 200) {
+        this.error = true
+        this.isPush = true
+      } else if ((this.param.comment).length <= 200) {
+        this.error = false
+        this.isPush = false
+      }
     },
   },
   mounted() {
@@ -164,3 +177,8 @@ export default {
   },
 };
 </script>
+<style>
+#comment {
+  color: red;
+}
+</style>

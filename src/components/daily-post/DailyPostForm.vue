@@ -154,10 +154,14 @@ export default {
         .then(() => this.$router.push("/myCondition"));
     },
     keyUp(){
-        if((this.param.comment).length > 200 ){
+      console.log(this.param.comment)
+      if((this.param.comment).length > 200 ){
+        console.log("おーばー")
           this.error = true
           this.isPush = true
         }else if((this.param.comment).length <= 200){
+      console.log("せーふ")
+
           this.error =false
           this.isPush = false
 

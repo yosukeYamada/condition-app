@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="bot-content">
   <v-container>
     <div class="rakuscal">
       <v-img 
@@ -65,7 +65,6 @@
   </v-container>
   <div class="parent">
   <div v-if="error"  id="error">ラクスカルくんに話しかけてみよう！！</div>
-
   </div>
   </div>
 </template>
@@ -147,11 +146,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.bot-content{
+  margin-top:50px;
+}
 .chat-box,
 .chat-box-list {
   display: flex;
   flex-direction: column;
   list-style-type: none;
+  background: #7494c0;
+  
 }
 .chat-box-list-container {
   overflow: scroll;
@@ -185,7 +189,7 @@ export default {
   }
 }
 .chat-box {
-  border: 1px solid #999;
+  border: 2px solid #808080;
   width: 50vw;
   height: 40vh;
   border-radius: 4px;
@@ -194,15 +198,17 @@ export default {
 .chat-inputs {
   display: flex;
   
+  
   input {
     line-height: 2;
     width: 100%;
-    border: 1px solid #999;
+    border: 2px solid #808080;
     border-left: none;
     border-bottom: none;
     border-right: none;
     border-bottom-left-radius: 4px;
     padding-left: 15px;
+    background:white
   }
   button {
     width: 145px;
@@ -225,6 +231,8 @@ export default {
     position: relative;
     cursor: pointer;
     display: inline-block;
+    margin-right:20px;
+    margin-top:20px;
 }
 .rakuscal p{
     margin:0;
@@ -258,6 +266,7 @@ export default {
 }
 .container {
   display: flex;
+  
 }
 #talk:hover {
   font-size: 15px;

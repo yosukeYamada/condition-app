@@ -36,7 +36,7 @@
         <div v-if="lastWeekScore <= 15">
           <span
             >大丈夫ですか！？ラクスカルは不安でなりません！
-            改めて今週の自分の行動を振り返りましょう！</span
+            改めて先週の自分の行動を振り返りましょう！</span
           >
         </div>
         <div v-if="lastWeekScore > 15 && lastWeekScore <= 25">

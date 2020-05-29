@@ -122,7 +122,7 @@ export default {
       this.toggle = !this.toggle
       this.lastMonth = !this.lastMonth
     },
-  }
+  },
 }
 </script>
 

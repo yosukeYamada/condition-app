@@ -189,6 +189,7 @@ export default {
     p {
       float: right;
     }
+    margin-top:4px;
   }
 }
 .chat-box {

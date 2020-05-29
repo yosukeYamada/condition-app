@@ -39,6 +39,7 @@ export default {
   data() {
     return {
       ADMIN: AUTHORITY.ADMIN,
+      USER: AUTHORITY.USER,
     };
   },
   computed: {

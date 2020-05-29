@@ -1,4 +1,5 @@
 <template>
+<div>
   <v-container>
     <div class="rakuscal">
       <v-img 
@@ -56,11 +57,17 @@
       <input
         type="text"
         v-model="message"
+        @keyup="keyUp"
       />
-      <button @click="sendMessage">送信</button>
+      <button v-bind:disabled="isPush" @click="sendMessage">送信</button>
     </div>
   </section>
   </v-container>
+  <div class="parent">
+  <div v-if="error"  id="error">ラクスカルくんに話しかけてみよう！！</div>
+
+  </div>
+  </div>
 </template>
 
 <script>
@@ -68,6 +75,8 @@ import axios from 'axios'
 export default {
   name: 'ChatBox',
   data: () => ({
+    isPush:true,
+    error:false,
     message: '',
     messages: [],
     toggle:false,
@@ -98,9 +107,20 @@ export default {
         })
       })
     },
+    keyUp(){
+      if((this.message).length === 0){
+        this.isPush = true
+        this.error = true
+      }else{
+        this.isPush = false
+        this.error = false
+      }
+
+    },
     openTalk() {
       this.toggle = !this.toggle
       this.talk = !this.talk
+      this.error = true
     },
     closeTalk() {
       this.toggle = !this.toggle
@@ -304,5 +324,11 @@ export default {
 	border: 10px solid transparent;
 	border-right: 10px solid green;
 	z-index: 2;
+}
+
+.parent{
+  text-align: center;
+  font-size: 20px;
+  color:red
 }
 </style>

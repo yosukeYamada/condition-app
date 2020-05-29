@@ -5,11 +5,15 @@
     class="mx-auto p-4 rounded-0"
   >
     <b-card-text>
-      <div
+      <b-col
+        xl="3"
+        lg="3"
+        md="4"
+        sm="4"
         class="border border-success text-success py-2 px-4 d-inline caption font-weight-bold"
       >
         {{ info.informationDate | moment }}
-      </div>
+      </b-col>
       <p class="headline font-weight-bold py-5 my-5">
         {{ info.informationTitle }}
       </p>
@@ -22,7 +26,6 @@
 
 <script>
 import moment from "moment";
-
 export default {
   computed: {
     info() {
@@ -36,3 +39,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.delete:hover {
+  cursor: pointer;
+}
+</style>

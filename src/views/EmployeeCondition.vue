@@ -33,21 +33,48 @@
         <EmployeeConditionList />
       </b-col>
     </b-row>
+    <b-row align-v="center" align-h="center">
+      <b-col sm="12" md="12" lg="10" xl="12">
+        <b-card class="p-2 elevation-1">
+          <b-card-text>
+            <h2 class="title mb-4 ">{{ employee.userName }}さんのコンディションチャート</h2>
+            <b-row class="text-right">
+              <b-col>
+                <el-date-picker
+                  v-model="selectedMonth"
+                  class="text-right"
+                  type="month"
+                  placeholder="表示する月を選択"
+                >
+                </el-date-picker>
+              </b-col>
+            </b-row>
+            <EmployeeGraph :daily-post-list="dailyPostList" :selected-month="selectedMonth" />
+            <small class="text-secondary pl-5">※ 凡例をクリックすることでグラフの表示非表示を切り替えることができます</small>
+          </b-card-text>
+        </b-card>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
 <script>
+import axios from "axios";
 import moment from "moment";
 import EmployeeConditionList from "@/components/employee-condition/EmployeeConditionList.vue";
 import BreadCrumbs from "@/components/common/BreadCrumbs.vue";
+import EmployeeGraph from "@/components/employee-condition/EmployeeGraph.vue";
 export default {
   components: {
     EmployeeConditionList,
     BreadCrumbs,
+    EmployeeGraph
   },
   data() {
     return {
       employee: {},
+      dailyPostList:[],
+      selectedMonth: new Date(),
       items: [
         {
           text: "従業員一覧",
@@ -76,13 +103,18 @@ export default {
       return dep.depName;
     },
   },
-  mounted() {
+  created() {
+    axios.post("/showDailyPosts", {
+      userId: JSON.parse(decodeURIComponent(this.$route.query.item)).userId
+    }).then((response) => {
+      this.dailyPostList = response.data;
+    });
+
     this.employee = this.$store.state.employeeList.find(
       (elm) =>
         elm.userId ===
         JSON.parse(decodeURIComponent(this.$route.query.item)).userId
     );
-    console.log(this.employee[0]);
     this.items[1].text = this.employee.userName + "のコンディション履歴";
   },
 };

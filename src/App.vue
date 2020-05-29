@@ -2,7 +2,7 @@
   <v-app style="background-color:#f5f5f5">
     <Header />
     <router-view />
-    <SideMenu></SideMenu>
+    <SideMenu />
   </v-app>
 </template>
 

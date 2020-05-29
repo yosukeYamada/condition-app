@@ -205,8 +205,9 @@ export default new Vuex.Store({
         (employee) => employee.userId === updateEmployee[0].userId
       )[0].version = updateEmployee[0].version;
       state.employeeList.filter(
+        
         (employee) => employee.userId === updateEmployee[0].userId
-      )[0].dep.depId = updateEmployee[0].depId;
+      )[0].depId = updateEmployee[0].depId;
     },
 
     /**
@@ -392,7 +393,7 @@ export default new Vuex.Store({
      */
     getNewsList({ commit }) {
       axios.get("/showNewsList").then((response) => {
-        commit("setNewsPost", response.data);
+        commit("setNewsPostList", response.data);
       });
     },
     /**

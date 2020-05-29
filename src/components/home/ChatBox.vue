@@ -144,6 +144,13 @@ export default {
       this.toggle = !this.toggle
       this.lastMonth = !this.lastMonth
     },
+  },
+  created() {
+    axios.post('/showScore', {
+      userId: this.$store.state.loginUser.userId
+    }).then((res) => {
+      console.log(res.data)
+    })
   }
 }
 </script>

@@ -14,15 +14,8 @@
           <p>Rakuppoを利用するにはユーザー登録を完了してください。</p>
         </b-card-text>
         <b-card-text>
-          <ValidationProvider
-            :rules="{ userName: /([^ -~｡-ﾟ])/ }"
-            v-slot="{ errors }"
-          >
-            <b-form-group
-              label="名前"
-              label-for="input-name"
-              description="苗字と名前の間はスペースをあけないでください"
-            >
+          <ValidationProvider :rules="{ userName: /([^ -~｡-ﾟ])/ }" v-slot="{ errors }">
+            <b-form-group label="名前" label-for="input-name" description="苗字と名前の間はスペースをあけないでください">
               <b-form-input
                 id="input-name"
                 type="text"
@@ -34,10 +27,7 @@
             </b-form-group>
           </ValidationProvider>
 
-          <ValidationProvider
-            :rules="{ userNameKana: /[ぁ-ん]/ }"
-            v-slot="{ errors }"
-          >
+          <ValidationProvider :rules="{ userNameKana: /[ぁ-ん]/ }" v-slot="{ errors }">
             <b-form-group
               label="ふりがな"
               label-for="input-name-kana"
@@ -58,12 +48,7 @@
             label-for="input-email"
             description="ログイン時に入力したメールアドレスを入力してください"
           >
-            <b-form-input
-              id="input-email"
-              type="email"
-              v-model="mailAddress"
-              disabled="disabled"
-            />
+            <b-form-input id="input-email" type="email" v-model="mailAddress" disabled="disabled" />
           </b-form-group>
           <ValidationObserver>
             <b-form-group label="入社年月">
@@ -75,9 +60,7 @@
                   >
                     <b-form-select name="year" v-model="hireYear">
                       <option disabled selected>年</option>
-                      <option v-for="i in selectYears" :key="i" :value="i">
-                        {{ i }}
-                      </option>
+                      <option v-for="i in selectYears" :key="i" :value="i">{{ i }}</option>
                     </b-form-select>
                     <small class="text-danger">{{ errors[0] }}</small>
                   </ValidationProvider>
@@ -86,9 +69,11 @@
                   <ValidationProvider name="month" rules="required">
                     <b-form-select name="month" v-model="hireMonth">
                       <option disabled selected>月</option>
-                      <option v-for="i in hireMonthList" :key="i" :value="i">{{
+                      <option v-for="i in hireMonthList" :key="i" :value="i">
+                        {{
                         i
-                      }}</option>
+                        }}
+                      </option>
                     </b-form-select>
                   </ValidationProvider>
                 </b-col>
@@ -99,15 +84,12 @@
             <ValidationProvider rules="required" v-slot="{ errors }">
               <b-form-group label="部門">
                 <b-form-select v-model="depId">
-                  <option value="null" disabled
-                    >部門名を選択してください</option
-                  >
+                  <option value="null" disabled>部門名を選択してください</option>
                   <option
                     v-for="(dep, i) in selectDepList"
                     :key="i"
                     :value="dep.value"
-                    >{{ dep.name }}</option
-                  >
+                  >{{ dep.name }}</option>
                 </b-form-select>
               </b-form-group>
               <small class="text-danger">{{ errors[0] }}</small>
@@ -117,11 +99,8 @@
             class="mr-3"
             variant="outline-success"
             @click.prevent="handleSubmit(registerUser)"
-            >登録</b-button
-          >
-          <b-button variant="outline-danger" @click.prevent="resetButton()"
-            >リセット</b-button
-          >
+          >登録</b-button>
+          <b-button variant="outline-danger" @click.prevent="resetButton()">リセット</b-button>
         </b-card-text>
       </b-card>
     </ValidationObserver>
@@ -141,7 +120,7 @@ export default {
       mailAddress: null,
       hireYear: null,
       hireMonth: null,
-      depId: null,
+      depId: null
     };
   },
   computed: {
@@ -156,11 +135,11 @@ export default {
     },
     /** 部署一覧 */
     selectDepList() {
-      return this.$store.state.depList.map((dep) => ({
+      return this.$store.state.depList.map(dep => ({
         name: dep.depName,
-        value: dep.depId,
+        value: dep.depId
       }));
-    },
+    }
   },
 
   methods: {
@@ -175,16 +154,40 @@ export default {
           depId: this.depId,
           hireYear: this.hireYear,
           hireMonth: this.hireMonth,
-          mailAddress: this.mailAddress,
+          mailAddress: this.mailAddress
         })
-        .then((response) => {
-          this.setLoginUser(response.data);
-          this.switchLoginStatus(true);
-          alert("登録が完了しました！");
-          this.$router.push("/home");
-          // お知らせ一覧を取得、表示用にstateに格納
-          this.$store.dispatch("setNewsPost", response.data.postedNewsList);
-        });
+        .then(response => {
+          Promise.resolve()
+            .then(() =>
+              axios
+                .post("/signUp", {
+                  mailAddress: this.mailAddress,
+                  password: this.mailAddress
+                })
+                .then(() => {
+                  axios
+                    .post("/login", {
+                      mailAddress: this.mailAddress,
+                      password: this.mailAddress
+                    })
+                    .then(response => {
+                      axios.defaults.headers.common["Authorization"] =
+                        response.headers["authorization"];
+                      // お知らせ一覧を取得、表示用にstateに格納
+                      this.$store.dispatch(
+                        "setNewsPost",
+                        response.data.postedNewsList
+                      );
+                    });
+                })
+            )
+            .then(() => this.setLoginUser(response.data))
+            .then(() => this.switchLoginStatus(true))
+            .then(() => alert("登録が完了しました！"))
+            .then(() => this.$router.push("/home"));
+        }).catch((e)=>{
+          console.log(e)
+        })
     },
     resetButton() {
       this.userName = "";
@@ -202,13 +205,13 @@ export default {
         yearList.push(i);
       }
       this.selectYears = yearList;
-    },
+    }
   },
   created() {
     this.makeYearList();
   },
   mounted() {
     this.mailAddress = this.$store.state.loginUser.mailList[0].mailName;
-  },
+  }
 };
 </script>

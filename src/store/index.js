@@ -11,6 +11,7 @@ Vue.use(Vuex);
 
 const getDefaultState = () => {
   return {
+    token:"",
     loginUser: {
       authority: 2, // 初期値は2(一般ユーザー権限)で指定
       depId: 0,
@@ -229,6 +230,14 @@ export default new Vuex.Store({
     resetState(state) {
       Object.assign(state, getDefaultState());
     },
+
+    /* トークンをセットするメソッド.
+     * 
+     * @param {*} token トークン 
+     */
+    setToken(state,token){
+      state.token = token
+    }
   },
   actions: {
     /**
@@ -424,6 +433,10 @@ export default new Vuex.Store({
     resetState({ commit }) {
       commit("resetState");
     },
+    
+    setToken({commit},token){
+      commit("setToken",token);
+    }
   },
 
   getters: {

@@ -7,6 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "local-serve": "vue-cli-service serve --mode local",
+    "test-dev-serve": "vue-cli-service serve --mode test-development",
+    "test-dev-build": "vue-cli-service build --mode test-development",
     "dev-serve": "vue-cli-service serve --mode development",
     "dev-build": "vue-cli-service build --mode development"
   },

@@ -66,7 +66,8 @@ export default {
     }
   },
   mounted() {
-    firebase.auth().onAuthStateChanged((user) => {
+    axios.defaults.headers.common["Authorization"] = "";
+    firebase.auth().onAuthStateChanged(user => {
       this.loading = false;
       if (user) {
         this.setFirebaseUser(user);
@@ -80,35 +81,66 @@ export default {
             this.getDepList(response.data.depList);
             //新規登録画面へ遷移
             if (response.data.authority == AUTHORITY.UNREGISTERED) {
-              axios
-                .post("/signUp", {
-                  mailAddress: googleMailAddress,
-                  password: googleMailAddress
-                })
-                .then(() => {
-                  // APIへログイン
-                  axios
-                    .post("/login", {
-                      mailAddress: googleMailAddress,
-                      password: googleMailAddress
-                    })
-                    .then(apiLoginResponse => {
-                      Promise.resolve()
-                      .then(() =>
-                        this.setToken(apiLoginResponse.headers["authorization"])
-                      )
-                      .then(() =>
-                        this.$router.push("/registerUser"))
-              
+              // Promise.resolve()
+                // .then(
+                //   () => (axios.defaults.headers.common["Authorization"] = "")
+                // )
+                // .then(() =>
+                //   axios
+                //     .post("/signUp", {
+                //       mailAddress: googleMailAddress,
+                //       password: googleMailAddress
+                //     })
+                //     .catch(error => {
+                //       console.log(error);
+                //       alert("問題が発生しました");
+                //     })
+                // )
+                // .then(() =>
+                //   axios
+                //     .post("/login", {
+                //       mailAddress: googleMailAddress,
+                //       password: googleMailAddress
+                //     })
+                //     .then(apiResponse => {
+                //       Promise.resolve()
+                //         .then(() =>
+                //           console.log(
+                //             "aaaaaaaaaaa" + apiResponse.headers["authorization"]
+                //           )
+                //         )
+                //         .then(() =>
+                //           this.setToken(apiResponse.headers["authorization"])
+                //         )
+                //         .then(
+                //           () =>
+                //             (axios.defaults.headers.common[
+                //               "Authorization"
+                //             ] = this.token)
+                //         )
+                        this.$router.push("/registerUser");
+                //         .then(() => this.$router.push("/registerUser"));
+                //     })
+                //     .catch(error => {
+                //       console.log(error);
+                //       console.log("問題が発生しました");
+                //     })
+                // )
+                // .then(() => console.log(this.token));
 
-                    })
-                    .catch(error => {
-                      console.log(error);
-                    });
-                })
-                .catch(error => {
-                  console.log(error);
-                });
+              // axios
+              //   .post("/signUp", {
+              //     mailAddress: googleMailAddress,
+              //     password: googleMailAddress
+              //   })
+              // APIへログイン
+              //     .then(apiLoginResponse => {
+              //       Promise.resolve()
+              //     .catch(error => {
+              //       console.log(error);
+              //     });
+              // }
+              // )
               //管理者権限
             } else if (response.data.authority == AUTHORITY.ADMIN) {
               /** 管理者権限の場合 */
@@ -134,10 +166,8 @@ export default {
                     )
                     .then(() => this.getEmployeeList())
                     .then(() => this.$router.push("/home"));
+
                   //全従業員情報を取得
-                })
-                .catch(error => {
-                  console.log(error);
                 });
             } else if (response.data.authority == AUTHORITY.USER) {
               /** ユーザー権限の場合 */
@@ -171,17 +201,15 @@ export default {
               firebase.auth().signOut();
               this.err =
                 "メールドメインがrakus-partners.co.jp\nまたはrakus.co.jpのユーザーのみログインできます";
-            } else if(response.data.status == STATUS.DELETED) {
+            } else if (response.data.status == STATUS.DELETED) {
               /** メールアドレスのドメインが組織外のユーザーの場合 */
               this.deleteLoginUser();
               firebase.auth().signOut();
-              this.err =
-                "アカウントが削除されているためログインできません";
+              this.err = "アカウントが削除されているためログインできません";
             }
           })
           .catch(error => {
             console.log(error);
-            console.log("失敗");
           });
         this.loading = true;
       } else {

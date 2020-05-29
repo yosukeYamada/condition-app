@@ -105,6 +105,8 @@ export default {
           this.$refs.chatbox.scrollTop = this.$refs.chatbox.scrollHeight
         })
       })
+      this.isPush = true
+      this.error = true
     },
     keyUp(){
       if((this.message).length === 0){
@@ -124,6 +126,7 @@ export default {
     closeTalk() {
       this.toggle = !this.toggle
       this.talk = !this.talk
+      this.error = false
     },
     openLastWeek() {
       this.toggle = !this.toggle

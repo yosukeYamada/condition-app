@@ -33,56 +33,65 @@
       </div>
 
       <div v-if="lastWeek" class="my-parts">
+          <span>先週の総合結果：{{lastWeekScore}}/{{ totalMaxScoreOfLastWeek}}点</span><br>
+          <span>モチベーション：{{lastWeekMotivationScore}}/{{partMaxScoreOfLastWeek}}点</span><br>
+          <span>コンディション：{{lastWeekConditionScore}}/{{partMaxScoreOfLastWeek}}点</span><br>
+          <span>パフォーマンス：{{lastWeekPerformanceScore}}/{{partMaxScoreOfLastWeek}}点</span>
+
         <div v-if="lastWeekScore <= 15">
-          <span
+          <br><span
             >大丈夫ですか！？ラクスカルは不安でなりません！
             改めて先週の自分の行動を振り返りましょう！</span
           >
         </div>
         <div v-if="lastWeekScore > 15 && lastWeekScore <= 25">
-          <span
+          <br><span
             >今週は少し頑張りが足りなかったようです、、
             来週はコンデイションを整えて良い１週間にしましょう！</span
           >
         </div>
         <div v-if="lastWeekScore > 25 && lastWeekScore <= 45">
-          <span
+          <br><span
             >今週は少し頑張りが足りなかったようです、、
             来週はコンデイションを整えて良い１週間にしましょう！</span
           >
         </div>
         <div v-if="lastWeekScore > 45 && lastWeekScore <= 65">
-          <span
+          <br><span
             >コンディションは概ね良好のようですね！疲れている時には糖分を取って休憩しましょう！</span
           >
         </div>
         <div v-if="lastWeekScore > 65 && lastWeekScore <= 75">
-          <span
+         <br><span
             >コンディションは概ね良好のようですね！疲れている時には糖分を取って休憩しましょう！</span
           >
         </div>
       </div>
 
       <div v-if="lastMonth" class="my-parts">
+        <span>先月の総合結果：{{lastMonthScore}}/{{totalMaxScoreOfLastMonth}}点</span><br>
+          <span>モチベーション：{{lastMonthMotivationScore}}/{{partMaxScoreOfLastMonth}}点</span><br>
+          <span>コンディション：{{lastMonthConditionScore}}/{{partMaxScoreOfLastMonth}}点</span><br>
+          <span>パフォーマンス：{{lastMonthPerformanceScore}}/{{partMaxScoreOfLastMonth}}点</span>
         <div v-if="lastMonthScore <= 120">
-          <span
+          <br><span
             >かなり調子がよくなかったみたいです、、、
             原因をしっかり分析して改善につなげていきましょう！</span
           >
         </div>
         <div v-if="lastMonthScore > 120 && lastMonthScore <= 210">
-          <span>
+          <br><span>
             ちょっと先月は調子が良くなかったみたいですね、、
             時には好きな事に没頭して気分転換をすることも大事ですよ！
           </span>
         </div>
         <div v-if="lastMonthScore > 210 && lastMonthScore <= 270">
-          <span>
+          <br><span>
             概ねコンディションは良好なようですね！今月はもっと成果をだせるようにがんばっていきましょう！
           </span>
         </div>
         <div v-if="lastMonthScore > 270 && lastMonthScore <= 300">
-          <span>
+          <br><span>
             お見事です！よく１ヶ月間コンディションを高く維持できましたね！ラクスカルも嬉しいです！
           </span>
         </div>
@@ -120,8 +129,20 @@ import axios from "axios";
 export default {
   name: "ChatBox",
   data: () => ({
+    totalMaxScoreOfLastWeek:"",
+    partMaxScoreOfLastWeek:"",
+    lastWeekMotivationScore:"",
+    lastWeekConditionScore:"",
+    lastWeekPerformanceScore:"",
     lastWeekScore: "",
+
+    totalMaxScoreOfLastMonth:"",
+    partMaxScoreOfLastMonth:"",
+    lastMonthMotivationScore:"",
+    lastMonthConditionScore:"",
+    lastMonthPerformanceScore:"",
     lastMonthScore: "",
+
     isPush: true,
     error: false,
     message: "",
@@ -200,7 +221,18 @@ export default {
       })
       .then((res) => {
         console.log(res.data);
+         this.totalMaxScoreOfLastWeek = res.data.maxTotalScoreOfLastWeek;
+         this.partMaxScoreOfLastWeek = res.data.maxPartScoreOfLastWeek;
+         this.lastWeekMotivationScore = res.data.totalLastWeekMotivationScore;
+         this.lastWeekConditionScore = res.data.totalLastWeekConditionScore;
+         this.lastWeekPerformanceScore = res.data.totalLastWeekPerformanceScore;
         this.lastWeekScore = res.data.totalLastWeekCount;
+
+        this.totalMaxScoreOfLastMonth = res.data.maxTotalScoreOfLastMonth;
+        this.partMaxScoreOfLastMonth = res.data.maxPartScoreOfLastMonth;
+        this.lastMonthMotivationScore = res.data.totalLastMonthMotivationScore;
+        this.lastMonthConditionScore = res.data.totalLastMonthConditionScore;
+        this.lastMonthPerformanceScore = res.data.totalLastMonthPerformanceScore;
         this.lastMonthScore = res.data.totalLastMonthCount;
       });
   },

@@ -134,6 +134,7 @@ export default {
   }),
   methods: {
     sendMessage() {
+      "use strict";
       const message = this.message;
       this.messages.push({
         text: message,
@@ -143,13 +144,17 @@ export default {
       let params = new URLSearchParams();
       params.append("apikey", "DZZFZglGN7QoV2cbRMvNJ5Zuj4VqzJJA");
       params.append("query", message);
-      axios
-        .post("https://api.a3rt.recruit-tech.co.jp/talk/v1/smalltalk", params)
+      fetch("https://api.a3rt.recruit-tech.co.jp/talk/v1/smalltalk", {
+          method: 'post',
+          body: params
+        })
         .then((res) => {
-          this.messages.push({
-            text: res.data.results[0].reply,
-            author: "server",
-          });
+          res.json().then(data => {
+            this.messages.push({
+              text: data.results[0].reply,
+              author: "server",
+            });
+          })
           this.$nextTick(() => {
             this.$refs.chatbox.scrollTop = this.$refs.chatbox.scrollHeight;
           });
@@ -199,7 +204,6 @@ export default {
         userId: this.$store.state.loginUser.userId,
       })
       .then((res) => {
-        console.log(res.data);
         this.lastWeekScore = res.data.totalLastWeekCount;
         this.lastMonthScore = res.data.totalLastMonthCount;
       });
@@ -208,9 +212,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.bot-content {
-  margin-top: 50px;
-}
 .chat-box,
 .chat-box-list {
   display: flex;
@@ -394,7 +395,6 @@ export default {
   border-right: 10px solid green;
   z-index: 2;
 }
-
 .parent {
   text-align: center;
   font-size: 20px;

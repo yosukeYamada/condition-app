@@ -88,12 +88,10 @@
 <script>
 import axios from "axios";
 import AUTHORITY from "@/assets/js/Authority.js";
-import Push from "push.js";
+
 
 export default {
-  created() { 
-    window.Push = require('push.js');
-    Push.create('Hello World!') },
+    
   data() {
     return {
       loading: false,

@@ -7,7 +7,7 @@
             <HomeNews />
           </b-col>
         </b-row>
-            <ChatBox/>
+            <ChatBox v-if="authority === USER"/>
         <b-row align-h="center" v-if="authority === ADMIN">
           <b-col sm="6" md="5" lg="4">
             <InputRate />
@@ -39,6 +39,7 @@ export default {
   data() {
     return {
       ADMIN: AUTHORITY.ADMIN,
+      USER: AUTHORITY.USER,
     };
   },
   computed: {

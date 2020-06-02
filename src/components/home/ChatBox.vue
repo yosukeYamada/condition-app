@@ -33,12 +33,19 @@
       </div>
 
       <div v-if="lastWeek" class="my-parts">
-          <span>先週の総合結果：{{lastWeekScore}}/{{ totalMaxScoreOfLastWeek}}点</span><br>
-          <span>モチベーション：{{lastWeekMotivationScore}}/{{partMaxScoreOfLastWeek}}点</span><br>
-          <span>コンディション：{{lastWeekConditionScore}}/{{partMaxScoreOfLastWeek}}点</span><br>
-          <span>パフォーマンス：{{lastWeekPerformanceScore}}/{{partMaxScoreOfLastWeek}}点</span>
+          <h3>先週の総合結果：{{lastWeekScore}}/{{ totalMaxScoreOfLastWeek}}点</h3><br>
+          <h5>モチベーション：{{lastWeekMotivationScore}}/{{partMaxScoreOfLastWeek}}点</h5><br>
+          <h5>コンディション：{{lastWeekConditionScore}}/{{partMaxScoreOfLastWeek}}点</h5><br>
+          <h5>パフォーマンス：{{lastWeekPerformanceScore}}/{{partMaxScoreOfLastWeek}}点</h5>
 
-        <div v-if="lastWeekScore <= 15">
+        
+
+        <div v-if="lastWeekScore === 0">
+          <br><span
+            >今日から毎日コンディション登録をして頑張っていきましょう！</span
+          >
+        </div>
+        <div v-if="lastWeekScore >= 3 &&lastWeekScore <= 15">
           <br><span
             >大丈夫ですか！？ラクスカルは不安でなりません！
             改めて先週の自分の行動を振り返りましょう！</span
@@ -69,11 +76,16 @@
       </div>
 
       <div v-if="lastMonth" class="my-parts">
-        <span>先月の総合結果：{{lastMonthScore}}/{{totalMaxScoreOfLastMonth}}点</span><br>
-          <span>モチベーション：{{lastMonthMotivationScore}}/{{partMaxScoreOfLastMonth}}点</span><br>
-          <span>コンディション：{{lastMonthConditionScore}}/{{partMaxScoreOfLastMonth}}点</span><br>
-          <span>パフォーマンス：{{lastMonthPerformanceScore}}/{{partMaxScoreOfLastMonth}}点</span>
-        <div v-if="lastMonthScore <= 120">
+        <h3>先月の総合結果：{{lastMonthScore}}/{{totalMaxScoreOfLastMonth}}点</h3><br>
+          <h5>モチベーション：{{lastMonthMotivationScore}}/{{partMaxScoreOfLastMonth}}点</h5><br>
+          <h5>コンディション：{{lastMonthConditionScore}}/{{partMaxScoreOfLastMonth}}点</h5><br>
+          <h5>パフォーマンス：{{lastMonthPerformanceScore}}/{{partMaxScoreOfLastMonth}}点</h5>
+        <div v-if="lastMonthScore === 0">
+          <br><span
+            >今日から毎日コンディション登録をして頑張っていきましょう！</span
+          >
+        </div>
+        <div v-if="lastMonthScore >=3 && lastMonthScore <= 120">
           <br><span
             >かなり調子がよくなかったみたいです、、、
             原因をしっかり分析して改善につなげていきましょう！</span
@@ -225,6 +237,7 @@ export default {
         userId: this.$store.state.loginUser.userId,
       })
       .then((res) => {
+        console.log(res)
           this.totalMaxScoreOfLastWeek = res.data.maxTotalScoreOfLastWeek;
           this.partMaxScoreOfLastWeek = res.data.maxPartScoreOfLastWeek;
           this.lastWeekMotivationScore = res.data.totalLastWeekMotivationScore;

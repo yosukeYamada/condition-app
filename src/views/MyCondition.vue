@@ -53,7 +53,6 @@ export default {
         userId: this.$store.state.loginUser.userId,
       })
       .then((response) => {
-        console.log(response.data)
         this.dailyPostList = response.data;
       });
   },

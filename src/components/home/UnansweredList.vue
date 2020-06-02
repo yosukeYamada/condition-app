@@ -35,10 +35,13 @@
                 class="blue--text text--darken-2 mr-4"
               ></v-fa>
             </b-col>
-            <b-col lg="4">
+            <b-col lg="3">
+              <span>{{ unanswered.hireDate | moment }}入社</span>
+            </b-col>
+            <b-col lg="3">
               <span>{{ transferDepName(unanswered.depId) }}</span>
             </b-col>
-            <b-col lg="4">
+            <b-col lg="3">
               <span>{{ unanswered.userName + "さん" }}</span>
             </b-col>
             <b-col lg="2">
@@ -123,6 +126,11 @@ export default {
       depId : 0,
       depName: '全従業員'
     })
+  },
+  filters: {
+    moment: function(date) {
+      return moment(date).format("YYYY年MM月");
+    },
   },
 };
 </script>

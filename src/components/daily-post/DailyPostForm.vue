@@ -90,14 +90,12 @@
 import axios from "axios";
 import AUTHORITY from "@/assets/js/Authority.js";
 
-
 export default {
-    
   data() {
     return {
       loading: false,
       isPush: false,
-      rules: [v => v.length <= 200 || "200字以内でコメントしてください"],
+      rules: [(v) => v.length <= 200 || "200字以内でコメントしてください"],
       param: {
         motivationSelected: "3",
         performanceSelected: "3",

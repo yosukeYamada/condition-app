@@ -8,7 +8,12 @@
     no-body
     class="h-100"
   >
-    <el-select id="dep" style="width:100%;" v-model="depName" placeholder="部署名">
+    <el-select
+      id="dep"
+      style="width:100%;"
+      v-model="depName"
+      placeholder="部署名"
+    >
       <el-option
         v-for="dep in this.depList"
         :key="dep.depId"
@@ -23,12 +28,13 @@
       flush
       id="resent-posts-list"
     >
-      <b-list-group-item v-for="(unanswered, i) in this.unansweredList" :key="i">
+      <b-list-group-item
+        v-for="(unanswered, i) in this.unansweredList"
+        :key="i"
+      >
         <div>
           <b-row>
-            <b-col
-             lg="1"
-              >
+            <b-col lg="1">
               <v-fa
                 :icon="['far', 'frown']"
                 size="lg"
@@ -42,7 +48,14 @@
               <span>{{ unanswered.userName + "さん" }}</span>
             </b-col>
             <b-col lg="2">
-              <b-btn variant="danger" class="contact" @click="info">連絡</b-btn>
+              <b-btn
+                variant="danger"
+                class="contact"
+                @click="
+                  info(unanswered.userName, unanswered.mailList[0].mailName)
+                "
+                >連絡</b-btn
+              >
             </b-col>
           </b-row>
         </div>
@@ -56,26 +69,26 @@
 
 <script>
 import moment from "moment";
+import axios from "axios";
 export default {
   data() {
     return {
       unansweredList: [],
       depName: 0,
-      depList:[]
+      depList: [],
     };
   },
   watch: {
     employeeList: function() {
-      this.unansweredList = this.setUnanswered()
+      this.unansweredList = this.setUnanswered();
     },
     depName: function() {
-      if(this.depName == 0) {
-        this.unansweredList = this.setUnanswered()
+      if (this.depName == 0) {
+        this.unansweredList = this.setUnanswered();
       } else {
         this.unansweredList = this.setUnanswered().filter(
-          (employee) => 
-            employee.depId === this.depName
-        )
+          (employee) => employee.depId === this.depName
+        );
       }
     },
   },
@@ -112,17 +125,28 @@ export default {
       let dep = this.$store.state.depList.find((dep) => dep.depId === depId);
       return dep.depName;
     },
-    info() {
-      
-    }
+    info(userName, mailName) {
+      axios
+        .post("/sendMail", {
+          userName: userName,
+          mail: mailName,
+        })
+        .then((response) => {
+          console.log(response);
+          alert("メールを送信しました");
+        })
+        .catch((e) => {
+          alert("メール送信に失敗しました：" + e);
+        });
+    },
   },
   mounted() {
     this.unansweredList = this.setUnanswered();
-    this.depList = Array.from(this.$store.state.depList)
+    this.depList = Array.from(this.$store.state.depList);
     this.depList.unshift({
-      depId : 0,
-      depName: '全従業員'
-    })
+      depId: 0,
+      depName: "全従業員",
+    });
   },
 };
 </script>

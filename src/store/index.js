@@ -246,9 +246,10 @@ export default new Vuex.Store({
     login() {
       const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(googleAuthProvider);
-      googleAuthProvider.setCustomParameters({
-        hd: 'rakus-partners.co.jp'
-      });
+      /** ドメインを２つ指定できないためコメントアウトしました */
+      // googleAuthProvider.setCustomParameters({
+      //   hd: 'rakus-partners.co.jp'
+      // });
     },
     /**
      * ログイン状態を切り替えるメソッド

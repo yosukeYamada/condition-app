@@ -1,9 +1,8 @@
 <script>
-import { Line, mixins } from "vue-chartjs";
+import { Line} from "vue-chartjs";
 import moment from "moment";
 export default {
   extends: Line,
-  mixins: [mixins.reactiveData],
   props: ["dailyPostList", "selectedMonth"],
   data() {
     return {
@@ -24,7 +23,7 @@ export default {
                 //軸のメモリ
                 beginAtZero: true, //0から始まる
                 min: 0,
-                max: 5
+                max: 5,
               },
               gridLines: {
                 //y軸の網線
@@ -110,12 +109,17 @@ export default {
         moment(dailyPost.date).format("MM-DD")
       );
       /** データをセット */
+      var motivationData = dateArray.map((dateObj) => dateObj.motivationScore);
+      var conditionData = dateArray.map((dateObj) => dateObj.conditionScore);
+      var performanceData = dateArray.map(
+        (dateObj) => dateObj.performanceScore
+      );
       this.chartData = {
         labels: labels,
         datasets: [
           {
             label: "やる気",
-            data: dateArray.map((dateObj) => dateObj.motivationScore),
+            data: motivationData,
             borderColor: "#f57c00",
             backgroundColor: "rgba(240,100,100,0.2)",
             radius: 1,
@@ -123,7 +127,7 @@ export default {
           },
           {
             label: "体調",
-            data: dateArray.map((dateObj) => dateObj.conditionScore),
+            data: conditionData,
             backgroundColor: "rgba(92,184,92,0.2)",
             borderColor: "#356e4d",
             radius: 1,
@@ -131,7 +135,7 @@ export default {
           },
           {
             label: "成果",
-            data: dateArray.map((dateObj) => dateObj.performanceScore),
+            data: performanceData,
             backgroundColor: "rgba(0,127,255,0.2)",
             borderColor: "#007fff",
             radius: 1,

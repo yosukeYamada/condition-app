@@ -16,7 +16,6 @@ import Top from "../views/Top.vue";
 import store from "../store/index.js";
 import EditDeps from "@/views/EditDeps.vue";
 import PostInformation from "@/views/PostInformation.vue";
-import Information from "@/views/Information.vue";
 import EditInformationList from "@/views/EditInformationList.vue";
 import EditInformation from "@/views/EditInformation.vue";
 
@@ -132,7 +131,7 @@ const routes = [
     component: EmployeeList,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.state.loginStatus) {
+      if (store.state.loginStatus && store.state.loginUser.authority == 1) {
         next();
       } else {
         next("/login");
@@ -145,7 +144,7 @@ const routes = [
     component: AdminSetting,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.state.loginStatus) {
+      if (store.state.loginStatus  && store.state.loginUser.authority == 1) {
         next();
       } else {
         next("/login");
@@ -156,11 +155,14 @@ const routes = [
     path: "/editDeps",
     name: "EditDeps",
     component: EditDeps,
-  },
-  {
-    path: "/information",
-    name: "Information",
-    component: Information,
+    //ログインしていたら上記のパスに飛ぶことを許可する
+    beforeEnter(to, from, next) {
+      if (store.state.loginStatus  && store.state.loginUser.authority == 1) {
+        next();
+      } else {
+        next("/login");
+      }
+    },
   },
   {
     path: "/updateUser",
@@ -168,7 +170,7 @@ const routes = [
     component: UpdateUser,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.state.loginStatus) {
+      if (store.state.loginStatus  && store.state.loginUser.authority == 1) {
         next();
       } else {
         next("/login");
@@ -181,7 +183,7 @@ const routes = [
     component: UpdateUserForm,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.state.loginStatus) {
+      if (store.state.loginStatus  && store.state.loginUser.authority == 1) {
         next();
       } else {
         next("/login");
@@ -194,7 +196,7 @@ const routes = [
     component: PostInformation,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.state.loginStatus) {
+      if (store.state.loginStatus  && store.state.loginUser.authority == 1) {
         next();
       } else {
         next("/login");
@@ -207,7 +209,7 @@ const routes = [
     component: EditInformationList,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.state.loginStatus) {
+      if (store.state.loginStatus  && store.state.loginUser.authority == 1) {
         next();
       } else {
         next("/login");
@@ -220,7 +222,7 @@ const routes = [
     component: EditInformation,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
-      if (store.state.loginStatus) {
+      if (store.state.loginStatus  && store.state.loginUser.authority == 1) {
         next();
       } else {
         next("/login");

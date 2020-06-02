@@ -97,7 +97,7 @@ export default {
   methods: {
     ...mapActions(["employeeList"]),
     toPage(path) {
-      this.$router.push(path);
+      this.$router.push(path).catch(err => {err});
     },
     registerLimit() {
       axios

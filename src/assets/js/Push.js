@@ -1,0 +1,1 @@
+window.Push = require('push.js');

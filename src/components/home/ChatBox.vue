@@ -90,7 +90,7 @@
             概ねコンディションは良好なようですね！今月はもっと成果をだせるようにがんばっていきましょう！
           </span>
         </div>
-        <div v-if="lastMonthScore > 270 && lastMonthScore <= 300">
+        <div v-if="lastMonthScore > 270 ">
           <br><span>
             お見事です！よく１ヶ月間コンディションを高く維持できましたね！ラクスカルも嬉しいです！
           </span>

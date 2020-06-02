@@ -7,6 +7,8 @@ import "material-design-icons-iconfont/dist/material-design-icons.css";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import "../validate/validate.js";
+import Push from "push.js";
+
 
 // var URL = process.env.VUE_APP_API_BASE_URL;
 // axios.create({
@@ -95,5 +97,6 @@ new Vue({
   store,
   vuetify,
   axios,
+  Push,
   render: (h) => h(App),
 }).$mount("#app");

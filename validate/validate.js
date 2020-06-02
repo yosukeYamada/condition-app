@@ -52,5 +52,6 @@ extend("email", {
 
 extend("digits", digits);
 
+
 Vue.component("ValidationObserver", ValidationObserver);
 Vue.component("ValidationProvider", ValidationProvider);

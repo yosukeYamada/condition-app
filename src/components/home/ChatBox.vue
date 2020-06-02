@@ -7,15 +7,9 @@
         <div class="description" v-if="!toggle">
           僕に何か用かな？
           <ul>
-            <li @click="openTalk" id="talk">
-              ラクスカル君とおしゃべりしたい！
-            </li>
-            <li @click="openLastWeek" id="lastWeek">
-              私の先週の働きっぷりを総評して欲しい！
-            </li>
-            <li @click="openLastMonth" id="lastMonth">
-              私の先月の働きっぷりを総評して欲しい！
-            </li>
+            <li @click="openTalk" id="talk">ラクスカル君とおしゃべりしたい！</li>
+            <li @click="openLastWeek" id="lastWeek">私の先週の働きっぷりを総評して欲しい！</li>
+            <li @click="openLastMonth" id="lastMonth">私の先月の働きっぷりを総評して欲しい！</li>
           </ul>
         </div>
 
@@ -33,106 +27,122 @@
       </div>
 
       <div v-if="lastWeek" class="my-parts">
-          <h3>先週の総合結果：{{lastWeekScore}}/{{ totalMaxScoreOfLastWeek}}点</h3><br>
-          <h5>モチベーション：{{lastWeekMotivationScore}}/{{partMaxScoreOfLastWeek}}点</h5><br>
-          <h5>コンディション：{{lastWeekConditionScore}}/{{partMaxScoreOfLastWeek}}点</h5><br>
-          <h5>パフォーマンス：{{lastWeekPerformanceScore}}/{{partMaxScoreOfLastWeek}}点</h5>
-
-        
-
+        <h3>先週の総合結果：{{lastWeekScore}}/{{ totalMaxScoreOfLastWeek}}点</h3>
+        <br />
+        <h5>モチベーション：{{lastWeekMotivationScore}}/{{partMaxScoreOfLastWeek}}点</h5>
+        <br />
+        <h5>コンディション：{{lastWeekConditionScore}}/{{partMaxScoreOfLastWeek}}点</h5>
+        <br />
+        <h5>パフォーマンス：{{lastWeekPerformanceScore}}/{{partMaxScoreOfLastWeek}}点</h5>
         <div v-if="lastWeekScore === 0">
-          <br><span
-            >今日から毎日コンディション登録をして頑張っていきましょう！</span
-          >
+          <br />
+          <span>今日から毎日コンディション登録をして頑張っていきましょう！</span>
         </div>
         <div v-if="lastWeekScore >= 3 &&lastWeekScore <= 15">
-          <br><span
-            >大丈夫ですか！？ラクスカルは不安でなりません！
-            改めて先週の自分の行動を振り返りましょう！</span
-          >
+          <br />
+          <span>
+            大丈夫ですか！？ラクスカルは不安でなりません！
+            改めて先週の自分の行動を振り返りましょう！
+          </span>
         </div>
         <div v-if="lastWeekScore > 15 && lastWeekScore <= 25">
-          <br><span
-            >今週は少し頑張りが足りなかったようです、、
-            来週はコンデイションを整えて良い１週間にしましょう！</span
-          >
+          <br />
+          <span>
+            今週は少し頑張りが足りなかったようです、、
+            来週はコンデイションを整えて良い１週間にしましょう！
+          </span>
         </div>
         <div v-if="lastWeekScore > 25 && lastWeekScore <= 45">
-          <br><span
-            >今週は少し頑張りが足りなかったようです、、
-            来週はコンデイションを整えて良い１週間にしましょう！</span
-          >
+          <br />
+          <span>
+            今週は少し頑張りが足りなかったようです、、
+            来週はコンデイションを整えて良い１週間にしましょう！
+          </span>
         </div>
         <div v-if="lastWeekScore > 45 && lastWeekScore <= 65">
-          <br><span
-            >コンディションは概ね良好のようですね！疲れている時には糖分を取って休憩しましょう！</span
-          >
+          <br />
+          <span>コンディションは概ね良好のようですね！疲れている時には糖分を取って休憩しましょう！</span>
         </div>
         <div v-if="lastWeekScore > 65 && lastWeekScore <= 75">
-         <br><span
-            >コンディションは概ね良好のようですね！疲れている時には糖分を取って休憩しましょう！</span
-          >
+          <br />
+          <span>コンディションは概ね良好のようですね！疲れている時には糖分を取って休憩しましょう！</span>
         </div>
       </div>
 
       <div v-if="lastMonth" class="my-parts">
-        <h3>先月の総合結果：{{lastMonthScore}}/{{totalMaxScoreOfLastMonth}}点</h3><br>
-          <h5>モチベーション：{{lastMonthMotivationScore}}/{{partMaxScoreOfLastMonth}}点</h5><br>
-          <h5>コンディション：{{lastMonthConditionScore}}/{{partMaxScoreOfLastMonth}}点</h5><br>
-          <h5>パフォーマンス：{{lastMonthPerformanceScore}}/{{partMaxScoreOfLastMonth}}点</h5>
+        <h3>先月の総合結果：{{lastMonthScore}}/{{totalMaxScoreOfLastMonth}}点</h3>
+        <br />
+        <h5>モチベーション：{{lastMonthMotivationScore}}/{{partMaxScoreOfLastMonth}}点</h5>
+        <br />
+        <h5>コンディション：{{lastMonthConditionScore}}/{{partMaxScoreOfLastMonth}}点</h5>
+        <br />
+        <h5>パフォーマンス：{{lastMonthPerformanceScore}}/{{partMaxScoreOfLastMonth}}点</h5>
         <div v-if="lastMonthScore === 0">
-          <br><span
-            >今日から毎日コンディション登録をして頑張っていきましょう！</span
-          >
+          <br />
+          <span>今日から毎日コンディション登録をして頑張っていきましょう！</span>
         </div>
         <div v-if="lastMonthScore >=3 && lastMonthScore <= 120">
-          <br><span
-            >かなり調子がよくなかったみたいです、、、
-            原因をしっかり分析して改善につなげていきましょう！</span
-          >
+          <br />
+          <span>
+            かなり調子がよくなかったみたいです、、、
+            原因をしっかり分析して改善につなげていきましょう！
+          </span>
         </div>
         <div v-if="lastMonthScore > 120 && lastMonthScore <= 210">
-          <br><span>
+          <br />
+          <span>
             ちょっと先月は調子が良くなかったみたいですね、、
             時には好きな事に没頭して気分転換をすることも大事ですよ！
           </span>
         </div>
         <div v-if="lastMonthScore > 210 && lastMonthScore <= 270">
-          <br><span>
-            概ねコンディションは良好なようですね！今月はもっと成果をだせるようにがんばっていきましょう！
-          </span>
+          <br />
+          <span>概ねコンディションは良好なようですね！今月はもっと成果をだせるようにがんばっていきましょう！</span>
         </div>
         <div v-if="lastMonthScore > 270 ">
-          <br><span>
-            お見事です！よく１ヶ月間コンディションを高く維持できましたね！ラクスカルも嬉しいです！
-          </span>
+          <br />
+          <span>お見事です！よく１ヶ月間コンディションを高く維持できましたね！ラクスカルも嬉しいです！</span>
         </div>
       </div>
 
-      <section class="chat-box" v-if="talk">
-        <div class="chat-box-list-container" ref="chatbox">
-          <ul class="chat-box-list">
-            <li
-              class="message"
-              v-for="(message, idx) in messages"
-              :key="idx"
-              :class="message.author"
-            >
-              <p>
-                <span>{{ message.text }}</span>
-              </p>
-            </li>
-          </ul>
-        </div>
-        <div class="chat-inputs">
-          <input type="text" v-model="message" @keyup="keyUp" />
-          <button v-bind:disabled="isPush" @click="sendMessage">送信</button>
-        </div>
-      </section>
+      <ValidationObserver v-slot="{ invalid, passes }">
+        <ValidationProvider rules="required">
+          <div v-if="talk">
+            <section class="chat-box">
+              <div class="chat-box-list-container" ref="chatbox">
+                <ul class="chat-box-list">
+                  <li
+                    class="message"
+                    v-for="(message, idx) in messages"
+                    :key="idx"
+                    :class="message.author"
+                  >
+                    <p>
+                      <span>{{ message.text }}</span>
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </section>
+            <div class="chat-inputs">
+              <b-form-input
+                type="text"
+                v-model="message"
+                @keyup.enter="passes(sendMessage)"
+                required
+              />
+              <b-button
+                variant="outline-success"
+                :disabled="invalid"
+                @click.prevent="passes(sendMessage)"
+              >
+                <v-fa :icon="['fas', 'paper-plane']"></v-fa>
+              </b-button>
+            </div>
+          </div>
+        </ValidationProvider>
+      </ValidationObserver>
     </v-container>
-    <div class="parent">
-      <div v-if="error" id="error">ラクスカルくんに話しかけてみよう！！</div>
-    </div>
   </div>
 </template>
 
@@ -141,29 +151,27 @@ import axios from "axios";
 export default {
   name: "ChatBox",
   data: () => ({
-    totalMaxScoreOfLastWeek:"",
-    partMaxScoreOfLastWeek:"",
-    lastWeekMotivationScore:"",
-    lastWeekConditionScore:"",
-    lastWeekPerformanceScore:"",
+    totalMaxScoreOfLastWeek: "",
+    partMaxScoreOfLastWeek: "",
+    lastWeekMotivationScore: "",
+    lastWeekConditionScore: "",
+    lastWeekPerformanceScore: "",
     lastWeekScore: "",
 
-    totalMaxScoreOfLastMonth:"",
-    partMaxScoreOfLastMonth:"",
-    lastMonthMotivationScore:"",
-    lastMonthConditionScore:"",
-    lastMonthPerformanceScore:"",
+    totalMaxScoreOfLastMonth: "",
+    partMaxScoreOfLastMonth: "",
+    lastMonthMotivationScore: "",
+    lastMonthConditionScore: "",
+    lastMonthPerformanceScore: "",
     lastMonthScore: "",
 
-    isPush: true,
-    error: false,
     message: "",
     messages: [],
     toggle: false,
     talk: false,
     lastWeek: false,
     lastMonth: false,
-    rakuscalImage: "/rakuscal_clear.png",
+    rakuscalImage: "/rakuscal_clear.png"
   }),
   methods: {
     sendMessage() {
@@ -171,38 +179,26 @@ export default {
       const message = this.message;
       this.messages.push({
         text: message,
-        author: "client",
+        author: "client"
       });
       this.message = "";
       let params = new URLSearchParams();
       params.append("apikey", "DZZFZglGN7QoV2cbRMvNJ5Zuj4VqzJJA");
       params.append("query", message);
       fetch("https://api.a3rt.recruit-tech.co.jp/talk/v1/smalltalk", {
-          method: 'post',
-          body: params
-        })
-        .then((res) => {
-          res.json().then(data => {
-            this.messages.push({
-              text: data.results[0].reply,
-              author: "server",
-            });
-          })
+        method: "post",
+        body: params
+      }).then(res => {
+        res.json().then(data => {
+          this.messages.push({
+            text: data.results[0].reply,
+            author: "server"
+          });
           this.$nextTick(() => {
             this.$refs.chatbox.scrollTop = this.$refs.chatbox.scrollHeight;
           });
         });
-      this.isPush = true;
-      this.error = true;
-    },
-    keyUp() {
-      if (this.message.length === 0) {
-        this.isPush = true;
-        this.error = true;
-      } else {
-        this.isPush = false;
-        this.error = false;
-      }
+      });
     },
     openTalk() {
       this.toggle = !this.toggle;
@@ -229,30 +225,30 @@ export default {
     closeLastMonth() {
       this.toggle = !this.toggle;
       this.lastMonth = !this.lastMonth;
-    },
+    }
   },
   created() {
     axios
       .post("/showScore", {
-        userId: this.$store.state.loginUser.userId,
+        userId: this.$store.state.loginUser.userId
       })
-      .then((res) => {
-        console.log(res)
-          this.totalMaxScoreOfLastWeek = res.data.maxTotalScoreOfLastWeek;
-          this.partMaxScoreOfLastWeek = res.data.maxPartScoreOfLastWeek;
-          this.lastWeekMotivationScore = res.data.totalLastWeekMotivationScore;
-          this.lastWeekConditionScore = res.data.totalLastWeekConditionScore;
-          this.lastWeekPerformanceScore = res.data.totalLastWeekPerformanceScore;
-          this.lastWeekScore = res.data.totalLastWeekCount;
+      .then(res => {
+        this.totalMaxScoreOfLastWeek = res.data.maxTotalScoreOfLastWeek;
+        this.partMaxScoreOfLastWeek = res.data.maxPartScoreOfLastWeek;
+        this.lastWeekMotivationScore = res.data.totalLastWeekMotivationScore;
+        this.lastWeekConditionScore = res.data.totalLastWeekConditionScore;
+        this.lastWeekPerformanceScore = res.data.totalLastWeekPerformanceScore;
+        this.lastWeekScore = res.data.totalLastWeekCount;
 
         this.totalMaxScoreOfLastMonth = res.data.maxTotalScoreOfLastMonth;
         this.partMaxScoreOfLastMonth = res.data.maxPartScoreOfLastMonth;
         this.lastMonthMotivationScore = res.data.totalLastMonthMotivationScore;
         this.lastMonthConditionScore = res.data.totalLastMonthConditionScore;
-        this.lastMonthPerformanceScore = res.data.totalLastMonthPerformanceScore;
+        this.lastMonthPerformanceScore =
+          res.data.totalLastMonthPerformanceScore;
         this.lastMonthScore = res.data.totalLastMonthCount;
       });
-  },
+  }
 };
 </script>
 
@@ -265,7 +261,10 @@ export default {
   background: #7494c0;
 }
 .chat-box-list-container {
+  height: 300px;
   overflow: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
   margin-bottom: 1px;
   margin-top: 5px;
 }
@@ -274,12 +273,12 @@ export default {
   padding-right: 10px;
   span {
     padding: 5px;
-    color: white;
+    color: black;
     border-radius: 10px;
   }
   .server {
     span {
-      background: #99cc00;
+      background: white;
     }
     p {
       float: left;
@@ -288,7 +287,7 @@ export default {
   .client {
     span {
       height: 20px;
-      background: #0070c8;
+      background: #99cc00;
     }
     p {
       float: right;
@@ -305,26 +304,19 @@ export default {
 }
 .chat-inputs {
   display: flex;
+  margin-top: 10px;
 
   input {
     line-height: 2;
     width: 100%;
     border: 2px solid #808080;
-    border-left: none;
-    border-bottom: none;
-    border-right: none;
     border-bottom-left-radius: 4px;
     padding-left: 15px;
     background: white;
   }
   button {
-    width: 145px;
-    color: white;
-    background: #0070c8;
-    border-color: #999;
-    border-bottom: none;
-    border-right: none;
-    border-bottom-right-radius: 3px;
+    border: solid;
+    margin-left: 10px;
   }
 }
 .img {
@@ -439,10 +431,5 @@ export default {
   border: 10px solid transparent;
   border-right: 10px solid green;
   z-index: 2;
-}
-.parent {
-  text-align: center;
-  font-size: 20px;
-  color: red;
 }
 </style>

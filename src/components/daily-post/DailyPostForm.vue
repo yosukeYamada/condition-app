@@ -63,16 +63,17 @@
             label="なにかコメントはありますか？"
             label-for="input-comment"
           >
-            <div v-if="error" id="comment">200字以内でコメントしてください</div>
-            <b-form-textarea
+            <v-textarea
+              outlined
               class="mt-3"
               id="input-comment"
               v-model="param.comment"
               placeholder="コメントがあれば入力してください"
-              rows="3"
               max-rows="6"
+              counter="200"
+              :rules="rules"
               @keyup="keyUp"
-            ></b-form-textarea>
+            ></v-textarea>
           </b-form-group>
           <b-button
             v-bind:disabled="isPush"
@@ -96,7 +97,7 @@ export default {
     return {
       loading: false,
       isPush: false,
-      error: false,
+      rules: [v => v.length <= 200 || "200字以内でコメントしてください"],
       param: {
         motivationSelected: "3",
         performanceSelected: "3",
@@ -158,18 +159,11 @@ export default {
     },
     keyUp() {
       if (this.param.comment.length > 200) {
-        this.error = true;
         this.isPush = true;
       } else if (this.param.comment.length <= 200) {
-        this.error = false;
         this.isPush = false;
       }
     },
   },
 };
 </script>
-<style>
-#comment {
-  color: red;
-}
-</style>

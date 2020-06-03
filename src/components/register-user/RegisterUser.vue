@@ -98,6 +98,7 @@
           <b-button
             class="mr-3"
             variant="outline-success"
+            :disabled="isPush"
             @click.prevent="handleSubmit(registerUser)"
           >登録</b-button>
           <b-button variant="outline-danger" @click.prevent="resetButton()">リセット</b-button>
@@ -120,7 +121,8 @@ export default {
       mailAddress: null,
       hireYear: null,
       hireMonth: null,
-      depId: null
+      depId: null,
+      isPush:false
     };
   },
   computed: {
@@ -145,6 +147,7 @@ export default {
   methods: {
     ...mapActions(["setLoginUser", "switchLoginStatus"]),
     registerUser() {
+      this.isPush = true;
       this.userName = this.userName.replace("　", "");
       this.userNameKana = this.userNameKana.replace("　", "");
       axios

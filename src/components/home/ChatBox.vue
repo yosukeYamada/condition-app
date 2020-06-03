@@ -55,8 +55,7 @@
         <div v-if="lastWeekScore > 25 && lastWeekScore <= 45">
           <br />
           <span>
-            今週は少し頑張りが足りなかったようです、、
-            来週はコンデイションを整えて良い１週間にしましょう！
+           コンディションは概ね良好のようですね！疲れている時には糖分を取って休憩しましょう！
           </span>
         </div>
         <div v-if="lastWeekScore > 45 && lastWeekScore <= 65">
@@ -65,7 +64,7 @@
         </div>
         <div v-if="lastWeekScore > 65 && lastWeekScore <= 75">
           <br />
-          <span>コンディションは概ね良好のようですね！疲れている時には糖分を取って休憩しましょう！</span>
+          <span>素晴らしい！コンディションも好調で、よくがんばりましたね！来週もこの調子でいきましょう！</span>
         </div>
       </div>
 

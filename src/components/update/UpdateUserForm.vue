@@ -49,7 +49,16 @@
               <small class="text-danger">{{ errors[0] }}</small>
             </b-form-group>
           </ValidationProvider>
-          <ValidationProvider rules="required|email" v-slot="{ errors }">
+          <ValidationProvider
+            :rules="{
+              required: true,
+              email,
+              rakuspartners:
+                /^[a-zA-Z0-9_.-]+@rakus-partners.co.jp/ ||
+                /^[a-zA-Z0-9_.-]+@rakus.co.jp/,
+            }"
+            v-slot="{ errors }"
+          >
             <b-form-group label="メールアドレス" label-for="input-email">
               <b-form-input
                 id="input-email"
@@ -111,6 +120,7 @@
             </ValidationProvider>
           </div>
           <b-button
+            v-bind:disabled="isPush"
             class="mr-3"
             variant="outline-success"
             @click.prevent="handleSubmit(updateUser)"
@@ -130,6 +140,7 @@ export default {
   name: "UpdateUserForm",
   data() {
     return {
+      isPush: false,
       user: {},
       selectYears: [],
       userName: null,
@@ -161,6 +172,9 @@ export default {
     },
   },
   methods: {
+    pushBtn() {
+      this.isPush = true;
+    },
     updateUser() {
       this.user.userName = this.user.userName.replace("　", "");
       this.user.userNameKana = this.user.userNameKana.replace("　", "");

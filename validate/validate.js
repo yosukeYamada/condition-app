@@ -50,6 +50,25 @@ extend("email", {
   message: "メールアドレスの形式ではありません",
 });
 
+extend("rakuspartners", {
+  ...regex,
+  message:
+    "メールドメインがrakus-partners.co.jpまたはrakus.co.jpのみ更新できます",
+});
+// extend("rakus", {
+//   ...regex,
+//   message:
+//     "メールドメインがrakus-partners.co.jpまたはrakus.co.jpのみ更新できます",
+// });
+// // extend("checkRakuspartners", {
+//   valid: /^[a-zA-Z0-9_.-]+@rakus-partners.co.jp/,
+//   message:
+//     "メールドメインがrakus-partners.co.jpまたはrakus.co.jpのみ更新できます",
+// //regex:
+//                 /^[a-zA-Z0-9_.-]+@rakus-partners.co.jp/
+//                 | /^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@rakus.co.jp/,
+// // });
+
 extend("digits", digits);
 
 

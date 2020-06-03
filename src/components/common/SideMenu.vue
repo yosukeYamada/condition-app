@@ -108,7 +108,7 @@ export default {
           if (response.data) {
             alert("投稿は1日1回です");
           } else {
-            this.$router.push("/dailyPost");
+            this.$router.push("/dailyPost").catch(err => {err});
           }
         });
     },

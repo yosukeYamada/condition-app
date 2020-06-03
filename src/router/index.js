@@ -18,6 +18,7 @@ import EditDeps from "@/views/EditDeps.vue";
 import PostInformation from "@/views/PostInformation.vue";
 import EditInformationList from "@/views/EditInformationList.vue";
 import EditInformation from "@/views/EditInformation.vue";
+import Information from "@/views/Information.vue";
 
 Vue.use(VueRouter);
 
@@ -26,6 +27,11 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/information",
+    name: "Information",
+    component: Information,
   },
   {
     path: "/registerUser",

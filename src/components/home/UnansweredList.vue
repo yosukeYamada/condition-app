@@ -55,7 +55,7 @@
                 variant="danger"
                 class="contact"
                 @click="
-                  info(unanswered.userName, unanswered.mailList[0].mailName)
+                  sendMail(unanswered.userName, unanswered.mailList[0].mailName)
                 "
                 >連絡</b-btn
               >
@@ -128,7 +128,7 @@ export default {
       let dep = this.$store.state.depList.find((dep) => dep.depId === depId);
       return dep.depName;
     },
-    info(userName, mailName) {
+    sendMail(userName, mailName) {
       axios
         .post("/sendMail", {
           userName: userName,

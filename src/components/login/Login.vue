@@ -81,66 +81,7 @@ export default {
             this.getDepList(response.data.depList);
             //新規登録画面へ遷移
             if (response.data.authority == AUTHORITY.UNREGISTERED) {
-              // Promise.resolve()
-                // .then(
-                //   () => (axios.defaults.headers.common["Authorization"] = "")
-                // )
-                // .then(() =>
-                //   axios
-                //     .post("/signUp", {
-                //       mailAddress: googleMailAddress,
-                //       password: googleMailAddress
-                //     })
-                //     .catch(error => {
-                //       console.log(error);
-                //       alert("問題が発生しました");
-                //     })
-                // )
-                // .then(() =>
-                //   axios
-                //     .post("/login", {
-                //       mailAddress: googleMailAddress,
-                //       password: googleMailAddress
-                //     })
-                //     .then(apiResponse => {
-                //       Promise.resolve()
-                //         .then(() =>
-                //           console.log(
-                //             "aaaaaaaaaaa" + apiResponse.headers["authorization"]
-                //           )
-                //         )
-                //         .then(() =>
-                //           this.setToken(apiResponse.headers["authorization"])
-                //         )
-                //         .then(
-                //           () =>
-                //             (axios.defaults.headers.common[
-                //               "Authorization"
-                //             ] = this.token)
-                //         )
                         this.$router.push("/registerUser");
-                //         .then(() => this.$router.push("/registerUser"));
-                //     })
-                //     .catch(error => {
-                //       console.log(error);
-                //       console.log("問題が発生しました");
-                //     })
-                // )
-                // .then(() => console.log(this.token));
-
-              // axios
-              //   .post("/signUp", {
-              //     mailAddress: googleMailAddress,
-              //     password: googleMailAddress
-              //   })
-              // APIへログイン
-              //     .then(apiLoginResponse => {
-              //       Promise.resolve()
-              //     .catch(error => {
-              //       console.log(error);
-              //     });
-              // }
-              // )
               //管理者権限
             } else if (response.data.authority == AUTHORITY.ADMIN) {
               /** 管理者権限の場合 */

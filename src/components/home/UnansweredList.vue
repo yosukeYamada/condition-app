@@ -134,8 +134,7 @@ export default {
           userName: userName,
           mail: mailName,
         })
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           alert("メールを送信しました");
         })
         .catch((e) => {

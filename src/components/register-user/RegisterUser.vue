@@ -81,10 +81,10 @@
             </b-form-group>
           </ValidationObserver>
           <div>
-            <ValidationProvider rules="required" v-slot="{ errors }">
+            <ValidationProvider rules="checkDep" v-slot="{ errors }">
               <b-form-group label="部門">
                 <b-form-select v-model="depId">
-                  <option value="null" disabled>部門名を選択してください</option>
+                  <option disabled>部門名を選択してください</option>
                   <option
                     v-for="(dep, i) in selectDepList"
                     :key="i"

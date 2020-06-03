@@ -45,6 +45,7 @@ const getDefaultState = () => {
     newsPostList: [],
     informationList: [],
     categoryList: [],
+    unAnsweredId: [],
   };
 };
 
@@ -237,6 +238,14 @@ export default new Vuex.Store({
      */
     setToken(state,token){
       state.token = token
+    },
+
+    /**
+     * 未投稿者のuserIdをstateに格納するメソッド.
+     * @param {*} unAnswerduserId 未投稿者のuserId
+     */
+    setUnansweredId(state,unAnswereduserId){
+      state.unAnsweredId.push(unAnswereduserId)
     }
   },
   actions: {
@@ -440,6 +449,15 @@ export default new Vuex.Store({
     
     setToken({commit},token){
       commit("setToken",token);
+    },
+
+    /**
+     * 未投稿者のユーザーIdをstateに格納する
+     * @param {*} userId 未投稿者のuserId
+     */
+    setUnansweredId({commit},unAnswereduserId){
+    
+      commit("setUnansweredId",unAnswereduserId)
     }
   },
 

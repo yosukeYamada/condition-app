@@ -29,8 +29,8 @@
       id="resent-posts-list"
     >
       <b-list-group-item
-        v-for="(unanswered, i) in this.unansweredList"
-        :key="i"
+        v-for="(unanswered ,index) in this.unansweredList"
+        :key="index"
       >
         <div>
           <b-row>
@@ -52,13 +52,29 @@
             </b-col>
             <b-col lg="2">
               <b-btn
+                v-if="unansweredId[index] !== unanswered.userId"
                 variant="danger"
                 class="contact"
+                :key="unanswered.userId"
+                :value="isPush"
                 @click="
-                  sendMail(unanswered.userName, unanswered.mailList[0].mailName)
+                  sendMail(unanswered.userId,unanswered.userName, unanswered.mailList[0].mailName)
                 "
                 >連絡</b-btn
               >
+              <b-btn
+                v-if="unansweredId[index] === unanswered.userId"
+                variant="danger"
+                class="contact"
+                :key="unanswered.userId"
+                :disabled="true"
+                @click="
+                  sendMail(unanswered.userId,unanswered.userName, unanswered.mailList[0].mailName)
+                "
+                >連絡済み</b-btn
+              >
+             
+             
             </b-col>
           </b-row>
         </div>
@@ -79,6 +95,9 @@ export default {
       unansweredList: [],
       depName: 0,
       depList: [],
+      isPush:true,
+      index:"",
+      unansweredId:[]
     };
   },
   watch: {
@@ -128,23 +147,30 @@ export default {
       let dep = this.$store.state.depList.find((dep) => dep.depId === depId);
       return dep.depName;
     },
-    sendMail(userName, mailName) {
+    sendMail(userId,userName, mailName) {
+      // console.log(userId)
+      this.$store.dispatch("setUnansweredId",userId)
+      this.unansweredId = this.$store.state.unAnsweredId
+      console.log(this.$store.state.unAnsweredId)
       axios
         .post("/sendMail", {
           userName: userName,
           mail: mailName,
         })
-        .then((response) => {
-          console.log(response);
+        .then(() => {
+      
           alert("メールを送信しました");
         })
         .catch((e) => {
           alert("メール送信に失敗しました：" + e);
         });
+        
     },
   },
   mounted() {
+    
     this.unansweredList = this.setUnanswered();
+    console.log(this.unansweredId)
     this.depList = Array.from(this.$store.state.depList);
     this.depList.unshift({
       depId: 0,

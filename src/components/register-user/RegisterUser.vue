@@ -182,6 +182,8 @@ export default {
                         response.data.postedNewsList
                       );
                     });
+                }).catch((error)=>{
+                  console.log(error)
                 })
             )
             .then(() => this.setLoginUser(response.data))

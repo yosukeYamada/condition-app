@@ -4,7 +4,7 @@
       class="text-left"
       border-variant="success"
       style="border-width:2px;"
-      header="今日のコンディション登録"
+      header="今日のコンディション投稿"
       header-bg-variant="success"
       header-text-variant="white"
     >
@@ -79,7 +79,7 @@
             v-bind:disabled="isPush"
             variant="outline-success"
             @click.prevent="register()"
-            >登録する</b-button
+            >投稿する</b-button
           >
         </b-form>
       </b-card-text>
@@ -147,10 +147,10 @@ export default {
               if (this.$store.state.loginUser.authority === AUTHORITY.ADMIN) {
                 this.$store.dispatch("setMyDailyPost", response.data);
               }
-              alert("登録しました！");
+              alert("投稿しました！");
             })
             .catch((e) => {
-              alert("コンディション登録の送信に失敗しました：" + e);
+              alert("コンディション投稿の送信に失敗しました：" + e);
             })
         )
         .then(() => this.$router.push("/myCondition"));

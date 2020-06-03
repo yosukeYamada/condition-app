@@ -50,14 +50,13 @@
             </b-form-group>
           </ValidationProvider>
           <ValidationProvider
+            v-slot="{ errors }"
+            name="メールアドレス"
             :rules="{
               required: true,
-              email,
-              rakuspartners:
-                /^[a-zA-Z0-9_.-]+@rakus-partners.co.jp/ ||
-                /^[a-zA-Z0-9_.-]+@rakus.co.jp/,
+              email: true,
+              regex: /^[a-zA-Z0-9_.-]+@rakus-partners.co.jp|^[a-zA-Z0-9_.-]+@rakus.co.jp/,
             }"
-            v-slot="{ errors }"
           >
             <b-form-group label="メールアドレス" label-for="input-email">
               <b-form-input
@@ -120,9 +119,9 @@
             </ValidationProvider>
           </div>
           <b-button
-            v-bind:disabled="isPush"
             class="mr-3"
             variant="outline-success"
+            :disabled="isPush"
             @click.prevent="handleSubmit(updateUser)"
             >更新</b-button
           >
@@ -172,10 +171,8 @@ export default {
     },
   },
   methods: {
-    pushBtn() {
-      this.isPush = true;
-    },
     updateUser() {
+      this.isPush = true;
       this.user.userName = this.user.userName.replace("　", "");
       this.user.userNameKana = this.user.userNameKana.replace("　", "");
       axios

@@ -151,6 +151,8 @@ export default {
           })
           .catch(error => {
             console.log(error);
+            alert("異常が発生しました。")
+            this.$router.push("/");
           });
         this.loading = true;
       } else {

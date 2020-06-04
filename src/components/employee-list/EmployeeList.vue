@@ -46,7 +46,7 @@ export default {
   },
   filters: {
     truncate: function(value) {
-      var length = 20;
+      var length = 40;
       var ommision = "...";
       if (value.length <= length) {
         return value;

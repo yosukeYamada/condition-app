@@ -31,7 +31,7 @@
       />
     </template>
     <template v-slot:item.comment="{ item }">
-      {{ item.postedComment.comment | truncate }}
+      {{ item.postedComment.comment }}
     </template>
   </v-data-table>
 </template>
@@ -67,31 +67,22 @@ export default {
           value: "comment",
           text: "コメント",
           sortable: true,
-          width: '55%'
+          width: "55%",
         },
       ],
-      dailyPostList:[]
+      dailyPostList: [],
     };
   },
-  filters: {
-    truncate: function(value) {
-      var length = 20;
-      var ommision = "...";
-      if (value.length <= length) {
-        return value;
-      }
-      return value.substring(0, length) + ommision;
-    }
-  },
   created() {
-    axios.post("/showDailyPosts",{ 
-      userId:JSON.parse(decodeURIComponent(this.$route.query.item)).userId 
-    }).then((response) => {
-      this.dailyPostList = response.data
-    })
+    axios
+      .post("/showDailyPosts", {
+        userId: JSON.parse(decodeURIComponent(this.$route.query.item)).userId,
+      })
+      .then((response) => {
+        this.dailyPostList = response.data;
+      });
   },
   methods: {
-    
     transferIcon(param) {
       if (param === "快晴") {
         return ["fas", "sun"];
@@ -130,6 +121,5 @@ export default {
       }
     },
   },
-
 };
 </script>

@@ -45,19 +45,25 @@
             改めて先週の自分の行動を振り返りましょう！
           </span>
         </div>
-        <div v-if="lastWeekScore > 5 * totalOrderCountOfLastWeek && lastWeekScore <= 7 * totalOrderCountOfLastWeek">
+        <div
+          v-if="lastWeekScore > 5 * totalOrderCountOfLastWeek && lastWeekScore <= 7 * totalOrderCountOfLastWeek"
+        >
           <br />
           <span>
             今週は少し頑張りが足りなかったようです、、
             来週はコンデイションを整えて良い１週間にしましょう！
           </span>
         </div>
-       
-        <div v-if="lastWeekScore > 7 * totalOrderCountOfLastWeek && lastWeekScore <= 11 * totalOrderCountOfLastWeek">
+
+        <div
+          v-if="lastWeekScore > 7 * totalOrderCountOfLastWeek && lastWeekScore <= 11 * totalOrderCountOfLastWeek"
+        >
           <br />
           <span>コンディションは概ね良好のようですね！疲れている時には糖分を取って休憩しましょう！</span>
         </div>
-        <div v-if="lastWeekScore > 11 * totalOrderCountOfLastWeek && lastWeekScore <= 13 * totalOrderCountOfLastWeek">
+        <div
+          v-if="lastWeekScore > 11 * totalOrderCountOfLastWeek && lastWeekScore <= 13 * totalOrderCountOfLastWeek"
+        >
           <br />
           <span>素晴らしい！コンディションも好調で、よくがんばりましたね！来週もこの調子でいきましょう！</span>
         </div>
@@ -82,14 +88,18 @@
             原因をしっかり分析して改善につなげていきましょう！
           </span>
         </div>
-        <div v-if="lastMonthScore > 5 * totalOrderCountOfLastMonth && lastMonthScore <= 9 * totalOrderCountOfLastMonth">
+        <div
+          v-if="lastMonthScore > 5 * totalOrderCountOfLastMonth && lastMonthScore <= 9 * totalOrderCountOfLastMonth"
+        >
           <br />
           <span>
             ちょっと先月は調子が良くなかったみたいですね、、
             時には好きな事に没頭して気分転換をすることも大事ですよ！
           </span>
         </div>
-        <div v-if="lastMonthScore > 9 * totalOrderCountOfLastMonth && lastMonthScore <= 13 * totalOrderCountOfLastMonth">
+        <div
+          v-if="lastMonthScore > 9 * totalOrderCountOfLastMonth && lastMonthScore <= 13 * totalOrderCountOfLastMonth"
+        >
           <br />
           <span>概ねコンディションは良好なようですね！今月はもっと成果をだせるようにがんばっていきましょう！</span>
         </div>
@@ -145,15 +155,15 @@ import axios from "axios";
 export default {
   name: "ChatBox",
   data: () => ({
-    totalOrderCountOfLastWeek:"",
+    totalOrderCountOfLastWeek: "",
     totalMaxScoreOfLastWeek: "",
     partMaxScoreOfLastWeek: "",
     lastWeekMotivationScore: "",
     lastWeekConditionScore: "",
     lastWeekPerformanceScore: "",
     lastWeekScore: "",
-    
-    totalOrderCountOfLastMonth:"",
+
+    totalOrderCountOfLastMonth: "",
     totalMaxScoreOfLastMonth: "",
     partMaxScoreOfLastMonth: "",
     lastMonthMotivationScore: "",
@@ -223,30 +233,44 @@ export default {
       this.lastMonth = !this.lastMonth;
     }
   },
-  created() {
+  computed: {
+    token() {
+      return this.$store.state.token;
+    }
+  },
+  mounted() {
     // axios.get('/test/insert')
-    axios
-      .post("/showScore", {
-        userId: this.$store.state.loginUser.userId
-      })
-      .then(res => {
-        this.totalOrderCountOfLastWeek = res.data.totalOrderCountOfLastWeek
-        this.totalMaxScoreOfLastWeek = res.data.maxTotalScoreOfLastWeek;
-        this.partMaxScoreOfLastWeek = res.data.maxPartScoreOfLastWeek;
-        this.lastWeekMotivationScore = res.data.totalLastWeekMotivationScore;
-        this.lastWeekConditionScore = res.data.totalLastWeekConditionScore;
-        this.lastWeekPerformanceScore = res.data.totalLastWeekPerformanceScore;
-        this.lastWeekScore = res.data.totalLastWeekCount;
-        
-        this.totalOrderCountOfLastMonth = res.data.totalOrderCountOfLastMonth
-        this.totalMaxScoreOfLastMonth = res.data.maxTotalScoreOfLastMonth;
-        this.partMaxScoreOfLastMonth = res.data.maxPartScoreOfLastMonth;
-        this.lastMonthMotivationScore = res.data.totalLastMonthMotivationScore;
-        this.lastMonthConditionScore = res.data.totalLastMonthConditionScore;
-        this.lastMonthPerformanceScore =
-          res.data.totalLastMonthPerformanceScore;
-        this.lastMonthScore = res.data.totalLastMonthCount;
-      });
+    Promise.resolve()
+      .then(() => (axios.defaults.headers.common["Authorization"] = this.token))
+      .then(() =>
+        axios
+          .post("/showScore", {
+            userId: this.$store.state.loginUser.userId
+          })
+          .then(res => {
+            this.totalOrderCountOfLastWeek = res.data.totalOrderCountOfLastWeek;
+            this.totalMaxScoreOfLastWeek = res.data.maxTotalScoreOfLastWeek;
+            this.partMaxScoreOfLastWeek = res.data.maxPartScoreOfLastWeek;
+            this.lastWeekMotivationScore =
+              res.data.totalLastWeekMotivationScore;
+            this.lastWeekConditionScore = res.data.totalLastWeekConditionScore;
+            this.lastWeekPerformanceScore =
+              res.data.totalLastWeekPerformanceScore;
+            this.lastWeekScore = res.data.totalLastWeekCount;
+
+            this.totalOrderCountOfLastMonth =
+              res.data.totalOrderCountOfLastMonth;
+            this.totalMaxScoreOfLastMonth = res.data.maxTotalScoreOfLastMonth;
+            this.partMaxScoreOfLastMonth = res.data.maxPartScoreOfLastMonth;
+            this.lastMonthMotivationScore =
+              res.data.totalLastMonthMotivationScore;
+            this.lastMonthConditionScore =
+              res.data.totalLastMonthConditionScore;
+            this.lastMonthPerformanceScore =
+              res.data.totalLastMonthPerformanceScore;
+            this.lastMonthScore = res.data.totalLastMonthCount;
+          })
+      );
   }
 };
 </script>

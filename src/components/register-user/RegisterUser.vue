@@ -122,7 +122,7 @@ export default {
       hireYear: null,
       hireMonth: null,
       depId: null,
-      isPush:false
+      isPush: false
     };
   },
   computed: {
@@ -141,11 +141,14 @@ export default {
         name: dep.depName,
         value: dep.depId
       }));
+    },
+    token() {
+      return this.$store.state.token;
     }
   },
 
   methods: {
-    ...mapActions(["setLoginUser", "switchLoginStatus"]),
+    ...mapActions(["setLoginUser", "switchLoginStatus", "setToken"]),
     registerUser() {
       this.isPush = true;
       this.userName = this.userName.replace("　", "");
@@ -159,40 +162,51 @@ export default {
           hireMonth: this.hireMonth,
           mailAddress: this.mailAddress
         })
-        .then(response => {
-          Promise.resolve()
-            .then(() =>
-              axios
-                .post("/signUp", {
-                  mailAddress: this.mailAddress,
-                  password: this.mailAddress
-                })
-                .then(() => {
-                  axios
-                    .post("/login", {
-                      mailAddress: this.mailAddress,
-                      password: this.mailAddress
-                    })
-                    .then(response => {
-                      axios.defaults.headers.common["Authorization"] =
-                        response.headers["authorization"];
+        .then(responseUser => {
+          Promise.resolve().then(() =>
+            axios
+              .post("/signUp", {
+                mailAddress: this.mailAddress,
+                password: this.mailAddress
+              })
+              .then(() => {
+                axios
+                  .post("/login", {
+                    mailAddress: this.mailAddress,
+                    password: this.mailAddress
+                  })
+                  .then(response => {
+                    Promise.resolve()
+                      .then(() =>
+                        this.setToken(response.headers["authorization"])
+                      )
+                      .then(
+                        () =>
+                          (axios.defaults.headers.common[
+                            "Authorization"
+                          ] = this.token)
+                      )
                       // お知らせ一覧を取得、表示用にstateに格納
-                      this.$store.dispatch(
-                        "setNewsPost",
-                        response.data.postedNewsList
-                      );
-                    });
-                }).catch((error)=>{
-                  console.log(error)
-                })
-            )
-            .then(() => this.setLoginUser(response.data))
-            .then(() => this.switchLoginStatus(true))
-            .then(() => alert("登録が完了しました！"))
-            .then(() => this.$router.push("/home"));
-        }).catch((e)=>{
-          console.log(e)
+                      .then(() =>
+                        this.$store.dispatch(
+                          "setNewsPostList",
+                          response.data.postedNewsList
+                        )
+                      )
+                      .then(() => this.setLoginUser(responseUser.data))
+                      .then(() => alert("登録が完了しました！"))
+                      .then(() => this.switchLoginStatus(true))
+                      .then(() => this.$router.push("/home"));
+                  });
+              })
+              .catch(error => {
+                console.log(error);
+              })
+          );
         })
+        .catch(e => {
+          console.log(e);
+        });
     },
     resetButton() {
       this.userName = "";

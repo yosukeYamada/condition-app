@@ -45,9 +45,21 @@ export default {
 </script>
 
 <style scoped>
-#HomeNewsList {
-  height: 30vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
+/** スマートフォンディスプレイサイズの場合 */
+@media (max-width:400px){
+  #HomeNewsList {
+    max-height: 30vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
 }
+/** スマートフォンディスプレイサイズより大きい場合 */
+@media (min-width:401px){
+  #HomeNewsList {
+    max-height: 30vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+}
+
 </style>

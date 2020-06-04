@@ -148,10 +148,8 @@ export default {
       return dep.depName;
     },
     sendMail(userId,userName, mailName) {
-      // console.log(userId)
       this.$store.dispatch("setUnansweredId",userId)
       this.unansweredId = this.$store.state.unAnsweredId
-      console.log(this.$store.state.unAnsweredId)
       axios
         .post("/sendMail", {
           userName: userName,
@@ -170,7 +168,6 @@ export default {
   mounted() {
     
     this.unansweredList = this.setUnanswered();
-    console.log(this.unansweredId)
     this.depList = Array.from(this.$store.state.depList);
     this.depList.unshift({
       depId: 0,

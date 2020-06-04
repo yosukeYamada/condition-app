@@ -27,7 +27,7 @@
         />
       </template>
       <template v-slot:item.comment="{ item }">
-        {{ item.comment | truncate  }}
+        {{ item.comment }}
       </template>
       <template v-slot:item.actions="{ item }">
         <v-fa
@@ -54,7 +54,7 @@ export default {
           value: "date",
           text: "投稿日",
           sortable: true,
-          width: '15%'
+          width: "15%",
         },
         {
           value: "motivation",
@@ -75,7 +75,7 @@ export default {
           value: "comment",
           text: "コメント",
           sortable: true,
-          width: '50%'
+          width: "50%",
         },
         {
           value: "actions",
@@ -84,16 +84,6 @@ export default {
         },
       ],
     };
-  },
-  filters: {
-    truncate: function(value) {
-      var length = 20;
-      var ommision = "...";
-      if (value.length <= length) {
-        return value;
-      }
-      return value.substring(0, length) + ommision;
-    }
   },
   props: ["dailyPostList"],
   computed: {

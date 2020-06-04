@@ -37,23 +37,20 @@
       </b-col>
 
       <b-col sm="6" md="7" lg="6" xl="7" v-if="lastWeek">
-        <div class="my-parts">
-          <h3>
+        <div class="my-parts p-4" style="border-radius:4px;">
+          <h3 class="headline font-weight-bold mb-5">
             先週の総合結果：{{ lastWeekScore }}/{{ totalMaxScoreOfLastWeek }}点
           </h3>
-          <br />
           <h5>
             モチベーション：{{ lastWeekMotivationScore }}/{{
               partMaxScoreOfLastWeek
             }}点
           </h5>
-          <br />
           <h5>
             コンディション：{{ lastWeekConditionScore }}/{{
               partMaxScoreOfLastWeek
             }}点
           </h5>
-          <br />
           <h5>
             パフォーマンス：{{ lastWeekPerformanceScore }}/{{
               partMaxScoreOfLastWeek
@@ -116,25 +113,22 @@
       </b-col>
 
       <b-col sm="6" md="7" lg="6" xl="7" v-if="lastMonth">
-        <div class="my-parts">
-          <h3>
+        <div class="my-parts p-4" style="border-radius:4px;">
+          <h3 class="headline font-weight-bold mb-5">
             先月の総合結果：{{ lastMonthScore }}/{{
               totalMaxScoreOfLastMonth
             }}点
           </h3>
-          <br />
           <h5>
             モチベーション：{{ lastMonthMotivationScore }}/{{
               partMaxScoreOfLastMonth
             }}点
           </h5>
-          <br />
           <h5>
             コンディション：{{ lastMonthConditionScore }}/{{
               partMaxScoreOfLastMonth
             }}点
           </h5>
-          <br />
           <h5>
             パフォーマンス：{{ lastMonthPerformanceScore }}/{{
               partMaxScoreOfLastMonth
@@ -361,6 +355,10 @@ export default {
   max-width: 200px;
   max-height: 200px;
 }
+div.my-parts h5 {
+  font-size:18px;
+  margin-bottom:1rem;
+}
 .img:hover {
   cursor: pointer;
 }
@@ -428,8 +426,6 @@ export default {
 .my-parts {
   background: white;
   border: 2px solid #4ca746;
-  border-radius: 0px;
-  padding: 0.8em;
   position: relative;
   text-align: left;
 }

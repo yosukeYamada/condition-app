@@ -34,23 +34,16 @@
       >
         <div>
           <b-row>
-            <b-col lg="1">
-              <v-fa
-                :icon="['far', 'frown']"
-                size="lg"
-                class="blue--text text--darken-2 mr-4"
-              ></v-fa>
+            <b-col lg="3">
+              <span class="body-2">{{ transferDepName(unanswered.depId) }}</span>
             </b-col>
             <b-col lg="3">
-              <span>{{ unanswered.hireDate | moment }}入社</span>
+              <span class="body-2">{{ unanswered.hireDate | moment }}入社</span>
             </b-col>
-            <b-col lg="3">
-              <span>{{ transferDepName(unanswered.depId) }}</span>
+            <b-col lg="4">
+              <span class="body-2">{{ unanswered.userName + "さん" }}</span>
             </b-col>
-            <b-col lg="3">
-              <span>{{ unanswered.userName + "さん" }}</span>
-            </b-col>
-            <b-col lg="2">
+            <b-col lg="2" class="py-0 mt-2">
               <b-btn
                 v-if="unansweredId[index] !== unanswered.userId"
                 variant="danger"
@@ -73,8 +66,6 @@
                 "
                 >連絡済み</b-btn
               >
-             
-             
             </b-col>
           </b-row>
         </div>
@@ -184,7 +175,7 @@ export default {
 
 <style scoped>
 #resent-posts-list {
-  height: 40vh;
+  height: 30vh;
   overflow-y: scroll;
   overflow-x: hidden;
 }

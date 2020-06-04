@@ -56,7 +56,7 @@ export default {
 /** スマートフォンディスプレイサイズより大きい場合 */
 @media (min-width:401px){
   #HomeNewsList {
-    max-height: 30vh;
+    max-height: 28vh;
     overflow-y: scroll;
     overflow-x: hidden;
   }

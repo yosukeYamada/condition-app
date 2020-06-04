@@ -254,6 +254,9 @@ export default new Vuex.Store({
      */
     login() {
       const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+      googleAuthProvider.setCustomParameters({
+        prompt: 'select_account'
+      }); 
       firebase.auth().signInWithRedirect(googleAuthProvider);
       /** ドメインを２つ指定できないためコメントアウトしました */
       // googleAuthProvider.setCustomParameters({
